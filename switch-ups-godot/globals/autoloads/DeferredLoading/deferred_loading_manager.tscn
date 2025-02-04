@@ -1,0 +1,151 @@
+[gd_scene load_steps=11 format=3 uid="uid://b3iivh4vcwpxr"]
+
+[ext_resource type="Script" path="res://globals/autoloads/DeferredLoading/deferred_loading_manager.gd" id="1_6quig"]
+[ext_resource type="Texture2D" uid="uid://brjinnjo5rjtw" path="res://globals/CircleBlue.png" id="2_n5h2f"]
+[ext_resource type="Script" path="res://globals/simple_scripts/avatar_rotate.gd" id="3_lucd1"]
+
+[sub_resource type="Gradient" id="Gradient_o7gms"]
+colors = PackedColorArray(0.194349, 0.194349, 0.194349, 1, 0.219501, 0.219501, 0.219501, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_mf2sk"]
+gradient = SubResource("Gradient_o7gms")
+width = 400
+height = 20
+
+[sub_resource type="Gradient" id="Gradient_nvt5j"]
+offsets = PackedFloat32Array(0.338028, 0.732394)
+colors = PackedColorArray(0, 1, 1, 1, 0.0666667, 0.203922, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_8431j"]
+gradient = SubResource("Gradient_nvt5j")
+width = 400
+height = 20
+
+[sub_resource type="Animation" id="Animation_787u1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LoadingCircleAnchor/LoadingCircle:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1787, 947)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("LoadingCircleAnchor/LoadingCircle:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_4gwl6"]
+resource_name = "appear"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LoadingCircleAnchor/LoadingCircle:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0.466667, 1.5),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [Vector2(86, -89), Vector2(-99, -93)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("LoadingCircleAnchor/LoadingCircle:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.8, 1.16667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_x5pkc"]
+_data = {
+"RESET": SubResource("Animation_787u1"),
+"appear": SubResource("Animation_4gwl6")
+}
+
+[node name="DeferredLoadingManager" type="Node"]
+process_mode = 3
+script = ExtResource("1_6quig")
+
+[node name="HoldingScene" type="Node" parent="."]
+process_mode = 1
+
+[node name="ActiveScene" type="Node" parent="."]
+process_mode = 1
+
+[node name="LoadingRoot" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="ProgressBar" type="TextureProgressBar" parent="LoadingRoot"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -553.0
+offset_top = -93.0
+offset_right = -153.0
+offset_bottom = -73.0
+grow_horizontal = 0
+grow_vertical = 0
+value = 90.0
+fill_mode = 1
+texture_under = SubResource("GradientTexture2D_mf2sk")
+texture_progress = SubResource("GradientTexture2D_8431j")
+
+[node name="LoadingCircleAnchor" type="Control" parent="LoadingRoot"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="LoadingCircle" type="TextureRect" parent="LoadingRoot/LoadingCircleAnchor"]
+layout_mode = 0
+offset_left = 1787.0
+offset_top = 947.0
+offset_right = 1887.0
+offset_bottom = 1047.0
+pivot_offset = Vector2(50, 50)
+texture = ExtResource("2_n5h2f")
+expand_mode = 1
+script = ExtResource("3_lucd1")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="LoadingRoot/LoadingCircleAnchor/LoadingCircle"]
+root_node = NodePath("../../..")
+libraries = {
+"": SubResource("AnimationLibrary_x5pkc")
+}

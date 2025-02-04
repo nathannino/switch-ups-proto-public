@@ -1,0 +1,215 @@
+[gd_scene load_steps=3 format=3 uid="uid://bvau8nx2vb1p0"]
+
+[ext_resource type="Script" path="res://scenes/main_menu/main_menu.gd" id="1_e6rbv"]
+
+[sub_resource type="GDScript" id="GDScript_bosft"]
+script/source = "extends Label
+
+func _init() -> void:
+	pass
+	#custom_minimum_size = Vector2(0,9999999999)
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass
+
+func _reset_minimum_size() :
+	custom_minimum_size = Vector2(0,0)
+	$\"../../../..\".call_deferred(\"preinit_completed\")
+
+func _notification(what: int) -> void:
+	match what:
+		NOTIFICATION_PARENTED:
+			#text = DeferredLoadingManager.get_holding_data(\"license\")
+			#$\"../../..\".preinit_complete.emit()
+			print(\"license doneq\")
+			call_deferred(\"_reset_minimum_size\")
+			
+"
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_e6rbv")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="TabContainer" type="TabContainer" parent="MarginContainer"]
+layout_mode = 2
+current_tab = 0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="GodotLicense" type="Label" parent="MarginContainer/TabContainer/ScrollContainer"]
+custom_minimum_size = Vector2(0, 1e+10)
+layout_mode = 2
+text = "toijdlkasjd
+
+sad
+asd
+sad
+sad
+as
+das
+d
+asd
+asd
+sadsadsad
+sa
+dsa
+d
+as
+dsa
+d
+sad
+sa
+d
+sad
+sa
+dsa
+d
+sad
+sa
+d
+sad
+as
+das
+d
+as
+dsa
+d
+as
+dsa
+da
+toijdlkasjd
+
+sad
+asd
+sad
+sad
+as
+das
+d
+asd
+asd
+sadsadsad
+sa
+dsa
+d
+as
+dsa
+d
+sad
+sa
+d
+sad
+sa
+dsa
+d
+sad
+sa
+d
+sad
+as
+das
+d
+as
+dsa
+d
+as
+dsa
+da
+toijdlkasjd
+
+sad
+asd
+sad
+sad
+as
+das
+d
+asd
+asd
+sadsadsad
+sa
+dsa
+d
+as
+dsa
+d
+sad
+sa
+d
+sad
+sa
+dsa
+d
+sad
+sa
+d
+sad
+as
+das
+d
+as
+dsa
+d
+as
+dsa
+da
+toijdlkasjd
+
+sad
+asd
+sad
+sad
+as
+das
+d
+asd
+asd
+sadsadsad
+sa
+dsa
+d
+as
+dsa
+d
+sad
+sa
+d
+sad
+sa
+dsa
+d
+sad
+sa
+d
+sad
+as
+das
+d
+as
+dsa
+d
+as
+dsa
+da
+"
+script = SubResource("GDScript_bosft")

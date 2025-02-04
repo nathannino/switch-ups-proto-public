@@ -1,0 +1,58 @@
+[gd_scene load_steps=2 format=3 uid="uid://df1tpq7cfnr8u"]
+
+[sub_resource type="GDScript" id="GDScript_gcxv7"]
+script/source = "extends Control
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	$HBoxContainer/VersionInformation.text = \"%s : %s - v%s\" % [game_info.project_name, game_info.flavor, game_info.version]
+	if not game_info.dev :
+		$HBoxContainer/VersionInformation.hide()
+		$DevWarning.hide()
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	$HBoxContainer/FPSCounter.text = \"%d fps\" % Engine.get_frames_per_second()
+	pass
+"
+
+[node name="DebugOverlay" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = SubResource("GDScript_gcxv7")
+
+[node name="HBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 50.0
+mouse_filter = 2
+
+[node name="VersionInformation" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "Version label"
+
+[node name="FPSCounter" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "fps"
+
+[node name="DevWarning" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -23.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "This is an early development version, not intended to be shared outside of what's required for the school project"

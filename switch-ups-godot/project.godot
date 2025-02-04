@@ -11,9 +11,28 @@ config_version=5
 [application]
 
 config/name="Switch-ups"
+run/main_scene="res://overlay/main_overlay.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+DeferredLoadingManager="*res://globals/autoloads/DeferredLoading/deferred_loading_manager.tscn"
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/size/mode=4
+window/stretch/mode="viewport"
+window/stretch/aspect="expand"
 
 [dotnet]
 
 project/assembly_name="Switch-ups"
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+environment/defaults/default_clear_color=Color(0, 0, 0, 1)

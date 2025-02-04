@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://bsm2mbwpprhxl"]
+
+[ext_resource type="PackedScene" uid="uid://df1tpq7cfnr8u" path="res://overlay/debug_overlay.tscn" id="1_wdj3v"]
+
+[node name="MainOverlay" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="DebugOverlay" parent="." instance=ExtResource("1_wdj3v")]
+layout_mode = 1
