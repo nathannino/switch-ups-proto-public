@@ -6,7 +6,7 @@ const main_menu_path = "res://scenes/main_menu/main_menu.tscn"
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	main_menu = SceneLoadWrapper.preinit_scene(main_menu_path,{"license":setup_license,"funnies":func() :
-		OS.delay_msec(1000)
+		OS.delay_msec(3600)
 		return 0
 		})
 	pass # Replace with function body.

@@ -3,7 +3,6 @@ extends Control
 signal preinit_complete
 
 func preinit_completed() :
-	print("preinit_completed")
 	preinit_complete.emit()
 
 # Called when the node enters the scene tree for the first time.

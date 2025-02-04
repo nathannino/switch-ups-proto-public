@@ -22,7 +22,6 @@ func _notification(what: int) -> void:
 		NOTIFICATION_PARENTED:
 			#text = DeferredLoadingManager.get_holding_data(\"license\")
 			#$\"../../..\".preinit_complete.emit()
-			print(\"license doneq\")
 			call_deferred(\"_reset_minimum_size\")
 			
 "

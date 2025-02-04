@@ -20,6 +20,10 @@ const CIRCLE_ANIM = "appear"
 func _ready() -> void:
 	loading_circle_anim.play(CIRCLE_ANIM)
 	current_load_target = null
+	$BarAppearTimer.timeout.connect(func() :
+		if not current_load_target == null :
+			$LoadingRoot/ProgressBar.show_bar()
+	)
 	change_scene(SceneLoadWrapper.preload_scene(default_scene))
 	pass # Replace with function body.
 
@@ -31,7 +35,8 @@ func _process(delta: float) -> void:
 	if not current_load_target == null :
 		_process_load_poll()
 	else :
-		$LoadingRoot/ProgressBar.visible = false
+		if not $LoadingRoot/ProgressBar.bar_is_hiding() :
+			$LoadingRoot/ProgressBar.hide_bar()
 	
 	if workers > 0 :
 		if not workers_over_zero :
@@ -50,7 +55,8 @@ func _process(delta: float) -> void:
 	pass
 
 func _process_load_poll() :
-	$LoadingRoot/ProgressBar.visible = true
+	if not $LoadingRoot/ProgressBar.is_showing and $BarAppearTimer.is_stopped() :
+		$BarAppearTimer.start()
 	$LoadingRoot/ProgressBar.value = current_load_target.get_scene_preload_percent()
 	
 	if (current_load_target.ready) : #TODO : Add transition support
@@ -60,7 +66,7 @@ func _process_load_poll() :
 		for child in $HoldingScene.get_children() :
 			$HoldingScene.remove_child(child)
 			child.queue_free()
-		
+		$LoadingRoot/ProgressBar.value = 100
 	pass
 
 func cancel_scene_load() :
@@ -147,7 +153,10 @@ func preload_scene(_scene : SceneLoadWrapper, _thread : Thread) :
 				break
 	if _scene.load_target >= _scene.LOAD_TARGET.PREINIT :
 		var thread = Thread.new() 
-		thread.start(func() : _scene.start_init())
+		thread.start(func() : 
+			_scene.start_init()
+			thread.wait_to_finish()
+			)
 		await _scene.preinit_complete
 	_end_preload_scene(_scene,_thread)
 
