@@ -1,12 +1,13 @@
 extends Control
 
-signal preinit_complete
+#signal preinit_complete
 
-func preinit_completed() :
-	preinit_complete.emit()
+#func preinit_completed() :
+#	preinit_complete.emit()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	BgmManager.play("bg_compendium",BgmManager.TRANSITIONS.CROSSFADE)
 	pass # Replace with function body.
 
 

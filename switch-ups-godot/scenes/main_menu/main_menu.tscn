@@ -1,29 +1,65 @@
-[gd_scene load_steps=3 format=3 uid="uid://bvau8nx2vb1p0"]
+[gd_scene load_steps=5 format=3 uid="uid://bvau8nx2vb1p0"]
 
 [ext_resource type="Script" path="res://scenes/main_menu/main_menu.gd" id="1_e6rbv"]
+[ext_resource type="Script" path="res://scenes/main_menu/music_credits/music_library.gd" id="2_cty6b"]
 
-[sub_resource type="GDScript" id="GDScript_bosft"]
+[sub_resource type="GDScript" id="GDScript_f2ac0"]
 script/source = "extends Label
 
 func _init() -> void:
 	pass
-	#custom_minimum_size = Vector2(0,9999999999)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	var components = Engine.get_copyright_info()
+	var license_list = {}
+	var regex = RegEx.create_from_string(\"freetype|enet|mbed\")
+	for component in components:
+		var name = component.name
+		text += \"\\n\" + name + \"\\n\"
+		for part in component.parts:
+			license_list[part.license] = true
+			text += \"  License: \" + part.license + \"\\n\"
+			for line in part.copyright:
+				text += \"  Copyright \" + line + \"\\n\"
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+"
+
+[sub_resource type="GDScript" id="GDScript_auesj"]
+script/source = "extends Label
+
+func _init() -> void:
 	pass
 
-func _reset_minimum_size() :
-	custom_minimum_size = Vector2(0,0)
-	$\"../../../..\".call_deferred(\"preinit_completed\")
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	var components = Engine.get_copyright_info()
+	var license_list = {}
+	var regex = RegEx.create_from_string(\"freetype|enet|mbed\")
+	for component in components:
+		var name = component.name
+		for part in component.parts:
+			license_list[part.license] = true
+	
+	var licenses = Engine.get_license_info()
+	var new_lines = false
+	for k in licenses:
+		if license_list.has(k):
+			if new_lines :
+				text += \"\\n\\n\"
+			text += \"\\nLICENSE: \" + k + \"\\n\\n\" + licenses[k]
+			new_lines = true
+	pass # Replace with function body.
 
-func _notification(what: int) -> void:
-	match what:
-		NOTIFICATION_PARENTED:
-			#text = DeferredLoadingManager.get_holding_data(\"license\")
-			#$\"../../..\".preinit_complete.emit()
-			call_deferred(\"_reset_minimum_size\")
-			
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
 "
 
 [node name="MainMenu" type="Control"]
@@ -47,168 +83,49 @@ theme_override_constants/margin_top = 50
 theme_override_constants/margin_right = 50
 theme_override_constants/margin_bottom = 50
 
-[node name="TabContainer" type="TabContainer" parent="MarginContainer"]
+[node name="Credits" type="TabContainer" parent="MarginContainer"]
+layout_mode = 2
+current_tab = 1
+
+[node name="Third Party" type="TabContainer" parent="MarginContainer/Credits"]
+visible = false
 layout_mode = 2
 current_tab = 0
+metadata/_tab_index = 0
 
-[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/TabContainer"]
+[node name="Copyright" type="ScrollContainer" parent="MarginContainer/Credits/Third Party"]
 layout_mode = 2
 metadata/_tab_index = 0
 
-[node name="GodotLicense" type="Label" parent="MarginContainer/TabContainer/ScrollContainer"]
-custom_minimum_size = Vector2(0, 1e+10)
+[node name="Label" type="Label" parent="MarginContainer/Credits/Third Party/Copyright"]
 layout_mode = 2
-text = "toijdlkasjd
+script = SubResource("GDScript_f2ac0")
 
-sad
-asd
-sad
-sad
-as
-das
-d
-asd
-asd
-sadsadsad
-sa
-dsa
-d
-as
-dsa
-d
-sad
-sa
-d
-sad
-sa
-dsa
-d
-sad
-sa
-d
-sad
-as
-das
-d
-as
-dsa
-d
-as
-dsa
-da
-toijdlkasjd
+[node name="Licenses" type="ScrollContainer" parent="MarginContainer/Credits/Third Party"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
 
-sad
-asd
-sad
-sad
-as
-das
-d
-asd
-asd
-sadsadsad
-sa
-dsa
-d
-as
-dsa
-d
-sad
-sa
-d
-sad
-sa
-dsa
-d
-sad
-sa
-d
-sad
-as
-das
-d
-as
-dsa
-d
-as
-dsa
-da
-toijdlkasjd
+[node name="Label" type="Label" parent="MarginContainer/Credits/Third Party/Licenses"]
+layout_mode = 2
+script = SubResource("GDScript_auesj")
 
-sad
-asd
-sad
-sad
-as
-das
-d
-asd
-asd
-sadsadsad
-sa
-dsa
-d
-as
-dsa
-d
-sad
-sa
-d
-sad
-sa
-dsa
-d
-sad
-sa
-d
-sad
-as
-das
-d
-as
-dsa
-d
-as
-dsa
-da
-toijdlkasjd
+[node name="Music Library" type="ScrollContainer" parent="MarginContainer/Credits" node_paths=PackedStringArray("grid")]
+layout_mode = 2
+script = ExtResource("2_cty6b")
+grid = NodePath("MarginContainer/GridContainer")
+metadata/_tab_index = 1
 
-sad
-asd
-sad
-sad
-as
-das
-d
-asd
-asd
-sadsadsad
-sa
-dsa
-d
-as
-dsa
-d
-sad
-sa
-d
-sad
-sa
-dsa
-d
-sad
-sa
-d
-sad
-as
-das
-d
-as
-dsa
-d
-as
-dsa
-da
-"
-script = SubResource("GDScript_bosft")
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Credits/Music Library"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/Credits/Music Library/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+columns = 3

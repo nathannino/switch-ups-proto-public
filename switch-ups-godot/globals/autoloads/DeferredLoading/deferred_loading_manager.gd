@@ -24,12 +24,16 @@ func _ready() -> void:
 		if not current_load_target == null :
 			$LoadingRoot/ProgressBar.show_bar()
 	)
-	change_scene(SceneLoadWrapper.preload_scene(default_scene))
+	change_scene(SceneLoadWrapper.preload_scene(default_scene),true)
 	pass # Replace with function body.
 
 var current_load_target : SceneLoadWrapper
+var load_blocking = false
 
 var workers_over_zero = false
+
+func _end_thread(thread : Thread) :
+	thread.wait_to_finish()
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if not current_load_target == null :
@@ -59,7 +63,7 @@ func _process_load_poll() :
 		$BarAppearTimer.start()
 	$LoadingRoot/ProgressBar.value = current_load_target.get_scene_preload_percent()
 	
-	if (current_load_target.ready) : #TODO : Add transition support
+	if (current_load_target.ready and (not load_blocking or not workers_over_zero)) : #TODO : Add transition support
 		var _new_scene = current_load_target.get_finished()
 		current_load_target = null
 		$ActiveScene.add_child(_new_scene)
@@ -155,12 +159,13 @@ func preload_scene(_scene : SceneLoadWrapper, _thread : Thread) :
 		var thread = Thread.new() 
 		thread.start(func() : 
 			_scene.start_init()
-			thread.wait_to_finish()
 			)
 		await _scene.preinit_complete
+		
+		call_deferred("_end_thread",thread)
 	_end_preload_scene(_scene,_thread)
 
-func change_scene(scene : SceneLoadWrapper) -> bool :
+func change_scene(scene : SceneLoadWrapper, _load_blocking = false) -> bool :
 	if scene.corrupted :
 		return false
 	#FIXME : handle transitions n stuff

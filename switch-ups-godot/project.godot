@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 DeferredLoadingManager="*res://globals/autoloads/DeferredLoading/deferred_loading_manager.tscn"
+BgmManager="*res://globals/autoloads/bgm_manager/bgm_manager.tscn"
 
 [display]
 
@@ -32,6 +33,4 @@ project/assembly_name="Switch-ups"
 
 [rendering]
 
-renderer/rendering_method="gl_compatibility"
-renderer/rendering_method.mobile="gl_compatibility"
 environment/defaults/default_clear_color=Color(0, 0, 0, 1)

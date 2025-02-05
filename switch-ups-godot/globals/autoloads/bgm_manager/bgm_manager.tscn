@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://bekn7hfyhclel"]
+
+[ext_resource type="Script" path="res://globals/autoloads/bgm_manager/bgm_manager.gd" id="1_gwp3a"]
+[ext_resource type="AudioStream" uid="uid://c1bq8uuuoamrd" path="res://bgm/audio/bg_waiting.ogg" id="2_vyyfc"]
+
+[node name="BgmManager" type="Node"]
+script = ExtResource("1_gwp3a")
+fade_sigular_duration = 1.0
+crossfade_duration = 1.0
+
+[node name="AudioStreamPlayerOne" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_vyyfc")
+autoplay = true
+playback_type = 1
+
+[node name="AudioStreamPlayerTwo" type="AudioStreamPlayer" parent="."]
+playback_type = 1

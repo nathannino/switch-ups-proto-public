@@ -104,6 +104,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="LoadingRoot" type="Control" parent="."]
 layout_mode = 3
@@ -127,6 +128,7 @@ offset_left = -40.0
 offset_top = -40.0
 grow_horizontal = 0
 grow_vertical = 0
+mouse_filter = 2
 script = ExtResource("2_ewa2w")
 show_duration = 0.4
 hide_duration = 0.4
@@ -145,6 +147,7 @@ offset_right = -154.0
 offset_bottom = -68.0
 grow_horizontal = 0
 grow_vertical = 0
+mouse_filter = 2
 value = 100.0
 texture_progress = SubResource("GradientTexture2D_eew51")
 
@@ -159,6 +162,7 @@ offset_left = -400.0
 offset_top = -20.0
 grow_horizontal = 0
 grow_vertical = 0
+mouse_filter = 2
 value = 100.0
 fill_mode = 1
 texture_progress = SubResource("GradientTexture2D_eew51")
@@ -174,6 +178,7 @@ offset_left = -400.0
 offset_top = -20.0
 grow_horizontal = 0
 grow_vertical = 0
+mouse_filter = 2
 value = 90.0
 fill_mode = 1
 texture_progress = SubResource("GradientTexture2D_8431j")
@@ -193,6 +198,7 @@ offset_left = -40.0
 offset_top = -40.0
 grow_horizontal = 0
 grow_vertical = 0
+mouse_filter = 2
 
 [node name="LoadingCircle" type="TextureRect" parent="LoadingRoot/LoadingCircleAnchor"]
 layout_mode = 0
@@ -201,6 +207,7 @@ offset_top = 947.0
 offset_right = 1887.0
 offset_bottom = 1047.0
 pivot_offset = Vector2(50, 50)
+mouse_filter = 2
 texture = ExtResource("2_n5h2f")
 expand_mode = 1
 script = ExtResource("3_lucd1")

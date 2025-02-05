@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="bgm" load_steps=3 format=3 uid="uid://dwqywkqfdm06a"]
+
+[ext_resource type="Script" path="res://bgm/bgm.gd" id="1_h8m27"]
+[ext_resource type="AudioStream" uid="uid://q1swxgppykp4" path="res://bgm/audio/bg_compendium.ogg" id="1_je635"]
+
+[resource]
+script = ExtResource("1_h8m27")
+name = "Glad To Be Stuck Inside"
+key = "bg_compendium"
+loop = ExtResource("1_je635")
+author = "Holizna"
+license = 0
+source = "https://opengameart.org/content/lo-fi-and-chill-collection"
