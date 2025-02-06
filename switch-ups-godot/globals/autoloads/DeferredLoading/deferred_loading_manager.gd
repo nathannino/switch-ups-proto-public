@@ -18,6 +18,7 @@ var workers_mutex = Mutex.new() # Jut to be safe...
 const CIRCLE_ANIM = "appear"
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	_increment_workers()
 	loading_circle_anim.play(CIRCLE_ANIM)
 	current_load_target = null
 	$BarAppearTimer.timeout.connect(func() :
