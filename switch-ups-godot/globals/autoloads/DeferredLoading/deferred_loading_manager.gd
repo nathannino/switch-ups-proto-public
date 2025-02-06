@@ -18,7 +18,6 @@ var workers_mutex = Mutex.new() # Jut to be safe...
 const CIRCLE_ANIM = "appear"
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	_increment_workers()
 	loading_circle_anim.play(CIRCLE_ANIM)
 	current_load_target = null
 	$BarAppearTimer.timeout.connect(func() :
@@ -31,7 +30,7 @@ func _ready() -> void:
 var current_load_target : SceneLoadWrapper
 var load_blocking = false
 
-var workers_over_zero = false
+var workers_over_zero = true
 
 func _end_thread(thread : Thread) :
 	thread.wait_to_finish()
@@ -97,11 +96,13 @@ func _set_holding_data(key : String, data) -> void:
 func _increment_workers() :
 	workers_mutex.lock()
 	workers += 1
+	print("Increment workers : %d" % workers)
 	workers_mutex.unlock()
 
 func _decrement_workers() :
 	workers_mutex.lock()
 	workers -= 1
+	print("Decrement workers : %d" % workers)
 	workers_mutex.unlock()
 
 # Note that making threads is slow on windows, according to the godot documentation. Only use this when deferred loading of data requires a function

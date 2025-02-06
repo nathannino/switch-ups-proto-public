@@ -1,7 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://dhobuev3lfdfk"]
+[gd_scene load_steps=5 format=3 uid="uid://dhobuev3lfdfk"]
 
 [ext_resource type="Theme" uid="uid://dkfvpx50nyurp" path="res://scenes/main_menu/music_credits/temp_music_credits_title.tres" id="1_3tsna"]
 [ext_resource type="Script" path="res://scenes/main_menu/music_credits/music_panel.gd" id="1_m0gaa"]
+
+[sub_resource type="GDScript" id="GDScript_fxm7r"]
+script/source = "extends RichTextLabel
+
+func _on_meta_clicked(meta: Variant) -> void:
+	OS.shell_open(str(meta))
+"
 
 [sub_resource type="GDScript" id="GDScript_s6651"]
 script/source = "extends Button
@@ -54,33 +61,39 @@ layout_mode = 2
 theme_override_constants/separation = 10
 
 [node name="Title" type="Label" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(50, 10)
 layout_mode = 2
 theme = ExtResource("1_3tsna")
 text = "Title"
 horizontal_alignment = 1
+autowrap_mode = 3
 
 [node name="Artist" type="Label" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(50, 10)
 layout_mode = 2
 text = "Artist"
 horizontal_alignment = 1
+autowrap_mode = 3
 
 [node name="License" type="Label" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(50, 10)
 layout_mode = 2
 text = "License : CC0"
 horizontal_alignment = 1
+autowrap_mode = 3
 
-[node name="CenterContainer" type="CenterContainer" parent="MarginContainer/VBoxContainer"]
+[node name="Source" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-
-[node name="Source" type="LinkButton" parent="MarginContainer/VBoxContainer/CenterContainer"]
-layout_mode = 2
-text = "link"
-uri = "https://example.com"
-structured_text_bidi_override = 1
+bbcode_enabled = true
+text = "[center][u][url=https://example.com]Link[/url][/u][/center]"
+fit_content = true
+scroll_active = false
+script = SubResource("GDScript_fxm7r")
 
 [node name="Button" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Play Sound"
 script = SubResource("GDScript_s6651")
 
+[connection signal="meta_clicked" from="MarginContainer/VBoxContainer/Source" to="MarginContainer/VBoxContainer/Source" method="_on_meta_clicked"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Button" to="MarginContainer/VBoxContainer/Button" method="_on_pressed"]

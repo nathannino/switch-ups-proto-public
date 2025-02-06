@@ -14,7 +14,6 @@ func _init() -> void:
 func _ready() -> void:
 	var components = Engine.get_copyright_info()
 	var license_list = {}
-	var regex = RegEx.create_from_string(\"freetype|enet|mbed\")
 	for component in components:
 		var name = component.name
 		text += \"\\n\" + name + \"\\n\"
@@ -41,7 +40,6 @@ func _init() -> void:
 func _ready() -> void:
 	var components = Engine.get_copyright_info()
 	var license_list = {}
-	var regex = RegEx.create_from_string(\"freetype|enet|mbed\")
 	for component in components:
 		var name = component.name
 		for part in component.parts:
@@ -79,9 +77,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 50
+theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 50
-theme_override_constants/margin_right = 50
+theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 50
 
 [node name="Credits" type="TabContainer" parent="MarginContainer"]
@@ -114,6 +112,7 @@ metadata/_tab_index = 1
 layout_mode = 2
 script = ExtResource("2_cty6b")
 grid = NodePath("MarginContainer/GridContainer")
+min_size = 400.0
 metadata/_tab_index = 0
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Credits/Music/Music Library"]
