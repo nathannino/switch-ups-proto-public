@@ -1,7 +1,7 @@
 extends SubViewport
 
 #TODO : Move magic Vector2i to globals
-var target_size = Vector2i(1920,1080)
+var target_size : Vector2i
 #var target_size = Vector2i(3840,2160) # 4k
 var target_aspect_ratio : float
 
@@ -31,7 +31,6 @@ func _process(delta: float) -> void:
 func resize() :
 	var window_size = get_window().size
 	var window_aspect_ratio = float(window_size.x) / float(window_size.y)
-	print(window_aspect_ratio)
 	var width
 	var height
 	if (window_aspect_ratio < target_aspect_ratio) :

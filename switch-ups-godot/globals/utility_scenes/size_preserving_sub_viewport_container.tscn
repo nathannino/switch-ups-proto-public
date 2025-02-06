@@ -5,6 +5,8 @@
 [sub_resource type="GDScript" id="GDScript_ft3pa"]
 script/source = "extends Control
 
+@export var target_size : Vector2i
+
 func reparent_but_good(child : Node, root : Node) :
 	if not child.get_parent() == self : return # Already handled
 	child.owner = null
@@ -15,9 +17,12 @@ func reparent_but_good(child : Node, root : Node) :
 
 var has_called = false
 
+func _enter_tree() -> void:
+	$SubViewportContainer/SizePreservingSubViewport.target_size = target_size
+
 func move_scene_child_to_viewport() :
 	var container = get_node_or_null(\"SubViewportContainer\")
-	var child_root = get_node_or_null(\"SubViewportContainer/SubViewport\")
+	var child_root = get_node_or_null(\"SubViewportContainer/SizePreservingSubViewport\")
 	has_called = false
 	
 	if container == null or child_root == null :
@@ -37,6 +42,7 @@ func _notification(what: int) -> void:
 "
 
 [node name="SizePreservingSubViewportContainer" type="Control"]
+editor_description = "A viewport container that will make it's children the same size as"
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -44,6 +50,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = SubResource("GDScript_ft3pa")
+target_size = Vector2i(1920, 1080)
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 layout_mode = 1
@@ -54,7 +61,8 @@ grow_horizontal = 2
 grow_vertical = 2
 stretch = true
 
-[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+[node name="SizePreservingSubViewport" type="SubViewport" parent="SubViewportContainer"]
+editor_description = "The name is a reference to \"DrawSizePreservingFillContainer\" from osu!framework, which doesn't do the same thing, but that I am using for the same purpose as the time I used osu!framework for a school project (veille)"
 handle_input_locally = false
 size = Vector2i(1920, 1080)
 size_2d_override_stretch = true
