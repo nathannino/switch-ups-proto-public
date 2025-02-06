@@ -1,11 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://ctp0k7rqh0gs4"]
+[gd_scene load_steps=4 format=3 uid="uid://ctp0k7rqh0gs4"]
 
 [ext_resource type="Texture2D" uid="uid://css5cwgy07oyi" path="res://scenes/splash/LogoN_Gray .png" id="1_2km8g"]
-[ext_resource type="Script" path="res://globals/simple_scripts/viewport_min_size.gd" id="1_dugj1"]
+[ext_resource type="PackedScene" uid="uid://cdg20pv0w45x1" path="res://globals/utility_scenes/size_preserving_sub_viewport_container.tscn" id="1_wpi6h"]
 [ext_resource type="Texture2D" uid="uid://bqjlpodu8budu" path="res://scenes/splash/CircleClassic_Gray.png" id="2_fsl7n"]
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_r5unp"]
-viewport_path = NodePath("SubViewport")
 
 [node name="TestScene" type="Control"]
 layout_mode = 3
@@ -15,44 +12,29 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ViewportTexture" type="TextureRect" parent="."]
+[node name="SizePreservingSubViewportContainer" parent="." instance=ExtResource("1_wpi6h")]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-texture = SubResource("ViewportTexture_r5unp")
-expand_mode = 1
-stretch_mode = 5
 
-[node name="SubViewport" type="SubViewport" parent="."]
-handle_input_locally = false
-size = Vector2i(1920, 1080)
-render_target_update_mode = 4
-script = ExtResource("1_dugj1")
-
-[node name="LogoNGray" type="Sprite2D" parent="SubViewport"]
+[node name="LogoNGray" type="Sprite2D" parent="SizePreservingSubViewportContainer"]
 position = Vector2(960, 540)
 scale = Vector2(1.01053, 0.568421)
 texture = ExtResource("1_2km8g")
 
-[node name="Camera2D" type="Camera2D" parent="SubViewport"]
+[node name="Camera2D" type="Camera2D" parent="SizePreservingSubViewportContainer"]
 position = Vector2(947, 538)
 
-[node name="CircleClassicGray" type="Sprite2D" parent="SubViewport"]
+[node name="CircleClassicGray" type="Sprite2D" parent="SizePreservingSubViewportContainer"]
 position = Vector2(926, -1002)
 texture = ExtResource("2_fsl7n")
 
-[node name="CircleClassicGray2" type="Sprite2D" parent="SubViewport"]
+[node name="CircleClassicGray2" type="Sprite2D" parent="SizePreservingSubViewportContainer"]
 position = Vector2(-979, 554)
 texture = ExtResource("2_fsl7n")
 
-[node name="CircleClassicGray3" type="Sprite2D" parent="SubViewport"]
+[node name="CircleClassicGray3" type="Sprite2D" parent="SizePreservingSubViewportContainer"]
 position = Vector2(977, 2065)
 texture = ExtResource("2_fsl7n")
 
-[node name="CircleClassicGray4" type="Sprite2D" parent="SubViewport"]
+[node name="CircleClassicGray4" type="Sprite2D" parent="SizePreservingSubViewportContainer"]
 position = Vector2(2882, 528)
 texture = ExtResource("2_fsl7n")
