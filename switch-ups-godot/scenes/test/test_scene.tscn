@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://ctp0k7rqh0gs4"]
+[gd_scene load_steps=5 format=3 uid="uid://ctp0k7rqh0gs4"]
 
 [ext_resource type="Texture2D" uid="uid://css5cwgy07oyi" path="res://scenes/splash/LogoN_Gray .png" id="1_2km8g"]
 [ext_resource type="PackedScene" uid="uid://cdg20pv0w45x1" path="res://globals/utility_scenes/size_preserving_sub_viewport_container.tscn" id="1_wpi6h"]
 [ext_resource type="Texture2D" uid="uid://bqjlpodu8budu" path="res://scenes/splash/CircleClassic_Gray.png" id="2_fsl7n"]
+[ext_resource type="PackedScene" uid="uid://diohlpvbxl3oh" path="res://globals/utility_scenes/menus/spirit_summary/spirit_summary.tscn" id="4_7orxu"]
 
 [node name="TestScene" type="Control"]
 layout_mode = 3
@@ -38,3 +39,6 @@ texture = ExtResource("2_fsl7n")
 [node name="CircleClassicGray4" type="Sprite2D" parent="SizePreservingSubViewportContainer"]
 position = Vector2(2882, 528)
 texture = ExtResource("2_fsl7n")
+
+[node name="SpiritSummary" parent="." instance=ExtResource("4_7orxu")]
+layout_mode = 1

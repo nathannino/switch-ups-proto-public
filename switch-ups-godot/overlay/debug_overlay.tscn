@@ -20,10 +20,12 @@ func _process(delta: float) -> void:
 "
 
 [sub_resource type="LabelSettings" id="LabelSettings_hf6qk"]
+font_size = 10
 outline_size = 7
 outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_m7a3h"]
+font_size = 10
 outline_size = 7
 outline_color = Color(0, 0, 0, 1)
 

@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://bvau8nx2vb1p0"]
+[gd_scene load_steps=11 format=3 uid="uid://bvau8nx2vb1p0"]
 
 [ext_resource type="Script" path="res://scenes/main_menu/main_menu.gd" id="1_e6rbv"]
 [ext_resource type="Script" path="res://scenes/main_menu/music_credits/music_library.gd" id="2_cty6b"]
+[ext_resource type="Script" path="res://globals/simple_scripts/flowgrid.gd" id="3_4rnm2"]
 [ext_resource type="Script" path="res://globals/simple_scripts/set_parent_tab_name.gd" id="3_a6m5o"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ch1ei"]
@@ -260,7 +261,6 @@ metadata/_tab_index = 1
 layout_mode = 2
 script = ExtResource("2_cty6b")
 grid = NodePath("MarginContainer/GridContainer")
-min_size = 400.0
 metadata/_tab_index = 0
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/PanelContainer/VBoxContainer/Credits/Music/Music Library"]
@@ -276,6 +276,8 @@ theme_override_constants/margin_bottom = 5
 layout_mode = 2
 size_flags_horizontal = 3
 columns = 3
+script = ExtResource("3_4rnm2")
+min_size = 400.0
 
 [node name="License" type="TabContainer" parent="MarginContainer/PanelContainer/VBoxContainer/Credits/Music"]
 visible = false

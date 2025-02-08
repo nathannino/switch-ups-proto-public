@@ -16,3 +16,5 @@ class_name ms_spirit
 @export var defense : int
 @export var speed : int
 @export var luck : int
+
+@export var actions : Array[ms_action]

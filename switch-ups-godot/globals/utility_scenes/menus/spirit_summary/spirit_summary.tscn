@@ -1,0 +1,200 @@
+[gd_scene load_steps=7 format=3 uid="uid://diohlpvbxl3oh"]
+
+[ext_resource type="Script" path="res://globals/simple_scripts/flowgrid.gd" id="1_tr2os"]
+[ext_resource type="Script" path="res://globals/utility_scenes/menus/spirit_summary/spirit_summary.gd" id="1_yovre"]
+[ext_resource type="Texture2D" uid="uid://masa1osx0s86" path="res://monster_systems/spirits/art/unknown.png" id="2_owgom"]
+
+[sub_resource type="GDScript" id="GDScript_tlcg0"]
+script/source = "extends Label
+
+@export var grid : GridContainer
+
+func set_minimum_size() :
+	if (grid.columns > 1) :
+		autowrap_mode = TextServer.AUTOWRAP_OFF
+	else :
+		autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	set_minimum_size()
+	pass # Replace with function body.
+
+func _notification(what: int) -> void:
+	match what:
+		NOTIFICATION_RESIZED :
+			set_minimum_size()
+"
+
+[sub_resource type="GDScript" id="GDScript_8bwty"]
+script/source = "extends AspectRatioContainer
+
+@export var grid : GridContainer
+@export var minimum_size_double : Vector2
+@export var minimum_size_single : Vector2
+
+func set_minimum_size() :
+	if (grid.columns > 1) :
+		custom_minimum_size = minimum_size_double
+	else :
+		custom_minimum_size = minimum_size_single
+		print(custom_minimum_size)
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	set_minimum_size()
+	pass # Replace with function body.
+
+func _notification(what: int) -> void:
+	match what:
+		NOTIFICATION_RESIZED :
+			set_minimum_size()
+"
+
+[sub_resource type="GDScript" id="GDScript_dbube"]
+script/source = "extends MarginContainer
+
+@export var grid : GridContainer
+@export var margin_left : float
+@export var margin_top : float
+
+func _set_margins() :
+	if (grid.columns > 1) :
+		add_theme_constant_override(\"margin_left\",margin_left)
+		add_theme_constant_override(\"margin_top\",margin_top)
+	else :
+		add_theme_constant_override(\"margin_left\",0)
+		add_theme_constant_override(\"margin_top\",0)
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	_set_margins()
+	pass # Replace with function body.
+
+
+func _notification(what: int) -> void:
+	match what:
+		NOTIFICATION_RESIZED :
+			_set_margins()
+"
+
+[node name="SpiritSummary" type="Control" node_paths=PackedStringArray("label_name", "sprite", "label_type", "label_health", "label_concrete", "label_abstract", "label_defense", "label_speed", "label_luck")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_yovre")
+label_name = NodePath("PanelContainer/ScrollContainer/MarginContainer/GridContainer/Name")
+sprite = NodePath("PanelContainer/ScrollContainer/MarginContainer/GridContainer/AspectRatioContainer/TextureRect")
+label_type = NodePath("PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer2/RichTextLabel")
+label_health = NodePath("PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer2/Health")
+label_concrete = NodePath("PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer2/Concrete")
+label_abstract = NodePath("PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer2/Abstract")
+label_defense = NodePath("PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer2/Defense")
+label_speed = NodePath("PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer2/Speed")
+label_luck = NodePath("PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer2/Luck")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 30
+
+[node name="GridContainer" type="GridContainer" parent="PanelContainer/ScrollContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 2
+script = ExtResource("1_tr2os")
+min_size = 400.0
+max_columns = 2
+
+[node name="Name" type="Label" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer" node_paths=PackedStringArray("grid")]
+custom_minimum_size = Vector2(50, 10)
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Slightly Big Placeholder"
+horizontal_alignment = 1
+script = SubResource("GDScript_tlcg0")
+grid = NodePath("..")
+
+[node name="Control" type="Control" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer" node_paths=PackedStringArray("grid")]
+custom_minimum_size = Vector2(400, 400)
+layout_mode = 2
+script = SubResource("GDScript_8bwty")
+grid = NodePath("..")
+minimum_size_double = Vector2(400, 400)
+minimum_size_single = Vector2(0, 400)
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/AspectRatioContainer"]
+layout_mode = 2
+texture = ExtResource("2_owgom")
+stretch_mode = 6
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer" node_paths=PackedStringArray("grid")]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_bottom = 20
+script = SubResource("GDScript_dbube")
+grid = NodePath("..")
+margin_left = 10.0
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer2"]
+layout_mode = 2
+bbcode_enabled = true
+text = "Type : Meta"
+fit_content = true
+
+[node name="Health" type="Label" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Health : 10"
+
+[node name="Concrete" type="Label" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Concrete Power : 200"
+
+[node name="Abstract" type="Label" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Abstract Power : 9"
+
+[node name="Defense" type="Label" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Defense : 0"
+
+[node name="Speed" type="Label" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Speed : Error"
+
+[node name="Luck" type="Label" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Luck : none"
