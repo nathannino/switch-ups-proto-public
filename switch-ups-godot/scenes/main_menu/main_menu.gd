@@ -10,7 +10,6 @@ func _ready() -> void:
 	BgmManager.play("bg_compendium",BgmManager.TRANSITIONS.FADE_OUT_CUT_IN)
 	pass # Replace with function body.
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass

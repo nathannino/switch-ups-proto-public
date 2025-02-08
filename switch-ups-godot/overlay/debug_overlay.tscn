@@ -6,7 +6,7 @@ script/source = "extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	$HBoxContainer/VersionInformation.text = \"%s : %s - v%s\" % [game_info.project_name, game_info.flavor, game_info.version]
+	$HBoxContainer/VersionInformation.text = \"%s : %s - Protocol version %s\" % [game_info.project_name, game_info.flavor, game_info.version]
 	if not game_info.dev :
 		$HBoxContainer/VersionInformation.hide()
 		$DevWarning.hide()

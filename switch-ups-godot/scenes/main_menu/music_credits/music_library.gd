@@ -13,12 +13,27 @@ func _ready() -> void:
 		panel.call_deferred("populate",song_info)
 		grid.add_child(panel)
 	
-	visibility_changed.connect(func() :
-		if not visible :
-			BgmManager.stop_override(BgmManager.TRANSITIONS.CROSSFADE)
-	)
+	
 	
 	pass # Replace with function body.
+
+func _enter_tree() -> void:
+	get_parent().visibility_changed.connect(_stop_override_parent)
+	visibility_changed.connect(_stop_override_self)
+
+func _exit_tree() -> void:
+	get_parent().visibility_changed.disconnect(_stop_override_parent)
+	visibility_changed.disconnect(_stop_override_self)
+
+func _stop_override_parent() :
+	stop_override(get_parent())
+
+func _stop_override_self() :
+	stop_override(self)
+
+func stop_override(target : Node) :
+	if not target.visible :
+			BgmManager.stop_override(BgmManager.TRANSITIONS.CROSSFADE)
 
 func _notification(what: int) -> void:
 	match what:

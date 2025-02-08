@@ -1,8 +1,59 @@
-[gd_scene load_steps=6 format=3 uid="uid://bvau8nx2vb1p0"]
+[gd_scene load_steps=10 format=3 uid="uid://bvau8nx2vb1p0"]
 
 [ext_resource type="Script" path="res://scenes/main_menu/main_menu.gd" id="1_e6rbv"]
 [ext_resource type="Script" path="res://scenes/main_menu/music_credits/music_library.gd" id="2_cty6b"]
 [ext_resource type="Script" path="res://globals/simple_scripts/set_parent_tab_name.gd" id="3_a6m5o"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ch1ei"]
+font_size = 50
+
+[sub_resource type="GDScript" id="GDScript_ljm8m"]
+script/source = "extends Button
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+
+
+func _on_pressed() -> void:
+	$\"../../../../MarginContainer\".show()
+	pass # Replace with function body.
+"
+
+[sub_resource type="GDScript" id="GDScript_i8vqx"]
+script/source = "extends Button
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+
+
+func _on_pressed() -> void:
+	get_tree().quit(0)
+	pass # Replace with function body.
+"
+
+[sub_resource type="GDScript" id="GDScript_i3l6q"]
+script/source = "extends Button
+
+@export var toplevel : Control
+
+func _on_pressed() -> void:
+	toplevel.hide()
+	pass # Replace with function body.
+"
 
 [sub_resource type="GDScript" id="GDScript_f2ac0"]
 script/source = "extends RichTextLabel
@@ -70,7 +121,80 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_e6rbv")
 
+[node name="TitleAnchor" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 40.0
+grow_horizontal = 2
+
+[node name="Title" type="Label" parent="TitleAnchor"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -133.0
+offset_top = 72.0
+offset_right = 134.0
+offset_bottom = 141.0
+grow_horizontal = 2
+text = "Switch-Ups
+"
+label_settings = SubResource("LabelSettings_ch1ei")
+
+[node name="MainMenuMargins" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="Control" type="Control" parent="MainMenuMargins"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainMenuMargins/Control"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -103.0
+offset_top = -182.0
+offset_right = 103.0
+offset_bottom = -36.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="PlayButton" type="Button" parent="MainMenuMargins/Control/VBoxContainer"]
+layout_mode = 2
+text = "Play"
+
+[node name="CompendiumButton" type="Button" parent="MainMenuMargins/Control/VBoxContainer"]
+layout_mode = 2
+text = "Compendium"
+
+[node name="CreditsButton" type="Button" parent="MainMenuMargins/Control/VBoxContainer"]
+layout_mode = 2
+text = "Credits
+"
+script = SubResource("GDScript_ljm8m")
+
+[node name="QuitButton" type="Button" parent="MainMenuMargins/Control/VBoxContainer"]
+layout_mode = 2
+text = "Exit"
+script = SubResource("GDScript_i8vqx")
+
 [node name="MarginContainer" type="MarginContainer" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -82,40 +206,64 @@ theme_override_constants/margin_top = 50
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 50
 
-[node name="Credits" type="TabContainer" parent="MarginContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer"]
 layout_mode = 2
-current_tab = 1
 
-[node name="Third Party" type="TabContainer" parent="MarginContainer/Credits"]
-visible = false
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Credits"
+
+[node name="Control" type="Control" parent="MarginContainer/PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Button" type="Button" parent="MarginContainer/PanelContainer/VBoxContainer/HBoxContainer" node_paths=PackedStringArray("toplevel")]
+layout_mode = 2
+text = "Close"
+script = SubResource("GDScript_i3l6q")
+toplevel = NodePath("../../../..")
+
+[node name="Credits" type="TabContainer" parent="MarginContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+current_tab = 0
+
+[node name="Third Party" type="TabContainer" parent="MarginContainer/PanelContainer/VBoxContainer/Credits"]
 layout_mode = 2
 current_tab = 0
 metadata/_tab_index = 0
 
-[node name="Copyright" type="RichTextLabel" parent="MarginContainer/Credits/Third Party"]
+[node name="Copyright" type="RichTextLabel" parent="MarginContainer/PanelContainer/VBoxContainer/Credits/Third Party"]
 layout_mode = 2
 script = SubResource("GDScript_f2ac0")
 metadata/_tab_index = 0
 
-[node name="License" type="RichTextLabel" parent="MarginContainer/Credits/Third Party"]
+[node name="License" type="RichTextLabel" parent="MarginContainer/PanelContainer/VBoxContainer/Credits/Third Party"]
 visible = false
 layout_mode = 2
 script = SubResource("GDScript_auesj")
 metadata/_tab_index = 1
 
-[node name="Music" type="TabContainer" parent="MarginContainer/Credits"]
+[node name="Music" type="TabContainer" parent="MarginContainer/PanelContainer/VBoxContainer/Credits"]
+visible = false
 layout_mode = 2
 current_tab = 0
 metadata/_tab_index = 1
 
-[node name="Music Library" type="ScrollContainer" parent="MarginContainer/Credits/Music" node_paths=PackedStringArray("grid")]
+[node name="Music Library" type="ScrollContainer" parent="MarginContainer/PanelContainer/VBoxContainer/Credits/Music" node_paths=PackedStringArray("grid")]
 layout_mode = 2
 script = ExtResource("2_cty6b")
 grid = NodePath("MarginContainer/GridContainer")
 min_size = 400.0
 metadata/_tab_index = 0
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Credits/Music/Music Library"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/PanelContainer/VBoxContainer/Credits/Music/Music Library"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -124,18 +272,18 @@ theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="GridContainer" type="GridContainer" parent="MarginContainer/Credits/Music/Music Library/MarginContainer"]
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/PanelContainer/VBoxContainer/Credits/Music/Music Library/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 columns = 3
 
-[node name="License" type="TabContainer" parent="MarginContainer/Credits/Music"]
+[node name="License" type="TabContainer" parent="MarginContainer/PanelContainer/VBoxContainer/Credits/Music"]
 visible = false
 layout_mode = 2
 current_tab = 0
 metadata/_tab_index = 1
 
-[node name="CC0" type="RichTextLabel" parent="MarginContainer/Credits/Music/License"]
+[node name="CC0" type="RichTextLabel" parent="MarginContainer/PanelContainer/VBoxContainer/Credits/Music/License"]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -178,7 +326,7 @@ Should any part of the Waiver for any reason be judged legally invalid or ineffe
 "
 metadata/_tab_index = 0
 
-[node name="OGA-BY-3_0" type="RichTextLabel" parent="MarginContainer/Credits/Music/License"]
+[node name="OGA-BY-3_0" type="RichTextLabel" parent="MarginContainer/PanelContainer/VBoxContainer/Credits/Music/License"]
 visible = false
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
@@ -285,7 +433,7 @@ script = ExtResource("3_a6m5o")
 title = "OGA-BY-3.0"
 metadata/_tab_index = 1
 
-[node name="OGA-BY-4_0" type="RichTextLabel" parent="MarginContainer/Credits/Music/License"]
+[node name="OGA-BY-4_0" type="RichTextLabel" parent="MarginContainer/PanelContainer/VBoxContainer/Credits/Music/License"]
 visible = false
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
@@ -697,3 +845,7 @@ s"
 script = ExtResource("3_a6m5o")
 title = "OGA-BY-4_0"
 metadata/_tab_index = 2
+
+[connection signal="pressed" from="MainMenuMargins/Control/VBoxContainer/CreditsButton" to="MainMenuMargins/Control/VBoxContainer/CreditsButton" method="_on_pressed"]
+[connection signal="pressed" from="MainMenuMargins/Control/VBoxContainer/QuitButton" to="MainMenuMargins/Control/VBoxContainer/QuitButton" method="_on_pressed"]
+[connection signal="pressed" from="MarginContainer/PanelContainer/VBoxContainer/HBoxContainer/Button" to="MarginContainer/PanelContainer/VBoxContainer/HBoxContainer/Button" method="_on_pressed"]

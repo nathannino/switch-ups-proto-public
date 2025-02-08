@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="spirit" load_steps=3 format=3 uid="uid://bm6oi7rmy2ir4"]
+
+[ext_resource type="Script" path="res://monster_systems/spirits/resources_scripts/spirit.gd" id="1_fv8pj"]
+[ext_resource type="Texture2D" uid="uid://masa1osx0s86" path="res://monster_systems/spirits/art/unknown.png" id="2_h2geq"]
+
+[resource]
+script = ExtResource("1_fv8pj")
+key = "placeholder"
+name = "Placeholder"
+sprite = ExtResource("2_h2geq")
+type = 8
+health = 10
+atk_concrete = 2
+atk_abstract = 4
+defense = 1
+speed = 2
+luck = 2
