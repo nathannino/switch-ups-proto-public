@@ -1,20 +1,20 @@
 extends Control
 
-@export var label_name : Label
+@export var label_name : RichTextLabel
 @export var sprite : TextureRect
 @export var label_type : RichTextLabel
-@export var label_health : Label
-@export var label_concrete : Label
-@export var label_abstract : Label
-@export var label_defense : Label
-@export var label_speed : Label
-@export var label_luck : Label
+@export var label_health : RichTextLabel
+@export var label_concrete : RichTextLabel
+@export var label_abstract : RichTextLabel
+@export var label_defense : RichTextLabel
+@export var label_speed : RichTextLabel
+@export var label_luck : RichTextLabel
 
 func _ready() -> void:
 	set_summary_inactive(load("res://monster_systems/spirits/database/placeholder.tres"))
 
 func set_summary_inactive(spirit : ms_spirit) :
-	label_name.text = spirit.name
+	label_name.text = "[center]%s[/center]" % spirit.name
 	sprite.texture = spirit.sprite
 	label_type.text = "Type : %s" % ms_constants.type_to_bbcode(spirit.type)
 	label_health.text = "Health : %s" % spirit.health

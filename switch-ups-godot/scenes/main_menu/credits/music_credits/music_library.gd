@@ -1,6 +1,6 @@
 extends ScrollContainer
 
-const music_panel = preload("res://scenes/main_menu/music_credits/music_panel.tscn")
+const music_panel = preload("res://scenes/main_menu/credits/music_credits/music_panel.tscn")
 @export var grid : GridContainer
 
 # Called when the node enters the scene tree for the first time.

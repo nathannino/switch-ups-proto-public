@@ -1,6 +1,6 @@
 extends Node
 
-var default_scene = "res://scenes/splash/splash.tscn"
+const default_scene = "splash"
 
 enum TRANSITIONS {
 	NONE,
@@ -24,7 +24,7 @@ func _ready() -> void:
 		if not current_load_target == null :
 			$LoadingRoot/ProgressBar.show_bar()
 	)
-	change_scene(SceneLoadWrapper.preload_scene(default_scene),true)
+	change_scene(SceneLoadWrapper.create().background_preload().from_key(default_scene).prepare(),true)
 	pass # Replace with function body.
 
 var current_load_target : SceneLoadWrapper
@@ -124,6 +124,9 @@ func _deferred_generation_thread(key: String, function : Callable) -> void :
 	_decrement_workers()
 
 func prepare_scene(scene : SceneLoadWrapper) :
+	if scene.corrupted == true :
+		printerr("SceneTree reached, bailling out as per previously printerr'ed")
+		get_tree().quit(-1)
 	var thread = Thread.new()
 	thread.start(func() : preload_scene(scene, thread))
 

@@ -1,12 +1,24 @@
-[gd_scene load_steps=11 format=3 uid="uid://bvau8nx2vb1p0"]
+[gd_scene load_steps=13 format=3 uid="uid://bvau8nx2vb1p0"]
 
 [ext_resource type="Script" path="res://scenes/main_menu/main_menu.gd" id="1_e6rbv"]
-[ext_resource type="Script" path="res://scenes/main_menu/music_credits/music_library.gd" id="2_cty6b"]
+[ext_resource type="Script" path="res://scenes/main_menu/credits/music_credits/music_library.gd" id="2_cty6b"]
 [ext_resource type="Script" path="res://globals/simple_scripts/flowgrid.gd" id="3_4rnm2"]
 [ext_resource type="Script" path="res://globals/simple_scripts/set_parent_tab_name.gd" id="3_a6m5o"]
+[ext_resource type="PackedScene" uid="uid://diohlpvbxl3oh" path="res://globals/utility_scenes/menus/spirit_summary/spirit_summary.tscn" id="5_syefd"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ch1ei"]
 font_size = 50
+
+[sub_resource type="GDScript" id="GDScript_cosi4"]
+script/source = "extends Button
+
+@export var compendium : Control
+
+
+func _on_pressed() -> void:
+	compendium.show()
+	pass # Replace with function body.
+"
 
 [sub_resource type="GDScript" id="GDScript_ljm8m"]
 script/source = "extends Button
@@ -179,9 +191,11 @@ grow_vertical = 0
 layout_mode = 2
 text = "Play"
 
-[node name="CompendiumButton" type="Button" parent="MainMenuMargins/Control/VBoxContainer"]
+[node name="CompendiumButton" type="Button" parent="MainMenuMargins/Control/VBoxContainer" node_paths=PackedStringArray("compendium")]
 layout_mode = 2
 text = "Compendium"
+script = SubResource("GDScript_cosi4")
+compendium = NodePath("../../../../CompendiumContainer")
 
 [node name="CreditsButton" type="Button" parent="MainMenuMargins/Control/VBoxContainer"]
 layout_mode = 2
@@ -848,6 +862,72 @@ script = ExtResource("3_a6m5o")
 title = "OGA-BY-4_0"
 metadata/_tab_index = 2
 
+[node name="CompendiumContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 50
+
+[node name="PanelContainer" type="PanelContainer" parent="CompendiumContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CompendiumContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CompendiumContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CompendiumContainer/PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Compendium"
+
+[node name="Control" type="Control" parent="CompendiumContainer/PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Button" type="Button" parent="CompendiumContainer/PanelContainer/VBoxContainer/HBoxContainer" node_paths=PackedStringArray("toplevel")]
+layout_mode = 2
+text = "Close"
+script = SubResource("GDScript_i3l6q")
+toplevel = NodePath("../../../..")
+
+[node name="HSplitContainer" type="HSplitContainer" parent="CompendiumContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+split_offset = 150
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CompendiumContainer/PanelContainer/VBoxContainer/HSplitContainer"]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CompendiumContainer/PanelContainer/VBoxContainer/HSplitContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="GridContainer" type="GridContainer" parent="CompendiumContainer/PanelContainer/VBoxContainer/HSplitContainer/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Button" type="Button" parent="CompendiumContainer/PanelContainer/VBoxContainer/HSplitContainer/VBoxContainer/ScrollContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "hello_world"
+
+[node name="Control" type="Control" parent="CompendiumContainer/PanelContainer/VBoxContainer/HSplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SpiritSummary" parent="CompendiumContainer/PanelContainer/VBoxContainer/HSplitContainer/Control" instance=ExtResource("5_syefd")]
+layout_mode = 1
+
+[connection signal="pressed" from="MainMenuMargins/Control/VBoxContainer/CompendiumButton" to="MainMenuMargins/Control/VBoxContainer/CompendiumButton" method="_on_pressed"]
 [connection signal="pressed" from="MainMenuMargins/Control/VBoxContainer/CreditsButton" to="MainMenuMargins/Control/VBoxContainer/CreditsButton" method="_on_pressed"]
 [connection signal="pressed" from="MainMenuMargins/Control/VBoxContainer/QuitButton" to="MainMenuMargins/Control/VBoxContainer/QuitButton" method="_on_pressed"]
 [connection signal="pressed" from="MarginContainer/PanelContainer/VBoxContainer/HBoxContainer/Button" to="MarginContainer/PanelContainer/VBoxContainer/HBoxContainer/Button" method="_on_pressed"]
+[connection signal="pressed" from="CompendiumContainer/PanelContainer/VBoxContainer/HBoxContainer/Button" to="CompendiumContainer/PanelContainer/VBoxContainer/HBoxContainer/Button" method="_on_pressed"]

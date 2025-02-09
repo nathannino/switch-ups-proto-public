@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://masa1osx0s86" path="res://monster_systems/spirits/art/unknown.png" id="2_owgom"]
 
 [sub_resource type="GDScript" id="GDScript_tlcg0"]
-script/source = "extends Label
+script/source = "extends RichTextLabel
 
 @export var grid : GridContainer
 
@@ -125,12 +125,14 @@ script = ExtResource("1_tr2os")
 min_size = 400.0
 max_columns = 2
 
-[node name="Name" type="Label" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer" node_paths=PackedStringArray("grid")]
+[node name="Name" type="RichTextLabel" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer" node_paths=PackedStringArray("grid")]
 custom_minimum_size = Vector2(50, 10)
 layout_mode = 2
-theme_override_font_sizes/font_size = 50
+theme_override_font_sizes/normal_font_size = 40
+bbcode_enabled = true
 text = "Slightly Big Placeholder"
-horizontal_alignment = 1
+fit_content = true
+autowrap_mode = 0
 script = SubResource("GDScript_tlcg0")
 grid = NodePath("..")
 
@@ -169,32 +171,38 @@ bbcode_enabled = true
 text = "Type : Meta"
 fit_content = true
 
-[node name="Health" type="Label" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer2"]
+[node name="Health" type="RichTextLabel" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Health : 10"
+fit_content = true
 
-[node name="Concrete" type="Label" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer2"]
+[node name="Concrete" type="RichTextLabel" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Concrete Power : 200"
+fit_content = true
 
-[node name="Abstract" type="Label" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer2"]
+[node name="Abstract" type="RichTextLabel" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Abstract Power : 9"
+fit_content = true
 
-[node name="Defense" type="Label" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer2"]
+[node name="Defense" type="RichTextLabel" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Defense : 0"
+fit_content = true
 
-[node name="Speed" type="Label" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer2"]
+[node name="Speed" type="RichTextLabel" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Speed : Error"
+fit_content = true
 
-[node name="Luck" type="Label" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer2"]
+[node name="Luck" type="RichTextLabel" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Luck : none"
+fit_content = true
