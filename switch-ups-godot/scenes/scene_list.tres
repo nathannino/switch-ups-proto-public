@@ -1,23 +1,33 @@
-[gd_resource type="Resource" script_class="scene_dictionary" load_steps=6 format=3 uid="uid://dcsgbdv63ak16"]
+[gd_resource type="Resource" script_class="scene_dictionary" load_steps=8 format=3 uid="uid://dcsgbdv63ak16"]
 
-[ext_resource type="Script" path="res://globals/on_off_resources_scripts/scene_dictionary_entry.gd" id="1_gqhte"]
-[ext_resource type="Script" path="res://globals/on_off_resources_scripts/scene_dictionary.gd" id="1_lhr37"]
+[ext_resource type="Script" path="res://globals/one_off_resources_scripts/scene_dictionary_entry.gd" id="1_kd84q"]
+[ext_resource type="Script" path="res://globals/one_off_resources_scripts/scene_dictionary.gd" id="2_b33rt"]
 
 [sub_resource type="Resource" id="Resource_d2k66"]
-script = ExtResource("1_gqhte")
+script = ExtResource("1_kd84q")
 key = "splash"
 scene = "res://scenes/splash/splash.tscn"
 
 [sub_resource type="Resource" id="Resource_bhrd2"]
-script = ExtResource("1_gqhte")
+script = ExtResource("1_kd84q")
 key = "test"
 scene = "res://scenes/test/test_scene.tscn"
 
 [sub_resource type="Resource" id="Resource_jjp1p"]
-script = ExtResource("1_gqhte")
+script = ExtResource("1_kd84q")
 key = "main_menu"
 scene = "res://scenes/main_menu/main_menu.tscn"
 
+[sub_resource type="Resource" id="Resource_3n38e"]
+script = ExtResource("1_kd84q")
+key = "credits"
+scene = "res://scenes/main_menu/credits/credits_menu.tscn"
+
+[sub_resource type="Resource" id="Resource_24nol"]
+script = ExtResource("1_kd84q")
+key = "compendium"
+scene = "res://scenes/main_menu/compendium/compendium_container.tscn"
+
 [resource]
-script = ExtResource("1_lhr37")
-scenes = Array[ExtResource("1_gqhte")]([SubResource("Resource_d2k66"), SubResource("Resource_bhrd2"), SubResource("Resource_jjp1p")])
+script = ExtResource("2_b33rt")
+scenes = Array[ExtResource("1_kd84q")]([SubResource("Resource_d2k66"), SubResource("Resource_bhrd2"), SubResource("Resource_jjp1p"), SubResource("Resource_3n38e"), SubResource("Resource_24nol")])

@@ -96,13 +96,11 @@ func _set_holding_data(key : String, data) -> void:
 func _increment_workers() :
 	workers_mutex.lock()
 	workers += 1
-	print("Increment workers : %d" % workers)
 	workers_mutex.unlock()
 
 func _decrement_workers() :
 	workers_mutex.lock()
 	workers -= 1
-	print("Decrement workers : %d" % workers)
 	workers_mutex.unlock()
 
 # Note that making threads is slow on windows, according to the godot documentation. Only use this when deferred loading of data requires a function

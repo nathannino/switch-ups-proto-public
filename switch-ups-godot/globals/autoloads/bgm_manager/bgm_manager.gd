@@ -103,6 +103,9 @@ func _play(key : String, transition : TRANSITIONS) :
 	var song = database[key]
 	already_overwritten = false
 	
+	if _get_active().stream == song.loop :
+		return
+	
 	switch_active()
 	var active = _get_active()
 	var standby = _get_standby()
@@ -177,6 +180,7 @@ func _stop_override(transition : TRANSITIONS) :
 func load_database() :
 	var files = DirAccess.get_files_at(database_path)
 	var database = {}
+	print("Discovering BGM")
 	for file : String in files :
 		file = file.replace(".remap","")
 		if file.ends_with(".tres") :

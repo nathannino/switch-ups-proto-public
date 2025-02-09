@@ -30,6 +30,10 @@ window/stretch/aspect="expand"
 
 project/assembly_name="Switch-ups"
 
+[editor_plugins]
+
+enabled=PackedStringArray()
+
 [gui]
 
 theme/default_font_generate_mipmaps=true
