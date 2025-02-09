@@ -1,8 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://diohlpvbxl3oh"]
+[gd_scene load_steps=6 format=3 uid="uid://diohlpvbxl3oh"]
 
 [ext_resource type="Script" path="res://globals/simple_scripts/flowgrid.gd" id="1_tr2os"]
 [ext_resource type="Script" path="res://globals/utility_scenes/menus/spirit_summary/spirit_summary.gd" id="1_yovre"]
-[ext_resource type="Texture2D" uid="uid://masa1osx0s86" path="res://monster_systems/spirits/art/unknown.png" id="2_owgom"]
 
 [sub_resource type="GDScript" id="GDScript_tlcg0"]
 script/source = "extends RichTextLabel
@@ -129,7 +128,6 @@ custom_minimum_size = Vector2(50, 10)
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 40
 bbcode_enabled = true
-text = "Slightly Big Placeholder"
 fit_content = true
 autowrap_mode = 0
 script = SubResource("GDScript_tlcg0")
@@ -148,7 +146,6 @@ minimum_size_single = Vector2(0, 400)
 
 [node name="TextureRect" type="TextureRect" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/AspectRatioContainer"]
 layout_mode = 2
-texture = ExtResource("2_owgom")
 stretch_mode = 6
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer" node_paths=PackedStringArray("grid")]
@@ -167,41 +164,34 @@ size_flags_horizontal = 3
 [node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer2"]
 layout_mode = 2
 bbcode_enabled = true
-text = "Type : Meta"
 fit_content = true
 
 [node name="Health" type="RichTextLabel" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Health : 10"
 fit_content = true
 
 [node name="Concrete" type="RichTextLabel" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Concrete Power : 200"
 fit_content = true
 
 [node name="Abstract" type="RichTextLabel" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Abstract Power : 9"
 fit_content = true
 
 [node name="Defense" type="RichTextLabel" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Defense : 0"
 fit_content = true
 
 [node name="Speed" type="RichTextLabel" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Speed : Error"
 fit_content = true
 
 [node name="Luck" type="RichTextLabel" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Luck : none"
 fit_content = true

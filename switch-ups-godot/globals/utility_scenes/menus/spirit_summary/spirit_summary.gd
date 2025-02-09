@@ -11,7 +11,8 @@ extends Control
 @export var label_luck : RichTextLabel
 
 func _ready() -> void:
-	set_summary_inactive(load("res://monster_systems/spirits/database/placeholder.tres"))
+	#set_summary_inactive(load("res://monster_systems/spirits/database/placeholder.tres"))
+	pass
 
 func set_summary_inactive(spirit : ms_spirit) :
 	label_name.text = "[center]%s[/center]" % spirit.name
