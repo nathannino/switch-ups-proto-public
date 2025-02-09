@@ -90,6 +90,10 @@ fit_content = true
 scroll_active = false
 script = SubResource("GDScript_fxm7r")
 
+[node name="Control" type="Control" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
 [node name="Button" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Play Sound"
