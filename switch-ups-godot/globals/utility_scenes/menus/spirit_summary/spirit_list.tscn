@@ -1,0 +1,90 @@
+[gd_scene load_steps=5 format=3 uid="uid://cmjl5hcgm2r7w"]
+
+[ext_resource type="Script" path="res://globals/utility_scenes/menus/spirit_summary/spirit_list.gd" id="1_wdcg7"]
+[ext_resource type="PackedScene" uid="uid://daut2jgtjtnbo" path="res://globals/utility_scenes/menus/spirit_summary/spirit_list_button.tscn" id="2_nb18j"]
+
+[sub_resource type="GDScript" id="GDScript_e72b4"]
+script/source = "extends Control
+
+signal changed_selection(selection : ms_spirit)
+"
+
+[sub_resource type="GDScript" id="GDScript_iij4e"]
+script/source = "extends GridContainer
+
+var ready_to_add : Mutex
+var child_to_add : Array[Node]
+
+# Called when the node enters the scene tree for the first time.
+func _init() -> void:
+	ready_to_add = Mutex.new()
+	ready_to_add.lock()
+	child_to_add = []
+	ready_to_add.unlock()
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	ready_to_add.lock()
+	for child in child_to_add :
+		print(\"adding child : %s\" % child)
+		add_child(child)
+	child_to_add.clear()
+	ready_to_add.unlock()
+	pass
+
+
+@export var min_size : float
+@export var max_columns : int
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	_set_columns()
+
+func _set_columns() :
+	var columns_fit = max(1,floor(float(size.x) / min_size))
+	if max_columns < 1 :
+		columns = columns_fit
+	else :
+		columns = min(columns_fit,max_columns)
+
+func _notification(what: int) -> void:
+	match what:
+		NOTIFICATION_RESIZED :
+			_set_columns()
+"
+
+[node name="SpiritList" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_e72b4")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." node_paths=PackedStringArray("button_root", "scrollbar", "signal_sender")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wdcg7")
+button_root = NodePath("ScrollContainer2/ButtonRoot2")
+button_template = ExtResource("2_nb18j")
+scrollbar = NodePath("ScrollContainer2")
+signal_sender = NodePath("..")
+
+[node name="ScrollContainer2" type="ScrollContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ButtonRoot2" type="GridContainer" parent="VBoxContainer/ScrollContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = SubResource("GDScript_iij4e")
+min_size = 250.0
+max_columns = 3

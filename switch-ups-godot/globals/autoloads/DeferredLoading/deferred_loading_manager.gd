@@ -82,16 +82,21 @@ func cancel_scene_load() :
 	pass
 
 func forget(keys: Array[String]) -> void:
+	holding_mutex.lock()
 	for key in keys :
+		holding.erase(key)
 		pass
+	holding_mutex.unlock()
 
 func start_deferred_loading(key : String, path : String) -> void:
 	pass
 
 func _set_holding_data(key : String, data) -> void:
+	print("Waiting to add %s to deferred loading database" % key)
 	holding_mutex.lock()
 	holding[key] = data
 	holding_mutex.unlock()
+	print("Added %s to deferred loading database" % key)
 
 func _increment_workers() :
 	workers_mutex.lock()

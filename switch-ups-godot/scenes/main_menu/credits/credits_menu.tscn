@@ -1,9 +1,24 @@
-[gd_scene load_steps=7 format=3 uid="uid://c61v7qckif4d1"]
+[gd_scene load_steps=8 format=3 uid="uid://c61v7qckif4d1"]
 
 [ext_resource type="Script" path="res://scenes/main_menu/credits/music_credits/music_library.gd" id="1_4rm8s"]
 [ext_resource type="Script" path="res://globals/simple_scripts/button_change_scene_simple.gd" id="1_wmp6k"]
 [ext_resource type="Script" path="res://globals/simple_scripts/flowgrid.gd" id="2_tluex"]
 [ext_resource type="Script" path="res://globals/simple_scripts/set_parent_tab_name.gd" id="3_ntjgm"]
+
+[sub_resource type="GDScript" id="GDScript_xo24i"]
+script/source = "extends MarginContainer
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	BgmManager.play(\"bg_compendium\",BgmManager.TRANSITIONS.FADE_OUT_CUT_IN)
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+"
 
 [sub_resource type="GDScript" id="GDScript_f2ac0"]
 script/source = "extends RichTextLabel
@@ -68,6 +83,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = SubResource("GDScript_xo24i")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 2
@@ -705,5 +721,5 @@ OpenGameArt.org Notice
 	OpenGameArt.org may be contacted at http://opengameart.org/
 s"
 script = ExtResource("3_ntjgm")
-title = "OGA-BY-4_0"
+title = "OGA-BY-4.0"
 metadata/_tab_index = 2

@@ -38,7 +38,6 @@ func set_minimum_size() :
 		custom_minimum_size = minimum_size_double
 	else :
 		custom_minimum_size = minimum_size_single
-		print(custom_minimum_size)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

@@ -5,6 +5,7 @@ extends Node
 @onready var player_two = $AudioStreamPlayerTwo
 
 const database_path = "res://bgm/database/"
+const DATABASE_LOAD_KEY = "bgm_database"
 var database = null
 var current_active = 0
 
@@ -48,7 +49,7 @@ func _lock_music() :
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	DeferredLoadingManager._deferred_generation_thread("database",load_database)
+	DeferredLoadingManager._deferred_generation_thread(DATABASE_LOAD_KEY,load_database)
 	pass # Replace with function body.
 
 func _change_stream(song : bgm) :
@@ -186,14 +187,15 @@ func load_database() :
 		if file.ends_with(".tres") :
 			var entry = load(database_path + file)
 			database[entry.key] = entry 
-			print(entry.key)
+			print("BGM : %s" % entry.key)
 	print("BGM loaded")
 	return database
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if database == null :
-		var _database = DeferredLoadingManager.get_holding_data("database")
+		var _database = DeferredLoadingManager.get_holding_data(DATABASE_LOAD_KEY)
 		if _database is Dictionary :
 			database = _database
+			DeferredLoadingManager.forget([DATABASE_LOAD_KEY])
 	pass
