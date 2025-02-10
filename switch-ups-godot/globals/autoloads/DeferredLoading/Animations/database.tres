@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="scene_transition_anim" load_steps=5 format=3 uid="uid://c14ejtyo4e62"]
+[gd_resource type="Resource" script_class="scene_transition_anim" load_steps=6 format=3 uid="uid://c14ejtyo4e62"]
 
 [ext_resource type="Script" path="res://globals/autoloads/DeferredLoading/Animations/scene_transition_anim.gd" id="1_jjagi"]
 [ext_resource type="Script" path="res://globals/autoloads/DeferredLoading/Animations/scene_transition_anim_entry.gd" id="2_keuds"]
@@ -13,6 +13,11 @@ script = ExtResource("2_keuds")
 key = "fade_to_black"
 scene = "uid://pxafowio7yyk"
 
+[sub_resource type="Resource" id="Resource_2kf35"]
+script = ExtResource("2_keuds")
+key = "wipe_rect"
+scene = "res://globals/autoloads/DeferredLoading/Animations/rect_wipe_angle/transition_rect_wipe_angle.tscn"
+
 [resource]
 script = ExtResource("1_jjagi")
-transitions = Array[ExtResource("2_keuds")]([SubResource("Resource_mdd0u"), SubResource("Resource_j071j")])
+transitions = Array[ExtResource("2_keuds")]([SubResource("Resource_mdd0u"), SubResource("Resource_j071j"), SubResource("Resource_2kf35")])

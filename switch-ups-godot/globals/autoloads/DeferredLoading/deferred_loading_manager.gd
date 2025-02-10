@@ -39,6 +39,7 @@ var current_load_target : SceneLoadWrapper
 var current_load_transition : SceneLoadWrapper
 var current_load_scene : Node
 var load_midpoint = false
+var load_endpoint = false
 
 var workers_over_zero = true
 
@@ -49,6 +50,9 @@ func _process(delta: float) -> void:
 	if not current_load_target == null :
 		_process_load_poll()
 	else :
+		if load_endpoint :
+			current_load_scene.end_transition()
+			load_endpoint = false
 		if not $LoadingRoot/ProgressBar.bar_is_hiding() :
 			$LoadingRoot/ProgressBar.hide_bar()
 	
@@ -69,18 +73,19 @@ func _process(delta: float) -> void:
 	pass
 
 func _process_load_poll() :
-	if not $LoadingRoot/ProgressBar.is_showing and $BarAppearTimer.is_stopped() :
-		$BarAppearTimer.start()
 	$LoadingRoot/ProgressBar.value = current_load_target.get_scene_preload_percent()
 	
 	if current_load_transition.ready and current_load_scene == null :
 		current_load_scene = current_load_transition.get_finished()
+		current_load_scene.reset()
 		animation_root.add_child(current_load_scene)
 		current_load_scene.active_node = $ActiveScene
 		current_load_scene.inactive_node = $HoldingScene
 
 		current_load_scene.animation_midpoint.connect(func () :
 			load_midpoint = true
+			if not $LoadingRoot/ProgressBar.is_showing and $BarAppearTimer.is_stopped() :
+				$BarAppearTimer.start()
 		,CONNECT_ONE_SHOT)
 		current_load_scene.hide_old_scene.connect(func () :
 			for child in $HoldingScene.get_children() :
@@ -101,9 +106,7 @@ func _process_load_poll() :
 			var _new_scene = current_load_target.get_finished()
 			current_load_target = null
 			$ActiveScene.add_child(_new_scene)
-			current_load_scene.end_transition()
-		
-		
+			load_endpoint = true
 	pass
 	
 #TODO : New cancel load scene
@@ -214,5 +217,6 @@ func change_scene(scene : SceneLoadWrapper, animation : SceneLoadWrapper) -> boo
 	current_load_transition = animation
 	current_load_scene = null
 	load_midpoint = false
+	load_endpoint = false
 	
 	return true

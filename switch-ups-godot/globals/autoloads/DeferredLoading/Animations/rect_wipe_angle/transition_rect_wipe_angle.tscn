@@ -1,0 +1,81 @@
+[gd_scene load_steps=4 format=3 uid="uid://djhbec4ii8lww"]
+
+[ext_resource type="Shader" uid="uid://bvdcjmsvq222s" path="res://globals/autoloads/DeferredLoading/Animations/rect_wipe_angle/transition_rect_wipe_angle.tres" id="1_r3j7a"]
+
+[sub_resource type="GDScript" id="GDScript_y14kx"]
+script/source = "extends Control
+signal animation_midpoint # Where we can put the new scene into the scene tree
+signal hide_old_scene # Where we can queue_free the old scene
+signal animation_end # Where we can queue_free this transition scene
+
+var active_node : Node
+var inactive_node : Node
+
+@export var fade_time : float
+@export var fade_out_angle : int
+@export var fade_in_angle : int
+@export var fade_node : ColorRect
+
+func get_param(param_name : String) -> String :
+	return \"material:shader_parameter/%s\" % param_name
+
+func reset() :
+	fade_node.material.set_shader_parameter(\"progress\",0)
+
+func set_progress(prog : float) :
+	fade_node.material.set_shader_parameter(\"progress\",prog)
+
+# This is what is called when the change_scene is called.
+func start_transition() :
+	var tween = create_tween()
+	fade_node.material.set_shader_parameter(\"rotation_deg\",fade_out_angle)
+	tween.set_ease(Tween.EASE_IN)
+	tween.set_trans(Tween.TRANS_QUART)
+	tween.tween_method(set_progress,float(0),float(1),fade_time)
+	tween.tween_interval(0.1)
+	tween.tween_callback(midpoint)
+
+func midpoint() :
+	animation_midpoint.emit()
+	hide_old_scene.emit()
+
+# This is what is called after the new scene is added to the tree
+func end_transition() :
+	var tween = create_tween()
+	fade_node.material.set_shader_parameter(\"rotation_deg\",fade_in_angle)
+	tween.set_ease(Tween.EASE_OUT)
+	tween.set_trans(Tween.TRANS_QUART)
+	tween.tween_interval(0.1)
+	tween.tween_method(set_progress,float(1),float(0),fade_time)
+	await tween.finished
+	animation_end.emit()
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2e0q6"]
+shader = ExtResource("1_r3j7a")
+shader_parameter/rotation_deg = 202.386
+shader_parameter/amount = 5
+shader_parameter/progress = 0.152
+
+[node name="TransitionRectWipeAngle" type="Control" node_paths=PackedStringArray("fade_node")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_y14kx")
+fade_time = 0.5
+fade_out_angle = 270
+fade_in_angle = 90
+fade_node = NodePath("ColorRect")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_2e0q6")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)

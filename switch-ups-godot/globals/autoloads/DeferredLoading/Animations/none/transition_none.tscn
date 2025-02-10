@@ -10,6 +10,9 @@ signal animation_end # Where we can queue_free this transition scene
 var active_node : Node
 var inactive_node : Node
 
+func reset() :
+	pass
+
 # This is what is called when the change_scene is called.
 func start_transition() :
 	animation_midpoint.emit()
