@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=3 uid="uid://bgmng2w3kpdbs"]
+
+[sub_resource type="GDScript" id="GDScript_g6gbt"]
+script/source = "extends Control
+
+signal animation_midpoint # Where we can put the new scene into the scene tree
+signal hide_old_scene # Where we can queue_free the old scene
+signal animation_end # Where we can queue_free this transition scene
+
+var active_node : Node
+var inactive_node : Node
+
+# This is what is called when the change_scene is called.
+func start_transition() :
+	animation_midpoint.emit()
+	hide_old_scene.emit()
+	pass 
+
+# This is what is called after the new scene is added to the tree
+func end_transition() :
+	animation_end.emit()
+"
+
+[node name="TransitionNone" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_g6gbt")

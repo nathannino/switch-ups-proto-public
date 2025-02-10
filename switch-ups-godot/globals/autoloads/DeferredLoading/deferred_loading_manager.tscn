@@ -83,9 +83,10 @@ _data = {
 "appear": SubResource("Animation_4gwl6")
 }
 
-[node name="DeferredLoadingManager" type="Node"]
+[node name="DeferredLoadingManager" type="Node" node_paths=PackedStringArray("animation_root")]
 process_mode = 3
 script = ExtResource("1_6quig")
+animation_root = NodePath("AnimationRoot")
 
 [node name="BarAppearTimer" type="Timer" parent="."]
 wait_time = 0.6

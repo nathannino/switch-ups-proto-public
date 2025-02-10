@@ -2,10 +2,10 @@ extends Node
 
 const default_scene = "splash"
 
-enum TRANSITIONS {
-	NONE,
-	CROSSFADE
-}
+@export var animation_root : Node
+
+const transition_array = preload("uid://c14ejtyo4e62")
+var transitions : Dictionary
 
 var holding = {}
 var holding_mutex = Mutex.new()
@@ -19,16 +19,26 @@ const CIRCLE_ANIM = "appear"
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	loading_circle_anim.play(CIRCLE_ANIM)
+	transitions = transition_array.to_dictionary()
+	
 	current_load_target = null
 	$BarAppearTimer.timeout.connect(func() :
 		if not current_load_target == null :
 			$LoadingRoot/ProgressBar.show_bar()
 	)
-	change_scene(SceneLoadWrapper.create().background_preload().from_key(default_scene).prepare(),true)
+	change_scene(SceneLoadWrapper.create()
+								.background_preload()
+								.from_key(default_scene)
+								.prepare(),
+				SceneLoadWrapper.create()
+								.as_transition("fade_to_black")
+								.prepare())
 	pass # Replace with function body.
 
 var current_load_target : SceneLoadWrapper
-var load_blocking = false
+var current_load_transition : SceneLoadWrapper
+var current_load_scene : Node
+var load_midpoint = false
 
 var workers_over_zero = true
 
@@ -63,23 +73,40 @@ func _process_load_poll() :
 		$BarAppearTimer.start()
 	$LoadingRoot/ProgressBar.value = current_load_target.get_scene_preload_percent()
 	
-	if (current_load_target.ready and (not load_blocking or not workers_over_zero)) : #TODO : Add transition support
-		var _new_scene = current_load_target.get_finished()
-		current_load_target = null
-		$ActiveScene.add_child(_new_scene)
-		for child in $HoldingScene.get_children() :
-			$HoldingScene.remove_child(child)
-			child.queue_free()
-		$LoadingRoot/ProgressBar.value = 100
-	pass
+	if current_load_transition.ready and current_load_scene == null :
+		current_load_scene = current_load_transition.get_finished()
+		animation_root.add_child(current_load_scene)
+		current_load_scene.active_node = $ActiveScene
+		current_load_scene.inactive_node = $HoldingScene
 
-func cancel_scene_load() :
-	for child in $HoldingScene.get_children() :
-		$HoldingScene.remove_child(child)
-		$ActiveScene.add_child(child)
-	current_load_target = null
-	#TODO : Cancel animations
+		current_load_scene.animation_midpoint.connect(func () :
+			load_midpoint = true
+		,CONNECT_ONE_SHOT)
+		current_load_scene.hide_old_scene.connect(func () :
+			for child in $HoldingScene.get_children() :
+				$HoldingScene.remove_child.call_deferred(child)
+				child.queue_free.call_deferred()
+		,CONNECT_ONE_SHOT)
+		current_load_scene.animation_end.connect(func () :
+			current_load_scene.queue_free()
+			current_load_scene = null
+		, CONNECT_ONE_SHOT)
+		current_load_scene.start_transition()
+		
+	
+	if current_load_target.ready : #TODO : Add transition support
+		$LoadingRoot/ProgressBar.value = 100
+		
+		if load_midpoint :
+			var _new_scene = current_load_target.get_finished()
+			current_load_target = null
+			$ActiveScene.add_child(_new_scene)
+			current_load_scene.end_transition()
+		
+		
 	pass
+	
+#TODO : New cancel load scene
 
 func forget(keys: Array[String]) -> void:
 	holding_mutex.lock()
@@ -148,17 +175,15 @@ func preload_scene(_scene : SceneLoadWrapper, _thread : Thread) :
 	while not preload_complete :
 		match _scene.get_scene_preload_status() :
 			ResourceLoader.THREAD_LOAD_INVALID_RESOURCE :
-				printerr("Invalid Resource, attempting to recover?")
-				if _scene == current_load_target :
-					cancel_scene_load()
-				_end_preload_scene(_scene,_thread)
+				printerr("Loading invalid Resource, bailing out")
+				get_tree().quit(-1)
 				break
 			ResourceLoader.THREAD_LOAD_FAILED :
 				printerr("Loading failed, bailling out")
 				get_tree().quit(-1)
 				break
 			ResourceLoader.THREAD_LOAD_IN_PROGRESS :
-				OS.delay_msec(16)
+				OS.delay_msec(5)
 				break
 			ResourceLoader.THREAD_LOAD_LOADED :
 				preload_complete = true
@@ -173,13 +198,21 @@ func preload_scene(_scene : SceneLoadWrapper, _thread : Thread) :
 		call_deferred("_end_thread",thread)
 	_end_preload_scene(_scene,_thread)
 
-func change_scene(scene : SceneLoadWrapper, _load_blocking = false) -> bool :
+func change_scene(scene : SceneLoadWrapper, animation : SceneLoadWrapper) -> bool :
 	if scene.corrupted :
+		printerr("Scene corrupted!")
 		return false
+	if not current_load_target == null :
+		printerr("Already switching scenes")
 	#FIXME : handle transitions n stuff
+	
 	for child in $ActiveScene.get_children() :
 		$ActiveScene.remove_child(child)
 		$HoldingScene.add_child(child)
 	
 	current_load_target = scene
+	current_load_transition = animation
+	current_load_scene = null
+	load_midpoint = false
+	
 	return true

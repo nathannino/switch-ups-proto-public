@@ -26,7 +26,6 @@ script = SubResource("GDScript_rqon0")
 [node name="Button" type="Button" parent="."]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
-toggle_mode = true
 text = "hello"
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

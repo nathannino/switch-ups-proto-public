@@ -1,6 +1,7 @@
 extends Control
 
 var main_menu : SceneLoadWrapper
+var transition : SceneLoadWrapper
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -8,6 +9,7 @@ func _ready() -> void:
 	print("Created by Nathan_Nino")
 	print("Have fun!")
 	main_menu = SceneLoadWrapper.create().from_key("main_menu").background_preload().prepare()
+	transition = SceneLoadWrapper.create().as_transition("fade_to_black").prepare()
 	#main_menu = SceneLoadWrapper.preload_scene(test_path) #Testing
 	pass # Replace with function body.
 
@@ -17,5 +19,5 @@ func _process(delta: float) -> void:
 
 
 func _on_timer_timeout() -> void:
-	DeferredLoadingManager.change_scene(main_menu)
+	DeferredLoadingManager.change_scene(main_menu,transition)
 	pass # Replace with function body.

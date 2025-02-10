@@ -1,0 +1,56 @@
+[gd_scene load_steps=2 format=3 uid="uid://pxafowio7yyk"]
+
+[sub_resource type="GDScript" id="GDScript_ry5f2"]
+script/source = "extends Control
+
+signal animation_midpoint # Where we can put the new scene into the scene tree
+signal hide_old_scene # Where we can queue_free the old scene
+signal animation_end # Where we can queue_free this transition scene
+
+var active_node : Node
+var inactive_node : Node
+
+@export var fade_time : float
+@export var fade_node : ColorRect
+
+func reset() :
+	fade_node.self_modulate = Color(0,0,0,0)
+
+# This is what is called when the change_scene is called.
+func start_transition() :
+	var tween = create_tween()
+	tween.tween_property(fade_node,\"self_modulate\",Color(0,0,0,1),fade_time)
+	tween.tween_callback(midpoint)
+
+func midpoint() :
+	animation_midpoint.emit()
+	hide_old_scene.emit()
+
+# This is what is called after the new scene is added to the tree
+func end_transition() :
+	var tween = create_tween()
+	tween.tween_property(fade_node,\"self_modulate\",Color(0,0,0,0),fade_time)
+	await tween.finished
+	animation_end.emit()
+"
+
+[node name="TransitionFade" type="Control" node_paths=PackedStringArray("fade_node")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_ry5f2")
+fade_time = 0.5
+fade_node = NodePath("ColorRect")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)

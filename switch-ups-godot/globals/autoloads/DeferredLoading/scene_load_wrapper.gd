@@ -34,6 +34,14 @@ func from_path(_path : String) -> SceneLoadWrapper :
 	path = _path
 	return self
 
+func as_transition(_key : String) -> SceneLoadWrapper :
+	load_target = LOAD_TARGET.PRELOAD
+	path = DeferredLoadingManager.transitions[_key]
+	if path == null:
+		printerr("transition does not exists")
+		return null # FIXME : Super bad omg... but since it's only me and gdscript doesn't have exceptions, I want to crash and burn in a way the debugger can help me with
+	return self
+
 func from_key(_key : String) -> SceneLoadWrapper :
 	if scene_dict.get_scene_dictionary().size() == 0 :
 		scene_dict.populate_scene_dictionary()
