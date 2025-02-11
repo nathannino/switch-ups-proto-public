@@ -21,4 +21,5 @@ key = "reclaim"
 name = "Reclaim"
 desc = "Forcefully infiltrate enemy or smth idk TODO : Change this lol"
 type = 5
+cost = 0
 effects = Array[ExtResource("1_e0f6v")]([SubResource("Resource_jings")])

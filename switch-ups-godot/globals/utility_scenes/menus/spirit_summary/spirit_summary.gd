@@ -9,6 +9,7 @@ extends Control
 @export var label_defense : RichTextLabel
 @export var label_speed : RichTextLabel
 @export var label_luck : RichTextLabel
+@export var move_holder : Container
 
 func _ready() -> void:
 	#set_summary_inactive(load("res://monster_systems/spirits/database/placeholder.tres"))
@@ -24,6 +25,8 @@ func set_summary_inactive(spirit : ms_spirit) :
 	label_defense.text = "Defense : %s" % spirit.defense
 	label_speed.text = "Speed : %s" % spirit.speed
 	label_luck.text = "Luck : %s" % spirit.luck
+	move_holder.set_actions(spirit.actions)
+	%ActionsLabel.show()
 
 func set_summary_active() :
 	printerr("set_summary_active() : Not implemented")

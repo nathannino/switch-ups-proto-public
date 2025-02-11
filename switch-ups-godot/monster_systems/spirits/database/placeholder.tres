@@ -17,4 +17,4 @@ atk_abstract = 4
 defense = 1
 speed = 2
 luck = 2
-actions = Array[ExtResource("1_x2sh5")]([ExtResource("2_wqhhy")])
+actions = Array[ExtResource("1_x2sh5")]([ExtResource("2_wqhhy"), ExtResource("2_wqhhy"), ExtResource("2_wqhhy"), ExtResource("2_wqhhy"), ExtResource("2_wqhhy"), ExtResource("2_wqhhy"), ExtResource("2_wqhhy"), ExtResource("2_wqhhy"), ExtResource("2_wqhhy")])

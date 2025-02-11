@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://diohlpvbxl3oh"]
+[gd_scene load_steps=8 format=3 uid="uid://diohlpvbxl3oh"]
 
 [ext_resource type="Script" path="res://globals/simple_scripts/flowgrid.gd" id="1_tr2os"]
 [ext_resource type="Script" path="res://globals/utility_scenes/menus/spirit_summary/spirit_summary.gd" id="1_yovre"]
@@ -76,7 +76,46 @@ func _notification(what: int) -> void:
 			_set_margins()
 "
 
-[node name="SpiritSummary" type="Control" node_paths=PackedStringArray("label_name", "sprite", "label_type", "label_health", "label_concrete", "label_abstract", "label_defense", "label_speed", "label_luck")]
+[sub_resource type="GDScript" id="GDScript_ea35i"]
+script/source = "extends MarginContainer
+
+@onready var grid = $\"..\"
+var is_ready = false
+var recall = false
+
+func _ready() -> void:
+	is_ready = true
+	if recall : _on_grid_container_resized()
+	recall = false
+
+func _on_grid_container_resized() -> void:
+	if not is_ready :
+		recall = true
+		return
+	if grid.columns == 1 :
+		add_theme_constant_override(\"margin_top\",10)
+	else :
+		add_theme_constant_override(\"margin_top\",0)
+	pass # Replace with function body.
+"
+
+[sub_resource type="GDScript" id="GDScript_e6lmi"]
+script/source = "extends VBoxContainer
+
+const template = preload(\"uid://bw37jbhbgf6s0\")
+
+func set_actions(actions : Array[ms_action]) :
+	for child in get_children() :
+		remove_child(child)
+		child.queue_free()
+	
+	for action in actions :
+		var instance = template.instantiate()
+		instance.set_action(action)
+		add_child(instance)
+"
+
+[node name="SpiritSummary" type="Control" node_paths=PackedStringArray("label_name", "sprite", "label_type", "label_health", "label_concrete", "label_abstract", "label_defense", "label_speed", "label_luck", "move_holder")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -86,13 +125,14 @@ grow_vertical = 2
 script = ExtResource("1_yovre")
 label_name = NodePath("PanelContainer/ScrollContainer/MarginContainer/GridContainer/Name")
 sprite = NodePath("PanelContainer/ScrollContainer/MarginContainer/GridContainer/AspectRatioContainer/TextureRect")
-label_type = NodePath("PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer2/RichTextLabel")
-label_health = NodePath("PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer2/Health")
-label_concrete = NodePath("PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer2/Concrete")
-label_abstract = NodePath("PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer2/Abstract")
-label_defense = NodePath("PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer2/Defense")
-label_speed = NodePath("PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer2/Speed")
-label_luck = NodePath("PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer2/Luck")
+label_type = NodePath("PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/GridContainer/VBoxContainer2/RichTextLabel")
+label_health = NodePath("PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/GridContainer/VBoxContainer2/Health")
+label_concrete = NodePath("PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/GridContainer/VBoxContainer2/Concrete")
+label_abstract = NodePath("PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/GridContainer/VBoxContainer2/Abstract")
+label_defense = NodePath("PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/GridContainer/VBoxContainer2/Defense")
+label_speed = NodePath("PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/GridContainer/VBoxContainer2/Speed")
+label_luck = NodePath("PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/GridContainer/VBoxContainer2/Luck")
+move_holder = NodePath("PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer/MoveHolder")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -157,41 +197,71 @@ script = SubResource("GDScript_dbube")
 grid = NodePath("..")
 margin_left = 10.0
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer"]
+[node name="GridContainer" type="GridContainer" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer"]
+layout_mode = 2
+script = ExtResource("1_tr2os")
+min_size = 400.0
+max_columns = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer2"]
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/GridContainer/VBoxContainer2"]
 layout_mode = 2
 bbcode_enabled = true
 fit_content = true
 
-[node name="Health" type="RichTextLabel" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer2"]
+[node name="Health" type="RichTextLabel" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/GridContainer/VBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 fit_content = true
 
-[node name="Concrete" type="RichTextLabel" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer2"]
+[node name="Concrete" type="RichTextLabel" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/GridContainer/VBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 fit_content = true
 
-[node name="Abstract" type="RichTextLabel" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer2"]
+[node name="Abstract" type="RichTextLabel" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/GridContainer/VBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 fit_content = true
 
-[node name="Defense" type="RichTextLabel" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer2"]
+[node name="Defense" type="RichTextLabel" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/GridContainer/VBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 fit_content = true
 
-[node name="Speed" type="RichTextLabel" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer2"]
+[node name="Speed" type="RichTextLabel" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/GridContainer/VBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 fit_content = true
 
-[node name="Luck" type="RichTextLabel" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer2"]
+[node name="Luck" type="RichTextLabel" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/GridContainer/VBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 fit_content = true
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+script = SubResource("GDScript_ea35i")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/GridContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ActionsLabel" type="Label" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+text = "Actions : "
+
+[node name="MoveHolder" type="VBoxContainer" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 5
+script = SubResource("GDScript_e6lmi")
+
+[connection signal="resized" from="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/GridContainer" to="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/GridContainer/MarginContainer" method="_on_grid_container_resized"]

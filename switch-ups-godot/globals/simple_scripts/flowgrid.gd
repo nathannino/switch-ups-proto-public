@@ -5,7 +5,8 @@ extends GridContainer
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	_set_columns()
+	pass
+	#_set_columns()
 
 func _set_columns() :
 	var columns_fit = max(1,floor(float(size.x) / min_size))
