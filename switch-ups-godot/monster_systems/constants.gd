@@ -42,3 +42,10 @@ enum ATK_FLAVOR {
 	CONCRETE,
 	ABSTRACT
 }
+
+static func flavor_to_bbcode(type : ATK_FLAVOR) :
+	match type :
+		ATK_FLAVOR.CONCRETE :
+			return "concrete"
+		ATK_FLAVOR.ABSTRACT :
+			return "abstract"

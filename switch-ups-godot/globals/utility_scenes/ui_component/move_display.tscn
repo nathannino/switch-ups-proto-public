@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://globals/utility_scenes/ui_component/move_display.gd" id="1_k3w1v"]
 
-[node name="MoveDisplay" type="PanelContainer" node_paths=PackedStringArray("name_label", "type_label", "cost_label", "desc_label")]
+[node name="MoveDisplay" type="PanelContainer" node_paths=PackedStringArray("name_label", "type_label", "cost_label")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -14,7 +14,6 @@ script = ExtResource("1_k3w1v")
 name_label = NodePath("MarginContainer/VBoxContainer/Name")
 type_label = NodePath("MarginContainer/VBoxContainer/GridContainer/Type")
 cost_label = NodePath("MarginContainer/VBoxContainer/GridContainer/Cost")
-desc_label = NodePath("MarginContainer/VBoxContainer/Description")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
@@ -42,9 +41,4 @@ layout_mode = 2
 size_flags_horizontal = 3
 bbcode_enabled = true
 text = "[right]Cost[/right]"
-fit_content = true
-
-[node name="Description" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "Description"
 fit_content = true

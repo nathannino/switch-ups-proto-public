@@ -1,0 +1,35 @@
+[gd_scene load_steps=2 format=3 uid="uid://cciubrosm577s"]
+
+[sub_resource type="GDScript" id="GDScript_wfchc"]
+script/source = "extends HBoxContainer
+
+@export var text : RichTextLabel
+@export var container : Container
+
+var component : ms_ac_luck
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	text.text = \"%s% base chance to : \" % component.base_chance_percent
+	for child_component in component.action :
+		container.add_child(child_component.get_desc())
+"
+
+[node name="LuckDesc" type="HBoxContainer" node_paths=PackedStringArray("text", "container")]
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+script = SubResource("GDScript_wfchc")
+text = NodePath("desctext")
+container = NodePath("VBoxContainer")
+
+[node name="desctext" type="RichTextLabel" parent="."]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "80% chance to :"
+fit_content = true
+autowrap_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3

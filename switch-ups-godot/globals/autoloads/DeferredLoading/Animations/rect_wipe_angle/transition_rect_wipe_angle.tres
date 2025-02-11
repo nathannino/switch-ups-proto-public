@@ -20,7 +20,7 @@ linked_parent_graph_frame = 16
 parameter_name = "pivot"
 
 [sub_resource type="VisualShaderNodeFrame" id="VisualShaderNodeFrame_6shio"]
-size = Vector2(2004, 842)
+size = Vector2(2004, 738)
 title = "Rotate"
 attached_nodes = PackedInt32Array(4, 14, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32)
 
@@ -98,7 +98,7 @@ linked_parent_graph_frame = 16
 op_type = 0
 
 [sub_resource type="VisualShaderNodeFrame" id="VisualShaderNodeFrame_kxq0a"]
-size = Vector2(2564, 1467)
+size = Vector2(2564, 1098)
 title = "Transparency"
 attached_nodes = PackedInt32Array(13, 11, 10, 3, 9, 42, 41, 36, 37, 38, 39, 40, 43, 44, 49, 46, 47, 48)
 
@@ -174,7 +174,7 @@ linked_parent_graph_frame = 51
 input_name = "screen_pixel_size"
 
 [sub_resource type="VisualShaderNodeFrame" id="VisualShaderNodeFrame_gvu40"]
-size = Vector2(2044, 515)
+size = Vector2(2044, 378)
 title = "get amount"
 attached_nodes = PackedInt32Array(50, 52, 53, 54, 57, 58, 59, 60, 61, 62, 63)
 
@@ -443,7 +443,6 @@ void fragment() {
 
 }
 "
-graph_offset = Vector2(-2140.86, 409.314)
 mode = 1
 flags/light_only = false
 nodes/fragment/0/position = Vector2(2380, 20)
