@@ -82,7 +82,6 @@ func async_populate_grid() :
 	pass
 
 func add_child_to_container(child : Node) :
-	print(button_root.name)
 	button_root.ready_to_add.lock()
 	button_root.child_to_add.push_back(child)
 	button_root.ready_to_add.unlock()

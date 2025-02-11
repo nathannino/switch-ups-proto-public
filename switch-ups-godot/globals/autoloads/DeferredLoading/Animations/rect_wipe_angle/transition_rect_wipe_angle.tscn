@@ -53,9 +53,9 @@ func end_transition() :
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2e0q6"]
 shader = ExtResource("1_r3j7a")
-shader_parameter/rotation_deg = 202.386
-shader_parameter/amount = 5
-shader_parameter/progress = 0.152
+shader_parameter/rotation_deg = 145.736
+shader_parameter/size = 600
+shader_parameter/progress = 0.074
 
 [node name="TransitionRectWipeAngle" type="Control" node_paths=PackedStringArray("fade_node")]
 layout_mode = 3

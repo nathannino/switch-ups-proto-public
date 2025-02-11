@@ -28,7 +28,6 @@ func _init() -> void:
 func _process(delta: float) -> void:
 	ready_to_add.lock()
 	for child in child_to_add :
-		print(\"adding child : %s\" % child)
 		add_child(child)
 	child_to_add.clear()
 	ready_to_add.unlock()
