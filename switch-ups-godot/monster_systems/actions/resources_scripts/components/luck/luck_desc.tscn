@@ -10,7 +10,7 @@ var component : ms_ac_luck
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	text.text = \"%s% base chance to : \" % component.base_chance_percent
+	text.text = \"%s%% base chance to : \" % (component.base_chance_percent*100)
 	for child_component in component.action :
 		container.add_child(child_component.get_desc())
 "

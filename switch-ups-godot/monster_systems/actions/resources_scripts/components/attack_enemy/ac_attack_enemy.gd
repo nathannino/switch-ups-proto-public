@@ -9,5 +9,5 @@ const desc = preload("uid://nrssduut60jb")
 
 func get_desc() -> Node :
 	var instance = desc.instantiate()
-	instance.text = "Deal %s %s damage to the active enemy" % [base_atk, atk_flavor]
+	instance.text = "Deal %s %s damage to the active enemy" % [base_atk, ms_constants.flavor_to_bbcode(atk_flavor)]
 	return instance
