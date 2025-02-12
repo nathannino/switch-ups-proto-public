@@ -59,10 +59,13 @@ const lang_array = [
 
 func populate_options() :
 	clear()
+	var regex = RegEx.new()
+	regex.compile(\".+?(?=_)\")
+	var current_language = regex.search(TranslationServer.get_locale()).get_string()
 	for i in range(lang_array.size()) :
 		var lang = lang_array[i]
 		add_item(lang[\"longhand\"],i)
-		if (TranslationServer.get_locale() == lang[\"shorthand\"]) :
+		if (current_language == lang[\"shorthand\"]) :
 			selected = i
 
 # Called when the node enters the scene tree for the first time.
