@@ -23,6 +23,27 @@ func _process(delta: float) -> void:
 [sub_resource type="GDScript" id="GDScript_f2ac0"]
 script/source = "extends RichTextLabel
 
+@export var title : String
+@export var translate : bool
+
+func _get_index() -> int :
+	var child_list = $\"..\".get_children()
+	for i in range(child_list.size()) :
+		if child_list[i] == self :
+			return i
+	return -1
+
+func _notification(what: int) -> void:
+	match what:
+		NOTIFICATION_TRANSLATION_CHANGED :
+			translate_title()
+
+func translate_title() :
+	# Set name
+	var index = _get_index()
+	var text = tr(title) if translate else title
+	$\"..\".set_tab_title(index,text)
+
 func _init() -> void:
 	pass
 
@@ -38,6 +59,7 @@ func _ready() -> void:
 			text += \"  License: \" + part.license + \"\\n\"
 			for line in part.copyright:
 				text += \"  Copyright \" + line + \"\\n\"
+	translate_title()
 	pass # Replace with function body.
 
 
@@ -48,6 +70,27 @@ func _process(delta: float) -> void:
 
 [sub_resource type="GDScript" id="GDScript_auesj"]
 script/source = "extends RichTextLabel
+
+@export var title : String
+@export var translate : bool
+
+func _get_index() -> int :
+	var child_list = $\"..\".get_children()
+	for i in range(child_list.size()) :
+		if child_list[i] == self :
+			return i
+	return -1
+
+func _notification(what: int) -> void:
+	match what:
+		NOTIFICATION_TRANSLATION_CHANGED :
+			translate_title()
+
+func translate_title() :
+	# Set name
+	var index = _get_index()
+	var text = tr(title) if translate else title
+	$\"..\".set_tab_title(index,text)
 
 func _init() -> void:
 	pass
@@ -60,6 +103,7 @@ func _ready() -> void:
 		var name = component.name
 		for part in component.parts:
 			license_list[part.license] = true
+	translate_title()
 	
 	var licenses = Engine.get_license_info()
 	var new_lines = false
@@ -97,46 +141,58 @@ layout_mode = 2
 [node name="Label" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Credits"
+text = "TR_CREDIT_TITLE"
 horizontal_alignment = 1
 
 [node name="Button" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-text = "Close"
+text = "TR_CLOSE"
 script = ExtResource("1_wmp6k")
 key = "main_menu"
 
 [node name="Credits" type="TabContainer" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-current_tab = 0
+current_tab = 1
 
 [node name="Third Party" type="TabContainer" parent="PanelContainer/VBoxContainer/Credits"]
+visible = false
 layout_mode = 2
 current_tab = 0
+script = ExtResource("3_ntjgm")
+title = "TR_CREDIT_THIRD"
+translate = true
 metadata/_tab_index = 0
 
 [node name="Copyright" type="RichTextLabel" parent="PanelContainer/VBoxContainer/Credits/Third Party"]
 layout_mode = 2
 script = SubResource("GDScript_f2ac0")
+title = "TR_CREDIT_COPYRIGHT"
+translate = true
 metadata/_tab_index = 0
 
 [node name="License" type="RichTextLabel" parent="PanelContainer/VBoxContainer/Credits/Third Party"]
 visible = false
 layout_mode = 2
 script = SubResource("GDScript_auesj")
+title = "TR_CREDIT_LICENSE"
+translate = true
 metadata/_tab_index = 1
 
 [node name="Music" type="TabContainer" parent="PanelContainer/VBoxContainer/Credits"]
-visible = false
 layout_mode = 2
 current_tab = 0
+script = ExtResource("3_ntjgm")
+title = "TR_CREDIT_MUSIC"
+translate = true
 metadata/_tab_index = 1
 
 [node name="Music Library" type="ScrollContainer" parent="PanelContainer/VBoxContainer/Credits/Music" node_paths=PackedStringArray("grid")]
 layout_mode = 2
 script = ExtResource("1_4rm8s")
 grid = NodePath("MarginContainer/GridContainer")
+title = "TR_CREDIT_LIBRARY"
+translate = true
 metadata/_tab_index = 0
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/Credits/Music/Music Library"]
@@ -159,6 +215,9 @@ min_size = 400.0
 visible = false
 layout_mode = 2
 current_tab = 0
+script = ExtResource("3_ntjgm")
+title = "TR_CREDIT_LICENSE"
+translate = true
 metadata/_tab_index = 1
 
 [node name="CC0" type="RichTextLabel" parent="PanelContainer/VBoxContainer/Credits/Music/License"]

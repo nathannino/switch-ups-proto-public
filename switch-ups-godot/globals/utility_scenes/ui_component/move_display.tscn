@@ -46,7 +46,3 @@ fit_content = true
 
 [node name="desc" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-
-[node name="ColorRect" type="ColorRect" parent="."]
-self_modulate = Color(1, 1, 1, 0.156863)
-layout_mode = 2

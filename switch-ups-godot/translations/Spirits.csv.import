@@ -1,0 +1,17 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://cgghiiedsxjjd"
+
+[deps]
+
+files=["res://translations/Spirits.en.translation", "res://translations/Spirits.fr.translation"]
+
+source_file="res://translations/Spirits.csv"
+dest_files=["res://translations/Spirits.en.translation", "res://translations/Spirits.fr.translation"]
+
+[params]
+
+compress=true
+delimiter=1

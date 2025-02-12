@@ -255,7 +255,7 @@ size_flags_horizontal = 3
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
-text = "Actions : "
+text = "TR_SUMMARY_ACTION"
 
 [node name="MoveHolder" type="VBoxContainer" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2

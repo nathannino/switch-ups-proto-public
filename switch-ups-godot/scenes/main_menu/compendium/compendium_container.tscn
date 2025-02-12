@@ -46,12 +46,12 @@ layout_mode = 2
 [node name="Label" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Compendium"
+text = "TR_COMPENDIUM"
 horizontal_alignment = 1
 
 [node name="Button" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-text = "Close"
+text = "TR_CLOSE"
 script = ExtResource("1_a2mc8")
 key = "main_menu"
 

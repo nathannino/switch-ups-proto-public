@@ -1,0 +1,29 @@
+keys;en;fr
+TR_DEV;This is a very early development version, not intended to be shared outside of what's required for the school project;Ceci s'agit d'une version de développement très incomplet, qui n'est pas destinée à être partagée en dehors de ce qui est nécessaire pour le projet scolaire.
+TR_TITLE;Switch-Ups;Switch-Ups
+TR_BUT_START;Play;Jouer
+TR_COMPENDIUM;Compendium;Compendium
+TR_CREDIT_TITLE;Credits;Crédits
+TR_END;Exit;Quitter
+TR_CLOSE;Close;Fermer
+TR_BACK;Back;Retour
+TR_CREDIT_LICENSE;License;Licence
+TR_CREDIT_MUSIC;Music;Musique
+TR_CREDIT_THIRD;Third-Party;Licences de tiers
+TR_CREDIT_LIBRARY;Music Library;Librairie de musique
+TR_CREDIT_COPYRIGHT;Copyright;Droit d’auteur
+TR_CREDIT_PLAYMUSIC;Play song;Jouer la musique
+TR_CREDIT_ISPLAYING;Currently playing;Musique active
+TR_CREDIT_LICENSE_PERSON;License : {license};Licence : {license}
+TR_SUMMARY_TYPE;Type : {type};Type : {type}
+TR_SUMMARY_HEALTH;Health : {health};Points de vie : {health}
+TR_SUMMARY_CONCRETE;{tr} Power : {power};Pouvoir {tr} : {power}
+TR_SUMMARY_ABSTRACT;{tr} Power : {power};Pouvoir {tr} : {power}
+TR_SUMMARY_DEFENSE;Defense : {defense};Défense : {defense}
+TR_SUMMARY_SPEED;Speed : {speed};Vitesse : {speed}
+TR_SUMMARY_LUCK;Luck : {luck};Chance : {luck}
+TR_SUMMARY_ACTION;Actions : ;Actions : 
+TR_SUMMARY_COST;Cost : {cost};Coût : {cost}
+TR_OPTIONS_RESUME;Resume;Retour au jeu
+TR_OPTIONS_MAINMENU;Return to main menu;Retourner au menu principal
+TR_OPTIONS_QUIT;Close game;Fermer le jeu

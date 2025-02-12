@@ -1,0 +1,136 @@
+[gd_scene load_steps=5 format=3 uid="uid://d2lcdsh40reie"]
+
+[ext_resource type="Script" path="res://globals/simple_scripts/button_change_scene_simple.gd" id="1_57t8v"]
+
+[sub_resource type="GDScript" id="GDScript_cc25f"]
+script/source = "extends Control
+
+@export var return_main_menu_button : Control
+
+var can_pause = false
+
+signal grab_back_focus
+
+func set_game(_bool : bool) :
+	if _bool :
+		return_main_menu_button.show()
+	else :
+		return_main_menu_button.hide()
+
+func set_can_pause(_bool : bool) :
+	can_pause = _bool
+
+func hide_reset() :
+	propagate_call(\"release_focus\",[],true)
+	grab_back_focus.emit()
+	hide()
+
+func _input(event: InputEvent) -> void:
+	if not can_pause :
+		return
+	if event.is_action_pressed(\"options\") :
+		if visible :
+			hide_reset()
+		else :
+			show()
+
+
+func _on_button_3_pressed() -> void:
+	hide_reset()
+	pass # Replace with function body.
+"
+
+[sub_resource type="GDScript" id="GDScript_2nhgm"]
+script/source = "extends Button
+
+@export var toplevel : Node
+
+func _on_pressed() -> void:
+	toplevel.hide_reset()
+"
+
+[sub_resource type="GDScript" id="GDScript_ltcgg"]
+script/source = "extends OptionButton
+
+const lang_array = [
+	{\"shorthand\":\"fr\",\"longhand\":\"Français\"},
+	{\"shorthand\":\"en\",\"longhand\":\"English\"}
+]
+
+func populate_options() :
+	clear()
+	for i in range(lang_array.size()) :
+		var lang = lang_array[i]
+		add_item(lang[\"longhand\"],i)
+		if (TranslationServer.get_locale() == lang[\"shorthand\"]) :
+			selected = i
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	populate_options()
+	pass # Replace with function body.
+
+func _on_item_selected(index: int) -> void:
+	var id = get_selected_id()
+	var lang = lang_array[id]
+	TranslationServer.set_locale(lang.shorthand)
+	pass # Replace with function body.
+"
+
+[node name="Control" type="Control" node_paths=PackedStringArray("return_main_menu_button")]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_cc25f")
+return_main_menu_button = NodePath("CenterContainer/VBoxContainer/Button2")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.392157)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="CenterContainer/VBoxContainer" node_paths=PackedStringArray("toplevel")]
+layout_mode = 2
+text = "TR_OPTIONS_RESUME"
+script = SubResource("GDScript_2nhgm")
+toplevel = NodePath("../../..")
+
+[node name="OptionButton" type="OptionButton" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+script = SubResource("GDScript_ltcgg")
+
+[node name="Button2" type="Button" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "TR_OPTIONS_MAINMENU"
+script = ExtResource("1_57t8v")
+key = "main_menu"
+transition_key = "fade_to_black"
+
+[node name="Button3" type="Button" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "TR_OPTIONS_QUIT"
+script = ExtResource("1_57t8v")
+key = "kill"
+
+[connection signal="pressed" from="CenterContainer/VBoxContainer/Button" to="CenterContainer/VBoxContainer/Button" method="_on_pressed"]
+[connection signal="item_selected" from="CenterContainer/VBoxContainer/OptionButton" to="CenterContainer/VBoxContainer/OptionButton" method="_on_item_selected"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/Button3" to="." method="_on_button_3_pressed"]

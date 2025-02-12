@@ -5,8 +5,21 @@ script/source = "extends Control
 
 signal pressed
 
-func set_spirit(spirit : ms_spirit) :
-	$Button.text = spirit.name
+var spirit : ms_spirit
+
+func _notification(what: int) -> void:
+	match what :
+		NOTIFICATION_TRANSLATION_CHANGED :
+			translate()
+
+func translate() :
+	if spirit == null :
+		return
+	$Button.text = tr(spirit.name)
+
+func set_spirit(_spirit : ms_spirit) :
+	spirit = _spirit
+	translate()
 
 
 func _on_button_pressed() -> void:

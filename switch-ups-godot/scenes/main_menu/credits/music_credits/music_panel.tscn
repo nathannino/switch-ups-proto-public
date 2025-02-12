@@ -26,9 +26,9 @@ func _process(delta: float) -> void:
 		return
 	
 	if BgmManager._get_active().stream == song_data.loop :
-		text = \"Currently playing\"
+		text = tr(\"TR_CREDIT_ISPLAYING\")
 	else :
-		text = \"Play song\"
+		text = tr(\"TR_CREDIT_PLAYMUSIC\")
 	pass
 
 
@@ -96,7 +96,7 @@ size_flags_vertical = 3
 
 [node name="Button" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "Play Sound"
+text = "TR_"
 script = SubResource("GDScript_s6651")
 
 [connection signal="meta_clicked" from="MarginContainer/VBoxContainer/Source" to="MarginContainer/VBoxContainer/Source" method="_on_meta_clicked"]

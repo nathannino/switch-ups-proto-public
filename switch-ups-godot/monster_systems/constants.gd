@@ -16,27 +16,30 @@ enum TYPE {
 }
 
 static func type_to_bbcode(type : TYPE) :
+	var obj = Object.new() #???????????
+	var return_value = null
 	match type :
 		TYPE.RETRO :
-			return "Retro"
+			return_value = obj.tr("TR_CONST_TYPE_RETRO")
 		TYPE.CREATURE :
-			return "Creature"
+			return_value = obj.tr("TR_CONST_TYPE_CREATURE")
 		TYPE.DREAM :
-			return "Dream"
+			return_value = obj.tr("TR_CONST_TYPE_DREAM")
 		TYPE.FEAR :
-			return "Fear"
+			return_value = obj.tr("TR_CONST_TYPE_FEAR")
 		TYPE.VOID :
-			return "Void"
+			return_value = obj.tr("TR_CONST_TYPE_VOID")
 		TYPE.NATURE :
-			return "Nature"
+			return_value = obj.tr("TR_CONST_TYPE_NATURE")
 		TYPE.CONSTRUCT :
-			return "Construct"
+			return_value = obj.tr("TR_CONST_TYPE_CONSTRUCT")
 		TYPE.SPACE :
-			return "Space"
+			return_value = obj.tr("TR_CONST_TYPE_SPACE")
 		TYPE.META :
-			return "Meta"
+			return_value = obj.tr("TR_CONST_TYPE_META")
 		TYPE.NORMAL :
-			return "Normal"
+			return_value = obj.tr("TR_CONST_TYPE_NORMAL")
+	return return_value
 
 enum ATK_FLAVOR {
 	CONCRETE,
@@ -44,8 +47,12 @@ enum ATK_FLAVOR {
 }
 
 static func flavor_to_bbcode(type : ATK_FLAVOR) :
+	var obj = Object.new() #???????????
+	var return_value = null
 	match type :
 		ATK_FLAVOR.CONCRETE :
-			return "concrete"
+			return_value = obj.tr("TR_CONST_FLAVOR_CONCRETE")
 		ATK_FLAVOR.ABSTRACT :
-			return "abstract"
+			return_value = obj.tr("TR_CONST_FLAVOR_ABSTRACT")
+	obj.free()
+	return return_value

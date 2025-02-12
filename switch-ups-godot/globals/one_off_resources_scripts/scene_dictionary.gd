@@ -4,7 +4,7 @@ class_name scene_dictionary
 @export var scenes : Array[scene_dictionary_entry]
 var _scene_dictionary : Dictionary
 
-func get_scene_dictionary_entry(key : String)  -> String :
+func get_scene_dictionary_entry(key : String)  -> scene_dictionary_entry :
 	return _scene_dictionary[key]
 
 func get_scene_dictionary() -> Dictionary :
@@ -23,5 +23,5 @@ func populate_scene_dictionary() :
 				printerr("Could not find scene \"%s\" at path \"%s\", bailing out asap" % [scene.key, scene.scene])
 				Engine.get_main_loop().quit(-1) # Fail fast
 				found = false
-		_scene_dictionary[scene.key] = scene.scene
+		_scene_dictionary[scene.key] = scene
 		if found : print("Registered scene %s" % scene.key)

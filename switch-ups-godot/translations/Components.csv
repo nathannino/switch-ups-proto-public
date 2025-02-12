@@ -1,0 +1,3 @@
+keys;en;fr
+TR_AC_ATTACK;Deal {power} {flavor} damage to the active enemy;Infliger {power} dégâts {flavor} à l'ennemi actif
+TR_AC_LUCK;{percent}% base chance to : ;{percent}% de probabilité de :

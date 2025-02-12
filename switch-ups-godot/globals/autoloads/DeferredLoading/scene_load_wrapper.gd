@@ -19,6 +19,8 @@ var node = null
 var _preinit_complete = false
 var completed_steps = 0
 var required_steps = 1
+var can_pause = true
+var is_game = false
 
 signal preload_complete
 signal preinit_complete
@@ -45,14 +47,25 @@ func as_transition(_key : String) -> SceneLoadWrapper :
 func from_key(_key : String) -> SceneLoadWrapper :
 	if scene_dict.get_scene_dictionary().size() == 0 :
 		scene_dict.populate_scene_dictionary()
-	path = scene_dict.get_scene_dictionary_entry(_key)
+	var scene = scene_dict.get_scene_dictionary_entry(_key)
+	path = scene.scene
 	if path == null :
 		printerr("Scene does not exists")
 		return null # FIXME : Super bad omg... but since it's only me and gdscript doesn't have exceptions, I want to crash and burn in a way the debugger can help me with
+	can_pause = scene.can_pause
+	is_game = scene.considerd_game
 	return self
 
 func with_preloaded_generations(_preload_generations = {}) -> SceneLoadWrapper :
 	preload_generations = _preload_generations
+	return self
+
+func set_can_pause(_bool : bool) -> SceneLoadWrapper :
+	can_pause = _bool
+	return self
+
+func set_is_game(_bool : bool) -> SceneLoadWrapper :
+	is_game = _bool
 	return self
 
 func background_preload() -> SceneLoadWrapper :

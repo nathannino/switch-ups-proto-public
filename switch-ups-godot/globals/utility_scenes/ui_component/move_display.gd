@@ -18,13 +18,17 @@ func _ready() :
 	ready_done = true
 	pass
 
+func _notification(what: int) -> void:
+	match what:
+		NOTIFICATION_TRANSLATION_CHANGED :
+			update_ui()
+
 func update_ui() :
 	name_label.text = action.name
-	type_label.text = "Type : %s" % ms_constants.type_to_bbcode(action.type)
-	cost_label.text = "[right]Cost : %s[/right]" % action.cost
+	type_label.text = tr("TR_SUMMARY_TYPE").format({"type":ms_constants.type_to_bbcode(action.type)})
+	cost_label.text = "[right]" + tr("TR_SUMMARY_COST").format({"cost" : action.cost}) + "[/right]" 
+	for child in desc_container.get_children() :
+		desc_container.remove_child(child)
+		child.queue_free()
 	for component in action.effects :
 		desc_container.add_child(component.get_desc())
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass

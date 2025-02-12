@@ -1,29 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://bvau8nx2vb1p0"]
+[gd_scene load_steps=4 format=3 uid="uid://bvau8nx2vb1p0"]
 
 [ext_resource type="Script" path="res://scenes/main_menu/main_menu.gd" id="1_e6rbv"]
 [ext_resource type="Script" path="res://globals/simple_scripts/button_change_scene_simple.gd" id="2_330wo"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ch1ei"]
 font_size = 50
-
-[sub_resource type="GDScript" id="GDScript_i8vqx"]
-script/source = "extends Button
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
-
-func _on_pressed() -> void:
-	get_tree().quit(0)
-	pass # Replace with function body.
-"
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -63,8 +44,7 @@ offset_top = 72.0
 offset_right = 134.0
 offset_bottom = 141.0
 grow_horizontal = 2
-text = "Switch-Ups
-"
+text = "TR_TITLE"
 label_settings = SubResource("LabelSettings_ch1ei")
 
 [node name="MainMenuMargins" type="MarginContainer" parent="."]
@@ -98,24 +78,22 @@ grow_vertical = 0
 
 [node name="PlayButton" type="Button" parent="MainMenuMargins/Control/VBoxContainer"]
 layout_mode = 2
-text = "Play"
+text = "TR_BUT_START"
 
 [node name="CompendiumButton" type="Button" parent="MainMenuMargins/Control/VBoxContainer"]
 layout_mode = 2
-text = "Compendium"
+text = "TR_COMPENDIUM"
 script = ExtResource("2_330wo")
 key = "compendium"
 
 [node name="CreditsButton" type="Button" parent="MainMenuMargins/Control/VBoxContainer"]
 layout_mode = 2
-text = "Credits
-"
+text = "TR_CREDIT_TITLE"
 script = ExtResource("2_330wo")
 key = "credits"
 
 [node name="QuitButton" type="Button" parent="MainMenuMargins/Control/VBoxContainer"]
 layout_mode = 2
-text = "Exit"
-script = SubResource("GDScript_i8vqx")
-
-[connection signal="pressed" from="MainMenuMargins/Control/VBoxContainer/QuitButton" to="MainMenuMargins/Control/VBoxContainer/QuitButton" method="_on_pressed"]
+text = "TR_END"
+script = ExtResource("2_330wo")
+key = "kill"

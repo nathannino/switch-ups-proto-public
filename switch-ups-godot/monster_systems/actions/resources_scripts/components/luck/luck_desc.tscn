@@ -8,9 +8,22 @@ script/source = "extends HBoxContainer
 
 var component : ms_ac_luck
 
+func _notification(what: int) -> void:
+	match what :
+		NOTIFICATION_TRANSLATION_CHANGED :
+			translate()
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	text.text = \"%s%% base chance to : \" % (component.base_chance_percent*100)
+	translate()
+
+func translate() -> void :
+	if component == null :
+		return
+	
+	for child in container.get_children() :
+		child.queue_free()
+	text.text = tr(\"TR_AC_LUCK\").format({\"percent\":component.base_chance_percent*100})
 	for child_component in component.action :
 		container.add_child(child_component.get_desc())
 "

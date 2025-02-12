@@ -72,6 +72,7 @@ func _process(delta: float) -> void:
 			loading_circle_anim.seek(time)
 	pass
 
+var old_load_target
 func _process_load_poll() :
 	$LoadingRoot/ProgressBar.value = current_load_target.get_scene_preload_percent()
 	
@@ -86,6 +87,7 @@ func _process_load_poll() :
 			load_midpoint = true
 			if not $LoadingRoot/ProgressBar.is_showing and $BarAppearTimer.is_stopped() :
 				$BarAppearTimer.start()
+			OptionsOverlay.set_can_pause(current_load_target.can_pause)
 		,CONNECT_ONE_SHOT)
 		current_load_scene.hide_old_scene.connect(func () :
 			for child in $HoldingScene.get_children() :
@@ -95,6 +97,8 @@ func _process_load_poll() :
 		current_load_scene.animation_end.connect(func () :
 			current_load_scene.queue_free()
 			current_load_scene = null
+			if not old_load_target == null : OptionsOverlay.set_can_pause(old_load_target.can_pause)
+			old_load_target = null
 		, CONNECT_ONE_SHOT)
 		current_load_scene.start_transition()
 		
@@ -104,9 +108,10 @@ func _process_load_poll() :
 		
 		if load_midpoint :
 			var _new_scene = current_load_target.get_finished()
-			current_load_target = null
 			$ActiveScene.add_child(_new_scene)
 			load_endpoint = true
+			old_load_target = current_load_target
+			current_load_target = null
 	pass
 	
 #TODO : New cancel load scene
@@ -205,8 +210,8 @@ func change_scene(scene : SceneLoadWrapper, animation : SceneLoadWrapper) -> boo
 	if scene.corrupted :
 		printerr("Scene corrupted!")
 		return false
-	if not current_load_target == null :
-		printerr("Already switching scenes")
+	#if not current_load_target == null : #FIXME : Actually make look better than simply overriding
+		#printerr("Already switching scenes")
 	#FIXME : handle transitions n stuff
 	
 	for child in $ActiveScene.get_children() :
@@ -218,5 +223,8 @@ func change_scene(scene : SceneLoadWrapper, animation : SceneLoadWrapper) -> boo
 	current_load_scene = null
 	load_midpoint = false
 	load_endpoint = false
+	
+	OptionsOverlay.set_game(scene.is_game)
+	OptionsOverlay.set_can_pause(false)
 	
 	return true

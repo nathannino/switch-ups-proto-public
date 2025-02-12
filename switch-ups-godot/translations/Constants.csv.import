@@ -1,0 +1,17 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://dor67lld0bsho"
+
+[deps]
+
+files=["res://translations/Constants.en.translation", "res://translations/Constants.fr.translation"]
+
+source_file="res://translations/Constants.csv"
+dest_files=["res://translations/Constants.en.translation", "res://translations/Constants.fr.translation"]
+
+[params]
+
+compress=true
+delimiter=1

@@ -1,6 +1,7 @@
 extends Button
 
 @export var key : String
+@export var transition_key = "wipe_rect"
 var target : SceneLoadWrapper
 var transition : SceneLoadWrapper
 

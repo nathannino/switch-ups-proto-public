@@ -8,7 +8,7 @@
 [resource]
 script = ExtResource("1_fv8pj")
 key = "placeholder"
-name = "Placeholder"
+name = "TR_SPIRIT_PLACEHOLDER"
 sprite = ExtResource("2_h2geq")
 type = 8
 health = 10
