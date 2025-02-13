@@ -21,7 +21,7 @@ TR_SUMMARY_CONCRETE;{tr} Power : {power};Pouvoir {tr} : {power}
 TR_SUMMARY_ABSTRACT;{tr} Power : {power};Pouvoir {tr} : {power}
 TR_SUMMARY_DEFENSE;Defense : {defense};Défense : {defense}
 TR_SUMMARY_SPEED;Speed : {speed};Vitesse : {speed}
-TR_SUMMARY_LUCK;Luck : {luck};Chance : {luck}
+TR_SUMMARY_LUCK;Luck : {luck}%;Chance : {luck}%
 TR_SUMMARY_ACTION;Actions : ;Actions : 
 TR_SUMMARY_COST;Cost : {cost};Coût : {cost}
 TR_OPTIONS_RESUME;Resume;Retour au jeu
