@@ -26,7 +26,7 @@ considerd_game = false
 
 [sub_resource type="Resource" id="Resource_5wk4i"]
 script = ExtResource("1_kd84q")
-key = "tcp_port"
+key = "tcp_poc"
 scene = "res://TCP_server_project/main_tcp.tscn"
 can_pause = true
 considerd_game = false

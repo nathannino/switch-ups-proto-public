@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://bg6nha4tn60d1"]
+
+[ext_resource type="PackedScene" uid="uid://bsp4cm2qvhap7" path="res://TCP_server_project/server/server_client_node.tscn" id="1_rcwo6"]
+[ext_resource type="Script" path="res://monster_systems/server/server_client_wrapper.gd" id="1_rpjwv"]
+
+[node name="ServerClientWrapper" type="Node"]
+script = ExtResource("1_rpjwv")
+
+[node name="ServerClientNode" parent="." instance=ExtResource("1_rcwo6")]
+
+[connection signal="disconnected" from="ServerClientNode" to="." method="_on_server_client_node_disconnected"]
+[connection signal="payload_received" from="ServerClientNode" to="." method="_on_server_client_node_payload_received"]

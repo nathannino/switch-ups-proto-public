@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://b2tpdem416owt"]
+
+[ext_resource type="Script" path="res://monster_systems/server/server_wrapper.gd" id="1_5rxyd"]
+[ext_resource type="PackedScene" uid="uid://b1dfhsdyhw75g" path="res://TCP_server_project/server/tcp_server.tscn" id="2_pr3k4"]
+
+[node name="ServerWrapper" type="Node"]
+script = ExtResource("1_5rxyd")
+
+[node name="ServerMain" parent="." instance=ExtResource("2_pr3k4")]

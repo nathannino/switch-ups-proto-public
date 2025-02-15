@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://cdnpcuio7rgqv"]
+
+[ext_resource type="Script" path="res://monster_systems/client_autoload/client_wrapper_autoload.gd" id="1_5cum3"]
+[ext_resource type="PackedScene" uid="uid://bd1kyiefxpy52" path="res://TCP_server_project/client/tcp_client.tscn" id="2_u3gkb"]
+
+[node name="ClientWrapperAutoload" type="Node"]
+script = ExtResource("1_5cum3")
+
+[node name="MainClient" parent="." instance=ExtResource("2_u3gkb")]
+
+[connection signal="accepted" from="MainClient" to="." method="_on_main_client_accepted"]
+[connection signal="disconnected" from="MainClient" to="." method="_on_main_client_disconnected"]
+[connection signal="payload_received" from="MainClient" to="." method="_on_main_client_payload_received"]

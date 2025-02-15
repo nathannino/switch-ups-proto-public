@@ -8,6 +8,12 @@ func peer_ready(_peer : StreamPeerTCP) -> void:
 	var payload = TcpPayload.new().set_type(TcpPayload.TYPE.ASK_VER).set_content(TcpPayload.PROTOCOL_VER)
 	send(payload)
 
+func peer_refused(_peer : StreamPeerTCP) -> void:
+	peer = _peer
+	print("%s was refused" % peer)
+	send(TcpPayload.new().set_type(TcpPayload.TYPE.ERR_DISCONNECT).set_content("full"))
+	queue_free() # Not sending disconnected, as this shouldn't even be considered connected
+
 # TODO Include check to see if connected or not I guess
 func send(_payload : TcpPayload) :
 	peer.put_utf8_string(_payload.get_sent_json())
