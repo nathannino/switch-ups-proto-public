@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://cte06pjoedgye"]
+
+[ext_resource type="Script" path="res://TCP_server_project/wrappers/server_wrapper.gd" id="1_mvah0"]
+[ext_resource type="PackedScene" uid="uid://b1dfhsdyhw75g" path="res://TCP_server_project/server/tcp_server.tscn" id="1_sny84"]
+
+[node name="ServerWrapper" type="Node"]
+script = ExtResource("1_mvah0")
+
+[node name="ServerMain" parent="." instance=ExtResource("1_sny84")]

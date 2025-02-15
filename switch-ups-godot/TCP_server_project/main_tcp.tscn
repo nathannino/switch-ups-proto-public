@@ -1,0 +1,107 @@
+[gd_scene load_steps=6 format=3 uid="uid://diythk4g0iryy"]
+
+[ext_resource type="PackedScene" uid="uid://cte06pjoedgye" path="res://TCP_server_project/wrappers/ServerWrapper.tscn" id="1_h4fia"]
+[ext_resource type="PackedScene" uid="uid://bge7w16mcqrkq" path="res://TCP_server_project/wrappers/server_client_wrapper.tscn" id="2_jqct3"]
+[ext_resource type="PackedScene" uid="uid://ch52fr6lojmuk" path="res://TCP_server_project/wrappers/ClientWrapper.tscn" id="2_opsro"]
+
+[sub_resource type="GDScript" id="GDScript_fkrf5"]
+script/source = "extends Node
+
+@export var server : PackedScene
+@export var server_client : PackedScene
+@export var client : PackedScene
+
+const PORT = 25565;
+
+func _on_start_server_button_pressed() -> void:
+	if $ServerParent.get_children().size() <= 0 :
+		var _server = server.instantiate()
+		$ServerParent.add_child(_server)
+		_server.start_server(\"*\",PORT,server_client)
+		return
+	printerr(\"Server already exists\")
+
+
+func _on_start_client_button_pressed() -> void:
+	var client_instance = client.instantiate()
+	$ClientParent.add_child(client_instance)
+	var _username = $Control/TabContainer/System/LineEdit.get_text()
+	var _host = $Control/TabContainer/System/HSplitContainer/LineEdit.get_text()
+	print(\"Username : %s\" % _username)
+	print(\"Host : %s\" % _host)
+	client_instance.start_client(_host, PORT, _username, $Control/TabContainer)
+	pass # Replace with function body.
+
+func _process(_delta: float) -> void:
+	$Control/TabContainer/System/Label.text = \"Nombre de clients connectés : %s\" % $ServerParent.get_connection_amount()
+"
+
+[sub_resource type="GDScript" id="GDScript_v3poj"]
+script/source = "extends Node
+
+func get_connection_amount() -> int :
+	if not get_child_count() > 0 :
+		return 0
+	return get_child(0).get_connections()
+"
+
+[node name="MainTcp" type="Node"]
+script = SubResource("GDScript_fkrf5")
+server = ExtResource("1_h4fia")
+server_client = ExtResource("2_jqct3")
+client = ExtResource("2_opsro")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TabContainer" type="TabContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+current_tab = 0
+drag_to_rearrange_enabled = true
+
+[node name="System" type="VBoxContainer" parent="Control/TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="LineEdit" type="LineEdit" parent="Control/TabContainer/System"]
+layout_mode = 2
+placeholder_text = "Enter username"
+
+[node name="start_server_button" type="Button" parent="Control/TabContainer/System"]
+layout_mode = 2
+text = "Start server"
+
+[node name="HSplitContainer" type="HBoxContainer" parent="Control/TabContainer/System"]
+layout_mode = 2
+
+[node name="LineEdit" type="LineEdit" parent="Control/TabContainer/System/HSplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Adress to connect (Leave blank for localhost)"
+
+[node name="start_client_button" type="Button" parent="Control/TabContainer/System/HSplitContainer"]
+layout_mode = 2
+text = "Start client
+"
+
+[node name="Label" type="Label" parent="Control/TabContainer/System"]
+layout_mode = 2
+text = "Nombre de clients connectés : 0"
+
+[node name="ClientParent" type="Node" parent="."]
+
+[node name="ServerParent" type="Node" parent="."]
+script = SubResource("GDScript_v3poj")
+
+[connection signal="pressed" from="Control/TabContainer/System/start_server_button" to="." method="_on_start_server_button_pressed"]
+[connection signal="pressed" from="Control/TabContainer/System/HSplitContainer/start_client_button" to="." method="_on_start_client_button_pressed"]
