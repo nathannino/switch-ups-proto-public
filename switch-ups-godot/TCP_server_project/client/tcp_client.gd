@@ -10,6 +10,7 @@ func start_client(_host : String, _port : int) -> void :
 	peer = StreamPeerTCP.new()
 	if not peer.connect_to_host(_host,_port) == OK :
 		printerr("Connection failed")
+		error.emit("TR_CONN_FAILED")
 		disconnected.emit()
 		queue_free()
 		return
@@ -22,6 +23,12 @@ func send(_payload : TcpPayload) :
 signal payload_received(payload : TcpPayload)
 signal accepted
 signal disconnected
+signal error(reason : String)
+
+func regular_disconnect() :
+	peer.disconnect_from_host()
+	disconnected.emit()
+	queue_free()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -30,7 +37,6 @@ func _process(delta: float) -> void:
 	var can_poll = peer.poll()
 	if not can_poll == 0 :
 		printerr("Polling failed %s" % can_poll)
-		queue_free()
 	match peer.get_status() :
 		peer.STATUS_NONE :
 			print("Client not connected to server %s, acting as disconnected" % peer)
@@ -54,6 +60,7 @@ func _process(delta: float) -> void:
 						peer.disconnect_from_host()
 						disconnected.emit()
 						printerr("Disconnected from server : %s" % payload.get_content())
+						error.emit(payload.get_content())
 						queue_free()
 						return
 					TcpPayload.TYPE.ASK_VER_ACCEPTED :

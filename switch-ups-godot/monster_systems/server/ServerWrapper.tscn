@@ -1,9 +1,90 @@
-[gd_scene load_steps=3 format=3 uid="uid://b2tpdem416owt"]
+[gd_scene load_steps=7 format=3 uid="uid://b2tpdem416owt"]
 
 [ext_resource type="Script" path="res://monster_systems/server/server_wrapper.gd" id="1_5rxyd"]
+[ext_resource type="PackedScene" uid="uid://bg6nha4tn60d1" path="res://monster_systems/server/server_client_wrapper.tscn" id="2_iesxm"]
 [ext_resource type="PackedScene" uid="uid://b1dfhsdyhw75g" path="res://TCP_server_project/server/tcp_server.tscn" id="2_pr3k4"]
 
-[node name="ServerWrapper" type="Node"]
+[sub_resource type="GDScript" id="GDScript_gxxs3"]
+script/source = "extends Control
+
+@export var reason : Label
+
+func show_reason(msg : String) :
+	reason.text = msg
+	show()
+"
+
+[sub_resource type="LabelSettings" id="LabelSettings_dnnys"]
+font_size = 30
+
+[sub_resource type="GDScript" id="GDScript_po850"]
+script/source = "extends Button
+
+@export var root : Control
+
+
+func _on_pressed() -> void:
+	root.hide()
+	pass # Replace with function body.
+"
+
+[node name="ServerWrapper" type="Node" node_paths=PackedStringArray("error_root")]
 script = ExtResource("1_5rxyd")
+server_client_wrapper = ExtResource("2_iesxm")
+error_root = NodePath("ErrorRoot")
 
 [node name="ServerMain" parent="." instance=ExtResource("2_pr3k4")]
+
+[node name="ErrorRoot" type="ColorRect" parent="." node_paths=PackedStringArray("reason")]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.431373)
+script = SubResource("GDScript_gxxs3")
+reason = NodePath("CenterContainer/PanelContainer/MarginContainer/VBoxContainer/PanelContainer/reason")
+
+[node name="CenterContainer" type="CenterContainer" parent="ErrorRoot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="ErrorRoot/CenterContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="ErrorRoot/CenterContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ErrorRoot/CenterContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Label" type="Label" parent="ErrorRoot/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "TR_MSG_ERROR_TITLE"
+label_settings = SubResource("LabelSettings_dnnys")
+horizontal_alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="ErrorRoot/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="reason" type="Label" parent="ErrorRoot/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/PanelContainer"]
+layout_mode = 2
+text = "LOLOLOLOL ERROR MESSAGE GO BRRR"
+
+[node name="Button" type="Button" parent="ErrorRoot/CenterContainer/PanelContainer/MarginContainer/VBoxContainer" node_paths=PackedStringArray("root")]
+layout_mode = 2
+text = "TR_MSG_DISMISS"
+script = SubResource("GDScript_po850")
+root = NodePath("../../../../..")
+
+[connection signal="pressed" from="ErrorRoot/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/Button" to="ErrorRoot/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/Button" method="_on_pressed"]

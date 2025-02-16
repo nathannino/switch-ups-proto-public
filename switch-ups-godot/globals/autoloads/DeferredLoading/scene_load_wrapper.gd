@@ -53,7 +53,6 @@ func from_key(_key : String) -> SceneLoadWrapper :
 		printerr("Scene does not exists")
 		return null # FIXME : Super bad omg... but since it's only me and gdscript doesn't have exceptions, I want to crash and burn in a way the debugger can help me with
 	can_pause = scene.can_pause
-	is_game = scene.considerd_game
 	return self
 
 func with_preloaded_generations(_preload_generations = {}) -> SceneLoadWrapper :

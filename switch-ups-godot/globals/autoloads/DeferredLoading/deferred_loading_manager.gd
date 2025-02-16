@@ -224,7 +224,6 @@ func change_scene(scene : SceneLoadWrapper, animation : SceneLoadWrapper) -> boo
 	load_midpoint = false
 	load_endpoint = false
 	
-	OptionsOverlay.set_game(scene.is_game)
 	OptionsOverlay.set_can_pause(false)
 	
 	return true

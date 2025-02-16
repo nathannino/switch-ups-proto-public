@@ -14,7 +14,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_3h00b")
-debug_scene_load = "tcp_poc"
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 3.0

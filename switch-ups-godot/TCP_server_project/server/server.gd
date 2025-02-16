@@ -8,15 +8,14 @@ var server : TCPServer
 var client : PackedScene
 var client_signal : Callable
 
-func start_server(_bind_address : String, _port : int, _server_client_wrapper : PackedScene, global_signal_emitable : Callable) -> void :
+func start_server(_bind_address : String, _port : int, _server_client_wrapper : PackedScene, global_signal_emitable : Callable) -> Error :
 	server = TCPServer.new();
 	client = _server_client_wrapper
 	client_signal = global_signal_emitable
 	var response = server.listen(_port, _bind_address);
 	if not response == 0 :
 		printerr("Server failed to start : %s" % response)
-		get_tree().quit(-1);
-	pass # Replace with function body.
+	return response
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
