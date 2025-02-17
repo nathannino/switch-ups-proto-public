@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bvau8nx2vb1p0"]
+[gd_scene load_steps=10 format=3 uid="uid://bvau8nx2vb1p0"]
 
 [ext_resource type="Script" path="res://scenes/main_menu/main_menu.gd" id="1_e6rbv"]
 [ext_resource type="Script" path="res://globals/simple_scripts/button_change_scene_simple.gd" id="2_330wo"]
@@ -58,14 +58,25 @@ func _on_text_changed(new_text: String) -> void:
 	pass # Replace with function body.
 "
 
+[sub_resource type="GDScript" id="GDScript_xfoha"]
+script/source = "extends HBoxContainer
+
+@export var next_scene : String
+@export var transition : String
+
+func goto_next() :
+	DeferredLoadingManager.change_scene(SceneLoadWrapper.create().from_key(next_scene).background_preload().prepare(),SceneLoadWrapper.create().as_transition(transition).prepare())
+"
+
 [sub_resource type="GDScript" id="GDScript_jnjxl"]
 script/source = "extends Button
 
 @export var port : LineEdit
 
 func _on_pressed() -> void:
-	if ServerWrapper.start_server(\"*\",int(port.value)) :
+	if ServerWrapper.start_server(\"*\",int(port.text)) :
 		ClientWrapperAutoload.start_client(\"localhost\",int(port.text))
+		$\"..\".goto_next()
 		#TODO : Change Scene
 "
 
@@ -77,6 +88,7 @@ script/source = "extends Button
 
 func _on_pressed() -> void:
 	ClientWrapperAutoload.start_client(host.text,int(port.text))
+	$\"..\".goto_next()
 "
 
 [node name="MainMenu" type="Control"]
@@ -224,6 +236,7 @@ text = "TR_PORT"
 [node name="Port" type="LineEdit" parent="ConnectMenu/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+text = "25565"
 script = SubResource("GDScript_vuij6")
 
 [node name="Control" type="Control" parent="ConnectMenu/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
@@ -231,6 +244,9 @@ layout_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="ConnectMenu/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
+script = SubResource("GDScript_xfoha")
+next_scene = "build_team"
+transition = "wipe_rect"
 
 [node name="but_host" type="Button" parent="ConnectMenu/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" node_paths=PackedStringArray("port")]
 layout_mode = 2

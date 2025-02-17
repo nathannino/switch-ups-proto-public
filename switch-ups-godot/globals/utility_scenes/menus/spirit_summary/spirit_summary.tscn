@@ -104,7 +104,7 @@ script/source = "extends VBoxContainer
 
 const template = preload(\"uid://bw37jbhbgf6s0\")
 
-func set_actions(actions : Array[ms_action]) :
+func set_actions(actions : Array) :
 	for child in get_children() :
 		remove_child(child)
 		child.queue_free()

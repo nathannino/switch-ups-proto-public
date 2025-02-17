@@ -1,0 +1,200 @@
+[gd_scene load_steps=4 format=3 uid="uid://bjwcj7an8i718"]
+
+[ext_resource type="Texture2D" uid="uid://masa1osx0s86" path="res://monster_systems/spirits/art/unknown.png" id="1_doi4o"]
+
+[sub_resource type="GDScript" id="GDScript_k40d3"]
+script/source = "extends Control
+
+@export var spr : TextureRect
+@export var name_label : Label
+@export var health_label : Label
+@export var Type1 : RichTextLabel
+@export var Type2 : RichTextLabel
+
+@export var none_label : Label
+@export var button : Button
+
+signal pressed_option(index : int)
+var current_spirit : ms_spirit_active
+var options = []
+@export var options_root : Control
+
+func set_health(curr_health : float, max_health : float) :
+	health_label.text = \"HP : {curr}/{max}\".format({\"curr\":curr_health,\"max\":max_health})
+
+func reset() :
+	current_spirit = null
+	spr.texture = null
+	name_label.text = \"\"
+	health_label.text = \"\"
+	Type1.text = \"\"
+	Type2.text = \"\"
+	none_label.text = \"No spirits selected\"
+	options = []
+	button.show()
+	populate_options()
+
+func set_monster(spirit_active : ms_spirit_active, _options : Array = []) :
+	current_spirit = spirit_active
+	options = _options
+	var spirit : ms_spirit = SpiritDictionary.spirits[spirit_active.key]
+	name_label.text = tr(spirit.name)
+	spr.texture = spirit.sprite
+	set_health(spirit_active.current_hp,spirit.health)
+	Type1.text = ms_constants.type_to_bbcode(spirit.type)
+	Type2.text = \"\"
+	if not spirit_active.key_equip == \"\" :
+		var spirit_equip : ms_spirit = SpiritDictionary.spirits[spirit_active.key_equip]
+		Type2.text = ms_constants.type_to_bbcode(spirit_equip.type)
+	none_label.text = \"\"
+	button.show()
+	populate_options()
+
+func populate_options() :
+	for child in options_root.get_children() :
+		child.queue_free()
+	
+	for index in range(options.size()) :
+		var option = options[index]
+		var but = Button.new()
+		but.text = option #FIXME : Does button automatically translate when text is set using gdscript?
+		but.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		but.pressed.connect(func () : _on_button_option_pressed(index))
+		options_root.add_child(but)
+
+func show_options() -> void :
+	options_root.show()
+	button.hide()
+	options_root.get_child(0).grab_focus()
+
+func hide_options() -> void :
+	options_root.hide()
+	button.show()
+
+func _on_button_pressed() -> void:
+	if options.size() == 0 :
+		pressed_option.emit(-1)
+	else :
+		show_options()
+
+func _on_button_option_pressed(index : int) -> void:
+	pressed_option.emit(index)
+
+func _on_button_focus_entered() -> void:
+	if not options.size() == 0 :
+		show_options()
+
+func _ready() :
+	get_viewport().gui_focus_changed.connect(func (node : Control) :
+		if not (node.get_parent() == options_root) :
+			hide_options()
+	)
+"
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_76o8l"]
+
+[node name="MonsterButton" type="Control" node_paths=PackedStringArray("spr", "name_label", "health_label", "Type1", "Type2", "none_label", "button", "options_root")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_k40d3")
+spr = NodePath("VBoxContainer/Control/VBoxContainer/TextureRect")
+name_label = NodePath("VBoxContainer/Control/VBoxContainer/HBoxContainer/Name")
+health_label = NodePath("VBoxContainer/Control/VBoxContainer/HBoxContainer/Health")
+Type1 = NodePath("VBoxContainer/Control/VBoxContainer/HBoxContainer/HBoxContainer/Type1")
+Type2 = NodePath("VBoxContainer/Control/VBoxContainer/HBoxContainer/HBoxContainer/Type2")
+none_label = NodePath("CenterContainer/Label")
+button = NodePath("Button")
+options_root = NodePath("VBoxContainer/HBoxContainer")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Control" type="Control" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="HBoxContainer" parent="VBoxContainer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/Control/VBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.25
+texture = ExtResource("1_doi4o")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="HBoxContainer" type="VBoxContainer" parent="VBoxContainer/Control/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="Name" type="Label" parent="VBoxContainer/Control/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Name"
+
+[node name="Health" type="Label" parent="VBoxContainer/Control/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Health
+"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Control/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Type1" type="RichTextLabel" parent="VBoxContainer/Control/VBoxContainer/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "Type1"
+fit_content = true
+autowrap_mode = 0
+
+[node name="Type2" type="RichTextLabel" parent="VBoxContainer/Control/VBoxContainer/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "Type2"
+fit_content = true
+autowrap_mode = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_76o8l")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="CenterContainer"]
+layout_mode = 2
+text = "No Spirits Selected"
+
+[connection signal="focus_entered" from="Button" to="." method="_on_button_focus_entered"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="scene_dictionary" load_steps=10 format=3 uid="uid://dcsgbdv63ak16"]
+[gd_resource type="Resource" script_class="scene_dictionary" load_steps=11 format=3 uid="uid://dcsgbdv63ak16"]
 
 [ext_resource type="Script" path="res://globals/one_off_resources_scripts/scene_dictionary_entry.gd" id="1_kd84q"]
 [ext_resource type="Script" path="res://globals/one_off_resources_scripts/scene_dictionary.gd" id="2_b33rt"]
@@ -8,50 +8,49 @@ script = ExtResource("1_kd84q")
 key = "splash"
 scene = "res://scenes/splash/splash.tscn"
 can_pause = false
-considerd_game = false
 
 [sub_resource type="Resource" id="Resource_v6xim"]
 script = ExtResource("1_kd84q")
 key = "kill"
 scene = "res://scenes/kill.tscn"
 can_pause = false
-considerd_game = false
 
 [sub_resource type="Resource" id="Resource_bhrd2"]
 script = ExtResource("1_kd84q")
 key = "test"
 scene = "res://scenes/test/test_scene.tscn"
 can_pause = true
-considerd_game = false
 
 [sub_resource type="Resource" id="Resource_5wk4i"]
 script = ExtResource("1_kd84q")
 key = "tcp_poc"
 scene = "res://TCP_server_project/main_tcp.tscn"
 can_pause = true
-considerd_game = false
 
 [sub_resource type="Resource" id="Resource_jjp1p"]
 script = ExtResource("1_kd84q")
 key = "main_menu"
 scene = "res://scenes/main_menu/main_menu.tscn"
 can_pause = true
-considerd_game = false
 
 [sub_resource type="Resource" id="Resource_3n38e"]
 script = ExtResource("1_kd84q")
 key = "credits"
 scene = "res://scenes/main_menu/credits/credits_menu.tscn"
 can_pause = true
-considerd_game = false
 
 [sub_resource type="Resource" id="Resource_24nol"]
 script = ExtResource("1_kd84q")
 key = "compendium"
 scene = "res://scenes/main_menu/compendium/compendium_container.tscn"
 can_pause = true
-considerd_game = false
+
+[sub_resource type="Resource" id="Resource_ruwtl"]
+script = ExtResource("1_kd84q")
+key = "build_team"
+scene = "res://scenes/build_team/build_team_root.tscn"
+can_pause = true
 
 [resource]
 script = ExtResource("2_b33rt")
-scenes = Array[ExtResource("1_kd84q")]([SubResource("Resource_d2k66"), SubResource("Resource_v6xim"), SubResource("Resource_bhrd2"), SubResource("Resource_5wk4i"), SubResource("Resource_jjp1p"), SubResource("Resource_3n38e"), SubResource("Resource_24nol")])
+scenes = Array[ExtResource("1_kd84q")]([SubResource("Resource_d2k66"), SubResource("Resource_v6xim"), SubResource("Resource_bhrd2"), SubResource("Resource_5wk4i"), SubResource("Resource_jjp1p"), SubResource("Resource_3n38e"), SubResource("Resource_24nol"), SubResource("Resource_ruwtl")])
