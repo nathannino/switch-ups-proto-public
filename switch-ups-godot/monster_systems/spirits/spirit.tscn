@@ -1,19 +1,46 @@
-[gd_scene load_steps=3 format=3 uid="uid://ope0vgwhns7r"]
+[gd_scene load_steps=7 format=3 uid="uid://ope0vgwhns7r"]
 
 [ext_resource type="Texture2D" uid="uid://masa1osx0s86" path="res://monster_systems/spirits/art/unknown.png" id="1_plwqg"]
+[ext_resource type="Shader" path="res://shaders/spirit_ball.gdshader" id="1_uvler"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_d7wlw"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_n7s4d"]
+seamless = true
+noise = SubResource("FastNoiseLite_d7wlw")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qxfs0"]
+render_priority = 0
+shader = ExtResource("1_uvler")
+shader_parameter/time_speed = 0.1
+shader_parameter/spin = 0.0
+shader_parameter/flame_brightness = 0.6
+shader_parameter/color_intensity = 0.0
+shader_parameter/horizontal_frequency = 1.0
+shader_parameter/vertical_frequency = 1.0
+shader_parameter/size = -0.3
+shader_parameter/core_size = 1.0
+shader_parameter/color1 = Color(0.286, 0.22, 0.733, 1)
+shader_parameter/color2 = Color(0.98, 0.38, 0.34, 1)
+shader_parameter/color3 = Color(0.98, 0.95, 0.53, 1)
+shader_parameter/color4 = Color(1, 1, 1, 1)
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_n7s4d")
 
 [sub_resource type="SphereMesh" id="SphereMesh_wmpj6"]
+material = SubResource("ShaderMaterial_qxfs0")
+radius = 1.0
+height = 2.0
 
 [node name="Spirit" type="Node3D"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
 mesh = SubResource("SphereMesh_wmpj6")
 
 [node name="center" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.00572)
 
 [node name="Sprite3D" type="Sprite3D" parent="center"]
-transform = Transform3D(0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, 0, 0, 0.0268061)
+transform = Transform3D(0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, 0, 0, 0)
 texture_filter = 0
 texture = ExtResource("1_plwqg")

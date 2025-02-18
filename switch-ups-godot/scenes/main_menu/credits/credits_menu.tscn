@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://c61v7qckif4d1"]
+[gd_scene load_steps=9 format=3 uid="uid://c61v7qckif4d1"]
 
 [ext_resource type="Script" path="res://scenes/main_menu/credits/music_credits/music_library.gd" id="1_4rm8s"]
 [ext_resource type="Script" path="res://globals/simple_scripts/button_change_scene_simple.gd" id="1_wmp6k"]
@@ -121,6 +121,36 @@ func _process(delta: float) -> void:
 	pass
 "
 
+[sub_resource type="GDScript" id="GDScript_v1poy"]
+script/source = "extends RichTextLabel
+
+@export var title : String
+@export var translate : bool
+
+func _get_index() -> int :
+	var child_list = $\"..\".get_children()
+	for i in range(child_list.size()) :
+		if child_list[i] == self :
+			return i
+	return -1
+
+func _notification(what: int) -> void:
+	match what:
+		NOTIFICATION_TRANSLATION_CHANGED :
+			translate_title()
+
+func translate_title() :
+	# Set name
+	var index = _get_index()
+	var text = tr(title) if translate else title
+	$\"..\".set_tab_title(index,text)
+
+
+func _on_meta_clicked(meta: Variant) -> void:
+	OS.shell_open(str(meta))
+	pass # Replace with function body.
+"
+
 [node name="MarginContainer" type="MarginContainer"]
 anchors_preset = 15
 anchor_right = 1.0
@@ -178,6 +208,19 @@ script = SubResource("GDScript_auesj")
 title = "TR_CREDIT_LICENSE"
 translate = true
 metadata/_tab_index = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/VBoxContainer/Credits/Third Party"]
+visible = false
+layout_mode = 2
+bbcode_enabled = true
+text = "
+[ul]
+Stylized Flame - [url=https://godotshaders.com/shader/stylized-flame/](Thundergecko8 | Godot Shaders)[/url] - MIT
+[/ul]"
+script = SubResource("GDScript_v1poy")
+title = "TR_CREDIT_PLUGINS"
+translate = true
+metadata/_tab_index = 2
 
 [node name="Music" type="TabContainer" parent="PanelContainer/VBoxContainer/Credits"]
 layout_mode = 2
@@ -782,3 +825,5 @@ s"
 script = ExtResource("3_ntjgm")
 title = "OGA-BY-4.0"
 metadata/_tab_index = 2
+
+[connection signal="meta_clicked" from="PanelContainer/VBoxContainer/Credits/Third Party/RichTextLabel" to="PanelContainer/VBoxContainer/Credits/Third Party/RichTextLabel" method="_on_meta_clicked"]
