@@ -150,6 +150,8 @@ func disconnect_if_connected() :
 	
 	if spirit_list.changed_selection.is_connected(current_callable) :
 		spirit_list.changed_selection.disconnect(current_callable)
+	if movelist.move_selected.is_connected(current_callable) :
+		movelist.move_selected.disconnect(current_callable)
 
 func await_move_selection(index : int) :
 	scene_root.show_summary_movelist() # This needs to be first, else we automatically disconnect right after we connect to the signal
