@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cvjy602iejvrx"]
+[gd_scene load_steps=11 format=3 uid="uid://cvjy602iejvrx"]
 
 [ext_resource type="PackedScene" uid="uid://bjwcj7an8i718" path="res://globals/utility_scenes/ui_component/monster_button.tscn" id="1_5754o"]
 [ext_resource type="PackedScene" uid="uid://cmjl5hcgm2r7w" path="res://globals/utility_scenes/menus/spirit_summary/spirit_list.tscn" id="2_5ups2"]
@@ -99,6 +99,7 @@ func await_selection(button_node : Control) :
 		_on_selection_done(button_node,selection)
 	disconnect_if_connected()
 	spirit_list.changed_selection.connect(current_callable)
+	spirit_list.set_cancel_button(false)
 
 func _on_button_pressed(node : Control, index : int) :
 	match index :
@@ -174,6 +175,7 @@ func await_equip_selection() :
 	current_callable = func (selection : ms_spirit) :
 		_on_equip_selection_done(selection)
 	spirit_list.changed_selection.connect(current_callable)
+	spirit_list.set_cancel_button(true)
 
 func _on_spirit_summary_requested_equip_change() -> void:
 	await_equip_selection()
@@ -181,7 +183,7 @@ func _on_spirit_summary_requested_equip_change() -> void:
 
 func _on_equip_selection_done(selection : ms_spirit) :
 	var spirit = $SpiritSummary.spirit_active
-	spirit.change_equip_key(selection.key)
+	spirit.change_equip_key(selection.key if not selection == null else \"\")
 	$SpiritSummary.reload_content()
 	team_list.reload_content()
 	scene_root.show_team_summary()
@@ -200,6 +202,9 @@ signal changed_selection(selection : ms_spirit)
 
 func _on_spirit_list_changed_selection(selection: ms_spirit) -> void:
 	changed_selection.emit(selection)
+
+func set_cancel_button(boolean : bool) :
+	$SpiritList.set_cancel_button(boolean)
 "
 
 [sub_resource type="GDScript" id="GDScript_4hyk4"]
@@ -214,6 +219,17 @@ func set_actions(actions : Array) :
 	$MoveHolder.set_actions(actions)
 "
 
+[sub_resource type="GDScript" id="GDScript_knxf0"]
+script/source = "extends Button
+
+
+func _on_toggled(toggled_on: bool) -> void:
+	if toggled_on :
+		text = \"TR_BUILD_UNREADY\"
+	else :
+		text = \"TR_BUILD_READY\"
+"
+
 [node name="BuildTeamRoot" type="Control" node_paths=PackedStringArray("empty_node", "team_builder", "summary", "spirit_list", "move_list")]
 layout_mode = 3
 anchors_preset = 15
@@ -222,13 +238,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = SubResource("GDScript_b8mls")
-empty_node = NodePath("HBoxContainer/Empty")
-team_builder = NodePath("HBoxContainer/TeamBuilder")
-summary = NodePath("HBoxContainer/SpiritSummary2")
-spirit_list = NodePath("HBoxContainer/SpiritList")
-move_list = NodePath("HBoxContainer/MoveList")
+empty_node = NodePath("VBoxContainer/HBoxContainer/Empty")
+team_builder = NodePath("VBoxContainer/HBoxContainer/TeamBuilder")
+summary = NodePath("VBoxContainer/HBoxContainer/SpiritSummary2")
+spirit_list = NodePath("VBoxContainer/HBoxContainer/SpiritList")
+move_list = NodePath("VBoxContainer/HBoxContainer/MoveList")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -236,70 +252,85 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TeamBuilder" type="ScrollContainer" parent="HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TeamBuilder" type="ScrollContainer" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/TeamBuilder" node_paths=PackedStringArray("summary", "scene_root", "spirit_list")]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/TeamBuilder" node_paths=PackedStringArray("summary", "scene_root", "spirit_list")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = SubResource("GDScript_37t73")
 summary = NodePath("../../SpiritSummary2/SpiritSummary")
-scene_root = NodePath("../../..")
+scene_root = NodePath("../../../..")
 spirit_list = NodePath("../../SpiritList")
 
-[node name="MonsterButton" parent="HBoxContainer/TeamBuilder/VBoxContainer" instance=ExtResource("1_5754o")]
+[node name="MonsterButton" parent="VBoxContainer/HBoxContainer/TeamBuilder/VBoxContainer" instance=ExtResource("1_5754o")]
 layout_mode = 2
 
-[node name="MonsterButton2" parent="HBoxContainer/TeamBuilder/VBoxContainer" instance=ExtResource("1_5754o")]
+[node name="MonsterButton2" parent="VBoxContainer/HBoxContainer/TeamBuilder/VBoxContainer" instance=ExtResource("1_5754o")]
 layout_mode = 2
 
-[node name="MonsterButton3" parent="HBoxContainer/TeamBuilder/VBoxContainer" instance=ExtResource("1_5754o")]
+[node name="MonsterButton3" parent="VBoxContainer/HBoxContainer/TeamBuilder/VBoxContainer" instance=ExtResource("1_5754o")]
 layout_mode = 2
 
-[node name="MonsterButton4" parent="HBoxContainer/TeamBuilder/VBoxContainer" instance=ExtResource("1_5754o")]
+[node name="MonsterButton4" parent="VBoxContainer/HBoxContainer/TeamBuilder/VBoxContainer" instance=ExtResource("1_5754o")]
 layout_mode = 2
 
-[node name="MonsterButton5" parent="HBoxContainer/TeamBuilder/VBoxContainer" instance=ExtResource("1_5754o")]
+[node name="MonsterButton5" parent="VBoxContainer/HBoxContainer/TeamBuilder/VBoxContainer" instance=ExtResource("1_5754o")]
 layout_mode = 2
 
-[node name="Empty" type="Control" parent="HBoxContainer"]
+[node name="Empty" type="Control" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="SpiritSummary2" type="Control" parent="HBoxContainer" node_paths=PackedStringArray("scene_root", "spirit_list", "team_list", "movelist")]
+[node name="SpiritSummary2" type="Control" parent="VBoxContainer/HBoxContainer" node_paths=PackedStringArray("scene_root", "spirit_list", "team_list", "movelist")]
 layout_mode = 2
 size_flags_horizontal = 3
 script = SubResource("GDScript_gov62")
-scene_root = NodePath("../..")
+scene_root = NodePath("../../..")
 spirit_list = NodePath("../SpiritList/SpiritList")
 team_list = NodePath("../TeamBuilder/VBoxContainer")
 movelist = NodePath("../MoveList")
 
-[node name="SpiritSummary" parent="HBoxContainer/SpiritSummary2" instance=ExtResource("2_h40an")]
+[node name="SpiritSummary" parent="VBoxContainer/HBoxContainer/SpiritSummary2" instance=ExtResource("2_h40an")]
 layout_mode = 1
 size_flags_horizontal = 3
 
-[node name="SpiritList" type="Control" parent="HBoxContainer"]
+[node name="SpiritList" type="Control" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 script = SubResource("GDScript_l17k4")
 
-[node name="SpiritList" parent="HBoxContainer/SpiritList" instance=ExtResource("2_5ups2")]
+[node name="SpiritList" parent="VBoxContainer/HBoxContainer/SpiritList" instance=ExtResource("2_5ups2")]
 layout_mode = 1
 
-[node name="MoveList" type="ScrollContainer" parent="HBoxContainer"]
+[node name="MoveList" type="ScrollContainer" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 script = SubResource("GDScript_4hyk4")
 
-[node name="MoveHolder" parent="HBoxContainer/MoveList" instance=ExtResource("4_n3emp")]
+[node name="MoveHolder" parent="VBoxContainer/HBoxContainer/MoveList" instance=ExtResource("4_n3emp")]
 layout_mode = 2
 
-[connection signal="display_changed" from="." to="HBoxContainer/TeamBuilder/VBoxContainer" method="_on_build_team_root_display_changed"]
-[connection signal="display_changed" from="." to="HBoxContainer/SpiritSummary2" method="_on_build_team_root_display_changed"]
-[connection signal="move_selected" from="HBoxContainer/SpiritSummary2/SpiritSummary" to="HBoxContainer/SpiritSummary2" method="_on_spirit_summary_move_selected"]
-[connection signal="requested_equip_change" from="HBoxContainer/SpiritSummary2/SpiritSummary" to="HBoxContainer/SpiritSummary2" method="_on_spirit_summary_requested_equip_change"]
-[connection signal="changed_selection" from="HBoxContainer/SpiritList/SpiritList" to="HBoxContainer/SpiritList" method="_on_spirit_list_changed_selection"]
-[connection signal="move_selected" from="HBoxContainer/MoveList/MoveHolder" to="HBoxContainer/MoveList" method="_on_move_holder_move_selected"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+alignment = 2
+
+[node name="Button" type="Button" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+toggle_mode = true
+text = "TR_BUILD_READY"
+script = SubResource("GDScript_knxf0")
+
+[connection signal="display_changed" from="." to="VBoxContainer/HBoxContainer/TeamBuilder/VBoxContainer" method="_on_build_team_root_display_changed"]
+[connection signal="display_changed" from="." to="VBoxContainer/HBoxContainer/SpiritSummary2" method="_on_build_team_root_display_changed"]
+[connection signal="move_selected" from="VBoxContainer/HBoxContainer/SpiritSummary2/SpiritSummary" to="VBoxContainer/HBoxContainer/SpiritSummary2" method="_on_spirit_summary_move_selected"]
+[connection signal="requested_equip_change" from="VBoxContainer/HBoxContainer/SpiritSummary2/SpiritSummary" to="VBoxContainer/HBoxContainer/SpiritSummary2" method="_on_spirit_summary_requested_equip_change"]
+[connection signal="changed_selection" from="VBoxContainer/HBoxContainer/SpiritList/SpiritList" to="VBoxContainer/HBoxContainer/SpiritList" method="_on_spirit_list_changed_selection"]
+[connection signal="move_selected" from="VBoxContainer/HBoxContainer/MoveList/MoveHolder" to="VBoxContainer/HBoxContainer/MoveList" method="_on_move_holder_move_selected"]
+[connection signal="toggled" from="VBoxContainer/HBoxContainer2/Button" to="VBoxContainer/HBoxContainer2/Button" method="_on_toggled"]

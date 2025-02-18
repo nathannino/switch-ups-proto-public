@@ -49,6 +49,10 @@ static func from_spirit(_spirit : ms_spirit) -> ms_spirit_active :
 	return instance
 
 func change_equip_key(value : String) :
+	if value == "" :
+		key_equip = ""
+		extra_move = ""
+		return
 	key_equip = value
 	extra_move = SpiritDictionary.spirits[value].actions[0].key
 

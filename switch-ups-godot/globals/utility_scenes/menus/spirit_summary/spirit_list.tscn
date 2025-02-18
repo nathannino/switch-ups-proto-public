@@ -7,6 +7,22 @@
 script/source = "extends Control
 
 signal changed_selection(selection : ms_spirit)
+
+@export var show_cancel_default : bool
+@export var cancel_button : Button
+
+func _ready() :
+	set_cancel_button(show_cancel_default)
+
+func set_cancel_button(boolean : bool) :
+	if boolean :
+		cancel_button.show()
+	else :
+		cancel_button.hide()
+
+
+func _on_cancel_button_pressed() -> void:
+	changed_selection.emit(null)
 "
 
 [sub_resource type="GDScript" id="GDScript_iij4e"]
@@ -54,7 +70,7 @@ func _notification(what: int) -> void:
 			_set_columns()
 "
 
-[node name="SpiritList" type="Control"]
+[node name="SpiritList" type="Control" node_paths=PackedStringArray("cancel_button")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -62,6 +78,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = SubResource("GDScript_e72b4")
+cancel_button = NodePath("VBoxContainer/ScrollContainer2/VBoxContainer/CancelButton")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." node_paths=PackedStringArray("button_root", "scrollbar", "signal_sender")]
 layout_mode = 1
@@ -71,7 +88,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_wdcg7")
-button_root = NodePath("ScrollContainer2/ButtonRoot2")
+button_root = NodePath("ScrollContainer2/VBoxContainer/ButtonRoot2")
 button_template = ExtResource("2_nb18j")
 scrollbar = NodePath("ScrollContainer2")
 signal_sender = NodePath("..")
@@ -80,10 +97,21 @@ signal_sender = NodePath("..")
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ButtonRoot2" type="GridContainer" parent="VBoxContainer/ScrollContainer2"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CancelButton" type="Button" parent="VBoxContainer/ScrollContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "TR_SUMMARY_CLEAR"
+
+[node name="ButtonRoot2" type="GridContainer" parent="VBoxContainer/ScrollContainer2/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = SubResource("GDScript_iij4e")
 min_size = 250.0
 max_columns = 3
+
+[connection signal="pressed" from="VBoxContainer/ScrollContainer2/VBoxContainer/CancelButton" to="." method="_on_cancel_button_pressed"]

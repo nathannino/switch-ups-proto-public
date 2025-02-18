@@ -97,13 +97,14 @@ func _process_load_poll() :
 		current_load_scene.animation_end.connect(func () :
 			current_load_scene.queue_free()
 			current_load_scene = null
+			current_load_transition = null
 			if not old_load_target == null : OptionsOverlay.set_can_pause(old_load_target.can_pause)
 			old_load_target = null
 		, CONNECT_ONE_SHOT)
 		current_load_scene.start_transition()
 		
 	
-	if current_load_target.ready : #TODO : Add transition support
+	if current_load_target.ready :
 		$LoadingRoot/ProgressBar.value = 100
 		
 		if load_midpoint :
@@ -219,8 +220,9 @@ func change_scene(scene : SceneLoadWrapper, animation : SceneLoadWrapper) -> boo
 		$HoldingScene.add_child(child)
 	
 	current_load_target = scene
-	current_load_transition = animation
-	current_load_scene = null
+	if current_load_transition == null :
+		current_load_transition = animation
+		current_load_scene = null
 	load_midpoint = false
 	load_endpoint = false
 	

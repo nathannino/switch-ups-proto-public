@@ -10,6 +10,9 @@ func start_server(_bind_address : String, _port : int) -> bool :
 			return false
 		_:
 			return true
+
+func close_server() :
+	$ServerMain.close_server()
 	
 
 signal disconnected

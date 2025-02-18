@@ -16,6 +16,8 @@ func _on_server_client_node_payload_received(payload: TcpPayload) -> void:
 			printerr("Unkown type %s" % payload.get_type())
 	pass # Replace with function body.
 
+func disconnect_from_server(reason = "ERR_SERVER_GENERIC") :
+	$ServerClientNode.disconnect_from_server(true,reason)
 
 func _on_server_client_node_disconnected() -> void:
 	disconnected.emit()

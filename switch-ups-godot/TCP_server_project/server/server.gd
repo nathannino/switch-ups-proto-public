@@ -17,6 +17,15 @@ func start_server(_bind_address : String, _port : int, _server_client_wrapper : 
 		printerr("Server failed to start : %s" % response)
 	return response
 
+func close_server() :
+	if server == null :
+		return
+	
+	for child in get_children() :
+		child.disconnect_from_server()
+	server.stop()
+	server = null
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if server == null :

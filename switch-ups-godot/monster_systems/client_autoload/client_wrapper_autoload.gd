@@ -34,7 +34,8 @@ func send_message_to_server(username : String, message : String) :
 signal disconnected
 
 func _on_main_client_disconnected() -> void:
-	DeferredLoadingManager.change_scene(SceneLoadWrapper.create().from_key("main_menu").background_preload().prepare(),SceneLoadWrapper.create().as_transition("fade_to_black").prepare())
+	DeferredLoadingManager.change_scene(SceneLoadWrapper.create().from_key("main_menu").background_preload().prepare(),
+										SceneLoadWrapper.create().as_transition("fade_to_black").prepare())
 	disconnected.emit()
 	connected = false
 	client_scene = null

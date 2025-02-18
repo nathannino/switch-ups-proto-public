@@ -79,19 +79,19 @@ script/source = "extends Button
 
 @export var root : Control
 
-func _notification(what: int) -> void:
-	match what:
-		NOTIFICATION_VISIBILITY_CHANGED:
-			if ClientWrapperAutoload.connected :
-				show()
-			else :
-				hide()
-
 
 func _on_pressed() -> void:
 	ClientWrapperAutoload.disconnect_client()
+	ServerWrapper.close_server()
 	root.hide_reset()
 	pass # Replace with function body.
+
+
+func _on_control_visibility_changed() -> void:
+	if ClientWrapperAutoload.connected :
+		show()
+	else :
+		hide()
 "
 
 [node name="Control" type="Control" node_paths=PackedStringArray("return_main_menu_button")]
@@ -147,6 +147,7 @@ text = "TR_OPTIONS_QUIT"
 script = ExtResource("1_57t8v")
 key = "kill"
 
+[connection signal="visibility_changed" from="." to="CenterContainer/VBoxContainer/Button2" method="_on_control_visibility_changed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/Button" to="CenterContainer/VBoxContainer/Button" method="_on_pressed"]
 [connection signal="item_selected" from="CenterContainer/VBoxContainer/OptionButton" to="CenterContainer/VBoxContainer/OptionButton" method="_on_item_selected"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/Button2" to="CenterContainer/VBoxContainer/Button2" method="_on_pressed"]

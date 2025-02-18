@@ -37,6 +37,12 @@ func _process(delta: float) -> void:
 	var can_poll = peer.poll()
 	if not can_poll == 0 :
 		printerr("Polling failed %s" % can_poll)
+		match can_poll :
+			ERR_CONNECTION_ERROR :
+				error.emit("ERR_CLIENT_CANNOT_CONNECT")
+				disconnected.emit()
+				queue_free()
+				return
 	match peer.get_status() :
 		peer.STATUS_NONE :
 			print("Client not connected to server %s, acting as disconnected" % peer)
@@ -46,6 +52,7 @@ func _process(delta: float) -> void:
 			printerr("%s had an error" % peer)
 			send(TcpPayload.new().set_type(TcpPayload.TYPE.ERR_DISCONNECT).set_content("Internal Client Error")) # We keep trying
 			disconnected.emit()
+			error.emit("ERR_INTERNAL_CLIENT")
 			queue_free() # TODO : Actually show an error message
 		peer.STATUS_CONNECTED :
 			var _available_bytes: int = peer.get_available_bytes()

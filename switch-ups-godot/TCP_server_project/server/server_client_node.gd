@@ -11,8 +11,13 @@ func peer_ready(_peer : StreamPeerTCP) -> void:
 func peer_refused(_peer : StreamPeerTCP) -> void:
 	peer = _peer
 	print("%s was refused" % peer)
-	send(TcpPayload.new().set_type(TcpPayload.TYPE.ERR_DISCONNECT).set_content("full"))
-	queue_free() # Not sending disconnected, as this shouldn't even be considered connected
+	disconnect_from_server(false,"ERR_SERVER_FULL")
+
+func disconnect_from_server(_emit_signal = true, reason = "ERR_SERVER_GENERIC") :
+	send(TcpPayload.new().set_type(TcpPayload.TYPE.ERR_DISCONNECT).set_content(reason))
+	peer.disconnect_from_host()
+	if _emit_signal : disconnected.emit()
+	queue_free()
 
 # TODO Include check to see if connected or not I guess
 func send(_payload : TcpPayload) :
@@ -37,9 +42,7 @@ func _process(delta: float) -> void:
 			queue_free()
 		peer.STATUS_ERROR :
 			printerr("%s had an error" % peer)
-			send(TcpPayload.new().set_type(TcpPayload.TYPE.ERR_DISCONNECT).set_content("Internal Server Error")) # We keep trying
-			disconnected.emit()
-			queue_free() # TODO : Actually show an error message
+			disconnect_from_server(true,"ERR_SERVER_ERROR")
 		peer.STATUS_CONNECTED : 
 			var _available_bytes: int = peer.get_available_bytes()
 			if _available_bytes > 0 :
@@ -48,7 +51,7 @@ func _process(delta: float) -> void:
 				match payload.get_type() :
 					TcpPayload.TYPE.ASK_VER:
 						if not payload.get_content() == TcpPayload.PROTOCOL_VER :
-							send(TcpPayload.new().set_type(TcpPayload.TYPE.ERR_DISCONNECT).set_content("Mismatched Protocol_Ver"))
+							disconnect_from_server(true,"ERR_SERVER_PROTOCOLVER")
 						else :
 							send(TcpPayload.new().set_type(TcpPayload.TYPE.ASK_VER_ACCEPTED))
 						return
