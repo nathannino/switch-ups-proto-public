@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://bw37jbhbgf6s0"]
+[gd_scene load_steps=3 format=3 uid="uid://bw37jbhbgf6s0"]
 
 [ext_resource type="Script" path="res://globals/utility_scenes/ui_component/move_display.gd" id="1_k3w1v"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2hp1f"]
 
 [node name="MoveDisplay" type="PanelContainer" node_paths=PackedStringArray("name_label", "type_label", "cost_label", "desc_container")]
 anchors_preset = 15
@@ -46,3 +48,9 @@ fit_content = true
 
 [node name="desc" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_2hp1f")
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

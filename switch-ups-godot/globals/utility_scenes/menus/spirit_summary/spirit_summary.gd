@@ -11,6 +11,9 @@ extends Control
 @export var label_luck : RichTextLabel
 @export var move_holder : Container
 
+@export var spirit_label : Label
+@export var spirit_button : Control
+
 var spirit : ms_spirit
 var spirit_active : ms_spirit_active
 
@@ -21,7 +24,7 @@ func _ready() -> void:
 func _notification(what: int) -> void:
 	match what :
 		NOTIFICATION_TRANSLATION_CHANGED:
-			reload_content
+			reload_content()
 
 func reload_content() :
 	if spirit_active == null and not spirit == null : set_summary_inactive(spirit)
@@ -42,6 +45,9 @@ func set_empty() :
 	label_luck.text = ""
 	move_holder.set_actions([])
 	%ActionsLabel.hide()
+	spirit_label.hide()
+	spirit_button.hide()
+	spirit_button.reset()
 
 func set_summary_inactive(_spirit : ms_spirit) :
 	spirit = _spirit
@@ -57,6 +63,9 @@ func set_summary_inactive(_spirit : ms_spirit) :
 	label_luck.text = tr("TR_SUMMARY_LUCK").format({"luck":spirit.luck})
 	move_holder.set_actions(spirit.actions)
 	%ActionsLabel.show()
+	spirit_button.hide()
+	spirit_label.hide()
+	spirit_button.reset()
 
 func set_summary_active(_spirit : ms_spirit_active) :
 	spirit_active = _spirit
@@ -70,6 +79,24 @@ func set_summary_active(_spirit : ms_spirit_active) :
 	label_defense.text = tr("TR_SUMMARY_DEFENSE").format({"defense":spirit.defense})
 	label_speed.text = tr("TR_SUMMARY_SPEED").format({"speed":spirit.speed})
 	label_luck.text = tr("TR_SUMMARY_LUCK").format({"luck":spirit.luck})
-	move_holder.set_actions(spirit_active.get_moves())
+	move_holder.set_actions(spirit_active.get_actions_combined_converted())
 	%ActionsLabel.show()
+	spirit_label.show()
+	spirit_button.show()
+	
+	if not _spirit.key_equip == "" :
+		spirit_button.set_spirit_inactive(SpiritDictionary.spirits[spirit_active.key_equip])
+	else : 
+		spirit_button.reset()
 	pass
+
+signal move_selected(index : int, action : ms_action)
+signal requested_equip_change
+
+func _on_move_holder_move_selected(index: int, action: ms_action) -> void:
+	move_selected.emit(index,action)
+
+
+func _on_monster_button_pressed_option(index: int) -> void:
+	requested_equip_change.emit()
+	pass # Replace with function body.

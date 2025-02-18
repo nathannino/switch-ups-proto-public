@@ -7,6 +7,8 @@ var action : ms_action
 @export var cost_label : RichTextLabel
 @export var desc_container : Container
 
+signal pressed(action : ms_action)
+
 var ready_done = false
 func set_action(_action : ms_action) :
 	action = _action
@@ -32,3 +34,8 @@ func update_ui() :
 		child.queue_free()
 	for component in action.effects :
 		desc_container.add_child(component.get_desc())
+
+
+func _on_button_pressed() -> void:
+	pressed.emit(action)
+	pass # Replace with function body.

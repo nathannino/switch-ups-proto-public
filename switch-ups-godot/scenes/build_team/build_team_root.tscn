@@ -1,38 +1,180 @@
-[gd_scene load_steps=4 format=3 uid="uid://cvjy602iejvrx"]
+[gd_scene load_steps=8 format=3 uid="uid://cvjy602iejvrx"]
 
 [ext_resource type="PackedScene" uid="uid://bjwcj7an8i718" path="res://globals/utility_scenes/ui_component/monster_button.tscn" id="1_5754o"]
+[ext_resource type="PackedScene" uid="uid://cmjl5hcgm2r7w" path="res://globals/utility_scenes/menus/spirit_summary/spirit_list.tscn" id="2_5ups2"]
 [ext_resource type="PackedScene" uid="uid://diohlpvbxl3oh" path="res://globals/utility_scenes/menus/spirit_summary/spirit_summary.tscn" id="2_h40an"]
+
+[sub_resource type="GDScript" id="GDScript_b8mls"]
+script/source = "extends Control
+
+@export var empty_node : Control
+@export var team_builder : Control
+@export var summary : Control
+@export var spirit_list : Control
+
+signal display_changed
+
+func _ready() :
+	show_empty()
+
+func show_empty() :
+	team_builder.show()
+	empty_node.show()
+	summary.hide()
+	spirit_list.hide()
+	display_changed.emit()
+
+func show_team_summary() :
+	display_changed.emit()
+	empty_node.hide()
+	team_builder.show()
+	summary.show()
+	spirit_list.hide()
+
+func show_summary_spiritlist() :
+	display_changed.emit()
+	empty_node.hide()
+	team_builder.hide()
+	summary.show()
+	spirit_list.show()
+
+func show_team_spiritlist() :
+	display_changed.emit()
+	empty_node.hide()
+	team_builder.show()
+	summary.hide()
+	spirit_list.show()
+"
 
 [sub_resource type="GDScript" id="GDScript_37t73"]
 script/source = "extends VBoxContainer
 
 @export var summary : Node
+@export var scene_root : Control
+@export var spirit_list : Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	for child in get_children() :
 		child.reset()
-		child.pressed_option.connect(func(index : int) : _on_button_pressed(index, child.current_spirit))
+		child.pressed_option.connect(func(index : int) : _on_button_pressed(child, index))
 	var temp_child = get_child(0)
-	temp_child.set_monster(ms_spirit_active.from_spirit(SpiritDictionary.spirits[\"placeholder\"]),[\"Summary\",\"Change\"])
+	temp_child.set_monster(ms_spirit_active.from_spirit(SpiritDictionary.spirits[\"placeholder\"]),get_options_array())
 
-func _on_button_pressed(index : int, active_spirit : ms_spirit_active) :
+func get_options_array() -> Array :
+	return [\"Summary\",\"Change\"]
+
+var current_callable : Callable
+
+func reload_content() :
+	for child in get_children() :
+		child.reload_content()
+
+func disconnect_if_connected() :
+	if current_callable.is_null() :
+		return
+	
+	if spirit_list.changed_selection.is_connected(current_callable) :
+		spirit_list.changed_selection.disconnect(current_callable)
+
+func await_selection(button_node : Control) :
+	summary.set_empty()
+	scene_root.show_team_spiritlist() # This needs to be first, else we automatically disconnect right after we connect to the signal
+	
+	current_callable = func (selection : ms_spirit) :
+		_on_selection_done(button_node,selection)
+	disconnect_if_connected()
+	spirit_list.changed_selection.connect(current_callable)
+
+func _on_button_pressed(node : Control, index : int) :
 	match index :
 		-1 :
-			summary.set_empty()
+			await_selection(node)
 		0 :
-			summary.set_summary_active(active_spirit)
+			summary.set_summary_active(node.current_spirit)
+			scene_root.show_team_summary()
 		1 : 
-			summary.set_empty()
+			await_selection(node)
+
+func _on_selection_done(button_node : Control, selection : ms_spirit) :
+	scene_root.show_team_summary()
+	var spirit_active = ms_spirit_active.from_spirit(selection)
+	button_node.set_monster(spirit_active,get_options_array())
+	summary.set_summary_active(spirit_active)
+
+
+func _on_build_team_root_display_changed() -> void:
+	disconnect_if_connected()
+	pass # Replace with function body.
 "
 
-[node name="BuildTeamRoot" type="Control"]
+[sub_resource type="GDScript" id="GDScript_gov62"]
+script/source = "extends Control
+
+@export var scene_root : Control
+@export var spirit_list : Control
+@export var team_list : Control
+
+func _on_spirit_summary_move_selected(index: int, action: ms_action) -> void:
+	printerr(\"Not implemented yet\")
+	pass # Replace with function body.
+
+var current_callable : Callable
+
+func disconnect_if_connected() :
+	if current_callable.is_null() :
+		return
+	
+	if spirit_list.changed_selection.is_connected(current_callable) :
+		spirit_list.changed_selection.disconnect(current_callable)
+
+func await_equip_selection() :
+	scene_root.show_summary_spiritlist() # This needs to be first, else we automatically disconnect right after we connect to the signal
+	
+	current_callable = func (selection : ms_spirit) :
+		_on_equip_selection_done(selection)
+	disconnect_if_connected()
+	spirit_list.changed_selection.connect(current_callable)
+
+func _on_spirit_summary_requested_equip_change() -> void:
+	await_equip_selection()
+	pass # Replace with function body.
+
+func _on_equip_selection_done(selection : ms_spirit) :
+	var spirit = $SpiritSummary.spirit_active
+	spirit.change_equip_key(selection.key)
+	$SpiritSummary.reload_content()
+	team_list.reload_content()
+	scene_root.show_team_summary()
+	pass
+
+
+func _on_build_team_root_display_changed() -> void:
+	disconnect_if_connected()
+	pass # Replace with function body.
+"
+
+[sub_resource type="GDScript" id="GDScript_l17k4"]
+script/source = "extends Control
+
+signal changed_selection(selection : ms_spirit)
+
+func _on_spirit_list_changed_selection(selection: ms_spirit) -> void:
+	changed_selection.emit(selection)
+"
+
+[node name="BuildTeamRoot" type="Control" node_paths=PackedStringArray("empty_node", "team_builder", "summary", "spirit_list")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = SubResource("GDScript_b8mls")
+empty_node = NodePath("HBoxContainer/Empty")
+team_builder = NodePath("HBoxContainer/TeamBuilder")
+summary = NodePath("HBoxContainer/SpiritSummary2")
+spirit_list = NodePath("HBoxContainer/SpiritList")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
@@ -42,32 +184,60 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer" node_paths=PackedStringArray("summary")]
+[node name="TeamBuilder" type="ScrollContainer" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/TeamBuilder" node_paths=PackedStringArray("summary", "scene_root", "spirit_list")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 script = SubResource("GDScript_37t73")
-summary = NodePath("../SpiritSummary")
+summary = NodePath("../../SpiritSummary2/SpiritSummary")
+scene_root = NodePath("../../..")
+spirit_list = NodePath("../../SpiritList")
 
-[node name="MonsterButton" parent="HBoxContainer/VBoxContainer" instance=ExtResource("1_5754o")]
+[node name="MonsterButton" parent="HBoxContainer/TeamBuilder/VBoxContainer" instance=ExtResource("1_5754o")]
 layout_mode = 2
-size_flags_vertical = 3
 
-[node name="MonsterButton2" parent="HBoxContainer/VBoxContainer" instance=ExtResource("1_5754o")]
+[node name="MonsterButton2" parent="HBoxContainer/TeamBuilder/VBoxContainer" instance=ExtResource("1_5754o")]
 layout_mode = 2
-size_flags_vertical = 3
 
-[node name="MonsterButton3" parent="HBoxContainer/VBoxContainer" instance=ExtResource("1_5754o")]
+[node name="MonsterButton3" parent="HBoxContainer/TeamBuilder/VBoxContainer" instance=ExtResource("1_5754o")]
 layout_mode = 2
-size_flags_vertical = 3
 
-[node name="MonsterButton4" parent="HBoxContainer/VBoxContainer" instance=ExtResource("1_5754o")]
+[node name="MonsterButton4" parent="HBoxContainer/TeamBuilder/VBoxContainer" instance=ExtResource("1_5754o")]
 layout_mode = 2
-size_flags_vertical = 3
 
-[node name="MonsterButton5" parent="HBoxContainer/VBoxContainer" instance=ExtResource("1_5754o")]
+[node name="MonsterButton5" parent="HBoxContainer/TeamBuilder/VBoxContainer" instance=ExtResource("1_5754o")]
 layout_mode = 2
-size_flags_vertical = 3
 
-[node name="SpiritSummary" parent="HBoxContainer" instance=ExtResource("2_h40an")]
+[node name="Empty" type="Control" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="SpiritSummary2" type="Control" parent="HBoxContainer" node_paths=PackedStringArray("scene_root", "spirit_list", "team_list")]
+layout_mode = 2
+size_flags_horizontal = 3
+script = SubResource("GDScript_gov62")
+scene_root = NodePath("../..")
+spirit_list = NodePath("../SpiritList/SpiritList")
+team_list = NodePath("../TeamBuilder/VBoxContainer")
+
+[node name="SpiritSummary" parent="HBoxContainer/SpiritSummary2" instance=ExtResource("2_h40an")]
+layout_mode = 1
+size_flags_horizontal = 3
+
+[node name="SpiritList" type="Control" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+script = SubResource("GDScript_l17k4")
+
+[node name="SpiritList" parent="HBoxContainer/SpiritList" instance=ExtResource("2_5ups2")]
+layout_mode = 1
+
+[connection signal="display_changed" from="." to="HBoxContainer/TeamBuilder/VBoxContainer" method="_on_build_team_root_display_changed"]
+[connection signal="display_changed" from="." to="HBoxContainer/SpiritSummary2" method="_on_build_team_root_display_changed"]
+[connection signal="move_selected" from="HBoxContainer/SpiritSummary2/SpiritSummary" to="HBoxContainer/SpiritSummary2" method="_on_spirit_summary_move_selected"]
+[connection signal="requested_equip_change" from="HBoxContainer/SpiritSummary2/SpiritSummary" to="HBoxContainer/SpiritSummary2" method="_on_spirit_summary_requested_equip_change"]
+[connection signal="changed_selection" from="HBoxContainer/SpiritList/SpiritList" to="HBoxContainer/SpiritList" method="_on_spirit_list_changed_selection"]

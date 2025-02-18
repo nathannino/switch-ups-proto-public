@@ -18,3 +18,6 @@ class_name ms_spirit
 @export var luck : int
 
 @export var actions : Array[ms_action]
+
+func get_action(_key : String) -> ms_action :
+	return actions.filter(func(action : ms_action) : return action.key == _key)[0]

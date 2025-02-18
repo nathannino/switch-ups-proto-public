@@ -16,6 +16,7 @@ script/source = "extends Control
 
 signal pressed_option(index : int)
 var current_spirit : ms_spirit_active
+var current_spirit_inactive : ms_spirit
 var options = []
 @export var options_root : Control
 
@@ -24,6 +25,7 @@ func set_health(curr_health : float, max_health : float) :
 
 func reset() :
 	current_spirit = null
+	current_spirit_inactive = null
 	spr.texture = null
 	name_label.text = \"\"
 	health_label.text = \"\"
@@ -34,8 +36,30 @@ func reset() :
 	button.show()
 	populate_options()
 
+func reload_content() :
+	if current_spirit == null and current_spirit_inactive == null :
+		reset()
+	elif current_spirit_inactive == null : 
+		set_monster(current_spirit,options)
+	else :
+		set_spirit_inactive(current_spirit_inactive,options)
+
+func set_spirit_inactive(spirit_inactive : ms_spirit, _options : Array = []) :
+	current_spirit = null
+	current_spirit_inactive = spirit_inactive
+	options = _options
+	name_label.text = tr(spirit_inactive.name)
+	spr.texture = spirit_inactive.sprite
+	health_label.hide()
+	Type1.text = ms_constants.type_to_bbcode(spirit_inactive.type)
+	Type2.text = \"\"
+	none_label.text = \"\"
+	button.show()
+	populate_options()
+
 func set_monster(spirit_active : ms_spirit_active, _options : Array = []) :
 	current_spirit = spirit_active
+	current_spirit_inactive = null
 	options = _options
 	var spirit : ms_spirit = SpiritDictionary.spirits[spirit_active.key]
 	name_label.text = tr(spirit.name)
@@ -46,6 +70,8 @@ func set_monster(spirit_active : ms_spirit_active, _options : Array = []) :
 	if not spirit_active.key_equip == \"\" :
 		var spirit_equip : ms_spirit = SpiritDictionary.spirits[spirit_active.key_equip]
 		Type2.text = ms_constants.type_to_bbcode(spirit_equip.type)
+	else :
+		Type2.text = \"\"
 	none_label.text = \"\"
 	button.show()
 	populate_options()
@@ -89,17 +115,25 @@ func _ready() :
 		if not (node.get_parent() == options_root) :
 			hide_options()
 	)
+
+
+func _on_button_mouse_entered() -> void:
+	button.grab_focus()
+	pass # Replace with function body.
 "
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_76o8l"]
 
 [node name="MonsterButton" type="Control" node_paths=PackedStringArray("spr", "name_label", "health_label", "Type1", "Type2", "none_label", "button", "options_root")]
+custom_minimum_size = Vector2(100, 110)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 script = SubResource("GDScript_k40d3")
 spr = NodePath("VBoxContainer/Control/VBoxContainer/TextureRect")
 name_label = NodePath("VBoxContainer/Control/VBoxContainer/HBoxContainer/Name")
@@ -108,7 +142,7 @@ Type1 = NodePath("VBoxContainer/Control/VBoxContainer/HBoxContainer/HBoxContaine
 Type2 = NodePath("VBoxContainer/Control/VBoxContainer/HBoxContainer/HBoxContainer/Type2")
 none_label = NodePath("CenterContainer/Label")
 button = NodePath("Button")
-options_root = NodePath("VBoxContainer/HBoxContainer")
+options_root = NodePath("HBoxContainer")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -170,9 +204,15 @@ text = "Type2"
 fit_content = true
 autowrap_mode = 0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
 visible = false
-layout_mode = 2
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
 
 [node name="Button" type="Button" parent="."]
 layout_mode = 1
@@ -197,4 +237,6 @@ layout_mode = 2
 text = "No Spirits Selected"
 
 [connection signal="focus_entered" from="Button" to="." method="_on_button_focus_entered"]
+[connection signal="mouse_entered" from="Button" to="." method="_on_button_mouse_entered"]
+[connection signal="mouse_exited" from="Button" to="." method="_on_button_mouse_exited"]
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

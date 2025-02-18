@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://diohlpvbxl3oh"]
+[gd_scene load_steps=9 format=3 uid="uid://diohlpvbxl3oh"]
 
 [ext_resource type="Script" path="res://globals/simple_scripts/flowgrid.gd" id="1_tr2os"]
 [ext_resource type="Script" path="res://globals/utility_scenes/menus/spirit_summary/spirit_summary.gd" id="1_yovre"]
+[ext_resource type="PackedScene" uid="uid://bjwcj7an8i718" path="res://globals/utility_scenes/ui_component/monster_button.tscn" id="3_okbcr"]
 
 [sub_resource type="GDScript" id="GDScript_tlcg0"]
 script/source = "extends RichTextLabel
@@ -104,18 +105,25 @@ script/source = "extends VBoxContainer
 
 const template = preload(\"uid://bw37jbhbgf6s0\")
 
+signal move_selected(index : int, action : ms_action)
+
 func set_actions(actions : Array) :
 	for child in get_children() :
 		remove_child(child)
 		child.queue_free()
 	
-	for action in actions :
+	for index in range(actions.size()) :
+		var action = actions[index]
 		var instance = template.instantiate()
 		instance.set_action(action)
 		add_child(instance)
+		instance.pressed.connect(func (_action : ms_action) : action_pressed(index,_action))
+
+func action_pressed(index : int, action : ms_action) :
+	move_selected.emit(index,action)
 "
 
-[node name="SpiritSummary" type="Control" node_paths=PackedStringArray("label_name", "sprite", "label_type", "label_health", "label_concrete", "label_abstract", "label_defense", "label_speed", "label_luck", "move_holder")]
+[node name="SpiritSummary" type="Control" node_paths=PackedStringArray("label_name", "sprite", "label_type", "label_health", "label_concrete", "label_abstract", "label_defense", "label_speed", "label_luck", "move_holder", "spirit_label", "spirit_button")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -133,6 +141,8 @@ label_defense = NodePath("PanelContainer/ScrollContainer/MarginContainer/GridCon
 label_speed = NodePath("PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/GridContainer/VBoxContainer2/Speed")
 label_luck = NodePath("PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/GridContainer/VBoxContainer2/Luck")
 move_holder = NodePath("PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer/MoveHolder")
+spirit_label = NodePath("PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/GridContainer/VBoxContainer2/EquipLabel")
+spirit_button = NodePath("PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/GridContainer/VBoxContainer2/MonsterButton")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -207,6 +217,13 @@ max_columns = 2
 layout_mode = 2
 size_flags_horizontal = 3
 
+[node name="EquipLabel" type="Label" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/GridContainer/VBoxContainer2"]
+layout_mode = 2
+text = "TR_SUMMARY_EQUIP"
+
+[node name="MonsterButton" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/GridContainer/VBoxContainer2" instance=ExtResource("3_okbcr")]
+layout_mode = 2
+
 [node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/GridContainer/VBoxContainer2"]
 layout_mode = 2
 bbcode_enabled = true
@@ -265,3 +282,5 @@ theme_override_constants/separation = 5
 script = SubResource("GDScript_e6lmi")
 
 [connection signal="resized" from="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/GridContainer" to="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/GridContainer/MarginContainer" method="_on_grid_container_resized"]
+[connection signal="pressed_option" from="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/GridContainer/VBoxContainer2/MonsterButton" to="." method="_on_monster_button_pressed_option"]
+[connection signal="move_selected" from="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer/MoveHolder" to="." method="_on_move_holder_move_selected"]
