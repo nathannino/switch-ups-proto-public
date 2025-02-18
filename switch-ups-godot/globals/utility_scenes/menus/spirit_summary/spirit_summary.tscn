@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://globals/simple_scripts/flowgrid.gd" id="1_tr2os"]
 [ext_resource type="Script" path="res://globals/utility_scenes/menus/spirit_summary/spirit_summary.gd" id="1_yovre"]
 [ext_resource type="PackedScene" uid="uid://bjwcj7an8i718" path="res://globals/utility_scenes/ui_component/monster_button.tscn" id="3_okbcr"]
+[ext_resource type="PackedScene" uid="uid://l5cmnn36hklt" path="res://globals/utility_scenes/ui_component/move_holder.tscn" id="4_ak8gb"]
 
 [sub_resource type="GDScript" id="GDScript_tlcg0"]
 script/source = "extends RichTextLabel
@@ -98,29 +99,6 @@ func _on_grid_container_resized() -> void:
 	else :
 		add_theme_constant_override(\"margin_top\",0)
 	pass # Replace with function body.
-"
-
-[sub_resource type="GDScript" id="GDScript_e6lmi"]
-script/source = "extends VBoxContainer
-
-const template = preload(\"uid://bw37jbhbgf6s0\")
-
-signal move_selected(index : int, action : ms_action)
-
-func set_actions(actions : Array) :
-	for child in get_children() :
-		remove_child(child)
-		child.queue_free()
-	
-	for index in range(actions.size()) :
-		var action = actions[index]
-		var instance = template.instantiate()
-		instance.set_action(action)
-		add_child(instance)
-		instance.pressed.connect(func (_action : ms_action) : action_pressed(index,_action))
-
-func action_pressed(index : int, action : ms_action) :
-	move_selected.emit(index,action)
 "
 
 [node name="SpiritSummary" type="Control" node_paths=PackedStringArray("label_name", "sprite", "label_type", "label_health", "label_concrete", "label_abstract", "label_defense", "label_speed", "label_luck", "move_holder", "spirit_label", "spirit_button")]
@@ -274,12 +252,8 @@ visible = false
 layout_mode = 2
 text = "TR_SUMMARY_ACTION"
 
-[node name="MoveHolder" type="VBoxContainer" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer"]
+[node name="MoveHolder" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer" instance=ExtResource("4_ak8gb")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_override_constants/separation = 5
-script = SubResource("GDScript_e6lmi")
 
 [connection signal="resized" from="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/GridContainer" to="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/GridContainer/MarginContainer" method="_on_grid_container_resized"]
 [connection signal="pressed_option" from="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/GridContainer/VBoxContainer2/MonsterButton" to="." method="_on_monster_button_pressed_option"]

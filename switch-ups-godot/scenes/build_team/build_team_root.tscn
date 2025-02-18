@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://cvjy602iejvrx"]
+[gd_scene load_steps=10 format=3 uid="uid://cvjy602iejvrx"]
 
 [ext_resource type="PackedScene" uid="uid://bjwcj7an8i718" path="res://globals/utility_scenes/ui_component/monster_button.tscn" id="1_5754o"]
 [ext_resource type="PackedScene" uid="uid://cmjl5hcgm2r7w" path="res://globals/utility_scenes/menus/spirit_summary/spirit_list.tscn" id="2_5ups2"]
 [ext_resource type="PackedScene" uid="uid://diohlpvbxl3oh" path="res://globals/utility_scenes/menus/spirit_summary/spirit_summary.tscn" id="2_h40an"]
+[ext_resource type="PackedScene" uid="uid://l5cmnn36hklt" path="res://globals/utility_scenes/ui_component/move_holder.tscn" id="4_n3emp"]
 
 [sub_resource type="GDScript" id="GDScript_b8mls"]
 script/source = "extends Control
@@ -11,6 +12,7 @@ script/source = "extends Control
 @export var team_builder : Control
 @export var summary : Control
 @export var spirit_list : Control
+@export var move_list : Control
 
 signal display_changed
 
@@ -22,6 +24,7 @@ func show_empty() :
 	empty_node.show()
 	summary.hide()
 	spirit_list.hide()
+	move_list.hide()
 	display_changed.emit()
 
 func show_team_summary() :
@@ -30,6 +33,7 @@ func show_team_summary() :
 	team_builder.show()
 	summary.show()
 	spirit_list.hide()
+	move_list.hide()
 
 func show_summary_spiritlist() :
 	display_changed.emit()
@@ -37,6 +41,7 @@ func show_summary_spiritlist() :
 	team_builder.hide()
 	summary.show()
 	spirit_list.show()
+	move_list.hide()
 
 func show_team_spiritlist() :
 	display_changed.emit()
@@ -44,6 +49,15 @@ func show_team_spiritlist() :
 	team_builder.show()
 	summary.hide()
 	spirit_list.show()
+	move_list.hide()
+
+func show_summary_movelist() :
+	display_changed.emit()
+	empty_node.hide()
+	team_builder.hide()
+	summary.show()
+	spirit_list.hide()
+	move_list.show()
 "
 
 [sub_resource type="GDScript" id="GDScript_37t73"]
@@ -114,10 +128,19 @@ script/source = "extends Control
 @export var scene_root : Control
 @export var spirit_list : Control
 @export var team_list : Control
+@export var movelist : Control
 
 func _on_spirit_summary_move_selected(index: int, action: ms_action) -> void:
-	printerr(\"Not implemented yet\")
-	pass # Replace with function body.
+	await_move_selection(index)
+
+func _on_move_selection_done(index : int, selection : ms_action) -> void :
+	var spirit : ms_spirit_active = $SpiritSummary.spirit_active
+	if index == spirit.moves.size() :
+		spirit.extra_move = selection.key
+	else :
+		spirit.moves[index] = selection.key
+	$SpiritSummary.reload_content()
+	scene_root.show_team_summary()
 
 var current_callable : Callable
 
@@ -128,12 +151,26 @@ func disconnect_if_connected() :
 	if spirit_list.changed_selection.is_connected(current_callable) :
 		spirit_list.changed_selection.disconnect(current_callable)
 
+func await_move_selection(index : int) :
+	scene_root.show_summary_movelist() # This needs to be first, else we automatically disconnect right after we connect to the signal
+	var spirit : ms_spirit_active = $SpiritSummary.spirit_active
+	if index == spirit.moves.size() :
+		movelist.set_actions(SpiritDictionary.spirits[spirit.key_equip].actions)
+	else :
+		movelist.set_actions(SpiritDictionary.spirits[spirit.key].actions)
+	
+	disconnect_if_connected()
+	current_callable = func (selection : ms_action) :
+		_on_move_selection_done(index,selection)
+	movelist.move_selected.connect(current_callable)
+	
+
 func await_equip_selection() :
 	scene_root.show_summary_spiritlist() # This needs to be first, else we automatically disconnect right after we connect to the signal
 	
+	disconnect_if_connected()
 	current_callable = func (selection : ms_spirit) :
 		_on_equip_selection_done(selection)
-	disconnect_if_connected()
 	spirit_list.changed_selection.connect(current_callable)
 
 func _on_spirit_summary_requested_equip_change() -> void:
@@ -163,7 +200,19 @@ func _on_spirit_list_changed_selection(selection: ms_spirit) -> void:
 	changed_selection.emit(selection)
 "
 
-[node name="BuildTeamRoot" type="Control" node_paths=PackedStringArray("empty_node", "team_builder", "summary", "spirit_list")]
+[sub_resource type="GDScript" id="GDScript_4hyk4"]
+script/source = "extends Control
+
+signal move_selected(action : ms_action)
+
+func _on_move_holder_move_selected(index: int, action: ms_action) -> void:
+	move_selected.emit(action)
+
+func set_actions(actions : Array) :
+	$MoveHolder.set_actions(actions)
+"
+
+[node name="BuildTeamRoot" type="Control" node_paths=PackedStringArray("empty_node", "team_builder", "summary", "spirit_list", "move_list")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -175,6 +224,7 @@ empty_node = NodePath("HBoxContainer/Empty")
 team_builder = NodePath("HBoxContainer/TeamBuilder")
 summary = NodePath("HBoxContainer/SpiritSummary2")
 spirit_list = NodePath("HBoxContainer/SpiritList")
+move_list = NodePath("HBoxContainer/MoveList")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
@@ -216,13 +266,14 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="SpiritSummary2" type="Control" parent="HBoxContainer" node_paths=PackedStringArray("scene_root", "spirit_list", "team_list")]
+[node name="SpiritSummary2" type="Control" parent="HBoxContainer" node_paths=PackedStringArray("scene_root", "spirit_list", "team_list", "movelist")]
 layout_mode = 2
 size_flags_horizontal = 3
 script = SubResource("GDScript_gov62")
 scene_root = NodePath("../..")
 spirit_list = NodePath("../SpiritList/SpiritList")
 team_list = NodePath("../TeamBuilder/VBoxContainer")
+movelist = NodePath("../MoveList")
 
 [node name="SpiritSummary" parent="HBoxContainer/SpiritSummary2" instance=ExtResource("2_h40an")]
 layout_mode = 1
@@ -236,8 +287,17 @@ script = SubResource("GDScript_l17k4")
 [node name="SpiritList" parent="HBoxContainer/SpiritList" instance=ExtResource("2_5ups2")]
 layout_mode = 1
 
+[node name="MoveList" type="ScrollContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+script = SubResource("GDScript_4hyk4")
+
+[node name="MoveHolder" parent="HBoxContainer/MoveList" instance=ExtResource("4_n3emp")]
+layout_mode = 2
+
 [connection signal="display_changed" from="." to="HBoxContainer/TeamBuilder/VBoxContainer" method="_on_build_team_root_display_changed"]
 [connection signal="display_changed" from="." to="HBoxContainer/SpiritSummary2" method="_on_build_team_root_display_changed"]
 [connection signal="move_selected" from="HBoxContainer/SpiritSummary2/SpiritSummary" to="HBoxContainer/SpiritSummary2" method="_on_spirit_summary_move_selected"]
 [connection signal="requested_equip_change" from="HBoxContainer/SpiritSummary2/SpiritSummary" to="HBoxContainer/SpiritSummary2" method="_on_spirit_summary_requested_equip_change"]
 [connection signal="changed_selection" from="HBoxContainer/SpiritList/SpiritList" to="HBoxContainer/SpiritList" method="_on_spirit_list_changed_selection"]
+[connection signal="move_selected" from="HBoxContainer/MoveList/MoveHolder" to="HBoxContainer/MoveList" method="_on_move_holder_move_selected"]

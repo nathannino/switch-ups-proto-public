@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="ms_action" load_steps=7 format=3 uid="uid://bjfwbgkv0w423"]
+
+[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/action_component.gd" id="1_ega5b"]
+[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/attack_enemy/ac_attack_enemy.gd" id="2_q6v4a"]
+[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/luck/ac_luck.gd" id="3_rn61v"]
+[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/action.gd" id="4_pw2u8"]
+
+[sub_resource type="Resource" id="Resource_57nc0"]
+script = ExtResource("2_q6v4a")
+base_atk = 60
+atk_flavor = 0
+
+[sub_resource type="Resource" id="Resource_jings"]
+script = ExtResource("3_rn61v")
+base_chance_percent = 0.8
+action = Array[ExtResource("1_ega5b")]([SubResource("Resource_57nc0")])
+
+[resource]
+script = ExtResource("4_pw2u8")
+key = "reclaim"
+name = "TR_ACT_RECLAIM"
+type = 5
+cost = 0
+effects = Array[ExtResource("1_ega5b")]([SubResource("Resource_jings")])
