@@ -22,7 +22,7 @@ func close_server() :
 		return
 	
 	for child in get_children() :
-		child.disconnect_from_server()
+		child.disconnect_from_server("ERR_SERVER_CLOSED")
 	server.stop()
 	server = null
 
