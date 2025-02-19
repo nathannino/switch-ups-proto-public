@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="ms_spirit" load_steps=7 format=3 uid="uid://bghlhmejgwuy7"]
+
+[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/action.gd" id="1_gmbej"]
+[ext_resource type="Resource" uid="uid://cea7mp2f86a1h" path="res://monster_systems/actions/database/normal/reg_atk_con.tres" id="2_nd846"]
+[ext_resource type="Resource" uid="uid://btja4176bhm51" path="res://monster_systems/actions/database/creature/bite.tres" id="3_7tkv1"]
+[ext_resource type="Script" path="res://monster_systems/spirits/resources_scripts/spirit.gd" id="4_cs0fq"]
+[ext_resource type="Resource" uid="uid://7b5mkdx1uxjo" path="res://monster_systems/actions/database/fear/lash_out.tres" id="4_uyrgl"]
+[ext_resource type="Texture2D" uid="uid://masa1osx0s86" path="res://monster_systems/spirits/art/unknown.png" id="5_bvb6w"]
+
+[resource]
+script = ExtResource("4_cs0fq")
+key = "dog"
+name = "TR_SPIRIT_DOG"
+sprite = ExtResource("5_bvb6w")
+type = 1
+health = 325
+atk_concrete = 125
+atk_abstract = 75
+defense = 75
+speed = 125
+luck = 5
+actions = Array[ExtResource("1_gmbej")]([ExtResource("2_nd846"), ExtResource("3_7tkv1"), ExtResource("4_uyrgl")])

@@ -1,12 +1,12 @@
 [gd_resource type="Resource" script_class="ms_action" load_steps=5 format=3 uid="uid://bxpn0enwtueuh"]
 
 [ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/action_component.gd" id="1_43286"]
-[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/attack_enemy/ac_attack_enemy.gd" id="2_qy6uk"]
+[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/attack_enemy/ac_attack_enemy.gd" id="2_hmhkx"]
 [ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/action.gd" id="3_1ghhs"]
 
-[sub_resource type="Resource" id="Resource_kem64"]
-script = ExtResource("2_qy6uk")
-base_atk = 40
+[sub_resource type="Resource" id="Resource_170nx"]
+script = ExtResource("2_hmhkx")
+base_atk = 20
 atk_flavor = 1
 
 [resource]
@@ -15,4 +15,4 @@ key = "reg_atk_abs"
 name = "TR_ACT_REG_ATK_ABS"
 type = 9
 cost = 0
-effects = Array[ExtResource("1_43286")]([SubResource("Resource_kem64")])
+effects = Array[ExtResource("1_43286")]([SubResource("Resource_170nx")])

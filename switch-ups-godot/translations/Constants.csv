@@ -11,3 +11,17 @@ TR_CONST_TYPE_CONSTRUCT;Construct;Construction
 TR_CONST_TYPE_SPACE;Space;Espace
 TR_CONST_TYPE_META;Meta;Meta
 TR_CONST_TYPE_NORMAL;Normal;Normal
+TR_CONST_STATS_CONATK;Concrete Power;Pouvoir Concret
+TR_CONST_STATS_ABSATK;Abstract Power;Pouvoir Abstrait
+TR_CONST_STATS_DEF;Defense;Défense
+TR_CONST_STATS_SPEED;Speed;Vitesse
+TR_CONST_STATS_LUCK;Luck;Chance
+TR_CONST_TARGET_ALLYSPIRIT;allied spirit;esprit alié
+TR_CONST_TARGET_ALLYEXCLUDESELFSPIRIT;allied spirit excluding the front spirit;esprit alié excluant l’esprit en avant
+TR_CONST_TARGET_ALLYSPOT;allied spot;emplacement alié
+TR_CONST_TARGET_ALLYEXCLUDESELFSPOT;allied spot excluding the front spot;emplacement alié excluant l’emplacement en avant
+TR_CONST_TARGET_ENEMYSPIRIT;enemy spirit;esprit adverse
+TR_CONST_TARGET_ENEMYEXCLUDESELFSPIRIT;enemy spirit excluding the front spirit;esprit adverse excluant l’esprit en avant
+TR_CONST_TARGET_ENEMYSPOT;enemy spot;emplacement adverse
+TR_CONST_TARGET_ENEMYEXCLUDESELFSPOT;enemy spot excluding the front spot;emplacement adverse excluant l’emplacement en avant
+TR_CONST_TARGET_SELF;this spirit;cet esprit

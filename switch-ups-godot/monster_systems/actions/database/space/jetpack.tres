@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="ms_action" load_steps=5 format=3 uid="uid://buvg75peoo6sc"]
+
+[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/action_component.gd" id="1_pijh4"]
+[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/change_stat_level/ac_ch_stat_level.gd" id="2_p8nja"]
+[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/action.gd" id="2_uv5fe"]
+
+[sub_resource type="Resource" id="Resource_yjnbm"]
+script = ExtResource("2_p8nja")
+stat = 3
+level_change = 2
+
+[resource]
+script = ExtResource("2_uv5fe")
+key = "jetpack"
+name = "TR_ACT_JETPACK"
+type = 7
+cost = 1
+effects = Array[ExtResource("1_pijh4")]([SubResource("Resource_yjnbm")])

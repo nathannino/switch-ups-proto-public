@@ -1,0 +1,17 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://cdcgcmlgbon2i"
+
+[deps]
+
+files=["res://translations/Errors.en.translation", "res://translations/Errors.fr.translation"]
+
+source_file="res://translations/Errors.csv"
+dest_files=["res://translations/Errors.en.translation", "res://translations/Errors.fr.translation"]
+
+[params]
+
+compress=true
+delimiter=1

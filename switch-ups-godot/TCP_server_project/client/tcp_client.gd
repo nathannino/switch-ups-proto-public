@@ -9,8 +9,8 @@ var peer : StreamPeerTCP
 func start_client(_host : String, _port : int) -> void :
 	peer = StreamPeerTCP.new()
 	if not peer.connect_to_host(_host,_port) == OK :
-		printerr("Connection failed")
-		error.emit("TR_CONN_FAILED")
+		printerr("Connection failed (I don't know how to reach this)")
+		error.emit("ERR_CLIENT_CANNOT_CONNECT")
 		disconnected.emit()
 		queue_free()
 		return

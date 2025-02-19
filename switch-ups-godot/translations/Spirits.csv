@@ -1,3 +1,10 @@
 keys;en;fr
 TR_SPIRIT_PLACEHOLDER;Placeholder;Espace réservé
 TR_SPIRIT_GODOT;Godot;Godot
+TR_SPIRIT_FLAG;Flag;Drapeau
+TR_SPIRIT_FISH;Fish;Poisson
+TR_SPIRIT_DOG;Dog;Chien
+TR_SPIRIT_BLOCK;Block;Bloc
+TR_SPIRIT_PLAYER;Player;Joueur
+TR_SPIRIT_STAR;Star;Étoile
+TR_SPIRIT_WALL;Wall;Mur

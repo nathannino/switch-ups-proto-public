@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="ms_action" load_steps=9 format=3 uid="uid://dqoqaosti2hri"]
+
+[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/action_component.gd" id="1_k31uy"]
+[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/attack_enemy/ac_attack_enemy.gd" id="2_032bx"]
+[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/action.gd" id="2_gp5gy"]
+[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/change_stat_level/ac_ch_stat_level.gd" id="3_gq7oq"]
+[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/luck/ac_luck.gd" id="4_slwql"]
+
+[sub_resource type="Resource" id="Resource_o276a"]
+script = ExtResource("2_032bx")
+base_atk = 40
+atk_flavor = 1
+
+[sub_resource type="Resource" id="Resource_77kx6"]
+script = ExtResource("3_gq7oq")
+stat = 0
+level_change = -1
+
+[sub_resource type="Resource" id="Resource_m1jd2"]
+script = ExtResource("4_slwql")
+base_chance_percent = 0.5
+action = Array[ExtResource("1_k31uy")]([SubResource("Resource_77kx6")])
+
+[resource]
+script = ExtResource("2_gp5gy")
+key = "res_down"
+name = "TR_ACT_RES_DOWN"
+type = 0
+cost = 1
+effects = Array[ExtResource("1_k31uy")]([SubResource("Resource_o276a"), SubResource("Resource_m1jd2")])

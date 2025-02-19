@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="ms_action" load_steps=8 format=3 uid="uid://ch4nupwhlm6il"]
+
+[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/action_component.gd" id="1_2oajx"]
+[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/attack_enemy/ac_attack_enemy.gd" id="2_7fryq"]
+[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/action.gd" id="2_vjbmw"]
+[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/luck/ac_luck.gd" id="3_roohp"]
+
+[sub_resource type="Resource" id="Resource_2f7l1"]
+script = ExtResource("2_7fryq")
+base_atk = 30
+atk_flavor = 0
+
+[sub_resource type="Resource" id="Resource_qiq3q"]
+script = ExtResource("2_7fryq")
+base_atk = 30
+atk_flavor = 0
+
+[sub_resource type="Resource" id="Resource_ainrw"]
+script = ExtResource("3_roohp")
+base_chance_percent = 0.4
+action = Array[ExtResource("1_2oajx")]([SubResource("Resource_qiq3q")])
+
+[resource]
+script = ExtResource("2_vjbmw")
+key = "jump"
+name = "TR_ACT_JUMP"
+type = 0
+cost = 1
+effects = Array[ExtResource("1_2oajx")]([SubResource("Resource_2f7l1"), SubResource("Resource_ainrw")])

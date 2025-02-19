@@ -1,0 +1,8 @@
+keys;en;fr
+ERR_CLIENT_CANNOT_CONNECT;Failed to connect to server;Échec de la connexion au serveur
+ERR_PORT_IN_USE;Port already in use;Port déjà utilisé
+ERR_SERVER_GENERIC;Server disconnected client;Le serveur a déconnecté le client
+ERR_SERVER_PROTOCOLVER;Incompatible versions;Versions incompatible
+ERR_SERVER_ERROR;Internal server error;Erreur interne serveur
+ERR_SERVER_FULL;Server full;Serveur plein
+ERR_INTERNAL_CLIENT;Internal client error;Erreur interne client

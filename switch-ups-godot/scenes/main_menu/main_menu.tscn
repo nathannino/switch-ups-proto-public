@@ -52,7 +52,6 @@ func _on_text_changed(new_text: String) -> void:
 		text == \"\"
 		caret_column = 0
 		return
-
 	text = str(clamp(int(new_text),1,65565))
 	caret_column = old_col + 1
 	pass # Replace with function body.

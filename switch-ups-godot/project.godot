@@ -43,6 +43,28 @@ enabled=PackedStringArray()
 
 theme/default_font_generate_mipmaps=true
 
+[importer_defaults]
+
+texture={
+"compress/channel_pack": 0,
+"compress/hdr_compression": 1,
+"compress/high_quality": false,
+"compress/lossy_quality": 0.7,
+"compress/mode": 0,
+"compress/normal_map": 0,
+"detect_3d/compress_to": 0,
+"mipmaps/generate": true,
+"mipmaps/limit": -1,
+"process/fix_alpha_border": false,
+"process/hdr_as_srgb": false,
+"process/hdr_clamp_exposure": false,
+"process/normal_map_invert_y": false,
+"process/premult_alpha": false,
+"process/size_limit": 0,
+"roughness/mode": 0,
+"roughness/src_normal": ""
+}
+
 [input]
 
 options={
@@ -53,7 +75,7 @@ options={
 
 [internationalization]
 
-locale/translations=PackedStringArray("res://translations/Actions.en.translation", "res://translations/Actions.fr.translation", "res://translations/Main.en.translation", "res://translations/Main.fr.translation", "res://translations/Spirits.en.translation", "res://translations/Spirits.fr.translation", "res://translations/Components.en.translation", "res://translations/Components.fr.translation", "res://translations/Constants.en.translation", "res://translations/Constants.fr.translation")
+locale/translations=PackedStringArray("res://translations/Actions.en.translation", "res://translations/Actions.fr.translation", "res://translations/Main.en.translation", "res://translations/Main.fr.translation", "res://translations/Spirits.en.translation", "res://translations/Spirits.fr.translation", "res://translations/Components.en.translation", "res://translations/Components.fr.translation", "res://translations/Constants.en.translation", "res://translations/Constants.fr.translation", "res://translations/Errors.en.translation", "res://translations/Errors.fr.translation")
 
 [rendering]
 

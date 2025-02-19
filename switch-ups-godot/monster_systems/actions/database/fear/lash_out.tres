@@ -1,0 +1,59 @@
+[gd_resource type="Resource" script_class="ms_action" load_steps=14 format=3 uid="uid://7b5mkdx1uxjo"]
+
+[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/action_component.gd" id="1_2yupe"]
+[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/action.gd" id="2_q48g3"]
+[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/attack_enemy/ac_attack_enemy.gd" id="2_w13fx"]
+[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/luck/ac_luck.gd" id="3_cdrrj"]
+
+[sub_resource type="Resource" id="Resource_climf"]
+script = ExtResource("2_w13fx")
+base_atk = 15
+atk_flavor = 0
+
+[sub_resource type="Resource" id="Resource_t5lbs"]
+script = ExtResource("2_w13fx")
+base_atk = 15
+atk_flavor = 0
+
+[sub_resource type="Resource" id="Resource_1cllj"]
+script = ExtResource("3_cdrrj")
+base_chance_percent = 0.95
+action = Array[ExtResource("1_2yupe")]([SubResource("Resource_t5lbs")])
+
+[sub_resource type="Resource" id="Resource_yvyet"]
+script = ExtResource("2_w13fx")
+base_atk = 20
+atk_flavor = 0
+
+[sub_resource type="Resource" id="Resource_aftgu"]
+script = ExtResource("3_cdrrj")
+base_chance_percent = 0.9
+action = Array[ExtResource("1_2yupe")]([SubResource("Resource_yvyet")])
+
+[sub_resource type="Resource" id="Resource_vkx8e"]
+script = ExtResource("2_w13fx")
+base_atk = 25
+atk_flavor = 0
+
+[sub_resource type="Resource" id="Resource_h6tvg"]
+script = ExtResource("3_cdrrj")
+base_chance_percent = 0.8
+action = Array[ExtResource("1_2yupe")]([SubResource("Resource_vkx8e")])
+
+[sub_resource type="Resource" id="Resource_xr0a1"]
+script = ExtResource("2_w13fx")
+base_atk = 30
+atk_flavor = 0
+
+[sub_resource type="Resource" id="Resource_elyk3"]
+script = ExtResource("3_cdrrj")
+base_chance_percent = 0.75
+action = Array[ExtResource("1_2yupe")]([SubResource("Resource_xr0a1")])
+
+[resource]
+script = ExtResource("2_q48g3")
+key = "lash_out"
+name = "TR_ACT_LASHOUT"
+type = 3
+cost = 2
+effects = Array[ExtResource("1_2yupe")]([SubResource("Resource_climf"), SubResource("Resource_1cllj"), SubResource("Resource_aftgu"), SubResource("Resource_h6tvg"), SubResource("Resource_elyk3")])

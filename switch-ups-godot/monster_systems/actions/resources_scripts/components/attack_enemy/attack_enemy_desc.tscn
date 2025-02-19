@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://nrssduut60jb"]
+[gd_scene load_steps=2 format=3 uid="uid://c50be86xg570j"]
 
 [sub_resource type="GDScript" id="GDScript_78oy6"]
 script/source = "extends RichTextLabel

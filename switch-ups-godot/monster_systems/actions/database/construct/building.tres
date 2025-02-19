@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="ms_action" load_steps=7 format=3 uid="uid://bnk8m011lvsgo"]
+
+[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/action_component.gd" id="1_0fo4y"]
+[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/action.gd" id="2_8rhyw"]
+[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/select_target/ac_target.gd" id="2_d1exy"]
+[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/change_stat_level/ac_ch_stat_level.gd" id="2_nxubu"]
+
+[sub_resource type="Resource" id="Resource_05it4"]
+script = ExtResource("2_nxubu")
+stat = 2
+level_change = 2
+
+[sub_resource type="Resource" id="Resource_rre3q"]
+script = ExtResource("2_d1exy")
+target_type = 8
+during_turn = false
+action = Array[ExtResource("1_0fo4y")]([SubResource("Resource_05it4")])
+
+[resource]
+script = ExtResource("2_8rhyw")
+key = "building"
+name = "TR_ACT_BUILDING"
+type = 6
+cost = 2
+effects = Array[ExtResource("1_0fo4y")]([SubResource("Resource_rre3q")])

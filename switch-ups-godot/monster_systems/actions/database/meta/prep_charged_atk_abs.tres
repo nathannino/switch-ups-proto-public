@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="ms_action" load_steps=9 format=3 uid="uid://fstlvpkct8rx"]
+
+[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/action_component.gd" id="1_5g7ik"]
+[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/change_stat_level/ac_ch_stat_level.gd" id="2_dl0w2"]
+[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/change_active/change_active.gd" id="3_4oi8f"]
+[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/select_target/ac_target.gd" id="4_v514e"]
+[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/action.gd" id="5_vya0b"]
+
+[sub_resource type="Resource" id="Resource_s3fae"]
+script = ExtResource("2_dl0w2")
+stat = 1
+level_change = 1
+
+[sub_resource type="Resource" id="Resource_vlt5n"]
+script = ExtResource("3_4oi8f")
+
+[sub_resource type="Resource" id="Resource_i8wdn"]
+script = ExtResource("4_v514e")
+target_type = 0
+during_turn = false
+action = Array[ExtResource("1_5g7ik")]([SubResource("Resource_s3fae"), SubResource("Resource_vlt5n")])
+
+[resource]
+script = ExtResource("5_vya0b")
+key = "prep_charged_atk_abs"
+name = "TR_ACT_PREP_CHG_ATK_ABS"
+type = 8
+cost = 2
+effects = Array[ExtResource("1_5g7ik")]([SubResource("Resource_i8wdn")])

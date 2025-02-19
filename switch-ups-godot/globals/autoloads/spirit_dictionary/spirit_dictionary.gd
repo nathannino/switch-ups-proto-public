@@ -10,15 +10,18 @@ func _ready() -> void:
 	pass
 
 func generate_dictionary() -> Dictionary :
-	var files = DirAccess.get_files_at(database_path)
+	var dirs = DirAccess.get_directories_at(database_path)
+	
 	var database = {}
 	print("Discovering Spirits")
-	for file : String in files :
-		file = file.replace(".remap","")
-		if file.ends_with(".tres") :
-			var entry = load(database_path + file)
-			database[entry.key] = entry 
-			print("Spirit : %s" % entry.key)
+	for dir in dirs :
+		var files = DirAccess.get_files_at(database_path+"/"+dir)
+		for file : String in files :
+			file = file.replace(".remap","")
+			if file.ends_with(".tres") :
+				var entry = load("%s/%s/%s" % [database_path, dir, file])
+				database[entry.key] = entry 
+				print("Spirit : %s" % entry.key)
 	print("search done")
 	return database
 

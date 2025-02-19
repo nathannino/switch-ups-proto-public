@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="ms_action" load_steps=7 format=3 uid="uid://c8dhv8k4g54n0"]
+
+[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/action_component.gd" id="1_yngfv"]
+[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/action.gd" id="2_e48bs"]
+[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/change_energy/ac_ch_energy.gd" id="2_qvlhn"]
+[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/select_target/ac_target.gd" id="3_bp1pf"]
+
+[sub_resource type="Resource" id="Resource_xpe6c"]
+script = ExtResource("2_qvlhn")
+energy_change = 2
+
+[sub_resource type="Resource" id="Resource_5sxpi"]
+script = ExtResource("3_bp1pf")
+target_type = 0
+during_turn = false
+action = Array[ExtResource("1_yngfv")]([SubResource("Resource_xpe6c")])
+
+[resource]
+script = ExtResource("2_e48bs")
+key = "energize"
+name = "TR_ACT_ENERGIZE"
+type = 2
+cost = 2
+effects = Array[ExtResource("1_yngfv")]([SubResource("Resource_5sxpi")])

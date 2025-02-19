@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="ms_action" load_steps=7 format=3 uid="uid://dwu8064806fde"]
+
+[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/action_component.gd" id="1_mdyui"]
+[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/action.gd" id="2_do6ar"]
+[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/attack_enemy/ac_attack_enemy.gd" id="2_xprnx"]
+[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/change_stat_level/ac_ch_stat_level.gd" id="3_wp1vi"]
+
+[sub_resource type="Resource" id="Resource_8h0ke"]
+script = ExtResource("2_xprnx")
+base_atk = 50
+atk_flavor = 0
+
+[sub_resource type="Resource" id="Resource_acm4x"]
+script = ExtResource("3_wp1vi")
+stat = 3
+level_change = -1
+
+[resource]
+script = ExtResource("2_do6ar")
+key = "waterfall"
+name = "TR_ACT_WATERFALL"
+type = 5
+cost = 2
+effects = Array[ExtResource("1_mdyui")]([SubResource("Resource_8h0ke"), SubResource("Resource_acm4x")])

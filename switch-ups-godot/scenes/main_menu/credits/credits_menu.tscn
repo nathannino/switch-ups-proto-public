@@ -183,10 +183,9 @@ key = "main_menu"
 [node name="Credits" type="TabContainer" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-current_tab = 1
+current_tab = 0
 
 [node name="Third Party" type="TabContainer" parent="PanelContainer/VBoxContainer/Credits"]
-visible = false
 layout_mode = 2
 current_tab = 0
 script = ExtResource("3_ntjgm")
@@ -223,6 +222,7 @@ translate = true
 metadata/_tab_index = 2
 
 [node name="Music" type="TabContainer" parent="PanelContainer/VBoxContainer/Credits"]
+visible = false
 layout_mode = 2
 current_tab = 0
 script = ExtResource("3_ntjgm")

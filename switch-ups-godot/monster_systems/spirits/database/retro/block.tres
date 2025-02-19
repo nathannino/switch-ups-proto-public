@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="ms_spirit" load_steps=7 format=3 uid="uid://er8uasklea7a"]
+
+[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/action.gd" id="1_uqcdq"]
+[ext_resource type="Resource" uid="uid://cea7mp2f86a1h" path="res://monster_systems/actions/database/normal/reg_atk_con.tres" id="2_5klqe"]
+[ext_resource type="Resource" uid="uid://bab81l1aucwqe" path="res://monster_systems/actions/database/dream/build.tres" id="3_7cjwd"]
+[ext_resource type="Script" path="res://monster_systems/spirits/resources_scripts/spirit.gd" id="3_glhei"]
+[ext_resource type="Texture2D" uid="uid://v5nsd5j6vvx2" path="res://monster_systems/spirits/art/block.png" id="4_n8tvn"]
+[ext_resource type="Resource" uid="uid://dqoqaosti2hri" path="res://monster_systems/actions/database/retro/res_down.tres" id="4_scbwx"]
+
+[resource]
+script = ExtResource("3_glhei")
+key = "block"
+name = "TR_SPIRIT_BLOCK"
+sprite = ExtResource("4_n8tvn")
+type = 0
+health = 300
+atk_concrete = 115
+atk_abstract = 110
+defense = 125
+speed = 50
+luck = 5
+actions = Array[ExtResource("1_uqcdq")]([ExtResource("2_5klqe"), ExtResource("3_7cjwd"), ExtResource("4_scbwx")])

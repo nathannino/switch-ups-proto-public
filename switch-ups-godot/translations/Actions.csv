@@ -1,2 +1,17 @@
 keys;en;fr
 TR_ACT_RECLAIM;Reclaim;Récupération
+TR_ACT_BITE;Bite;Morsure
+TR_ACT_REG_ATK_ABS;Normal Attack;Attaque Normale
+TR_ACT_REG_ATK_CON;Normal Attack;Attaque Normale
+TR_ACT_PREP_CHG_ATK_ABS;Abstract Power;Pouvoir Abstrait
+TR_ACT_PREP_CHG_ATK_CON;Concrete Suprise;Surprise concret
+TR_ACT_LASHOUT;Lash-Out;Déchaîner
+TR_ACT_ENERGIZE;Energize;Énergiser
+TR_ACT_BUILD_FRIEND;Build Shield;Construire Bouclier
+TR_ACT_BUILDING;Building;Bâtiment
+TR_ACT_RES_DOWN;Resolution Downscaling;Réduction de la Résolution
+TR_ACT_LUCKY_SHOT;Lucky Shot;Coup de chance
+TR_ACT_JETPACK;Jetpack;Jetpack
+TR_ACT_WATERFALL;Waterfall;Cascade
+TR_ACT_ITTINARY;Itinerary;Itinéraire
+TR_ACT_JUMP;Jump;Saut

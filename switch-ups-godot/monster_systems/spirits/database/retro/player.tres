@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="ms_spirit" load_steps=7 format=3 uid="uid://cuwu3m00h5mlu"]
+
+[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/action.gd" id="1_qqcxp"]
+[ext_resource type="Resource" uid="uid://bxpn0enwtueuh" path="res://monster_systems/actions/database/normal/reg_atk_abs.tres" id="2_qwpew"]
+[ext_resource type="Resource" uid="uid://ch4nupwhlm6il" path="res://monster_systems/actions/database/retro/jump.tres" id="3_6o4gl"]
+[ext_resource type="Script" path="res://monster_systems/spirits/resources_scripts/spirit.gd" id="3_y7vqq"]
+[ext_resource type="Resource" uid="uid://dqoqaosti2hri" path="res://monster_systems/actions/database/retro/res_down.tres" id="4_561j3"]
+[ext_resource type="Texture2D" uid="uid://dtyr504b73r6q" path="res://monster_systems/spirits/art/player_single.png" id="4_st1ei"]
+
+[resource]
+script = ExtResource("3_y7vqq")
+key = "player"
+name = "TR_SPIRIT_PLAYER"
+sprite = ExtResource("4_st1ei")
+type = 0
+health = 300
+atk_concrete = 100
+atk_abstract = 100
+defense = 100
+speed = 100
+luck = 10
+actions = Array[ExtResource("1_qqcxp")]([ExtResource("2_qwpew"), ExtResource("3_6o4gl"), ExtResource("4_561j3")])
