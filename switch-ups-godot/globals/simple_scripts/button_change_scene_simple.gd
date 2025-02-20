@@ -2,6 +2,7 @@ extends Button
 
 @export var key : String
 @export var transition_key = "wipe_rect"
+@export var block_change_scene : bool
 var target : SceneLoadWrapper
 var transition : SceneLoadWrapper
 
@@ -14,3 +15,4 @@ func _ready() -> void:
 func change_scene() :
 	BgmManager.stop_override(BgmManager.TRANSITIONS.FADE_OUT_IN)
 	DeferredLoadingManager.change_scene(target,transition)
+	if block_change_scene : DeferredLoadingManager.prevent_change_scene()

@@ -47,6 +47,7 @@ func _process(delta: float) -> void:
 		peer.STATUS_NONE :
 			print("Client not connected to server %s, acting as disconnected" % peer)
 			disconnected.emit()
+			error.emit("ERR_LOST_CONNECTION")
 			queue_free()
 		peer.STATUS_ERROR :
 			printerr("%s had an error" % peer)

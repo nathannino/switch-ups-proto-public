@@ -100,6 +100,7 @@ func _process_load_poll() :
 			current_load_transition = null
 			if not old_load_target == null : OptionsOverlay.set_can_pause(old_load_target.can_pause)
 			old_load_target = null
+			can_change_scene = true
 		, CONNECT_ONE_SHOT)
 		current_load_scene.start_transition()
 		
@@ -207,6 +208,10 @@ func preload_scene(_scene : SceneLoadWrapper, _thread : Thread) :
 		call_deferred("_end_thread",thread)
 	_end_preload_scene(_scene,_thread)
 
+var can_change_scene = true
+func prevent_change_scene() :
+	can_change_scene = false
+
 func change_scene(scene : SceneLoadWrapper, animation : SceneLoadWrapper) -> bool :
 	if scene.corrupted :
 		printerr("Scene corrupted!")
@@ -214,6 +219,10 @@ func change_scene(scene : SceneLoadWrapper, animation : SceneLoadWrapper) -> boo
 	#if not current_load_target == null : #FIXME : Actually make look better than simply overriding
 		#printerr("Already switching scenes")
 	#FIXME : handle transitions n stuff
+	
+	if not can_change_scene :
+		printerr("change_scene currently prevented. Canceled scene change of : %s" % scene.path)
+		return false
 	
 	for child in $ActiveScene.get_children() :
 		$ActiveScene.remove_child(child)

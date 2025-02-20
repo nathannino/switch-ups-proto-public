@@ -146,6 +146,7 @@ layout_mode = 2
 text = "TR_OPTIONS_QUIT"
 script = ExtResource("1_57t8v")
 key = "kill"
+block_change_scene = true
 
 [connection signal="visibility_changed" from="." to="CenterContainer/VBoxContainer/Button2" method="_on_control_visibility_changed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/Button" to="CenterContainer/VBoxContainer/Button" method="_on_pressed"]

@@ -6,3 +6,4 @@ ERR_SERVER_PROTOCOLVER;Incompatible versions;Versions incompatible
 ERR_SERVER_ERROR;Internal server error;Erreur interne serveur
 ERR_SERVER_FULL;Server full;Serveur plein
 ERR_INTERNAL_CLIENT;Internal client error;Erreur interne client
+ERR_LOST_CONNECTION;Connection lost;Connexion perdu

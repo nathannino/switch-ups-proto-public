@@ -30,3 +30,9 @@ TR_OPTIONS_MAINMENU;Return to main menu;Retourner au menu principal
 TR_OPTIONS_QUIT;Close game;Fermer le jeu
 TR_MSG_ERROR_TITLE;Client had an error;Le client a eu un erreur
 TR_MSG_DISMISS;Dismiss;Fermer
+TR_BUILD_READY;Ready;Équipe prêt
+TR_BUILD_UNREADY;Unready;Annuler la préparation
+TR_HOST;Host game;Héberger le serveur
+TR_JOIN;Join game;Joindre le serveur
+TR_PORT;Server port;Port du serveur
+TR_ADDRESS;Server address;Adresse du serveur
