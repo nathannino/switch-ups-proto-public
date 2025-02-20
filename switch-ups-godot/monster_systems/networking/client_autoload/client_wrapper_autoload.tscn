@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://cdnpcuio7rgqv"]
 
-[ext_resource type="Script" path="res://monster_systems/client_autoload/client_wrapper_autoload.gd" id="1_5cum3"]
+[ext_resource type="Script" path="res://monster_systems/networking/client_autoload/client_wrapper_autoload.gd" id="1_5cum3"]
 [ext_resource type="PackedScene" uid="uid://bd1kyiefxpy52" path="res://TCP_server_project/client/tcp_client.tscn" id="2_u3gkb"]
 
 [sub_resource type="GDScript" id="GDScript_3mo2o"]

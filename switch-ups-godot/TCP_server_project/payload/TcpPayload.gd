@@ -8,10 +8,15 @@ enum TYPE {
 	ASK_VER_ACCEPTED,
 	SEND_MESSAGE,
 	
-	# Chat exclusive
+	# Chat poc exclusive
 	GET_HISTORY,
 	SEND_CHAT_HISTORY,
-	SEND_CHAT_MESSAGE
+	SEND_CHAT_MESSAGE,
+	
+	# Team setup
+	TEAMBUILD_SET_READY_STATE,
+	TEAMBUILD_REQUEST_TEAM,
+	TEAMBUILD_SEND_TEAM
 }
 const PROTOCOL_VER = game_info.version
 

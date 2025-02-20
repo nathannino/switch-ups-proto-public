@@ -3,6 +3,8 @@ extends Node
 @export var server_client_wrapper : PackedScene
 @export var error_root : Control
 
+const MAX_PLAYERS = 2
+
 func start_server(_bind_address : String, _port : int) -> bool :
 	match $ServerMain.start_server(_bind_address,_port,server_client_wrapper,global_payload_received) :
 		ERR_ALREADY_IN_USE :
@@ -22,6 +24,13 @@ func get_connections() -> int:
 
 func global_payload_received(_client : Node, payload : TcpPayload) -> void :
 	match payload.get_type() :
+		TcpPayload.TYPE.TEAMBUILD_SET_READY_STATE :
+			var readys = 0
+			for child in $ServerMain.get_children() :
+				if child.teambuilding_is_ready :
+					readys += 1
+			if readys >= MAX_PLAYERS :
+				$ServerMain.send_all(TcpPayload.new().set_type(TcpPayload.TYPE.TEAMBUILD_REQUEST_TEAM))
 		_ :
 			printerr("Unkown global type : %s" % payload.get_type())
 	pass

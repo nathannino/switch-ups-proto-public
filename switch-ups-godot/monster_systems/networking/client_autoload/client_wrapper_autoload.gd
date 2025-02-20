@@ -2,6 +2,10 @@ extends Node
 
 @export var error_root : Control
 
+#region Client signals
+signal teambuilder_request_team
+#endregion
+
 var connected = false
 signal connected_ack
 
@@ -28,8 +32,8 @@ func start_client(_host : String, _port : int) -> void :
 	client_scene.start_client(_host,_port)
 	return 
 	
-func send_message_to_server(username : String, message : String) :
-	client_scene.send(TcpPayload.new().set_type(TcpPayload.TYPE.SEND_CHAT_MESSAGE).set_content({"username" : username, "message" : message}))
+func send(payload : TcpPayload) :
+	client_scene.send(payload)
 
 signal disconnected
 
@@ -46,6 +50,8 @@ func disconnect_client() :
 
 func _on_main_client_payload_received(payload: TcpPayload) -> void:
 	match payload.get_type():
+		TcpPayload.TYPE.TEAMBUILD_REQUEST_TEAM :
+			teambuilder_request_team.emit()
 		_:
 			printerr("Unkown type %s" % payload.get_type())
 	pass # Replace with function body.

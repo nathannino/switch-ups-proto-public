@@ -66,6 +66,7 @@ script/source = "extends VBoxContainer
 @export var summary : Node
 @export var scene_root : Control
 @export var spirit_list : Control
+@export var ready_button : Button
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -74,6 +75,16 @@ func _ready() -> void:
 		child.pressed_option.connect(func(index : int) : _on_button_pressed(child, index))
 	var temp_child = get_child(0)
 	temp_child.set_monster(ms_spirit_active.from_spirit(SpiritDictionary.spirits[\"placeholder\"]),get_options_array())
+	ready_button.check_deactivated()
+	ClientWrapperAutoload.teambuilder_request_team.connect(send_team_to_server)
+
+func send_team_to_server() :
+	var team_array = []
+	for child in get_children() :
+		if not child.current_spirit == null :
+			team_array.push_back(child.current_spirit.to_dict())
+	ClientWrapperAutoload.send(TcpPayload.new().set_type(TcpPayload.TYPE.TEAMBUILD_SEND_TEAM).set_content(team_array))
+	
 
 func get_options_array() -> Array :
 	return [\"Summary\",\"Change\"]
@@ -116,7 +127,7 @@ func _on_selection_done(button_node : Control, selection : ms_spirit) :
 	var spirit_active = ms_spirit_active.from_spirit(selection)
 	button_node.set_monster(spirit_active,get_options_array())
 	summary.set_summary_active(spirit_active)
-
+	ready_button.check_deactivated()
 
 func _on_build_team_root_display_changed() -> void:
 	disconnect_if_connected()
@@ -222,12 +233,24 @@ func set_actions(actions : Array) :
 [sub_resource type="GDScript" id="GDScript_knxf0"]
 script/source = "extends Button
 
+@export var team : Node
+
+func check_deactivated() :
+	for child in team.get_children() :
+		if child.current_spirit == null :
+			if disabled == false : ClientWrapperAutoload.send(TcpPayload.new().set_type(TcpPayload.TYPE.TEAMBUILD_SET_READY_STATE).set_content(false))
+			disabled = true
+			return
+	disabled = false
 
 func _on_toggled(toggled_on: bool) -> void:
-	if toggled_on :
-		text = \"TR_BUILD_UNREADY\"
-	else :
-		text = \"TR_BUILD_READY\"
+	for child in team.get_children() :
+		if child.current_spirit == null :
+			set_pressed_no_signal(false)
+			return
+	
+	text = \"TR_BUILD_UNREADY\" if toggled_on else \"TR_BUILD_READY\"
+	ClientWrapperAutoload.send(TcpPayload.new().set_type(TcpPayload.TYPE.TEAMBUILD_SET_READY_STATE).set_content(toggled_on))
 "
 
 [node name="BuildTeamRoot" type="Control" node_paths=PackedStringArray("empty_node", "team_builder", "summary", "spirit_list", "move_list")]
@@ -260,7 +283,7 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/TeamBuilder" node_paths=PackedStringArray("summary", "scene_root", "spirit_list")]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/TeamBuilder" node_paths=PackedStringArray("summary", "scene_root", "spirit_list", "ready_button")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -268,6 +291,7 @@ script = SubResource("GDScript_37t73")
 summary = NodePath("../../SpiritSummary2/SpiritSummary")
 scene_root = NodePath("../../../..")
 spirit_list = NodePath("../../SpiritList")
+ready_button = NodePath("../../../HBoxContainer2/Button")
 
 [node name="MonsterButton" parent="VBoxContainer/HBoxContainer/TeamBuilder/VBoxContainer" instance=ExtResource("1_5754o")]
 layout_mode = 2
@@ -321,11 +345,13 @@ layout_mode = 2
 layout_mode = 2
 alignment = 2
 
-[node name="Button" type="Button" parent="VBoxContainer/HBoxContainer2"]
+[node name="Button" type="Button" parent="VBoxContainer/HBoxContainer2" node_paths=PackedStringArray("team")]
 layout_mode = 2
+disabled = true
 toggle_mode = true
 text = "TR_BUILD_READY"
 script = SubResource("GDScript_knxf0")
+team = NodePath("../../HBoxContainer/TeamBuilder/VBoxContainer")
 
 [connection signal="display_changed" from="." to="VBoxContainer/HBoxContainer/TeamBuilder/VBoxContainer" method="_on_build_team_root_display_changed"]
 [connection signal="display_changed" from="." to="VBoxContainer/HBoxContainer/SpiritSummary2" method="_on_build_team_root_display_changed"]
