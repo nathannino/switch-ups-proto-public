@@ -15,7 +15,9 @@ func start_server(_bind_address : String, _port : int) -> bool :
 
 func close_server() :
 	$ServerMain.close_server()
-	
+
+func change_scene_all(scene_key : String, transition_key : String) :
+	$ServerMain.send_all(TcpPayload.new().set_type(TcpPayload.TYPE.CHANGE_SCENE).set_content({"scene_key":scene_key,"transition_key":transition_key}))
 
 signal disconnected
 

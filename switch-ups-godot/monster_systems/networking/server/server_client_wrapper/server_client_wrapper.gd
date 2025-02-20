@@ -41,3 +41,10 @@ func _on_server_client_node_disconnected() -> void:
 	
 func send(_payload : TcpPayload) -> void :
 	$ServerClientNode.send(_payload)
+
+func change_scene(scene_key,transition_key) :
+	send(TcpPayload.new().set_type(TcpPayload.TYPE.CHANGE_SCENE).set_content({"scene_key":scene_key,"transition_key":transition_key}))
+
+func _on_server_client_node_accepted() -> void:
+	change_scene("build_team","wipe_rect")
+	pass # Replace with function body.

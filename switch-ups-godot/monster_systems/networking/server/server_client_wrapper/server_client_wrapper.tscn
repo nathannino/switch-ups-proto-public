@@ -8,5 +8,6 @@ script = ExtResource("1_rpjwv")
 
 [node name="ServerClientNode" parent="." instance=ExtResource("1_rcwo6")]
 
+[connection signal="accepted" from="ServerClientNode" to="." method="_on_server_client_node_accepted"]
 [connection signal="disconnected" from="ServerClientNode" to="." method="_on_server_client_node_disconnected"]
 [connection signal="payload_received" from="ServerClientNode" to="." method="_on_server_client_node_payload_received"]

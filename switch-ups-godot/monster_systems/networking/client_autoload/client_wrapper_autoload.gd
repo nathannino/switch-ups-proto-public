@@ -50,6 +50,12 @@ func disconnect_client() :
 
 func _on_main_client_payload_received(payload: TcpPayload) -> void:
 	match payload.get_type():
+		TcpPayload.TYPE.CHANGE_SCENE :
+			var dict = payload.get_content()
+			DeferredLoadingManager.change_scene(
+				SceneLoadWrapper.create().from_key(dict["scene_key"]).prepare(),
+				SceneLoadWrapper.create().as_transition(dict["transition_key"]).prepare()
+			)
 		TcpPayload.TYPE.TEAMBUILD_REQUEST_TEAM :
 			teambuilder_request_team.emit()
 		_:

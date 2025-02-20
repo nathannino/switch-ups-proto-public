@@ -30,6 +30,7 @@ static func calculate_required_steps(_preload_generations = {}) -> int :
 
 static func create() -> SceneLoadWrapper :
 	var wrapper = SceneLoadWrapper.new()
+	wrapper.load_target = LOAD_TARGET.PRELOAD # Eh, default value
 	return wrapper
 
 func from_path(_path : String) -> SceneLoadWrapper :

@@ -25,6 +25,7 @@ func send(_payload : TcpPayload) :
 
 signal payload_received(payload : TcpPayload)
 signal disconnected
+signal accepted
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -54,6 +55,7 @@ func _process(delta: float) -> void:
 							disconnect_from_server(true,"ERR_SERVER_PROTOCOLVER")
 						else :
 							send(TcpPayload.new().set_type(TcpPayload.TYPE.ASK_VER_ACCEPTED))
+							accepted.emit()
 						return
 					TcpPayload.TYPE.ERR_DISCONNECT :
 						peer.disconnect_from_host()
