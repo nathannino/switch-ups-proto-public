@@ -15,6 +15,16 @@ var workers_mutex = Mutex.new() # Jut to be safe...
 
 @onready var loading_circle_anim = $LoadingRoot/LoadingCircleAnchor/LoadingCircle/AnimationPlayer
 
+func add_prefix(prefix : String, value) :
+	return prefix + "%s" % value
+
+func is_ready(_key : String) -> bool :
+	var _data = get_holding_data(_key)
+	if _data is Object :
+		if _data == AWAITING :
+			return false
+	return true
+
 const CIRCLE_ANIM = "appear"
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

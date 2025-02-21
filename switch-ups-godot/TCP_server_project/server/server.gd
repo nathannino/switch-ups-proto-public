@@ -8,6 +8,8 @@ var server : TCPServer
 var client : PackedScene
 var client_signal : Callable
 
+signal client_disconnected
+
 func start_server(_bind_address : String, _port : int, _server_client_wrapper : PackedScene, global_signal_emitable : Callable) -> Error :
 	server = TCPServer.new();
 	client = _server_client_wrapper
@@ -35,6 +37,9 @@ func _process(delta: float) -> void:
 		var client_peer = server.take_connection();
 		var client_scene = client.instantiate();
 		client_scene.global_payload_received.connect(client_signal)
+		client_scene.disconnected.connect(func() :
+			client_disconnected.emit.call_deferred()
+		)
 		add_child(client_scene)
 		client_scene.peer_ready(client_peer);
 	pass

@@ -4,10 +4,13 @@ extends Node
 
 #region Client signals
 signal teambuilder_request_team
+signal teambuilder_last_team(team : Array)
 #endregion
 
 var connected = false
 signal connected_ack
+
+const AWAIT_PREFIX = "packet"
 
 @export var client_packed : PackedScene
 var client_scene : Node
@@ -48,16 +51,29 @@ func _on_main_client_disconnected() -> void:
 func disconnect_client() :
 	client_scene.regular_disconnect()
 
+func get_signal_anonymous_func(payload_type : TcpPayload.TYPE) : # I hate this
+	return func() : 
+		while not DeferredLoadingManager.is_ready(DeferredLoadingManager.add_prefix(AWAIT_PREFIX,payload_type)) :
+			OS.delay_msec(1)
+		return DeferredLoadingManager.get_holding_data(DeferredLoadingManager.add_prefix(AWAIT_PREFIX,payload_type))
+
+
 func _on_main_client_payload_received(payload: TcpPayload) -> void:
 	match payload.get_type():
 		TcpPayload.TYPE.CHANGE_SCENE :
 			var dict = payload.get_content()
+			var preload_dict = {}
+			for entry in dict["packet_await"] :
+				preload_dict[DeferredLoadingManager.add_prefix(AWAIT_PREFIX,entry)] = get_signal_anonymous_func(entry)
 			DeferredLoadingManager.change_scene(
-				SceneLoadWrapper.create().from_key(dict["scene_key"]).prepare(),
-				SceneLoadWrapper.create().as_transition(dict["transition_key"]).prepare()
+			SceneLoadWrapper.create().from_key(dict["scene_key"]).with_preloaded_generations(preload_dict).prepare(),
+			SceneLoadWrapper.create().as_transition(dict["transition_key"]).prepare()
 			)
+		TcpPayload.TYPE.TEAMBUILD_LAST_TEAM :
+			print.call_deferred("last_team sent")
+			DeferredLoadingManager._set_holding_data(DeferredLoadingManager.add_prefix(AWAIT_PREFIX,TcpPayload.TYPE.TEAMBUILD_LAST_TEAM),payload.get_content())
 		TcpPayload.TYPE.TEAMBUILD_REQUEST_TEAM :
-			teambuilder_request_team.emit()
+			teambuilder_request_team.emit.call_deferred()
 		_:
 			printerr("Unkown type %s" % payload.get_type())
 	pass # Replace with function body.

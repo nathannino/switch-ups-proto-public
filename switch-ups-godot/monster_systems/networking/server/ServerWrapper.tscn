@@ -87,4 +87,5 @@ text = "TR_MSG_DISMISS"
 script = SubResource("GDScript_po850")
 root = NodePath("../../../../..")
 
+[connection signal="client_disconnected" from="ServerMain" to="." method="_on_server_main_client_disconnected"]
 [connection signal="pressed" from="ErrorRoot/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/Button" to="ErrorRoot/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/Button" method="_on_pressed"]

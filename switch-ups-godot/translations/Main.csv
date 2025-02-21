@@ -25,6 +25,8 @@ TR_SUMMARY_SPEED;Speed : {speed};Vitesse : {speed}
 TR_SUMMARY_LUCK;Luck : {luck}%;Chance : {luck}%
 TR_SUMMARY_ACTION;Actions : ;Actions : 
 TR_SUMMARY_COST;Cost : {cost};Coût : {cost}
+TR_SUMMARY_EQUIP;Equipped spirit;Esprit équipé
+TR_SUMMARY_CLEAR;Clear selection;Effacer la sélection
 TR_OPTIONS_RESUME;Resume;Retour au jeu
 TR_OPTIONS_MAINMENU;Return to main menu;Retourner au menu principal
 TR_OPTIONS_QUIT;Close game;Fermer le jeu

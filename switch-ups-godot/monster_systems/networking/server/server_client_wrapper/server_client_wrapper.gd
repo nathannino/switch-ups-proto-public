@@ -3,8 +3,37 @@ extends Node
 # TODO : Make sure this is reset when needed, this is very important state to sync omg
 #region Client variables
 var teambuilding_is_ready = false
+var teambuilding_received_team = false
+var in_battle = false
 var team = []
 #endregion
+
+#region state setters
+func state_teambuilding() :
+	reset_team_stats()
+	teambuilding_is_ready = false
+	teambuilding_received_team = false
+	in_battle = false
+	change_scene("build_team","wipe_rect",[TcpPayload.TYPE.TEAMBUILD_LAST_TEAM])
+	send(TcpPayload.new().set_type(TcpPayload.TYPE.TEAMBUILD_LAST_TEAM).set_content(team_to_dict()))
+
+func state_startbattle() :
+	reset_team_stats()
+	teambuilding_is_ready = false
+	teambuilding_received_team = false
+	in_battle = true
+	change_scene("battle_v1","fade_to_black")
+#endregion
+
+func team_to_dict() :
+	var dict_team = []
+	for member in team :
+		dict_team.push_back(member.to_dict())
+	return dict_team
+
+func reset_team_stats() :
+	for member in team :
+		member.reset_stats()
 
 func peer_ready(_peer : StreamPeerTCP) -> void:
 	if ServerWrapper.get_connections() > ServerWrapper.MAX_PLAYERS :
@@ -26,7 +55,8 @@ func _on_server_client_node_payload_received(payload: TcpPayload) -> void:
 			team.clear()
 			for member in temp_team :
 				team.push_back(ms_spirit_active.from_dict(member))
-			print(temp_team)
+			teambuilding_received_team = true
+			global_payload_received.emit(self,payload)
 		_:
 			printerr("Unkown type %s" % payload.get_type())
 	pass # Replace with function body.
@@ -42,9 +72,9 @@ func _on_server_client_node_disconnected() -> void:
 func send(_payload : TcpPayload) -> void :
 	$ServerClientNode.send(_payload)
 
-func change_scene(scene_key,transition_key) :
-	send(TcpPayload.new().set_type(TcpPayload.TYPE.CHANGE_SCENE).set_content({"scene_key":scene_key,"transition_key":transition_key}))
+func change_scene(scene_key,transition_key,packet_await = []) :
+	send(TcpPayload.new().set_type(TcpPayload.TYPE.CHANGE_SCENE).set_content({"scene_key":scene_key,"transition_key":transition_key,"packet_await":packet_await}))
 
 func _on_server_client_node_accepted() -> void:
-	change_scene("build_team","wipe_rect")
+	state_teambuilding()
 	pass # Replace with function body.

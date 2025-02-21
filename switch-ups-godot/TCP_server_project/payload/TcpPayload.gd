@@ -17,6 +17,7 @@ enum TYPE {
 	CHANGE_SCENE,
 	
 	# Team setup
+	TEAMBUILD_LAST_TEAM, # Sends the state of the last team, to not have to start from scratch
 	TEAMBUILD_SET_READY_STATE,
 	TEAMBUILD_REQUEST_TEAM,
 	TEAMBUILD_SEND_TEAM,

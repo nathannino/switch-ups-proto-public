@@ -73,8 +73,9 @@ func _ready() -> void:
 	for child in get_children() :
 		child.reset()
 		child.pressed_option.connect(func(index : int) : _on_button_pressed(child, index))
-	var temp_child = get_child(0)
-	temp_child.set_monster(ms_spirit_active.from_spirit(SpiritDictionary.spirits[\"placeholder\"]),get_options_array())
+	var last_team = DeferredLoadingManager.get_holding_data(DeferredLoadingManager.add_prefix(ClientWrapperAutoload.AWAIT_PREFIX,TcpPayload.TYPE.TEAMBUILD_LAST_TEAM))
+	for index in range(last_team.size()) :
+		get_child(index).set_monster(ms_spirit_active.from_dict(last_team[index]))
 	ready_button.check_deactivated()
 	ClientWrapperAutoload.teambuilder_request_team.connect(send_team_to_server)
 

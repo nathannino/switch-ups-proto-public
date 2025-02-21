@@ -56,6 +56,9 @@ func change_equip_key(value : String) :
 	key_equip = value
 	extra_move = SpiritDictionary.spirits[value].actions[0].key
 
+func reset_stats() :
+	current_hp = SpiritDictionary.spirits[key].health
+
 func get_action_converted(_key : String) -> ms_action :
 	if _key == extra_move :
 		return SpiritDictionary.spirits[key_equip].get_action(_key)
