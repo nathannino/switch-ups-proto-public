@@ -178,6 +178,21 @@ func _stop_override(transition : TRANSITIONS) :
 	await _handle_active(transition, active)
 	pass
 
+func stop(transition : TRANSITIONS) :
+	var thread = Thread.new()
+	thread.start(func() : 
+		_lock_music()
+		await _stop(transition)
+		_unlock_music()
+		call_deferred("_end_tread",thread)
+	)
+
+func _stop(transition : TRANSITIONS) :
+	already_overwritten = false
+	var active = _get_active()
+	
+	await _handle_standby(transition, func () : active.call_deferred("stop"), active) 
+
 func load_database() :
 	var files = DirAccess.get_files_at(database_path)
 	var database = {}

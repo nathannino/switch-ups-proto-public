@@ -4,7 +4,7 @@ extends Node
 
 #region Client signals
 signal teambuilder_request_team
-signal teambuilder_last_team(team : Array)
+signal battle_team_synced(teams : Array)
 #endregion
 
 var connected = false
@@ -66,12 +66,14 @@ func _on_main_client_payload_received(payload: TcpPayload) -> void:
 			for entry in dict["packet_await"] :
 				preload_dict[DeferredLoadingManager.add_prefix(AWAIT_PREFIX,entry)] = get_signal_anonymous_func(entry)
 			DeferredLoadingManager.change_scene(
-			SceneLoadWrapper.create().from_key(dict["scene_key"]).with_preloaded_generations(preload_dict).prepare(),
+			SceneLoadWrapper.create().from_key(dict["scene_key"]).with_preloaded_generations(preload_dict).background_await().prepare(),
 			SceneLoadWrapper.create().as_transition(dict["transition_key"]).prepare()
 			)
-		TcpPayload.TYPE.TEAMBUILD_LAST_TEAM :
-			print.call_deferred("last_team sent")
-			DeferredLoadingManager._set_holding_data(DeferredLoadingManager.add_prefix(AWAIT_PREFIX,TcpPayload.TYPE.TEAMBUILD_LAST_TEAM),payload.get_content())
+		TcpPayload.TYPE.TEAMBUILD_LAST_TEAM, TcpPayload.TYPE.BATTLE_SETUP_PLAYERID:
+			DeferredLoadingManager._set_holding_data(DeferredLoadingManager.add_prefix(AWAIT_PREFIX,payload.get_type()),payload.get_content())
+		TcpPayload.TYPE.BATTLE_SETUP_SYNCTEAM :
+			DeferredLoadingManager._set_holding_data(DeferredLoadingManager.add_prefix(AWAIT_PREFIX,payload.get_type()),payload.get_content())
+			battle_team_synced.emit(payload.get_content())
 		TcpPayload.TYPE.TEAMBUILD_REQUEST_TEAM :
 			teambuilder_request_team.emit.call_deferred()
 		_:

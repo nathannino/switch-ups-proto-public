@@ -1,4 +1,7 @@
-[gd_scene format=3 uid="uid://cwp5xmvuwvhph"]
+[gd_scene load_steps=3 format=3 uid="uid://cwp5xmvuwvhph"]
+
+[ext_resource type="Script" path="res://scenes/battle_v1/battle_v_1.gd" id="1_hot38"]
+[ext_resource type="PackedScene" uid="uid://bjwcj7an8i718" path="res://globals/utility_scenes/ui_component/monster_button.tscn" id="2_12bl6"]
 
 [node name="BattleV1" type="Control"]
 layout_mode = 3
@@ -7,6 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_hot38")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
@@ -15,3 +19,40 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+color = Color(0.201527, 0.201527, 0.201527, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PlayerTeam" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="MonsterButtonLeft" parent="VBoxContainer/PlayerTeam" instance=ExtResource("2_12bl6")]
+layout_mode = 2
+
+[node name="MonsterButtonActive" parent="VBoxContainer/PlayerTeam" instance=ExtResource("2_12bl6")]
+layout_mode = 2
+
+[node name="MonsterButtonRight" parent="VBoxContainer/PlayerTeam" instance=ExtResource("2_12bl6")]
+layout_mode = 2
+
+[node name="Actions" type="Control" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="EnemyTeam" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="MonsterButtonLeft" parent="VBoxContainer/EnemyTeam" instance=ExtResource("2_12bl6")]
+layout_mode = 2
+
+[node name="MonsterButtonActive" parent="VBoxContainer/EnemyTeam" instance=ExtResource("2_12bl6")]
+layout_mode = 2
+
+[node name="MonsterButtonRight" parent="VBoxContainer/EnemyTeam" instance=ExtResource("2_12bl6")]
+layout_mode = 2

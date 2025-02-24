@@ -156,12 +156,13 @@ func _decrement_workers() :
 	workers_mutex.unlock()
 
 # Note that making threads is slow on windows, according to the godot documentation. Only use this when deferred loading of data requires a function
-func start_deferred_generation(key : String, function : Callable) -> void:
+func start_deferred_generation(key : String, function : Callable, cleanup : Callable = func() : pass) -> void:
 	var thread = Thread.new()
 	_set_holding_data(key,AWAITING)
 	thread.start(func() : 
 		_deferred_generation_thread(key,function)
-		thread.wait_to_finish()
+		cleanup.call()
+		_end_thread.call_deferred(thread)
 	)
 
 func get_holding_data(key : String) :
@@ -188,8 +189,7 @@ func preload_scene(_scene : SceneLoadWrapper, _thread : Thread) :
 	_increment_workers()
 	_scene.ready = false
 	for key in _scene.preload_generations :
-		_deferred_generation_thread(key,_scene.preload_generations[key])
-		_scene.increment_completed_steps()
+		start_deferred_generation(key,_scene.preload_generations[key],_scene.increment_completed_steps)
 	_scene.start_preload()
 	var preload_complete = false
 	while not preload_complete :

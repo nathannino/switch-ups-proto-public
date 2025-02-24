@@ -18,6 +18,7 @@ signal display_changed
 
 func _ready() :
 	show_empty()
+	BgmManager.stop(BgmManager.TRANSITIONS.CUT) # Getting real tired of hearing that dumb song with a slight delay every time I want to test something ngl FIXME : Get a better main menu song... and also get a teambuilder song
 
 func show_empty() :
 	team_builder.show()

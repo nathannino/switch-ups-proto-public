@@ -22,8 +22,17 @@ func state_startbattle() :
 	teambuilding_is_ready = false
 	teambuilding_received_team = false
 	in_battle = true
-	change_scene("battle_v1","fade_to_black")
+	change_scene("battle_v1","fade_to_black",[TcpPayload.TYPE.BATTLE_SETUP_PLAYERID,TcpPayload.TYPE.BATTLE_SETUP_SYNCTEAM])
+	
+	send(TcpPayload.new().set_type(TcpPayload.TYPE.BATTLE_SETUP_PLAYERID).set_content(get_index()))
+	sync_teams.call_deferred() # Making sure every server_client_wrapper had state_startbattle() called
 #endregion
+
+func sync_teams() :
+	var teams = []
+	for child in get_parent().get_children() :
+		teams.push_back(child.team)
+	send(TcpPayload.new().set_type(TcpPayload.TYPE.BATTLE_SETUP_SYNCTEAM).set_content(teams))
 
 func team_to_dict() :
 	var dict_team = []
