@@ -7,7 +7,7 @@ var transition : SceneLoadWrapper
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	print("%s : %s - v%s" % [game_info.project_name, game_info.flavor, game_info.version])
+	print("%s : %s - protocol verison %s" % [game_info.project_name, game_info.flavor, game_info.version + ("_dev" if game_info.dev else "")])
 	print("Created by Nathan_Nino")
 	print("Have fun!")
 	var key = "main_menu"

@@ -76,6 +76,11 @@ func set_monster(spirit_active : ms_spirit_active, _options : Array = []) :
 	button.show()
 	populate_options()
 
+func set_button_state(enabled : bool) :
+	button.visible = enabled
+	if not enabled and options_root.visible :
+		options_root.hide()
+
 func populate_options() :
 	for child in options_root.get_children() :
 		child.queue_free()

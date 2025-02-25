@@ -29,10 +29,10 @@ enum TYPE {
 	BATTLE_AWAIT_ENDTURN,
 	BATTLE_STARTTURN,
 }
-const PROTOCOL_VER = game_info.version
+const PROTOCOL_VER = game_info.version + ("_dev" if game_info.dev else "")
 
 var type : TYPE
-var content : Variant
+var content : Variant = null
 
 func parse_json(_string : String) -> TcpPayload :
 	var json = JSON.new()

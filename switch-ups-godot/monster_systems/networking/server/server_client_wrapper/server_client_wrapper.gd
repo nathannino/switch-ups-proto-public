@@ -5,6 +5,7 @@ extends Node
 var teambuilding_is_ready = false
 var teambuilding_received_team = false
 var in_battle = false
+var battle_loaded = false
 var team = []
 #endregion
 
@@ -14,6 +15,7 @@ func state_teambuilding() :
 	teambuilding_is_ready = false
 	teambuilding_received_team = false
 	in_battle = false
+	battle_loaded = false
 	change_scene("build_team","wipe_rect",[TcpPayload.TYPE.TEAMBUILD_LAST_TEAM])
 	send(TcpPayload.new().set_type(TcpPayload.TYPE.TEAMBUILD_LAST_TEAM).set_content(team_to_dict()))
 
@@ -22,6 +24,7 @@ func state_startbattle() :
 	teambuilding_is_ready = false
 	teambuilding_received_team = false
 	in_battle = true
+	battle_loaded = false
 	change_scene("battle_v1","fade_to_black",[TcpPayload.TYPE.BATTLE_SETUP_PLAYERID,TcpPayload.TYPE.BATTLE_SETUP_SYNCTEAM])
 	
 	send(TcpPayload.new().set_type(TcpPayload.TYPE.BATTLE_SETUP_PLAYERID).set_content(get_index()))
@@ -31,7 +34,7 @@ func state_startbattle() :
 func sync_teams() :
 	var teams = []
 	for child in get_parent().get_children() :
-		teams.push_back(child.team)
+		teams.push_back(child.team_to_dict())
 	send(TcpPayload.new().set_type(TcpPayload.TYPE.BATTLE_SETUP_SYNCTEAM).set_content(teams))
 
 func team_to_dict() :
@@ -65,6 +68,9 @@ func _on_server_client_node_payload_received(payload: TcpPayload) -> void:
 			for member in temp_team :
 				team.push_back(ms_spirit_active.from_dict(member))
 			teambuilding_received_team = true
+			global_payload_received.emit(self,payload)
+		TcpPayload.TYPE.BATTLE_AWAIT_INIT :
+			battle_loaded = true
 			global_payload_received.emit(self,payload)
 		_:
 			printerr("Unkown type %s" % payload.get_type())

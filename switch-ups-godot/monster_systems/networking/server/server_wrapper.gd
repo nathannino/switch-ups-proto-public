@@ -48,6 +48,13 @@ func global_payload_received(_client : Node, payload : TcpPayload) -> void :
 					readys += 1
 			if readys >= MAX_PLAYERS :
 				set_state_battle_start()
+		TcpPayload.TYPE.BATTLE_AWAIT_INIT :
+			var readys = 0
+			for child in $ServerMain.get_children() :
+				if child.battle_loaded :
+					readys += 1
+			if readys >= MAX_PLAYERS :
+				$ServerMain.send_all(TcpPayload.new().set_type(TcpPayload.TYPE.BATTLE_AWAIT_INIT))
 		_ :
 			printerr("Unkown global type : %s" % payload.get_type())
 	pass

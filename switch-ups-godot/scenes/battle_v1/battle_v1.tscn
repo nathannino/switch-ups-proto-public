@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://cwp5xmvuwvhph"]
+[gd_scene load_steps=4 format=3 uid="uid://cwp5xmvuwvhph"]
 
 [ext_resource type="Script" path="res://scenes/battle_v1/battle_v_1.gd" id="1_hot38"]
 [ext_resource type="PackedScene" uid="uid://bjwcj7an8i718" path="res://globals/utility_scenes/ui_component/monster_button.tscn" id="2_12bl6"]
+[ext_resource type="Script" path="res://scenes/battle_v1/team_display_row.gd" id="2_ur35w"]
 
 [node name="BattleV1" type="Control"]
 layout_mode = 3
@@ -29,8 +30,14 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PlayerTeam" type="HBoxContainer" parent="VBoxContainer"]
+[node name="PlayerTeam" type="HBoxContainer" parent="VBoxContainer" node_paths=PackedStringArray("battle_root", "spirit_left", "spirit_center", "spirit_right")]
 layout_mode = 2
+script = ExtResource("2_ur35w")
+battle_root = NodePath("../..")
+is_self = true
+spirit_left = NodePath("MonsterButtonLeft")
+spirit_center = NodePath("MonsterButtonActive")
+spirit_right = NodePath("MonsterButtonRight")
 
 [node name="MonsterButtonLeft" parent="VBoxContainer/PlayerTeam" instance=ExtResource("2_12bl6")]
 layout_mode = 2
@@ -45,8 +52,13 @@ layout_mode = 2
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="EnemyTeam" type="HBoxContainer" parent="VBoxContainer"]
+[node name="EnemyTeam" type="HBoxContainer" parent="VBoxContainer" node_paths=PackedStringArray("battle_root", "spirit_left", "spirit_center", "spirit_right")]
 layout_mode = 2
+script = ExtResource("2_ur35w")
+battle_root = NodePath("../..")
+spirit_left = NodePath("MonsterButtonLeft")
+spirit_center = NodePath("MonsterButtonActive")
+spirit_right = NodePath("MonsterButtonRight")
 
 [node name="MonsterButtonLeft" parent="VBoxContainer/EnemyTeam" instance=ExtResource("2_12bl6")]
 layout_mode = 2

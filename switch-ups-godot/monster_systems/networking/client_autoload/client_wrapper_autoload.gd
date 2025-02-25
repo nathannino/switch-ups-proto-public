@@ -5,6 +5,7 @@ extends Node
 #region Client signals
 signal teambuilder_request_team
 signal battle_team_synced(teams : Array)
+signal battle_all_loaded
 #endregion
 
 var connected = false
@@ -75,7 +76,9 @@ func _on_main_client_payload_received(payload: TcpPayload) -> void:
 			DeferredLoadingManager._set_holding_data(DeferredLoadingManager.add_prefix(AWAIT_PREFIX,payload.get_type()),payload.get_content())
 			battle_team_synced.emit(payload.get_content())
 		TcpPayload.TYPE.TEAMBUILD_REQUEST_TEAM :
-			teambuilder_request_team.emit.call_deferred()
+			teambuilder_request_team.emit()
+		TcpPayload.TYPE.BATTLE_AWAIT_INIT :
+			battle_all_loaded.emit()
 		_:
 			printerr("Unkown type %s" % payload.get_type())
 	pass # Replace with function body.
