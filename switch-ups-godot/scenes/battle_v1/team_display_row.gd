@@ -2,6 +2,7 @@ extends HBoxContainer
 
 @export var battle_root : Node
 @export var is_self : bool
+@export var summary_container : Container
 
 @export_category("monster_buttons")
 @export var spirit_left : Control
@@ -10,7 +11,10 @@ extends HBoxContainer
 
 func _ready() -> void:
 	battle_root.sync_team.connect(sync_team_state)
-	set_button_state(false)
+	
+	spirit_center.pressed_option.connect(func (_index) : show_summary(spirit_center))
+	spirit_left.pressed_option.connect(func (_index) : show_summary(spirit_left))
+	spirit_right.pressed_option.connect(func (_index) : show_summary(spirit_right))
 
 func set_button_state(enabled : bool) :
 	for child in get_children() :
@@ -21,3 +25,7 @@ func sync_team_state() :
 	spirit_center.set_monster(team[0])
 	spirit_left.set_monster(team[1])
 	spirit_right.set_monster(team[2])
+
+func show_summary(monster_button : Node) :
+	summary_container.show()
+	summary_container.set_summary_active(monster_button.current_spirit)

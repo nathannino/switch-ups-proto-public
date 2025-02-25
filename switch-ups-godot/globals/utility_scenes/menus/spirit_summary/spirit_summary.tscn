@@ -167,6 +167,7 @@ layout_mode = 2
 [node name="AspectRatioContainer" type="AspectRatioContainer" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer" node_paths=PackedStringArray("grid")]
 custom_minimum_size = Vector2(400, 400)
 layout_mode = 2
+alignment_vertical = 0
 script = SubResource("GDScript_8bwty")
 grid = NodePath("..")
 minimum_size_double = Vector2(400, 400)

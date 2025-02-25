@@ -7,6 +7,7 @@ var teambuilding_received_team = false
 var in_battle = false
 var battle_loaded = false
 var team = []
+var await_endturn = false
 #endregion
 
 #region state setters
@@ -16,6 +17,7 @@ func state_teambuilding() :
 	teambuilding_received_team = false
 	in_battle = false
 	battle_loaded = false
+	var await_endturn = false
 	change_scene("build_team","wipe_rect",[TcpPayload.TYPE.TEAMBUILD_LAST_TEAM])
 	send(TcpPayload.new().set_type(TcpPayload.TYPE.TEAMBUILD_LAST_TEAM).set_content(team_to_dict()))
 
@@ -25,6 +27,7 @@ func state_startbattle() :
 	teambuilding_received_team = false
 	in_battle = true
 	battle_loaded = false
+	var await_endturn = false
 	change_scene("battle_v1","fade_to_black",[TcpPayload.TYPE.BATTLE_SETUP_PLAYERID,TcpPayload.TYPE.BATTLE_SETUP_SYNCTEAM])
 	
 	send(TcpPayload.new().set_type(TcpPayload.TYPE.BATTLE_SETUP_PLAYERID).set_content(get_index()))
@@ -71,6 +74,9 @@ func _on_server_client_node_payload_received(payload: TcpPayload) -> void:
 			global_payload_received.emit(self,payload)
 		TcpPayload.TYPE.BATTLE_AWAIT_INIT :
 			battle_loaded = true
+			global_payload_received.emit(self,payload)
+		TcpPayload.TYPE.BATTLE_AWAIT_ENDTURN :
+			await_endturn = true
 			global_payload_received.emit(self,payload)
 		_:
 			printerr("Unkown type %s" % payload.get_type())

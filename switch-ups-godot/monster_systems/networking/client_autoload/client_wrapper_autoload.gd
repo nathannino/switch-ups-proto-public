@@ -6,6 +6,7 @@ extends Node
 signal teambuilder_request_team
 signal battle_team_synced(teams : Array)
 signal battle_all_loaded
+signal battle_begin_turn
 #endregion
 
 var connected = false
@@ -79,6 +80,8 @@ func _on_main_client_payload_received(payload: TcpPayload) -> void:
 			teambuilder_request_team.emit()
 		TcpPayload.TYPE.BATTLE_AWAIT_INIT :
 			battle_all_loaded.emit()
+		TcpPayload.TYPE.BATTLE_STARTTURN :
+			battle_begin_turn.emit()
 		_:
 			printerr("Unkown type %s" % payload.get_type())
 	pass # Replace with function body.

@@ -7,6 +7,12 @@ var friend_team : Array[ms_spirit_active] = []
 var enemy_team : Array[ms_spirit_active] = []
 signal sync_team
 
+@export var timer : Timer
+
+@export_category("Action Menu")
+@export var action_box : Control
+@export var main_action_menu : Control
+
 func _init() :
 	player_id = DeferredLoadingManager.get_holding_data(DeferredLoadingManager.add_prefix(ClientWrapperAutoload.AWAIT_PREFIX,TcpPayload.TYPE.BATTLE_SETUP_PLAYERID))
 	_set_team_state(DeferredLoadingManager.get_holding_data(DeferredLoadingManager.add_prefix(ClientWrapperAutoload.AWAIT_PREFIX,TcpPayload.TYPE.BATTLE_SETUP_SYNCTEAM)))
@@ -30,5 +36,15 @@ func _set_team_state(teams : Array) :
 		sync_team.emit()
 
 func _ready() :
-	ClientWrapperAutoload.send(TcpPayload.new().set_type(TcpPayload.TYPE.SEND_MESSAGE).set_content("DEBUG_READY_DONE"))
-	pass
+	ClientWrapperAutoload.battle_begin_turn.connect(begin_turn)
+	action_box.hide()
+	
+	timer.wait_time = 3 # Simulate a battle begin animation or smth
+	timer.timeout.connect(func () : 
+		ClientWrapperAutoload.send(TcpPayload.new().set_type(TcpPayload.TYPE.BATTLE_AWAIT_ENDTURN))
+	, CONNECT_ONE_SHOT)
+	timer.start()
+
+func begin_turn() :
+	action_box.show()
+	main_action_menu.reset_center()

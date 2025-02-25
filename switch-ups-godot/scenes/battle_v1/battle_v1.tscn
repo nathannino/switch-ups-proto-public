@@ -1,10 +1,122 @@
-[gd_scene load_steps=4 format=3 uid="uid://cwp5xmvuwvhph"]
+[gd_scene load_steps=10 format=3 uid="uid://cwp5xmvuwvhph"]
 
 [ext_resource type="Script" path="res://scenes/battle_v1/battle_v_1.gd" id="1_hot38"]
 [ext_resource type="PackedScene" uid="uid://bjwcj7an8i718" path="res://globals/utility_scenes/ui_component/monster_button.tscn" id="2_12bl6"]
 [ext_resource type="Script" path="res://scenes/battle_v1/team_display_row.gd" id="2_ur35w"]
+[ext_resource type="PackedScene" uid="uid://diohlpvbxl3oh" path="res://globals/utility_scenes/menus/spirit_summary/spirit_summary.tscn" id="4_5f312"]
 
-[node name="BattleV1" type="Control"]
+[sub_resource type="GDScript" id="GDScript_r1x23"]
+script/source = "extends Control
+
+@export_category(\"Anchors\")
+@export var left_control : Control
+@export var center_control : Control
+@export var right_control : Control
+
+@export_category(\"Buttons\")
+@export var left_button : Button
+@export var right_button : Button
+
+
+enum POSITION {
+	LEFT,
+	CENTER,
+	RIGHT,
+}
+
+var spirit_position = POSITION.CENTER
+
+func _goto_pos(_position : POSITION) :
+	spirit_position = _position
+	get_parent().remove_child(self)
+	match _position :
+		POSITION.LEFT :
+			left_control.add_child(self)
+			
+			left_button.modulate = Color(0,0,0,0)
+			left_button.disabled = true
+			
+			right_button.modulate = Color.WHITE
+			right_button.disabled = false
+		POSITION.CENTER :
+			center_control.add_child(self)
+			
+			left_button.modulate = Color.WHITE
+			left_button.disabled = false
+			
+			right_button.modulate = Color.WHITE
+			right_button.disabled = false
+		POSITION.RIGHT :
+			right_control.add_child(self)
+			
+			left_button.modulate = Color.WHITE
+			left_button.disabled = false
+			
+			right_button.modulate = Color(0,0,0,0)
+			right_button.disabled = true
+
+func reset_center() :
+	_goto_pos(POSITION.CENTER)
+
+func left() :
+	match spirit_position :
+		POSITION.LEFT :
+			_goto_pos(POSITION.RIGHT)
+		POSITION.CENTER :
+			_goto_pos(POSITION.LEFT)
+		POSITION.RIGHT :
+			_goto_pos(POSITION.CENTER)
+
+func right() :
+	match spirit_position :
+		POSITION.LEFT :
+			_goto_pos(POSITION.CENTER)
+		POSITION.CENTER :
+			_goto_pos(POSITION.RIGHT)
+		POSITION.RIGHT :
+			_goto_pos(POSITION.LEFT)
+"
+
+[sub_resource type="GDScript" id="GDScript_wqnbj"]
+script/source = "extends Button
+
+@export var menu_root : Control
+
+func _on_pressed() -> void:
+	menu_root.left()
+"
+
+[sub_resource type="GDScript" id="GDScript_3dv3g"]
+script/source = "extends Button
+
+@export var menu_root : Control
+
+func _on_pressed() -> void:
+	menu_root.right()
+"
+
+[sub_resource type="GDScript" id="GDScript_3dqdr"]
+script/source = "extends PanelContainer
+
+@export var summary_node : Node
+
+func set_empty() :
+	summary_node.set_empty()
+
+func set_summary_active(_spirit : ms_spirit_active) :
+	summary_node.set_summary_active(_spirit)
+"
+
+[sub_resource type="GDScript" id="GDScript_4nxje"]
+script/source = "extends Button
+
+@export var root_node : Node
+
+func _on_pressed() -> void:
+	root_node.hide()
+"
+
+[node name="BattleV1" type="Control" node_paths=PackedStringArray("timer", "action_box", "main_action_menu")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,6 +124,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_hot38")
+timer = NodePath("ActionTimer")
+action_box = NodePath("VBoxContainer/Actions/ActionBox")
+main_action_menu = NodePath("VBoxContainer/Actions/ActionBox/Control2/MainActionMenu")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
@@ -30,11 +145,12 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PlayerTeam" type="HBoxContainer" parent="VBoxContainer" node_paths=PackedStringArray("battle_root", "spirit_left", "spirit_center", "spirit_right")]
+[node name="PlayerTeam" type="HBoxContainer" parent="VBoxContainer" node_paths=PackedStringArray("battle_root", "summary_container", "spirit_left", "spirit_center", "spirit_right")]
 layout_mode = 2
 script = ExtResource("2_ur35w")
 battle_root = NodePath("../..")
 is_self = true
+summary_container = NodePath("../../SummaryContainer")
 spirit_left = NodePath("MonsterButtonLeft")
 spirit_center = NodePath("MonsterButtonActive")
 spirit_right = NodePath("MonsterButtonRight")
@@ -52,6 +168,93 @@ layout_mode = 2
 layout_mode = 2
 size_flags_vertical = 3
 
+[node name="ActionBox" type="HBoxContainer" parent="VBoxContainer/Actions"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Control" type="Control" parent="VBoxContainer/Actions/ActionBox"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Control2" type="Control" parent="VBoxContainer/Actions/ActionBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MainActionMenu" type="Control" parent="VBoxContainer/Actions/ActionBox/Control2" node_paths=PackedStringArray("left_control", "center_control", "right_control", "left_button", "right_button")]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset = Vector2(20, 40)
+script = SubResource("GDScript_r1x23")
+left_control = NodePath("../../Control")
+center_control = NodePath("..")
+right_control = NodePath("../../Control3")
+left_button = NodePath("ActionContainer/LeftButton")
+right_button = NodePath("ActionContainer/RightButton")
+
+[node name="ActionContainer" type="HBoxContainer" parent="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -98.5
+offset_top = -40.0
+offset_right = 98.5
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 40
+alignment = 1
+
+[node name="LeftButton" type="Button" parent="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer" node_paths=PackedStringArray("menu_root")]
+layout_mode = 2
+text = "Rotate Left"
+script = SubResource("GDScript_wqnbj")
+menu_root = NodePath("../..")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer"]
+layout_mode = 2
+alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="AttackButton" type="Button" parent="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/HBoxContainer"]
+layout_mode = 2
+text = "Attack"
+
+[node name="DefenseButton" type="Button" parent="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/HBoxContainer"]
+layout_mode = 2
+text = "Defense"
+
+[node name="PartyButton" type="Button" parent="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/HBoxContainer"]
+layout_mode = 2
+text = "Switch"
+
+[node name="RightButton" type="Button" parent="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer" node_paths=PackedStringArray("menu_root")]
+layout_mode = 2
+text = "Rotate Right
+"
+script = SubResource("GDScript_3dv3g")
+menu_root = NodePath("../..")
+
+[node name="Control3" type="Control" parent="VBoxContainer/Actions/ActionBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
 [node name="EnemyTeam" type="HBoxContainer" parent="VBoxContainer" node_paths=PackedStringArray("battle_root", "spirit_left", "spirit_center", "spirit_right")]
 layout_mode = 2
 script = ExtResource("2_ur35w")
@@ -68,3 +271,42 @@ layout_mode = 2
 
 [node name="MonsterButtonRight" parent="VBoxContainer/EnemyTeam" instance=ExtResource("2_12bl6")]
 layout_mode = 2
+
+[node name="SummaryContainer" type="PanelContainer" parent="." node_paths=PackedStringArray("summary_node")]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_3dqdr")
+summary_node = NodePath("VBoxContainer/SpiritSummary")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SummaryContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SummaryContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SummaryContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Summary"
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="SummaryContainer/VBoxContainer/HBoxContainer" node_paths=PackedStringArray("root_node")]
+layout_mode = 2
+text = "Close"
+script = SubResource("GDScript_4nxje")
+root_node = NodePath("../../..")
+
+[node name="SpiritSummary" parent="SummaryContainer/VBoxContainer" instance=ExtResource("4_5f312")]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ActionTimer" type="Timer" parent="."]
+
+[connection signal="pressed" from="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/LeftButton" to="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/LeftButton" method="_on_pressed"]
+[connection signal="pressed" from="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/RightButton" to="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/RightButton" method="_on_pressed"]
+[connection signal="pressed" from="SummaryContainer/VBoxContainer/HBoxContainer/Button" to="SummaryContainer/VBoxContainer/HBoxContainer/Button" method="_on_pressed"]
