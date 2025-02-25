@@ -120,6 +120,8 @@ func get_finished() :
 			assert(_preinit_complete)
 			return node
 		LOAD_TARGET.PREINIT, LOAD_TARGET.PREINIT_AWAIT :
+			while node == null :
+				OS.delay_msec(0.5) # FIXME : BADDDDD
 			return node
 		_:
 			assert(false)
