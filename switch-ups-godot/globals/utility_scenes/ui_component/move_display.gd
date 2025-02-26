@@ -6,6 +6,7 @@ var action : ms_action
 @export var type_label : RichTextLabel
 @export var cost_label : RichTextLabel
 @export var desc_container : Container
+@export var button : Button
 
 signal pressed(action : ms_action)
 
@@ -24,6 +25,9 @@ func _notification(what: int) -> void:
 	match what:
 		NOTIFICATION_TRANSLATION_CHANGED :
 			update_ui()
+
+func set_button_disabled(_disabled : bool) :
+	button.disabled = _disabled
 
 func update_ui() :
 	name_label.text = action.name

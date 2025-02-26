@@ -4,7 +4,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2hp1f"]
 
-[node name="MoveDisplay" type="PanelContainer" node_paths=PackedStringArray("name_label", "type_label", "cost_label", "desc_container")]
+[node name="MoveDisplay" type="PanelContainer" node_paths=PackedStringArray("name_label", "type_label", "cost_label", "desc_container", "button")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -17,6 +17,7 @@ name_label = NodePath("MarginContainer/VBoxContainer/Name")
 type_label = NodePath("MarginContainer/VBoxContainer/GridContainer/Type")
 cost_label = NodePath("MarginContainer/VBoxContainer/GridContainer/Cost")
 desc_container = NodePath("MarginContainer/VBoxContainer/desc")
+button = NodePath("Button")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2

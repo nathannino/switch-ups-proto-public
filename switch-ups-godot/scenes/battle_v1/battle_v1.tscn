@@ -1,9 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://cwp5xmvuwvhph"]
+[gd_scene load_steps=14 format=3 uid="uid://cwp5xmvuwvhph"]
 
 [ext_resource type="Script" path="res://scenes/battle_v1/battle_v_1.gd" id="1_hot38"]
 [ext_resource type="PackedScene" uid="uid://bjwcj7an8i718" path="res://globals/utility_scenes/ui_component/monster_button.tscn" id="2_12bl6"]
 [ext_resource type="Script" path="res://scenes/battle_v1/team_display_row.gd" id="2_ur35w"]
 [ext_resource type="PackedScene" uid="uid://diohlpvbxl3oh" path="res://globals/utility_scenes/menus/spirit_summary/spirit_summary.tscn" id="4_5f312"]
+[ext_resource type="Script" path="res://scenes/battle_v1/move_list.gd" id="4_6ihod"]
+[ext_resource type="PackedScene" uid="uid://l5cmnn36hklt" path="res://globals/utility_scenes/ui_component/move_holder.tscn" id="5_vk5bl"]
 
 [sub_resource type="GDScript" id="GDScript_r1x23"]
 script/source = "extends Control
@@ -17,20 +19,13 @@ script/source = "extends Control
 @export var left_button : Button
 @export var right_button : Button
 
+var spirit_position = ms_constants.POSITION.CENTER
 
-enum POSITION {
-	LEFT,
-	CENTER,
-	RIGHT,
-}
-
-var spirit_position = POSITION.CENTER
-
-func _goto_pos(_position : POSITION) :
+func _goto_pos(_position : ms_constants.POSITION) :
 	spirit_position = _position
 	get_parent().remove_child(self)
 	match _position :
-		POSITION.LEFT :
+		ms_constants.POSITION.LEFT :
 			left_control.add_child(self)
 			
 			left_button.modulate = Color(0,0,0,0)
@@ -38,7 +33,7 @@ func _goto_pos(_position : POSITION) :
 			
 			right_button.modulate = Color.WHITE
 			right_button.disabled = false
-		POSITION.CENTER :
+		ms_constants.POSITION.CENTER :
 			center_control.add_child(self)
 			
 			left_button.modulate = Color.WHITE
@@ -46,7 +41,7 @@ func _goto_pos(_position : POSITION) :
 			
 			right_button.modulate = Color.WHITE
 			right_button.disabled = false
-		POSITION.RIGHT :
+		ms_constants.POSITION.RIGHT :
 			right_control.add_child(self)
 			
 			left_button.modulate = Color.WHITE
@@ -56,25 +51,25 @@ func _goto_pos(_position : POSITION) :
 			right_button.disabled = true
 
 func reset_center() :
-	_goto_pos(POSITION.CENTER)
+	_goto_pos(ms_constants.POSITION.CENTER)
 
 func left() :
 	match spirit_position :
-		POSITION.LEFT :
-			_goto_pos(POSITION.RIGHT)
-		POSITION.CENTER :
-			_goto_pos(POSITION.LEFT)
-		POSITION.RIGHT :
-			_goto_pos(POSITION.CENTER)
+		ms_constants.POSITION.LEFT :
+			_goto_pos(ms_constants.POSITION.RIGHT)
+		ms_constants.POSITION.CENTER :
+			_goto_pos(ms_constants.POSITION.LEFT)
+		ms_constants.POSITION.RIGHT :
+			_goto_pos(ms_constants.POSITION.CENTER)
 
 func right() :
 	match spirit_position :
-		POSITION.LEFT :
-			_goto_pos(POSITION.CENTER)
-		POSITION.CENTER :
-			_goto_pos(POSITION.RIGHT)
-		POSITION.RIGHT :
-			_goto_pos(POSITION.LEFT)
+		ms_constants.POSITION.LEFT :
+			_goto_pos(ms_constants.POSITION.CENTER)
+		ms_constants.POSITION.CENTER :
+			_goto_pos(ms_constants.POSITION.RIGHT)
+		ms_constants.POSITION.RIGHT :
+			_goto_pos(ms_constants.POSITION.LEFT)
 "
 
 [sub_resource type="GDScript" id="GDScript_wqnbj"]
@@ -86,6 +81,16 @@ func _on_pressed() -> void:
 	menu_root.left()
 "
 
+[sub_resource type="GDScript" id="GDScript_pq3xb"]
+script/source = "extends Button
+
+@export var move_list : Control
+
+
+func _on_pressed() -> void:
+	move_list.show_moves()
+"
+
 [sub_resource type="GDScript" id="GDScript_3dv3g"]
 script/source = "extends Button
 
@@ -93,6 +98,18 @@ script/source = "extends Button
 
 func _on_pressed() -> void:
 	menu_root.right()
+"
+
+[sub_resource type="GDScript" id="GDScript_sfrxn"]
+script/source = "extends Button
+
+@export var action_box : Control
+@export var move_list : Control
+
+
+func _on_pressed() -> void:
+	action_box.show()
+	move_list.hide()
 "
 
 [sub_resource type="GDScript" id="GDScript_3dqdr"]
@@ -145,23 +162,22 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PlayerTeam" type="HBoxContainer" parent="VBoxContainer" node_paths=PackedStringArray("battle_root", "summary_container", "spirit_left", "spirit_center", "spirit_right")]
+[node name="EnemyTeam" type="HBoxContainer" parent="VBoxContainer" node_paths=PackedStringArray("battle_root", "summary_container", "spirit_left", "spirit_center", "spirit_right")]
 layout_mode = 2
 script = ExtResource("2_ur35w")
 battle_root = NodePath("../..")
-is_self = true
 summary_container = NodePath("../../SummaryContainer")
 spirit_left = NodePath("MonsterButtonLeft")
 spirit_center = NodePath("MonsterButtonActive")
 spirit_right = NodePath("MonsterButtonRight")
 
-[node name="MonsterButtonLeft" parent="VBoxContainer/PlayerTeam" instance=ExtResource("2_12bl6")]
+[node name="MonsterButtonLeft" parent="VBoxContainer/EnemyTeam" instance=ExtResource("2_12bl6")]
 layout_mode = 2
 
-[node name="MonsterButtonActive" parent="VBoxContainer/PlayerTeam" instance=ExtResource("2_12bl6")]
+[node name="MonsterButtonActive" parent="VBoxContainer/EnemyTeam" instance=ExtResource("2_12bl6")]
 layout_mode = 2
 
-[node name="MonsterButtonRight" parent="VBoxContainer/PlayerTeam" instance=ExtResource("2_12bl6")]
+[node name="MonsterButtonRight" parent="VBoxContainer/EnemyTeam" instance=ExtResource("2_12bl6")]
 layout_mode = 2
 
 [node name="Actions" type="Control" parent="VBoxContainer"]
@@ -169,6 +185,7 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="ActionBox" type="HBoxContainer" parent="VBoxContainer/Actions"]
+visible = false
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -232,9 +249,11 @@ layout_mode = 2
 alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="AttackButton" type="Button" parent="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/HBoxContainer"]
+[node name="AttackButton" type="Button" parent="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/HBoxContainer" node_paths=PackedStringArray("move_list")]
 layout_mode = 2
 text = "Attack"
+script = SubResource("GDScript_pq3xb")
+move_list = NodePath("../../../../../../MoveList")
 
 [node name="DefenseButton" type="Button" parent="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/HBoxContainer"]
 layout_mode = 2
@@ -255,21 +274,91 @@ menu_root = NodePath("../..")
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="EnemyTeam" type="HBoxContainer" parent="VBoxContainer" node_paths=PackedStringArray("battle_root", "spirit_left", "spirit_center", "spirit_right")]
+[node name="MoveList" type="VBoxContainer" parent="VBoxContainer/Actions" node_paths=PackedStringArray("move_holder", "battle_root", "main_action_menu", "action_box", "back_left", "back_center", "back_right")]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_6ihod")
+move_holder = NodePath("PanelContainer/ScrollContainer/MoveHolder")
+battle_root = NodePath("../../..")
+main_action_menu = NodePath("../ActionBox/Control2/MainActionMenu")
+action_box = NodePath("../ActionBox")
+back_left = NodePath("BackContainer/AspectRatioContainer/LeftButton")
+back_center = NodePath("BackContainer/AspectRatioContainer2/CenterButton")
+back_right = NodePath("BackContainer/AspectRatioContainer3/RightButton")
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/Actions/MoveList"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/Actions/MoveList/PanelContainer"]
+layout_mode = 2
+
+[node name="MoveHolder" parent="VBoxContainer/Actions/MoveList/PanelContainer/ScrollContainer" instance=ExtResource("5_vk5bl")]
+layout_mode = 2
+
+[node name="BackContainer" type="HBoxContainer" parent="VBoxContainer/Actions/MoveList"]
+layout_mode = 2
+alignment = 1
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="VBoxContainer/Actions/MoveList/BackContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LeftButton" type="Button" parent="VBoxContainer/Actions/MoveList/BackContainer/AspectRatioContainer" node_paths=PackedStringArray("action_box", "move_list")]
+layout_mode = 2
+text = "Back"
+script = SubResource("GDScript_sfrxn")
+action_box = NodePath("../../../../ActionBox")
+move_list = NodePath("../../..")
+
+[node name="AspectRatioContainer2" type="AspectRatioContainer" parent="VBoxContainer/Actions/MoveList/BackContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CenterButton" type="Button" parent="VBoxContainer/Actions/MoveList/BackContainer/AspectRatioContainer2" node_paths=PackedStringArray("action_box", "move_list")]
+layout_mode = 2
+text = "Back"
+script = SubResource("GDScript_sfrxn")
+action_box = NodePath("../../../../ActionBox")
+move_list = NodePath("../../..")
+
+[node name="AspectRatioContainer3" type="AspectRatioContainer" parent="VBoxContainer/Actions/MoveList/BackContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RightButton" type="Button" parent="VBoxContainer/Actions/MoveList/BackContainer/AspectRatioContainer3" node_paths=PackedStringArray("action_box", "move_list")]
+layout_mode = 2
+text = "Back"
+script = SubResource("GDScript_sfrxn")
+action_box = NodePath("../../../../ActionBox")
+move_list = NodePath("../../..")
+
+[node name="Spacer" type="Control" parent="VBoxContainer/Actions/MoveList"]
+custom_minimum_size = Vector2(0, 3.205)
+layout_mode = 2
+
+[node name="PlayerTeam" type="HBoxContainer" parent="VBoxContainer" node_paths=PackedStringArray("battle_root", "summary_container", "spirit_left", "spirit_center", "spirit_right")]
 layout_mode = 2
 script = ExtResource("2_ur35w")
 battle_root = NodePath("../..")
+is_self = true
+summary_container = NodePath("../../SummaryContainer")
 spirit_left = NodePath("MonsterButtonLeft")
 spirit_center = NodePath("MonsterButtonActive")
 spirit_right = NodePath("MonsterButtonRight")
 
-[node name="MonsterButtonLeft" parent="VBoxContainer/EnemyTeam" instance=ExtResource("2_12bl6")]
+[node name="MonsterButtonLeft" parent="VBoxContainer/PlayerTeam" instance=ExtResource("2_12bl6")]
 layout_mode = 2
 
-[node name="MonsterButtonActive" parent="VBoxContainer/EnemyTeam" instance=ExtResource("2_12bl6")]
+[node name="MonsterButtonActive" parent="VBoxContainer/PlayerTeam" instance=ExtResource("2_12bl6")]
 layout_mode = 2
 
-[node name="MonsterButtonRight" parent="VBoxContainer/EnemyTeam" instance=ExtResource("2_12bl6")]
+[node name="MonsterButtonRight" parent="VBoxContainer/PlayerTeam" instance=ExtResource("2_12bl6")]
 layout_mode = 2
 
 [node name="SummaryContainer" type="PanelContainer" parent="." node_paths=PackedStringArray("summary_node")]
@@ -308,5 +397,9 @@ size_flags_vertical = 3
 [node name="ActionTimer" type="Timer" parent="."]
 
 [connection signal="pressed" from="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/LeftButton" to="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/LeftButton" method="_on_pressed"]
+[connection signal="pressed" from="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/HBoxContainer/AttackButton" to="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/HBoxContainer/AttackButton" method="_on_pressed"]
 [connection signal="pressed" from="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/RightButton" to="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/RightButton" method="_on_pressed"]
+[connection signal="pressed" from="VBoxContainer/Actions/MoveList/BackContainer/AspectRatioContainer/LeftButton" to="VBoxContainer/Actions/MoveList/BackContainer/AspectRatioContainer/LeftButton" method="_on_pressed"]
+[connection signal="pressed" from="VBoxContainer/Actions/MoveList/BackContainer/AspectRatioContainer2/CenterButton" to="VBoxContainer/Actions/MoveList/BackContainer/AspectRatioContainer2/CenterButton" method="_on_pressed"]
+[connection signal="pressed" from="VBoxContainer/Actions/MoveList/BackContainer/AspectRatioContainer3/RightButton" to="VBoxContainer/Actions/MoveList/BackContainer/AspectRatioContainer3/RightButton" method="_on_pressed"]
 [connection signal="pressed" from="SummaryContainer/VBoxContainer/HBoxContainer/Button" to="SummaryContainer/VBoxContainer/HBoxContainer/Button" method="_on_pressed"]

@@ -7,6 +7,7 @@ var key_equip : String
 var current_hp : int
 var moves : Array
 var extra_move : String
+var current_stamina : int
 
 func read_dict(_data : Dictionary) -> void :
 	key = _data["key"]
@@ -14,6 +15,7 @@ func read_dict(_data : Dictionary) -> void :
 	current_hp = _data["hp"]
 	moves = _data["actions"]
 	extra_move = _data["ex_action"]
+	current_stamina = _data["stamina"]
 
 func to_dict() -> Dictionary :
 	return {
@@ -22,6 +24,7 @@ func to_dict() -> Dictionary :
 		"hp" = current_hp,
 		"actions" = moves,
 		"ex_action" = extra_move,
+		"stamina" = current_stamina
 	}
 
 # We are not sending over a resource omg did you know resource files can have arbitrary code inside? scary.
@@ -58,6 +61,7 @@ func change_equip_key(value : String) :
 
 func reset_stats() :
 	current_hp = SpiritDictionary.spirits[key].health
+	current_stamina = 1
 
 func get_action_converted(_key : String) -> ms_action :
 	if _key == extra_move :

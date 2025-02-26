@@ -1,4 +1,4 @@
-extends Node
+extends Object
 
 class_name ms_constants
 
@@ -110,3 +110,9 @@ static func targets_to_bbcode(type : TARGETS) :
 			return TranslationServer.translate("TR_CONST_TARGET_ENEMYEXCLUDESELFSPOT")
 		TARGETS.SELF_SPIRIT :
 			return TranslationServer.translate("TR_CONST_TARGET_SELF")
+
+enum POSITION {
+	LEFT,
+	CENTER,
+	RIGHT,
+}

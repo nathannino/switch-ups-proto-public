@@ -8,6 +8,7 @@ script/source = "extends Control
 @export var spr : TextureRect
 @export var name_label : Label
 @export var health_label : Label
+@export var stamina : Label
 @export var Type1 : RichTextLabel
 @export var Type2 : RichTextLabel
 
@@ -29,6 +30,7 @@ func reset() :
 	spr.texture = null
 	name_label.text = \"\"
 	health_label.text = \"\"
+	stamina.text = \"\"
 	Type1.text = \"\"
 	Type2.text = \"\"
 	none_label.text = \"No spirits selected\"
@@ -44,13 +46,24 @@ func reload_content() :
 	else :
 		set_spirit_inactive(current_spirit_inactive,options)
 
+var keep_hidden = false
+func hide_extra_info(_remember : bool = true) :
+	keep_hidden = _remember or keep_hidden
+	health_label.hide()
+	stamina.hide()
+
+func show_extra_info() :
+	keep_hidden = false
+	health_label.show()
+	stamina.show()
+
 func set_spirit_inactive(spirit_inactive : ms_spirit, _options : Array = []) :
 	current_spirit = null
 	current_spirit_inactive = spirit_inactive
 	options = _options
 	name_label.text = tr(spirit_inactive.name)
 	spr.texture = spirit_inactive.sprite
-	health_label.hide()
+	hide_extra_info(false)
 	Type1.text = ms_constants.type_to_bbcode(spirit_inactive.type)
 	Type2.text = \"\"
 	none_label.text = \"\"
@@ -65,6 +78,7 @@ func set_monster(spirit_active : ms_spirit_active, _options : Array = []) :
 	name_label.text = tr(spirit.name)
 	spr.texture = spirit.sprite
 	set_health(spirit_active.current_hp,spirit.health)
+	stamina.text = \"Stamina : %s\" % current_spirit.current_stamina #FIXME : Add translations
 	Type1.text = ms_constants.type_to_bbcode(spirit.type)
 	Type2.text = \"\"
 	if not spirit_active.key_equip == \"\" :
@@ -75,6 +89,8 @@ func set_monster(spirit_active : ms_spirit_active, _options : Array = []) :
 	none_label.text = \"\"
 	button.show()
 	populate_options()
+	if not keep_hidden :
+		show_extra_info()
 
 func set_button_state(enabled : bool) :
 	button.visible = enabled
@@ -129,7 +145,7 @@ func _on_button_mouse_entered() -> void:
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_76o8l"]
 
-[node name="MonsterButton" type="Control" node_paths=PackedStringArray("spr", "name_label", "health_label", "Type1", "Type2", "none_label", "button", "options_root")]
+[node name="MonsterButton" type="Control" node_paths=PackedStringArray("spr", "name_label", "health_label", "stamina", "Type1", "Type2", "none_label", "button", "options_root")]
 custom_minimum_size = Vector2(100, 110)
 layout_mode = 3
 anchors_preset = 15
@@ -143,6 +159,7 @@ script = SubResource("GDScript_k40d3")
 spr = NodePath("VBoxContainer/Control/VBoxContainer/TextureRect")
 name_label = NodePath("VBoxContainer/Control/VBoxContainer/HBoxContainer/Name")
 health_label = NodePath("VBoxContainer/Control/VBoxContainer/HBoxContainer/Health")
+stamina = NodePath("VBoxContainer/Control/VBoxContainer/HBoxContainer/Stamina")
 Type1 = NodePath("VBoxContainer/Control/VBoxContainer/HBoxContainer/HBoxContainer/Type1")
 Type2 = NodePath("VBoxContainer/Control/VBoxContainer/HBoxContainer/HBoxContainer/Type2")
 none_label = NodePath("CenterContainer/Label")
@@ -190,6 +207,11 @@ text = "Name"
 [node name="Health" type="Label" parent="VBoxContainer/Control/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Health
+"
+
+[node name="Stamina" type="Label" parent="VBoxContainer/Control/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Stamina
 "
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Control/VBoxContainer/HBoxContainer"]

@@ -22,9 +22,9 @@ func set_button_state(enabled : bool) :
 
 func sync_team_state() :
 	var team = battle_root.friend_team if is_self else battle_root.enemy_team
-	spirit_center.set_monster(team[0])
-	spirit_left.set_monster(team[1])
-	spirit_right.set_monster(team[2])
+	spirit_center.set_monster(battle_root.get_spirit_in_field(team,ms_constants.POSITION.CENTER))
+	spirit_left.set_monster(battle_root.get_spirit_in_field(team,ms_constants.POSITION.LEFT))
+	spirit_right.set_monster(battle_root.get_spirit_in_field(team,ms_constants.POSITION.RIGHT))
 
 func show_summary(monster_button : Node) :
 	summary_container.show()

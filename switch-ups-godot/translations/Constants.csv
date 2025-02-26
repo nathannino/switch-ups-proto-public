@@ -25,3 +25,5 @@ TR_CONST_TARGET_ENEMYEXCLUDESELFSPIRIT;enemy spirit excluding the front spirit;e
 TR_CONST_TARGET_ENEMYSPOT;enemy spot;emplacement adverse
 TR_CONST_TARGET_ENEMYEXCLUDESELFSPOT;enemy spot excluding the front spot;emplacement adverse excluant l’emplacement en avant
 TR_CONST_TARGET_SELF;this spirit;cet esprit
+TR_CONST_TARGET_SELECT_SPIRIT;Select a spirit;Sélectionner un esprit
+TR_CONST_TARGET_SELECT_SPOT;Select a spot;Sélectionner un endroit

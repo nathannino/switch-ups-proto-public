@@ -3,8 +3,15 @@ extends Control
 signal preinit_complete
 var player_id : int
 
+#region required by actions
 var friend_team : Array[ms_spirit_active] = []
 var enemy_team : Array[ms_spirit_active] = []
+
+var CANCEL = Object.new()
+func submit_action_data(_data) :
+	print(_data)
+	pass
+#endregion
 signal sync_team
 
 @export var timer : Timer
@@ -21,6 +28,12 @@ func _init() :
 	, CONNECT_ONE_SHOT)
 	ClientWrapperAutoload.send.call_deferred(TcpPayload.new().set_type(TcpPayload.TYPE.BATTLE_AWAIT_INIT).set_content(null))
 
+func _notification(what: int) -> void:
+	match what: 
+		NOTIFICATION_PREDELETE :
+			CANCEL.free()
+			CANCEL = null
+
 func _set_team_state(teams : Array) :
 	for index in range(teams.size()) :
 		var team_dict = teams[index]
@@ -33,10 +46,11 @@ func _set_team_state(teams : Array) :
 			enemy_team = team
 	if not is_node_ready() :
 		await ready
-		sync_team.emit()
+	sync_team.emit()
 
 func _ready() :
 	ClientWrapperAutoload.battle_begin_turn.connect(begin_turn)
+	ClientWrapperAutoload.battle_team_synced.connect(_set_team_state)
 	action_box.hide()
 	
 	timer.wait_time = 3 # Simulate a battle begin animation or smth
@@ -48,3 +62,14 @@ func _ready() :
 func begin_turn() :
 	action_box.show()
 	main_action_menu.reset_center()
+
+func get_spirit_in_field(_team : Array[ms_spirit_active], pos : ms_constants.POSITION) -> ms_spirit_active :
+	match pos :
+		ms_constants.POSITION.LEFT :
+			return _team[1]
+		ms_constants.POSITION.RIGHT : 
+			return _team[2]
+		ms_constants.POSITION.CENTER : 
+			return _team[0]
+		_ :
+			return null

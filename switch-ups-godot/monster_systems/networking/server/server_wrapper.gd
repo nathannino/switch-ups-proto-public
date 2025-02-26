@@ -83,6 +83,11 @@ func battle_next_main() :
 	match battle_next :
 		BATTLE_STEPS.SELECT_ACTION :
 			for child in $ServerMain.get_children() :
+				var _team = child.team
+				_team[0].current_stamina += 1
+				_team[1].current_stamina += 1
+				_team[2].current_stamina += 1
+			for child in $ServerMain.get_children() :
 				child.sync_teams()
 				child.send(TcpPayload.new().set_type(TcpPayload.TYPE.BATTLE_STARTTURN))
 			pass

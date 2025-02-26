@@ -8,3 +8,9 @@ class_name ms_action_component
 func get_desc() -> Node :
 	printerr("no description set")
 	return Control.new()
+
+func get_precommit() -> PackedScene :
+	return null
+
+func get_interrupt_action() -> PackedScene :
+	return null

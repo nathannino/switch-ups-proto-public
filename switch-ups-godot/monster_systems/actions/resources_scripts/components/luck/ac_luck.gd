@@ -10,3 +10,9 @@ func get_desc() -> Node :
 	var instance = desc.instantiate()
 	instance.component = self
 	return instance
+
+func get_precommit() -> PackedScene :
+	return null
+
+func get_interrupt_action() -> PackedScene :
+	return null

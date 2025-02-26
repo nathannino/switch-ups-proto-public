@@ -1,0 +1,90 @@
+[gd_scene load_steps=4 format=3 uid="uid://cedlvcxxgruty"]
+
+[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/select_target/target_select.gd" id="1_ax6tc"]
+
+[sub_resource type="GDScript" id="GDScript_ww61s"]
+script/source = "extends Button
+
+@export var scene_root : Node
+
+
+func _on_pressed() -> void:
+	scene_root.return_value(scene_root.battle_root.CANCEL)
+"
+
+[sub_resource type="GDScript" id="GDScript_n4r2k"]
+script/source = "extends GridContainer
+
+const monster_button = preload(\"uid://bjwcj7an8i718\")
+
+@export var scene_root : Node
+@export var max_columns : int
+
+func set_options(_options : Array) :
+	for child in get_children() :
+		child.queue_free()
+	
+	columns = min(max(_options.size(),1),max_columns)
+	
+	for index in range(_options.size()) :
+		var spirit = _options[index]
+		var instance = monster_button.instantiate()
+		instance.set_monster(spirit)
+		instance.pressed_option.connect(func(_option : int) :
+			confirm(spirit,index)
+		)
+
+func confirm(spirit : ms_spirit_active, pos : int) :
+	scene_root.return_value({\"spirit\":spirit,\"spot\":pos})
+"
+
+[node name="TargetPrecommit" type="Control" node_paths=PackedStringArray("title_label", "back_button", "grid")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ax6tc")
+title_label = NodePath("VBoxContainer/HBoxContainer/Label")
+back_button = NodePath("VBoxContainer/HBoxContainer/Button")
+grid = NodePath("VBoxContainer/PanelContainer/AspectRatioContainer/GridContainer")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "text"
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="VBoxContainer/HBoxContainer" node_paths=PackedStringArray("scene_root")]
+layout_mode = 2
+text = "TR_BACK"
+script = SubResource("GDScript_ww61s")
+scene_root = NodePath("../../..")
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="VBoxContainer/PanelContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer/PanelContainer/AspectRatioContainer" node_paths=PackedStringArray("scene_root")]
+layout_mode = 2
+script = SubResource("GDScript_n4r2k")
+scene_root = NodePath("../../../..")
+max_columns = 3
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Button" to="VBoxContainer/HBoxContainer/Button" method="_on_pressed"]

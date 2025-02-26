@@ -139,11 +139,9 @@ func start_deferred_loading(key : String, path : String) -> void:
 	pass
 
 func _set_holding_data(key : String, data) -> void:
-	print("Waiting to add %s to deferred loading database" % key)
 	holding_mutex.lock()
 	holding[key] = data
 	holding_mutex.unlock()
-	print("Added %s to deferred loading database" % key)
 
 func _increment_workers() :
 	workers_mutex.lock()

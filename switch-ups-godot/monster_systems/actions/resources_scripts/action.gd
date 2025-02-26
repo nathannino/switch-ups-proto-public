@@ -6,5 +6,6 @@ class_name ms_action
 @export var name : String
 @export var type : ms_constants.TYPE
 @export var cost : int
+@export var priority : int
 
 @export var effects : Array[ms_action_component]

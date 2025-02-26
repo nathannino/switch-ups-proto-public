@@ -89,6 +89,7 @@ func _ready() -> void:
 	for child in get_children() :
 		child.reset()
 		child.pressed_option.connect(func(index : int) : _on_button_pressed(child, index))
+		child.hide_extra_info()
 	var last_team = DeferredLoadingManager.get_holding_data(DeferredLoadingManager.add_prefix(ClientWrapperAutoload.AWAIT_PREFIX,TcpPayload.TYPE.TEAMBUILD_LAST_TEAM))
 	for index in range(last_team.size()) :
 		get_child(index).set_monster(ms_spirit_active.from_dict(last_team[index]))
