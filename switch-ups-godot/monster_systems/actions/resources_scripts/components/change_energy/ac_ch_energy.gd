@@ -11,8 +11,14 @@ func get_desc() -> Node :
 	instance.component = self
 	return instance
 
-func get_precommit() -> PackedScene :
+func get_child_component(_index : int) -> ms_action_component :
 	return null
 
-func get_interrupt_action() -> PackedScene :
+func get_precommit() -> Control :
+	return null
+
+func serv_requires_interrupt() -> bool :
+	return false
+
+func get_interrupt_action() -> Control :
 	return null

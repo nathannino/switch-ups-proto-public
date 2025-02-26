@@ -13,7 +13,10 @@ func get_desc() -> Node :
 	instance.component = self
 	return instance
 
-func _select_screen(allow_back : bool) -> PackedScene :
+func get_child_component(_index : int) -> ms_action_component :
+	return action[_index] if _index < action.size() else null
+
+func _select_screen(allow_back : bool) -> Control :
 	match target_type :
 		ms_constants.TARGETS.SELF_SPIRIT :
 			return null
@@ -24,8 +27,11 @@ func _select_screen(allow_back : bool) -> PackedScene :
 			return instance
 
 
-func get_precommit() -> PackedScene :
+func get_precommit() -> Control :
 	return _select_screen(true) if not during_turn else null
 
-func get_interrupt_action() -> PackedScene :
-	return _select_screen(false) if during_turn else null
+func serv_requires_interrupt() -> bool :
+	return during_turn
+
+func get_interrupt_action() -> Control :
+	return _select_screen(false)

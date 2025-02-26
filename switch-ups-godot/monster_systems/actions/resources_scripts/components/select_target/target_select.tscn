@@ -33,9 +33,10 @@ func set_options(_options : Array) :
 		instance.pressed_option.connect(func(_option : int) :
 			confirm(spirit,index)
 		)
+		add_child(instance)
 
-func confirm(spirit : ms_spirit_active, pos : int) :
-	scene_root.return_value({\"spirit\":spirit,\"spot\":pos})
+func confirm(_spirit : ms_spirit_active, pos : int) :
+	scene_root.return_value({\"spot\":pos})
 "
 
 [node name="TargetPrecommit" type="Control" node_paths=PackedStringArray("title_label", "back_button", "grid")]
@@ -48,7 +49,7 @@ grow_vertical = 2
 script = ExtResource("1_ax6tc")
 title_label = NodePath("VBoxContainer/HBoxContainer/Label")
 back_button = NodePath("VBoxContainer/HBoxContainer/Button")
-grid = NodePath("VBoxContainer/PanelContainer/AspectRatioContainer/GridContainer")
+grid = NodePath("VBoxContainer/PanelContainer/GridContainer")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -77,14 +78,10 @@ scene_root = NodePath("../../..")
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="VBoxContainer/PanelContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="GridContainer" type="GridContainer" parent="VBoxContainer/PanelContainer/AspectRatioContainer" node_paths=PackedStringArray("scene_root")]
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer/PanelContainer" node_paths=PackedStringArray("scene_root")]
 layout_mode = 2
 script = SubResource("GDScript_n4r2k")
-scene_root = NodePath("../../../..")
+scene_root = NodePath("../../..")
 max_columns = 3
 
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Button" to="VBoxContainer/HBoxContainer/Button" method="_on_pressed"]

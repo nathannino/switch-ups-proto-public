@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cwp5xmvuwvhph"]
+[gd_scene load_steps=15 format=3 uid="uid://cwp5xmvuwvhph"]
 
 [ext_resource type="Script" path="res://scenes/battle_v1/battle_v_1.gd" id="1_hot38"]
 [ext_resource type="PackedScene" uid="uid://bjwcj7an8i718" path="res://globals/utility_scenes/ui_component/monster_button.tscn" id="2_12bl6"]
@@ -100,6 +100,15 @@ func _on_pressed() -> void:
 	menu_root.right()
 "
 
+[sub_resource type="GDScript" id="GDScript_rx87q"]
+script/source = "extends ScrollContainer
+
+@export var battle_root : Control
+
+func _on_move_holder_move_selected(index: int, action: ms_action) -> void:
+	battle_root._on_move_selected(index,action)
+"
+
 [sub_resource type="GDScript" id="GDScript_sfrxn"]
 script/source = "extends Button
 
@@ -133,7 +142,7 @@ func _on_pressed() -> void:
 	root_node.hide()
 "
 
-[node name="BattleV1" type="Control" node_paths=PackedStringArray("timer", "action_box", "main_action_menu")]
+[node name="BattleV1" type="Control" node_paths=PackedStringArray("timer", "interrupt_anchor", "action_box", "main_action_menu", "move_list")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -142,8 +151,10 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_hot38")
 timer = NodePath("ActionTimer")
+interrupt_anchor = NodePath("InterruptAnchor")
 action_box = NodePath("VBoxContainer/Actions/ActionBox")
 main_action_menu = NodePath("VBoxContainer/Actions/ActionBox/Control2/MainActionMenu")
+move_list = NodePath("VBoxContainer/Actions/MoveList")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
@@ -295,8 +306,10 @@ back_right = NodePath("BackContainer/AspectRatioContainer3/RightButton")
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/Actions/MoveList/PanelContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/Actions/MoveList/PanelContainer" node_paths=PackedStringArray("battle_root")]
 layout_mode = 2
+script = SubResource("GDScript_rx87q")
+battle_root = NodePath("../../../../..")
 
 [node name="MoveHolder" parent="VBoxContainer/Actions/MoveList/PanelContainer/ScrollContainer" instance=ExtResource("5_vk5bl")]
 layout_mode = 2
@@ -361,6 +374,15 @@ layout_mode = 2
 [node name="MonsterButtonRight" parent="VBoxContainer/PlayerTeam" instance=ExtResource("2_12bl6")]
 layout_mode = 2
 
+[node name="InterruptAnchor" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [node name="SummaryContainer" type="PanelContainer" parent="." node_paths=PackedStringArray("summary_node")]
 visible = false
 layout_mode = 1
@@ -399,6 +421,7 @@ size_flags_vertical = 3
 [connection signal="pressed" from="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/LeftButton" to="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/LeftButton" method="_on_pressed"]
 [connection signal="pressed" from="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/HBoxContainer/AttackButton" to="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/HBoxContainer/AttackButton" method="_on_pressed"]
 [connection signal="pressed" from="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/RightButton" to="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/RightButton" method="_on_pressed"]
+[connection signal="move_selected" from="VBoxContainer/Actions/MoveList/PanelContainer/ScrollContainer/MoveHolder" to="VBoxContainer/Actions/MoveList/PanelContainer/ScrollContainer" method="_on_move_holder_move_selected"]
 [connection signal="pressed" from="VBoxContainer/Actions/MoveList/BackContainer/AspectRatioContainer/LeftButton" to="VBoxContainer/Actions/MoveList/BackContainer/AspectRatioContainer/LeftButton" method="_on_pressed"]
 [connection signal="pressed" from="VBoxContainer/Actions/MoveList/BackContainer/AspectRatioContainer2/CenterButton" to="VBoxContainer/Actions/MoveList/BackContainer/AspectRatioContainer2/CenterButton" method="_on_pressed"]
 [connection signal="pressed" from="VBoxContainer/Actions/MoveList/BackContainer/AspectRatioContainer3/RightButton" to="VBoxContainer/Actions/MoveList/BackContainer/AspectRatioContainer3/RightButton" method="_on_pressed"]
