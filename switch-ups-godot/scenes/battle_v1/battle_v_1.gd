@@ -171,7 +171,6 @@ func get_spirit_in_field(_team : Array[ms_spirit_active], pos : ms_constants.POS
 	return _team[ms_constants.position_to_index(pos)]
 
 func submit_action_component() :
-	print(action_data)
 	ClientWrapperAutoload.send(TcpPayload.new().set_type(TcpPayload.TYPE.BATTLE_SUBMIT_ACTION).set_content(
 		{
 			"position_to_active" : main_action_menu.spirit_position,

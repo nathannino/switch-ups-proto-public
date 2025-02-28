@@ -49,6 +49,8 @@ func handle_server(user:ms_spirit_active, user_player_node : Node, target : ms_s
 		player_damage = abs(target.current_hp)
 		target.current_hp = 0
 		spirit_damage -= player_damage
+		
+		target_player_node.player_health -= player_damage
 	
 	return [ms_constants.ACTION_COMPONENT_HANDLE_STATE.GET_SIBLING,[],[user,user_player_node,target,target_player_node],
 		{
