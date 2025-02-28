@@ -151,5 +151,5 @@ enum ADDITIONNAL_ACTION_COMPONENT_EFFECTS {
 static func calculate_randomness(user : ms_spirit_active, target : ms_spirit_active) :
 	var default_result = randf()
 	default_result = min(default_result + (user.get_luck()/100),1.0)
-	default_result = min(default_result - (target.get_luck()/100),0.0) 
+	default_result = max(default_result - (target.get_luck()/100),0.0) 
 	return default_result
