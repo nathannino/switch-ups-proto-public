@@ -83,6 +83,7 @@ func global_payload_received(_client : Node, payload : TcpPayload) -> void :
 func battle_next_main() :
 	match battle_next :
 		BATTLE_STEPS.SELECT_ACTION :
+			$ServerMain.send_all(TcpPayload.new().set_type(TcpPayload.TYPE.BATTLE_HIDE_CANCEL).set_content(false))
 			for child in $ServerMain.get_children() :
 				var _team = child.team
 				_team[0].current_stamina += 1
@@ -93,6 +94,7 @@ func battle_next_main() :
 			battle_next = BATTLE_STEPS.CALCULATE_MOVES
 			pass
 		BATTLE_STEPS.CALCULATE_MOVES :
+			$ServerMain.send_all(TcpPayload.new().set_type(TcpPayload.TYPE.BATTLE_HIDE_CANCEL).set_content(true))
 			$TurnCalculator.start_turn()
 		BATTLE_STEPS.AWAIT_MODIFICATION :
 			battle_next = BATTLE_STEPS.RESUME_MOVES

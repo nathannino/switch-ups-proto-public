@@ -1,10 +1,11 @@
-[gd_scene load_steps=22 format=3 uid="uid://cwp5xmvuwvhph"]
+[gd_scene load_steps=23 format=3 uid="uid://cwp5xmvuwvhph"]
 
 [ext_resource type="Script" path="res://scenes/battle_v1/battle_v_1.gd" id="1_hot38"]
 [ext_resource type="PackedScene" uid="uid://bjwcj7an8i718" path="res://globals/utility_scenes/ui_component/monster_button.tscn" id="2_12bl6"]
 [ext_resource type="Script" path="res://scenes/battle_v1/team_display_row.gd" id="2_ur35w"]
 [ext_resource type="PackedScene" uid="uid://diohlpvbxl3oh" path="res://globals/utility_scenes/menus/spirit_summary/spirit_summary.tscn" id="4_5f312"]
 [ext_resource type="Script" path="res://scenes/battle_v1/move_list.gd" id="4_6ihod"]
+[ext_resource type="Script" path="res://monster_systems/constants.gd" id="4_6ymry"]
 [ext_resource type="PackedScene" uid="uid://l5cmnn36hklt" path="res://globals/utility_scenes/ui_component/move_holder.tscn" id="5_vk5bl"]
 
 [sub_resource type="Gradient" id="Gradient_yw4tm"]
@@ -166,6 +167,11 @@ script/source = "extends Button
 
 @export var battle_root : Control
 
+func _ready() -> void:
+	ClientWrapperAutoload.hide_cancel.connect(func (_hide) :
+		visible = not _hide
+	)
+
 func _on_pressed() -> void:
 	ClientWrapperAutoload.send(TcpPayload.new().set_type(TcpPayload.TYPE.BATTLE_AWAIT_ENDTURN).set_content(false))
 	battle_root.begin_turn()
@@ -285,6 +291,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 0
+script = ExtResource("4_6ymry")
 
 [node name="Control" type="Control" parent="VBoxContainer/Actions/ActionBox"]
 custom_minimum_size = Vector2(0, 20)

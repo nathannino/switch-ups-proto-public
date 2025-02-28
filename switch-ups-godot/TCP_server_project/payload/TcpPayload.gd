@@ -30,7 +30,8 @@ enum TYPE {
 	BATTLE_STARTTURN,
 	BATTLE_SUBMIT_ACTION,
 	BATTLE_REQUEST_DATA,
-	BATTLE_LOGS
+	BATTLE_LOGS,
+	BATTLE_HIDE_CANCEL
 }
 const PROTOCOL_VER = game_info.version + ("_dev" if game_info.dev else "")
 

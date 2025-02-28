@@ -164,6 +164,7 @@ func begin_turn() :
 	action_index = []
 
 	action_box.show()
+	await_cancel.hide()
 	main_action_menu.reset_center()
 
 func get_spirit_in_field(_team : Array[ms_spirit_active], pos : ms_constants.POSITION) -> ms_spirit_active :

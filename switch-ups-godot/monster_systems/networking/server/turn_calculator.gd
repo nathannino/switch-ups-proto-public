@@ -77,6 +77,7 @@ func start_turn() :
 	
 	_rotate_to_front_startturn()
 	_determine_move_order()
+	start_side()
 	
 	
 
@@ -92,6 +93,7 @@ func start_side() :
 	var user = user_node.team[ms_constants.position_to_index(ms_constants.POSITION.CENTER)]
 	var enemy = enemy_node.team[ms_constants.position_to_index(ms_constants.POSITION.CENTER)]
 	target_info = [user,user_node,enemy,enemy_node]
+	calculate_next()
 
 func calculate_next() :
 	var order = player_order_data[speed_order[current_handling_order]]
@@ -100,14 +102,14 @@ func calculate_next() :
 	var _root_component : ms_action_component = action.get_child_component(action_index[0])
 	
 	if _root_component == null :
+		current_handling_order += 1
 		if current_handling_order >= speed_order.size() :
 			$"..".battle_submit_logs_end(battle_log)
 			battle_log.clear()
 			return
 		else :
-			current_handling_order += 1
 			action_index = [0]
-			calculate_next()
+			start_side()
 			return
 	
 	var current_component = ms_action_index_manager.get_latest_component(action,action_index)
@@ -138,9 +140,9 @@ func calculate_next() :
 		var result_data = results[3]
 		result_data["target_info"] = {
 			"user" : target_info[1].team.find(target_info[0]),
-			"user_id" : $"../ServerMain".get_children().find(target_info[0]),
+			"user_id" : $"../ServerMain".get_children().find(target_info[1]),
 			"target" : target_info[3].team.find(target_info[2]),
-			"target_id" : $"../ServerMain".get_children().find(target_info[2]),
+			"target_id" : $"../ServerMain".get_children().find(target_info[3]),
 		}
 		result_data["action_index_array"] = action_index
 		
@@ -153,7 +155,8 @@ func calculate_next() :
 		if response == ms_constants.ACTION_COMPONENT_HANDLE_STATE.GET_CHILD :
 			ms_action_index_manager.increase_action_index(current_component,action_index)
 		elif response == ms_constants.ACTION_COMPONENT_HANDLE_STATE.GET_SIBLING :
-			ms_action_index_manager.increase_action_index(null,action_index)
+			action_index[-1] += 1
+			#ms_action_index_manager.increase_action_index(null,action_index)
 		calculate_next()
 
 func send_request_data() :
