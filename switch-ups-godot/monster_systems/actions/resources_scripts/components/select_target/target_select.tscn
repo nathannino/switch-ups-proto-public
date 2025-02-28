@@ -36,7 +36,7 @@ func set_options(_options : Array) :
 		add_child(instance)
 
 func confirm(_spirit : ms_spirit_active, pos : int) :
-	scene_root.return_value({\"spot\":pos})
+	scene_root.return_value(pos)
 "
 
 [node name="TargetPrecommit" type="Control" node_paths=PackedStringArray("title_label", "back_button", "grid")]

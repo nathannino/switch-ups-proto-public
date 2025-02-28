@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cwp5xmvuwvhph"]
+[gd_scene load_steps=22 format=3 uid="uid://cwp5xmvuwvhph"]
 
 [ext_resource type="Script" path="res://scenes/battle_v1/battle_v_1.gd" id="1_hot38"]
 [ext_resource type="PackedScene" uid="uid://bjwcj7an8i718" path="res://globals/utility_scenes/ui_component/monster_button.tscn" id="2_12bl6"]
@@ -6,6 +6,32 @@
 [ext_resource type="PackedScene" uid="uid://diohlpvbxl3oh" path="res://globals/utility_scenes/menus/spirit_summary/spirit_summary.tscn" id="4_5f312"]
 [ext_resource type="Script" path="res://scenes/battle_v1/move_list.gd" id="4_6ihod"]
 [ext_resource type="PackedScene" uid="uid://l5cmnn36hklt" path="res://globals/utility_scenes/ui_component/move_holder.tscn" id="5_vk5bl"]
+
+[sub_resource type="Gradient" id="Gradient_yw4tm"]
+colors = PackedColorArray(0.0901961, 0.0901961, 0.0901961, 1, 0.0885599, 0.0885599, 0.0885599, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_1weiw"]
+gradient = SubResource("Gradient_yw4tm")
+
+[sub_resource type="Gradient" id="Gradient_775m0"]
+colors = PackedColorArray(0, 0.658824, 0, 1, 0, 0.658824, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_xumci"]
+gradient = SubResource("Gradient_775m0")
+
+[sub_resource type="GDScript" id="GDScript_rkjtq"]
+script/source = "extends TextureProgressBar
+
+@export var battle_root : Control
+
+func _ready() -> void:
+	battle_root.enemy_hp_changed.connect(func(old,new) :
+		value = new
+	)
+
+func _on_value_changed(value: float) -> void:
+	$Label.text = value
+"
 
 [sub_resource type="GDScript" id="GDScript_r1x23"]
 script/source = "extends Control
@@ -121,6 +147,30 @@ func _on_pressed() -> void:
 	move_list.hide()
 "
 
+[sub_resource type="GDScript" id="GDScript_08te3"]
+script/source = "extends TextureProgressBar
+
+@export var battle_root : Control
+
+func _ready() -> void:
+	battle_root.friend_hp_changed.connect(func(old,new) :
+		value = new
+	)
+
+func _on_value_changed(value: float) -> void:
+	$Label.text = value
+"
+
+[sub_resource type="GDScript" id="GDScript_lmsix"]
+script/source = "extends Button
+
+@export var battle_root : Control
+
+func _on_pressed() -> void:
+	ClientWrapperAutoload.send(TcpPayload.new().set_type(TcpPayload.TYPE.BATTLE_AWAIT_ENDTURN).set_content(false))
+	battle_root.begin_turn()
+"
+
 [sub_resource type="GDScript" id="GDScript_3dqdr"]
 script/source = "extends PanelContainer
 
@@ -142,7 +192,7 @@ func _on_pressed() -> void:
 	root_node.hide()
 "
 
-[node name="BattleV1" type="Control" node_paths=PackedStringArray("timer", "interrupt_anchor", "action_box", "main_action_menu", "move_list")]
+[node name="BattleV1" type="Control" node_paths=PackedStringArray("timer", "interrupt_anchor", "await_cancel", "action_box", "main_action_menu", "move_list", "enemy_team_ui", "friend_team_ui")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -152,9 +202,12 @@ grow_vertical = 2
 script = ExtResource("1_hot38")
 timer = NodePath("ActionTimer")
 interrupt_anchor = NodePath("InterruptAnchor")
+await_cancel = NodePath("AwaitCancel")
 action_box = NodePath("VBoxContainer/Actions/ActionBox")
 main_action_menu = NodePath("VBoxContainer/Actions/ActionBox/Control2/MainActionMenu")
 move_list = NodePath("VBoxContainer/Actions/MoveList")
+enemy_team_ui = NodePath("VBoxContainer/EnemyTeam")
+friend_team_ui = NodePath("VBoxContainer/PlayerTeam")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
@@ -172,6 +225,34 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="EnemyHP" type="TextureProgressBar" parent="VBoxContainer" node_paths=PackedStringArray("battle_root")]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+max_value = 1000.0
+value = 1000.0
+nine_patch_stretch = true
+texture_under = SubResource("GradientTexture1D_1weiw")
+texture_progress = SubResource("GradientTexture1D_xumci")
+script = SubResource("GDScript_rkjtq")
+battle_root = NodePath("../..")
+
+[node name="Label" type="Label" parent="VBoxContainer/EnemyHP"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "1000
+"
+horizontal_alignment = 1
 
 [node name="EnemyTeam" type="HBoxContainer" parent="VBoxContainer" node_paths=PackedStringArray("battle_root", "summary_container", "spirit_left", "spirit_center", "spirit_right")]
 layout_mode = 2
@@ -374,7 +455,35 @@ layout_mode = 2
 [node name="MonsterButtonRight" parent="VBoxContainer/PlayerTeam" instance=ExtResource("2_12bl6")]
 layout_mode = 2
 
-[node name="InterruptAnchor" type="Control" parent="."]
+[node name="FriendHP" type="TextureProgressBar" parent="VBoxContainer" node_paths=PackedStringArray("battle_root")]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+max_value = 1000.0
+value = 1000.0
+nine_patch_stretch = true
+texture_under = SubResource("GradientTexture1D_1weiw")
+texture_progress = SubResource("GradientTexture1D_xumci")
+script = SubResource("GDScript_08te3")
+battle_root = NodePath("../..")
+
+[node name="Label" type="Label" parent="VBoxContainer/FriendHP"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "1000
+"
+horizontal_alignment = 1
+
+[node name="InterruptAnchor" type="Panel" parent="."]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -382,6 +491,37 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="AwaitCancel" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -39.0
+offset_bottom = 39.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="AwaitCancel"]
+layout_mode = 2
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="AwaitCancel/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="AwaitCancel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Waiting for other player"
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="AwaitCancel/MarginContainer/VBoxContainer" node_paths=PackedStringArray("battle_root")]
+layout_mode = 2
+text = "Cancel"
+script = SubResource("GDScript_lmsix")
+battle_root = NodePath("../../../..")
 
 [node name="SummaryContainer" type="PanelContainer" parent="." node_paths=PackedStringArray("summary_node")]
 visible = false
@@ -418,6 +558,7 @@ size_flags_vertical = 3
 
 [node name="ActionTimer" type="Timer" parent="."]
 
+[connection signal="value_changed" from="VBoxContainer/EnemyHP" to="VBoxContainer/EnemyHP" method="_on_value_changed"]
 [connection signal="pressed" from="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/LeftButton" to="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/LeftButton" method="_on_pressed"]
 [connection signal="pressed" from="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/HBoxContainer/AttackButton" to="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/HBoxContainer/AttackButton" method="_on_pressed"]
 [connection signal="pressed" from="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/RightButton" to="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/RightButton" method="_on_pressed"]
@@ -425,4 +566,5 @@ size_flags_vertical = 3
 [connection signal="pressed" from="VBoxContainer/Actions/MoveList/BackContainer/AspectRatioContainer/LeftButton" to="VBoxContainer/Actions/MoveList/BackContainer/AspectRatioContainer/LeftButton" method="_on_pressed"]
 [connection signal="pressed" from="VBoxContainer/Actions/MoveList/BackContainer/AspectRatioContainer2/CenterButton" to="VBoxContainer/Actions/MoveList/BackContainer/AspectRatioContainer2/CenterButton" method="_on_pressed"]
 [connection signal="pressed" from="VBoxContainer/Actions/MoveList/BackContainer/AspectRatioContainer3/RightButton" to="VBoxContainer/Actions/MoveList/BackContainer/AspectRatioContainer3/RightButton" method="_on_pressed"]
+[connection signal="pressed" from="AwaitCancel/MarginContainer/VBoxContainer/Button" to="AwaitCancel/MarginContainer/VBoxContainer/Button" method="_on_pressed"]
 [connection signal="pressed" from="SummaryContainer/VBoxContainer/HBoxContainer/Button" to="SummaryContainer/VBoxContainer/HBoxContainer/Button" method="_on_pressed"]

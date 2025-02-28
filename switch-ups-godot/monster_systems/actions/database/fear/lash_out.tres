@@ -56,4 +56,5 @@ key = "lash_out"
 name = "TR_ACT_LASHOUT"
 type = 3
 cost = 2
+priority = 0
 effects = Array[ExtResource("1_2yupe")]([SubResource("Resource_climf"), SubResource("Resource_1cllj"), SubResource("Resource_aftgu"), SubResource("Resource_h6tvg"), SubResource("Resource_elyk3")])

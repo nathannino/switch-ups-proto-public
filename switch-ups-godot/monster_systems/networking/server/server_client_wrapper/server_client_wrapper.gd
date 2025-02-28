@@ -6,8 +6,12 @@ var teambuilding_is_ready = false
 var teambuilding_received_team = false
 var in_battle = false
 var battle_loaded = false
+var team_id = 0
 var team = []
+var start_turn_team_state = []
+var player_health = 0
 var await_endturn = false
+var selected_action_dict = null
 #endregion
 
 #region state setters
@@ -15,29 +19,31 @@ func state_teambuilding() :
 	reset_team_stats()
 	teambuilding_is_ready = false
 	teambuilding_received_team = false
-	in_battle = false
-	battle_loaded = false
-	var await_endturn = false
 	change_scene("build_team","wipe_rect",[TcpPayload.TYPE.TEAMBUILD_LAST_TEAM])
 	send(TcpPayload.new().set_type(TcpPayload.TYPE.TEAMBUILD_LAST_TEAM).set_content(team_to_dict()))
 
 func state_startbattle() :
 	reset_team_stats()
-	teambuilding_is_ready = false
-	teambuilding_received_team = false
 	in_battle = true
 	battle_loaded = false
-	var await_endturn = false
+	await_endturn = false
+	selected_action_dict = null
+	team_id = get_parent().get_children().find(self)
 	change_scene("battle_v1","fade_to_black",[TcpPayload.TYPE.BATTLE_SETUP_PLAYERID,TcpPayload.TYPE.BATTLE_SETUP_SYNCTEAM])
 	
 	send(TcpPayload.new().set_type(TcpPayload.TYPE.BATTLE_SETUP_PLAYERID).set_content(get_index()))
 	sync_teams.call_deferred() # Making sure every server_client_wrapper had state_startbattle() called
+
+func state_startturn() :
+	sync_teams()
+	selected_action_dict = null
+	send(TcpPayload.new().set_type(TcpPayload.TYPE.BATTLE_STARTTURN))
 #endregion
 
 func sync_teams() :
 	var teams = []
 	for child in get_parent().get_children() :
-		teams.push_back(child.team_to_dict())
+		teams.push_back({"hp":child.player_health,"team":child.team_to_dict()})
 	send(TcpPayload.new().set_type(TcpPayload.TYPE.BATTLE_SETUP_SYNCTEAM).set_content(teams))
 
 func team_to_dict() :
@@ -47,6 +53,7 @@ func team_to_dict() :
 	return dict_team
 
 func reset_team_stats() :
+	player_health = 1000
 	for member in team :
 		member.reset_stats()
 
@@ -76,8 +83,10 @@ func _on_server_client_node_payload_received(payload: TcpPayload) -> void:
 			battle_loaded = true
 			global_payload_received.emit(self,payload)
 		TcpPayload.TYPE.BATTLE_AWAIT_ENDTURN :
-			await_endturn = true
+			await_endturn = payload.get_content()
 			global_payload_received.emit(self,payload)
+		TcpPayload.TYPE.BATTLE_SUBMIT_ACTION :
+			selected_action_dict = payload.get_content()
 		_:
 			printerr("Unkown type %s" % payload.get_type())
 	pass # Replace with function body.

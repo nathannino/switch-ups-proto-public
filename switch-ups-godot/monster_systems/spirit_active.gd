@@ -4,10 +4,76 @@ class_name ms_spirit_active
 
 var key : String
 var key_equip : String
-var current_hp : int
+var _current_hp : float = 0
+signal current_hp_changed(old : float, new : float)
+var current_hp : float:
+	get : return _current_hp
+	set(value) :
+		var old = _current_hp
+		_current_hp = value
+		current_hp_changed.emit(old,value)
 var moves : Array
 var extra_move : String
-var current_stamina : int
+var _current_stamina : int = 0
+signal current_stamina_changed(old : int,new : int)
+var current_stamina : int :
+	get : return _current_stamina
+	set(value) :
+		var old = _current_stamina
+		_current_stamina = value
+		current_stamina_changed.emit(old,value)
+
+#region stat_changes
+var _atk_concrete_change : int
+signal atk_concrete_changed(old,new)
+var atk_concrete_change : int :
+	get : return _atk_concrete_change
+	set(value) :
+		var old = _atk_concrete_change
+		_atk_concrete_change = value
+		atk_concrete_changed.emit(old,value)
+const ATK_CONCRETE_CHANGE_MULTI = 10
+
+var _atk_abstract_change : int
+signal atk_abstract_changed(old,new)
+var atk_abstract_change : int :
+	get : return _atk_abstract_change
+	set(value) :
+		var old = _atk_abstract_change
+		_atk_abstract_change = value
+		atk_abstract_changed.emit(old,value)
+const ATK_ABSTRACT_CHANGE_MULTI = 10
+
+var _defense_change : int
+signal defense_changed(old,new)
+var defense_change : int :
+	get : return _defense_change
+	set(value) :
+		var old = _defense_change
+		_defense_change = value
+		defense_changed.emit(old,value)
+const DEFENSE_CHANGE_MULTI = 10
+
+var _speed_change : int
+signal speed_changed(old,new)
+var speed_change : int :
+	get : return _speed_change
+	set(value) :
+		var old = _speed_change
+		_speed_change = value
+		speed_changed.emit(old,value)
+
+var _luck_change : int
+const SPEED_CHANGE_MULTI = 10
+signal luck_changed(old,new)
+var luck_change : int :
+	get : return _luck_change
+	set(value) :
+		var old = _luck_change
+		_luck_change = value
+		luck_changed.emit(old,value)
+const LUCK_CHANGE_MULTI = 5
+#regionend
 
 func read_dict(_data : Dictionary) -> void :
 	key = _data["key"]
@@ -83,3 +149,18 @@ func get_actions_combined_converted() -> Array[ms_action] :
 	if not key_equip == "" :
 		return_array.push_back(get_extra_action_converted())
 	return return_array
+
+func get_atk_concrete() :
+	return SpiritDictionary.spirits[key].atk_concrete + (atk_concrete_change * ATK_CONCRETE_CHANGE_MULTI)
+
+func get_atk_abstract() :
+	return SpiritDictionary.spirits[key].atk_abstract + (atk_abstract_change * ATK_ABSTRACT_CHANGE_MULTI)
+
+func get_defense() :
+	return SpiritDictionary.spirits[key].defense + (defense_change * DEFENSE_CHANGE_MULTI)
+
+func get_luck() :
+	return SpiritDictionary.spirits[key].luck + (luck_change * LUCK_CHANGE_MULTI)
+
+func get_speed() :
+	return SpiritDictionary.spirits[key].speed + (speed_change * SPEED_CHANGE_MULTI)

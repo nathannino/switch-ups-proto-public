@@ -116,3 +116,40 @@ enum POSITION {
 	CENTER,
 	RIGHT,
 }
+
+static func index_to_position(_index : int) :
+	match _index:
+		1: return POSITION.LEFT
+		0: return POSITION.CENTER
+		2: return POSITION.RIGHT
+
+static func position_to_index(_pos : POSITION) :
+	match _pos :
+		POSITION.LEFT :
+			return 1
+		POSITION.CENTER :
+			return 0
+		POSITION.RIGHT :
+			return 2
+
+enum BATTLE_LOG {
+	ROTATE,
+	ACTION
+}
+
+enum ACTION_COMPONENT_HANDLE_STATE {
+	REQUEST_DATA, # Check precommit data first
+	REQUEST_DATA_CLIENT_REQUIRED, # Skip straight to asking the client
+	GET_CHILD,
+	GET_SIBLING,
+}
+
+enum ADDITIONNAL_ACTION_COMPONENT_EFFECTS {
+	CLEAR_TARGET_ACTION_DATA
+}
+
+static func calculate_randomness(user : ms_spirit_active, target : ms_spirit_active) :
+	var default_result = randf()
+	default_result = min(default_result + (user.get_luck()/100),1.0)
+	default_result = min(default_result - (target.get_luck()/100),0.0) 
+	return default_result

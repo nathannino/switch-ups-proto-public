@@ -7,6 +7,8 @@ signal teambuilder_request_team
 signal battle_team_synced(teams : Array)
 signal battle_all_loaded
 signal battle_begin_turn
+signal battle_logs(logs)
+signal request_data(request)
 #endregion
 
 var connected = false
@@ -82,6 +84,10 @@ func _on_main_client_payload_received(payload: TcpPayload) -> void:
 			battle_all_loaded.emit()
 		TcpPayload.TYPE.BATTLE_STARTTURN :
 			battle_begin_turn.emit()
+		TcpPayload.TYPE.BATTLE_LOGS :
+			battle_logs.emit(payload.get_content())
+		TcpPayload.TYPE.BATTLE_REQUEST_DATA :
+			request_data.emit(payload.get_content())
 		_:
 			printerr("Unkown type %s" % payload.get_type())
 	pass # Replace with function body.

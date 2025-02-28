@@ -54,8 +54,3 @@ func _position_back() :
 			back_right.disabled = false
 		_ :
 			printerr("Where do I put the back button =(")
-
-
-func _on_move_holder_move_selected(index: int, action: ms_action) -> void:
-	
-	pass # Replace with function body.

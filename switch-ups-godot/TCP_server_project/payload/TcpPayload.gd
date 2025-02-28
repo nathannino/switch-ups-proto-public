@@ -28,6 +28,9 @@ enum TYPE {
 	BATTLE_AWAIT_INIT,
 	BATTLE_AWAIT_ENDTURN,
 	BATTLE_STARTTURN,
+	BATTLE_SUBMIT_ACTION,
+	BATTLE_REQUEST_DATA,
+	BATTLE_LOGS
 }
 const PROTOCOL_VER = game_info.version + ("_dev" if game_info.dev else "")
 

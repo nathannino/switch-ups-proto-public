@@ -16,10 +16,29 @@ script/source = "extends Control
 @export var button : Button
 
 signal pressed_option(index : int)
-var current_spirit : ms_spirit_active
+var _current_spirit : ms_spirit_active
+var current_spirit : ms_spirit_active :
+	get : return _current_spirit
+	set(value) :
+		if not _current_spirit == null :
+			if _current_spirit.current_hp_changed.is_connected(update_health) :
+				_current_spirit.current_hp_changed.disconnect(update_health)
+			if _current_spirit.current_stamina_changed.is_connected(update_stamina) :
+				_current_spirit.current_stamina_changed.disconnect(update_stamina)
+			pass
+		_current_spirit = value
+		if not value == null :
+			value.current_hp_changed.connect(update_health)
+			value.current_stamina_changed.connect(update_stamina)
 var current_spirit_inactive : ms_spirit
 var options = []
 @export var options_root : Control
+
+func update_health(old, new) :
+	set_health(new,SpiritDictionary.spirits[current_spirit.key].health)
+
+func update_stamina(old,new) :
+	\"Stamina : %s\" % new
 
 func set_health(curr_health : float, max_health : float) :
 	health_label.text = \"HP : {curr}/{max}\".format({\"curr\":curr_health,\"max\":max_health})

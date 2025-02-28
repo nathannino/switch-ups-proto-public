@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://b2tpdem416owt"]
+[gd_scene load_steps=8 format=3 uid="uid://b2tpdem416owt"]
 
 [ext_resource type="Script" path="res://monster_systems/networking/server/server_wrapper.gd" id="1_5rxyd"]
 [ext_resource type="PackedScene" uid="uid://bg6nha4tn60d1" path="res://monster_systems/networking/server/server_client_wrapper/server_client_wrapper.tscn" id="2_iesxm"]
 [ext_resource type="PackedScene" uid="uid://b1dfhsdyhw75g" path="res://TCP_server_project/server/tcp_server.tscn" id="2_pr3k4"]
+[ext_resource type="Script" path="res://monster_systems/networking/server/turn_calculator.gd" id="4_tdqmj"]
 
 [sub_resource type="GDScript" id="GDScript_gxxs3"]
 script/source = "extends Control
@@ -86,6 +87,9 @@ layout_mode = 2
 text = "TR_MSG_DISMISS"
 script = SubResource("GDScript_po850")
 root = NodePath("../../../../..")
+
+[node name="TurnCalculator" type="Node" parent="."]
+script = ExtResource("4_tdqmj")
 
 [connection signal="client_disconnected" from="ServerMain" to="." method="_on_server_main_client_disconnected"]
 [connection signal="pressed" from="ErrorRoot/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/Button" to="ErrorRoot/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/Button" method="_on_pressed"]

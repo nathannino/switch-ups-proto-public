@@ -2,6 +2,7 @@ extends Control
 
 var target_type : ms_constants.TARGETS
 var allow_back : bool
+var ignore_index : int
 
 var battle_root : Node
 
@@ -18,10 +19,19 @@ func set_label() :
 
 func set_option() :
 	var options = []
+	ignore_index = -1
 	match target_type :
 		ms_constants.TARGETS.ALLY_SPIRIT, ms_constants.TARGETS.ALLY_SPOT :
 			options = battle_root.friend_team.slice(0,3)
-		ms_constants.TARGETS.ALLY_EXCLUDE_SELF_SPIRIT, ms_constants.TARGETS.ALLY_EXCLUDE_SELF_SPOT :
+		ms_constants.TARGETS.ALLY_EXCLUDE_SELF_SPIRIT :
+			var temp_options = battle_root.friend_team.slice(0,3)
+			ignore_index = temp_options.find(battle_root.get_spirit_in_field(battle_root.friend_team,battle_root.get_selected_position))
+			options = []
+			for _index in range(temp_options.size) :
+				if _index == ignore_index :
+					continue
+				options.push_back(temp_options[_index])
+		ms_constants.TARGETS.ALLY_EXCLUDE_SELF_SPOT :
 			options = battle_root.friend_team.slice(1,3)
 		ms_constants.TARGETS.ENEMY_SPIRIT, ms_constants.TARGETS.ENEMY_SPOT :
 			options = battle_root.enemy_team.slice(0,3)
@@ -40,5 +50,20 @@ func attach_ready(_battle_root : Node) :
 	set_label()
 	pass
 
-func return_value(value) :
-	battle_root.submit_action_data(value)
+func pos_to_index(pos) :
+	match target_type :
+		ms_constants.TARGETS.ALLY_SPIRIT, ms_constants.TARGETS.ALLY_SPOT, ms_constants.TARGETS.ENEMY_SPIRIT, ms_constants.TARGETS.ENEMY_SPOT :
+			return pos
+		ms_constants.TARGETS.ALLY_EXCLUDE_SELF_SPIRIT :
+			assert(not ignore_index == -1)
+			if pos < ignore_index :
+				return pos
+			return pos + 1
+		ms_constants.TARGETS.ALLY_EXCLUDE_SELF_SPOT, ms_constants.TARGETS.ENEMY_EXCLUDE_ACTIVE_SPIRIT, ms_constants.TARGETS.ENEMY_EXCLUDE_ACTIVE_SPOT :
+			return pos + 1
+		_ :
+			return -1
+
+func return_value(pos : int) :
+	var _index = pos_to_index(pos)
+	battle_root.submit_action_data({"is_precommit":allow_back,"array_pos":_index,"spot_position":ms_constants.index_to_position(_index)})

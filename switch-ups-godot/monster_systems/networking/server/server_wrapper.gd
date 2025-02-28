@@ -10,6 +10,7 @@ enum BATTLE_STEPS {
 	SELECT_ACTION,
 	CALCULATE_MOVES,
 	AWAIT_MODIFICATION,
+	RESUME_MOVES,
 }
 
 var battle_next : BATTLE_STEPS = BATTLE_STEPS.NONE
@@ -88,11 +89,32 @@ func battle_next_main() :
 				_team[1].current_stamina += 1
 				_team[2].current_stamina += 1
 			for child in $ServerMain.get_children() :
-				child.sync_teams()
-				child.send(TcpPayload.new().set_type(TcpPayload.TYPE.BATTLE_STARTTURN))
+				child.state_startturn()
+			battle_next = BATTLE_STEPS.CALCULATE_MOVES
 			pass
+		BATTLE_STEPS.CALCULATE_MOVES :
+			$TurnCalculator.start_turn()
+		BATTLE_STEPS.AWAIT_MODIFICATION :
+			battle_next = BATTLE_STEPS.RESUME_MOVES
+			$TurnCalculator.send_request_data()
+		BATTLE_STEPS.RESUME_MOVES :
+			$TurnCalculator.calculate_next()
 		_ :
 			printerr("No next step : %s" % battle_next)
+
+func battle_submit_logs_middle(logs) :
+	battle_next = BATTLE_STEPS.AWAIT_MODIFICATION
+	_battle_submit_logs(logs)
+	pass
+
+func battle_submit_logs_end(logs) :
+	battle_next = BATTLE_STEPS.SELECT_ACTION
+	_battle_submit_logs(logs)
+	pass
+
+func _battle_submit_logs(logs) :
+	$ServerMain.send_all(TcpPayload.new().set_type(TcpPayload.TYPE.BATTLE_LOGS).set_content(logs))
+	pass
 
 func _on_server_main_client_disconnected() -> void:
 	# Let's keep it simple and just send everyone back
