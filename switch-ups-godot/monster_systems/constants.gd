@@ -133,8 +133,8 @@ static func position_to_index(_pos : POSITION) :
 			return 2
 
 enum BATTLE_LOG {
-	ROTATE,
-	ACTION
+	ROTATE = 3,
+	ACTION = 2
 }
 
 enum ACTION_COMPONENT_HANDLE_STATE {

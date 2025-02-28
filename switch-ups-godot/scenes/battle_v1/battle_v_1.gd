@@ -130,14 +130,14 @@ func _set_team_state(teams : Array) :
 
 func handle_battle_logs(battle_logs) :
 	for log in battle_logs : #TODO : Animations
-		if battle_logs.has("log_type") :
-			match battle_logs["log_type"] :
-				ms_constants.BATTLE_LOG.ROTATE :
-					var pid = log["pid"]
-					rotate_visual(pid,log["old_index"],pid,log["new_index"])
-					continue
-				ms_constants.BATTLE_LOG.ACTION :
-					pass # Honestly, probably won't be used
+		var battle_log_type : ms_constants.BATTLE_LOG = log.get("log_type",ms_constants.BATTLE_LOG.ACTION)
+		match battle_log_type :
+			ms_constants.BATTLE_LOG.ROTATE :
+				var pid = log["pid"]
+				rotate_visual(pid,log["old_index"],pid,log["new_index"])
+				continue
+			ms_constants.BATTLE_LOG.ACTION :
+				pass # Honestly, probably won't be used
 		var target_info = log["target_info"]
 		var log_player_id = target_info["user_id"]
 		var _team = friend_team if log_player_id == player_id else enemy_team

@@ -31,7 +31,7 @@ func _rotate_to_front_startturn() :
 			var old_center = node.team[ms_constants.position_to_index(ms_constants.POSITION.CENTER)]
 			var new_center = node.team[ms_constants.position_to_index(target_position)]
 			node.team[ms_constants.position_to_index(ms_constants.POSITION.CENTER)] = new_center
-			node.team[ms_constants.position_to_index(target_position)]
+			node.team[ms_constants.position_to_index(target_position)] = old_center
 			child["priority_debuff"] = child.get("priority_debuff",0) - 2
 			battle_log.push_back({
 				"log_type" : ms_constants.BATTLE_LOG.ROTATE,
