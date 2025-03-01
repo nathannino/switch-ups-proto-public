@@ -128,6 +128,7 @@ func _set_team_state(teams : Array) :
 		await ready
 	sync_team.emit()
 
+var current_action_battle_log
 func handle_battle_logs(battle_logs) :
 	for log in battle_logs : #TODO : Animations
 		var battle_log_type : ms_constants.BATTLE_LOG = log.get("log_type",ms_constants.BATTLE_LOG.ACTION)
@@ -140,10 +141,10 @@ func handle_battle_logs(battle_logs) :
 				var log_player_id = log["pid"]
 				var _team = friend_team if log_player_id == player_id else enemy_team
 				var _spirit = _team[log["spirit"]]
-				var _action = _spirit.get_actions_combined_converted()[log["action"]]
+				current_action_battle_log = _spirit.get_actions_combined_converted()[log["action"]]
 				#TODO : dialog
 				if log["success"] :
-					_spirit.current_stamina -= _action.cost
+					_spirit.current_stamina -= current_action_battle_log.cost
 				continue
 			ms_constants.BATTLE_LOG.ACTION :
 				pass # Honestly, probably won't be used
@@ -151,7 +152,7 @@ func handle_battle_logs(battle_logs) :
 		var log_player_id = target_info["user_id"]
 		var _team = friend_team if log_player_id == player_id else enemy_team
 		var _spirit = _team[target_info["user"]]
-		var _action = _spirit.get_actions_combined_converted()[log["action_position"]]
+		var _action = current_action_battle_log
 		ms_action_index_manager.get_latest_component(_action,log["action_index_array"])
 	ClientWrapperAutoload.send(TcpPayload.new().set_type(TcpPayload.TYPE.BATTLE_AWAIT_ENDTURN).set_content(true))
 

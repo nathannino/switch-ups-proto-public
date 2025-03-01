@@ -111,6 +111,7 @@ func check_stamina() :
 		battle_log.push_back(log)
 		return true
 
+var selected_action
 func start_side() :
 	var order = player_order_data[speed_order[current_handling_order]]
 	var user_node = order["player_node"]
@@ -118,12 +119,14 @@ func start_side() :
 	var user = user_node.team[ms_constants.position_to_index(ms_constants.POSITION.CENTER)]
 	var enemy = enemy_node.team[ms_constants.position_to_index(ms_constants.POSITION.CENTER)]
 	target_info = [user,user_node,enemy,enemy_node]
+	
+	selected_action = get_current_action(order["player_node"].team[ms_constants.position_to_index(ms_constants.POSITION.CENTER)],order["action_index"])
 	if check_stamina() :
 		calculate_next()
 
 func calculate_next() :
 	var order = player_order_data[speed_order[current_handling_order]]
-	var action = get_current_action(order["player_node"].team[ms_constants.position_to_index(ms_constants.POSITION.CENTER)],order["action_index"])
+	var action = selected_action
 	
 	var _root_component : ms_action_component = action.get_child_component(action_index[0])
 	
