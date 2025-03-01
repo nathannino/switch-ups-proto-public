@@ -147,7 +147,7 @@ func calculate_next() :
 		calculate_next()
 		return
 	
-	var results = current_component.handle_server(target_info[0],target_info[1],target_info[2],target_info[3],current_data)
+	var results = current_component.handle_server(self,target_info[0],target_info[1],target_info[2],target_info[3],current_data)
 	
 	var response = results[0]
 	if response == ms_constants.ACTION_COMPONENT_HANDLE_STATE.REQUEST_DATA and current_data.size() == 0 :

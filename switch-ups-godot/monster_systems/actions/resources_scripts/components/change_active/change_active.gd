@@ -28,7 +28,7 @@ func already_handled_server(battle_log : Array, position : int) :
 	return ms_constants.ACTION_COMPONENT_HANDLE_STATE.GET_SIBLING
 
 # At this point, we assume that both target and user are from the same player... but just in case it isn't
-func handle_server(user:ms_spirit_active, user_player_node : Node, target : ms_spirit_active, target_player_node : Node, data : Dictionary) -> Array :
+func handle_server(turn_calc : Node,user:ms_spirit_active, user_player_node : Node, target : ms_spirit_active, target_player_node : Node, data : Dictionary) -> Array :
 	var old_index = target_player_node.team.find(target)
 	var new_index = user_player_node.team.find(user)
 	

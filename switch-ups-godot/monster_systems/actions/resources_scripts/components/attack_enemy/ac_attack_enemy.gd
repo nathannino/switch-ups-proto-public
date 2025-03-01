@@ -35,11 +35,29 @@ func handle_client(battle_log : Dictionary, battle_root : Node) :
 func already_handled_server(battle_log : Array, position : int) :
 	return ms_constants.ACTION_COMPONENT_HANDLE_STATE.GET_SIBLING
 
-func handle_server(user:ms_spirit_active, user_player_node : Node, target : ms_spirit_active, target_player_node : Node, data : Dictionary) -> Array :
+func handle_server(turn_calc : Node,user:ms_spirit_active, user_player_node : Node, target : ms_spirit_active, target_player_node : Node, data : Dictionary) -> Array :
 	var attack_power = base_atk * (user.get_atk_concrete() if atk_flavor == ms_constants.ATK_FLAVOR.CONCRETE else user.get_atk_abstract())
 	var defense_power = (target.get_defense() / 2) + ((target.get_atk_concrete() if atk_flavor == ms_constants.ATK_FLAVOR.CONCRETE else target.get_atk_abstract())/2)
 	var random = 0.9 + (ms_constants.calculate_randomness(user,target) * 0.2)
 	var damage = attack_power / defense_power * random
+	
+	var current_action = turn_calc.get_current_action(user,turn_calc.player_order_data[turn_calc.speed_order[turn_calc.current_handling_order]]["action_index"])
+	
+	var weak_res = ms_constants.get_hit_type(
+		current_action.type,
+		SpiritDictionary.spirits[target.key].type,
+		null if target.key_equip == "" else SpiritDictionary.spirits[target.key_equip].type)
+	
+	match weak_res :
+		ms_constants.WEAK_RES.WEAK :
+			damage *= 1.25
+		ms_constants.WEAK_RES.RES :
+			damage *= 0 # TODO : RES is now block... is that good?
+		ms_constants.WEAK_RES.NORMAL :
+			pass
+	
+	if current_action.type == SpiritDictionary.spirits[target.key].type :
+		damage *= 1.1
 	
 	var player_damage = 0
 	var spirit_damage = damage
@@ -56,6 +74,7 @@ func handle_server(user:ms_spirit_active, user_player_node : Node, target : ms_s
 		{
 			"damage_amount" : damage,
 			"spirit_damage" : spirit_damage,
-			"overflow_damage" : player_damage
+			"overflow_damage" : player_damage,
+			"weak_status" : weak_res,
 		}
 	]
