@@ -150,7 +150,6 @@ func calculate_next() :
 	if response == ms_constants.ACTION_COMPONENT_HANDLE_STATE.REQUEST_DATA and current_data.size() == 0 :
 		if not order["action_data"].size() == 0 :
 			current_data = order["action_data"].pop_front()
-			ms_action_index_manager.increase_action_index(current_component,action_index)
 			calculate_next()
 			return
 	
@@ -158,7 +157,7 @@ func calculate_next() :
 		$"..".battle_submit_logs_middle(battle_log)
 		battle_log.clear()
 		current_data = {}
-		return
+		return #TODO : Request for more data
 	
 	if response == ms_constants.ACTION_COMPONENT_HANDLE_STATE.GET_CHILD or response == ms_constants.ACTION_COMPONENT_HANDLE_STATE.GET_SIBLING :
 		current_data = {}
