@@ -67,6 +67,10 @@ func set_summary_inactive(_spirit : ms_spirit) :
 	spirit_label.hide()
 	spirit_button.reset()
 
+func add_bonus(key : String, _format : Dictionary, bonus : int, bonus_multi : float) :
+	var addition = "" if bonus == 0 else " (+%s)" % (bonus * bonus_multi) if bonus > 0 else " (-%s)" % (abs(bonus * bonus_multi))
+	return tr(key).format(_format) + addition
+
 func set_summary_active(_spirit : ms_spirit_active) :
 	spirit_active = _spirit
 	spirit = SpiritDictionary.spirits[spirit_active.key]
@@ -74,11 +78,11 @@ func set_summary_active(_spirit : ms_spirit_active) :
 	sprite.texture = spirit.sprite
 	label_type.text = tr("TR_SUMMARY_TYPE").format({"type":ms_constants.type_to_bbcode(spirit.type)})
 	label_health.text = tr("HP : {curr}/{max}").format({"curr":spirit_active.current_hp,"max":spirit.health})
-	label_concrete.text = tr("TR_SUMMARY_CONCRETE").format({"tr":ms_constants.flavor_to_bbcode(ms_constants.ATK_FLAVOR.CONCRETE),"power":spirit.atk_concrete})
-	label_abstract.text = tr("TR_SUMMARY_ABSTRACT").format({"tr":ms_constants.flavor_to_bbcode(ms_constants.ATK_FLAVOR.ABSTRACT),"power":spirit.atk_abstract})
-	label_defense.text = tr("TR_SUMMARY_DEFENSE").format({"defense":spirit.defense})
-	label_speed.text = tr("TR_SUMMARY_SPEED").format({"speed":spirit.speed})
-	label_luck.text = tr("TR_SUMMARY_LUCK").format({"luck":spirit.luck})
+	label_concrete.text = add_bonus("TR_SUMMARY_CONCRETE",{"tr":ms_constants.flavor_to_bbcode(ms_constants.ATK_FLAVOR.CONCRETE),"power":spirit.atk_concrete},spirit_active.atk_concrete_change,spirit_active.ATK_CONCRETE_CHANGE_MULTI)
+	label_abstract.text = add_bonus("TR_SUMMARY_ABSTRACT",{"tr":ms_constants.flavor_to_bbcode(ms_constants.ATK_FLAVOR.ABSTRACT),"power":spirit.atk_abstract},spirit_active.atk_abstract_change,spirit_active.ATK_ABSTRACT_CHANGE_MULTI)
+	label_defense.text = add_bonus("TR_SUMMARY_DEFENSE",{"defense":spirit.defense},spirit_active.defense_change,spirit_active.DEFENSE_CHANGE_MULTI)
+	label_speed.text = add_bonus("TR_SUMMARY_SPEED",{"speed":spirit.speed},spirit_active.speed_change,spirit_active.DEFENSE_CHANGE_MULTI)
+	label_luck.text = add_bonus("TR_SUMMARY_LUCK",{"luck":spirit.luck},spirit_active.luck_change,spirit_active.LUCK_CHANGE_MULTI)
 	move_holder.set_actions(spirit_active.get_actions_combined_converted())
 	%ActionsLabel.show()
 	spirit_label.show()
