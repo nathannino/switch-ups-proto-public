@@ -82,6 +82,11 @@ func read_dict(_data : Dictionary) -> void :
 	moves = _data["actions"]
 	extra_move = _data["ex_action"]
 	current_stamina = _data["stamina"]
+	atk_concrete_change = _data["atk_con"]
+	atk_abstract_change = _data["atk_abs"]
+	defense_change = _data["def"]
+	speed_change = _data["speed"]
+	luck_change = _data["luck"]
 
 func to_dict() -> Dictionary :
 	return {
@@ -90,7 +95,12 @@ func to_dict() -> Dictionary :
 		"hp" = current_hp,
 		"actions" = moves,
 		"ex_action" = extra_move,
-		"stamina" = current_stamina
+		"stamina" = current_stamina,
+		"atk_con" = atk_concrete_change,
+		"atk_abs" = atk_abstract_change,
+		"def" = defense_change,
+		"speed" = speed_change,
+		"luck" = luck_change
 	}
 
 # We are not sending over a resource omg did you know resource files can have arbitrary code inside? scary.
