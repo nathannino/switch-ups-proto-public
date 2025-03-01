@@ -80,6 +80,7 @@ script/source = "extends Button
 func _on_pressed() -> void:
 	var battle_root = SceneRoot.battle_root
 	SceneRoot.return_value({
+		\"is_precommit\" : SceneRoot.allow_back,
 		\"active\" : battle_root.friend_team.find(SceneRoot.team_active_representative),
 		\"reserve\" : battle_root.friend_team.find(SceneRoot.team_reserve_representative),
 	})
@@ -136,10 +137,11 @@ battle_root = NodePath("../../..")
 layout_mode = 2
 text = "<-->"
 
-[node name="TeamReserve" type="VBoxContainer" parent="HBoxContainer/HBoxContainer2"]
+[node name="TeamReserve" type="VBoxContainer" parent="HBoxContainer/HBoxContainer2" node_paths=PackedStringArray("battle_root")]
 layout_mode = 2
 size_flags_horizontal = 3
 script = SubResource("GDScript_yo4e1")
+battle_root = NodePath("../../..")
 
 [node name="ConfirmButton" type="Button" parent="HBoxContainer" node_paths=PackedStringArray("SceneRoot")]
 layout_mode = 2

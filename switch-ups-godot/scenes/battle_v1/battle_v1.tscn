@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://cwp5xmvuwvhph"]
+[gd_scene load_steps=25 format=3 uid="uid://cwp5xmvuwvhph"]
 
 [ext_resource type="Script" path="res://scenes/battle_v1/battle_v_1.gd" id="1_hot38"]
 [ext_resource type="PackedScene" uid="uid://bjwcj7an8i718" path="res://globals/utility_scenes/ui_component/monster_button.tscn" id="2_12bl6"]
@@ -117,6 +117,30 @@ script/source = "extends Button
 
 func _on_pressed() -> void:
 	move_list.show_moves()
+"
+
+[sub_resource type="GDScript" id="GDScript_lilf8"]
+script/source = "extends Button
+
+@export var battle_root : Control
+
+const action = preload(\"uid://bret6c1vixpf5\")
+
+func _on_pressed() -> void:
+	battle_root._on_move_selected(-1,action)
+	pass # Replace with function body.
+"
+
+[sub_resource type="GDScript" id="GDScript_gvnmd"]
+script/source = "extends Button
+
+@export var battle_root : Control
+
+const action = preload(\"uid://ia42qhobbyee\")
+
+func _on_pressed() -> void:
+	battle_root._on_move_selected(-2,action)
+	pass # Replace with function body.
 "
 
 [sub_resource type="GDScript" id="GDScript_3dv3g"]
@@ -357,13 +381,17 @@ text = "Attack"
 script = SubResource("GDScript_pq3xb")
 move_list = NodePath("../../../../../../MoveList")
 
-[node name="DefenseButton" type="Button" parent="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/HBoxContainer"]
+[node name="DefenseButton" type="Button" parent="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/HBoxContainer" node_paths=PackedStringArray("battle_root")]
 layout_mode = 2
 text = "Defense"
+script = SubResource("GDScript_lilf8")
+battle_root = NodePath("../../../../../../../..")
 
-[node name="PartyButton" type="Button" parent="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/HBoxContainer"]
+[node name="PartyButton" type="Button" parent="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/HBoxContainer" node_paths=PackedStringArray("battle_root")]
 layout_mode = 2
 text = "Switch"
+script = SubResource("GDScript_gvnmd")
+battle_root = NodePath("../../../../../../../..")
 
 [node name="RightButton" type="Button" parent="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer" node_paths=PackedStringArray("menu_root")]
 layout_mode = 2
@@ -572,6 +600,8 @@ size_flags_vertical = 3
 [connection signal="value_changed" from="VBoxContainer/EnemyHP" to="VBoxContainer/EnemyHP" method="_on_value_changed"]
 [connection signal="pressed" from="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/LeftButton" to="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/LeftButton" method="_on_pressed"]
 [connection signal="pressed" from="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/HBoxContainer/AttackButton" to="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/HBoxContainer/AttackButton" method="_on_pressed"]
+[connection signal="pressed" from="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/HBoxContainer/DefenseButton" to="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/HBoxContainer/DefenseButton" method="_on_pressed"]
+[connection signal="pressed" from="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/HBoxContainer/PartyButton" to="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/HBoxContainer/PartyButton" method="_on_pressed"]
 [connection signal="pressed" from="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/RightButton" to="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/RightButton" method="_on_pressed"]
 [connection signal="move_selected" from="VBoxContainer/Actions/MoveList/PanelContainer/ScrollContainer/MoveHolder" to="VBoxContainer/Actions/MoveList/PanelContainer/ScrollContainer" method="_on_move_holder_move_selected"]
 [connection signal="pressed" from="VBoxContainer/Actions/MoveList/BackContainer/AspectRatioContainer/LeftButton" to="VBoxContainer/Actions/MoveList/BackContainer/AspectRatioContainer/LeftButton" method="_on_pressed"]

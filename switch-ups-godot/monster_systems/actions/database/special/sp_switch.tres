@@ -13,5 +13,5 @@ key = "sp_switch"
 name = "TR_ACT_SP_JUMP"
 type = 8
 cost = 0
-priority = 100
+priority = 99
 effects = Array[ExtResource("1_sll8v")]([SubResource("Resource_uctxt")])

@@ -2,6 +2,9 @@ extends RefCounted
 
 class_name ms_spirit_active
 
+const sp_switch_action = preload("uid://ia42qhobbyee")
+const sp_defend_action = preload("uid://bret6c1vixpf5")
+
 var key : String
 var key_equip : String
 var _current_hp : float = 0
@@ -74,6 +77,8 @@ var luck_change : int :
 		luck_changed.emit(old,value)
 const LUCK_CHANGE_MULTI = 5
 #regionend
+
+var is_defending = false
 
 func read_dict(_data : Dictionary) -> void :
 	key = _data["key"]
@@ -160,6 +165,27 @@ func get_actions_combined_converted() -> Array[ms_action] :
 		return_array.push_back(get_extra_action_converted())
 	return return_array
 
+func get_action_index(_action : ms_action) -> int :
+	if _action == sp_switch_action :
+		return -2
+	if _action == sp_defend_action :
+		return -1
+	# TODO : Defense
+	return get_actions_array_converted().find(_action)
+
+func get_action(action_index) -> ms_action :
+	if action_index == -2 :
+		return sp_switch_action
+	if action_index == -1 or (action_index == get_actions_array_converted().size() and key_equip == ""):
+		return sp_defend_action
+	if action_index in range(get_actions_array_converted().size()) :
+		return get_actions_array_converted()[action_index]
+	if action_index == get_actions_array_converted().size() :
+		return get_extra_action_converted()
+	
+	printerr("action not found wtf???")
+	return null
+
 func get_atk_concrete() :
 	return SpiritDictionary.spirits[key].atk_concrete + (atk_concrete_change * ATK_CONCRETE_CHANGE_MULTI)
 
@@ -167,7 +193,7 @@ func get_atk_abstract() :
 	return SpiritDictionary.spirits[key].atk_abstract + (atk_abstract_change * ATK_ABSTRACT_CHANGE_MULTI)
 
 func get_defense() :
-	return SpiritDictionary.spirits[key].defense + (defense_change * DEFENSE_CHANGE_MULTI)
+	return (SpiritDictionary.spirits[key].defense + (defense_change * DEFENSE_CHANGE_MULTI)) * 2 if is_defending else 1
 
 func get_luck() :
 	return SpiritDictionary.spirits[key].luck + (luck_change * LUCK_CHANGE_MULTI)

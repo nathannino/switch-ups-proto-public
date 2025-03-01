@@ -89,6 +89,8 @@ func battle_next_main() :
 				_team[0].current_stamina += 1
 				_team[1].current_stamina += 1
 				_team[2].current_stamina += 1
+				for member in _team :
+					member.is_defending = false
 			for child in $ServerMain.get_children() :
 				child.state_startturn()
 			battle_next = BATTLE_STEPS.CALCULATE_MOVES

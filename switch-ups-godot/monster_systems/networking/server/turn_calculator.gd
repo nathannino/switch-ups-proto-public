@@ -17,7 +17,7 @@ func get_players() :
 	return $"../ServerMain".get_children()
 
 func get_current_action(spirit : ms_spirit_active, action_index : int) :
-	return spirit.get_actions_combined_converted()[action_index]
+	return spirit.get_action(action_index)
 
 # Rotation not forced by action
 func _rotate_to_front_startturn() :
@@ -174,7 +174,7 @@ func calculate_next() :
 		}
 		result_data["action_index_array"] = action_index
 		
-		result_data["action_position"] = target_info[0].get_actions_combined_converted().find(action)
+		result_data["action_position"] = target_info[0].get_action_index(action)
 		
 		target_info = results[2]
 		

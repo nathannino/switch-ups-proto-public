@@ -37,10 +37,8 @@ func handle_server(user:ms_spirit_active, user_player_node : Node, target : ms_s
 	if data.size() == 0 :
 		return [ms_constants.ACTION_COMPONENT_HANDLE_STATE.REQUEST_DATA,[],[user,user_player_node,target,target_player_node],null]
 	
-	var target_team_state
 	var target_team = user_player_node.team
-	if data["is_precommit"] :
-		target_team_state = user_player_node.start_turn_team_state if data["is_precommit"] else user_player_node.team
+	var target_team_state = user_player_node.start_turn_team_state if data["is_precommit"] else user_player_node.team
 	
 	# Data = 
 	# 	"active" : battle_root.friend_team.find(SceneRoot.team_active_representative),
