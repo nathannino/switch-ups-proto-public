@@ -46,7 +46,7 @@ func handle_server(user:ms_spirit_active, user_player_node : Node, target : ms_s
 	if target_type == ms_constants.TARGETS.SELF_SPIRIT :
 		return [ms_constants.ACTION_COMPONENT_HANDLE_STATE.GET_CHILD,[],[user,user_player_node,user,user_player_node],{}]
 	
-	if data.size == 0 :
+	if data.size() == 0 :
 		var request_data = ms_constants.ACTION_COMPONENT_HANDLE_STATE.REQUEST_DATA_CLIENT_REQUIRED if during_turn else ms_constants.ACTION_COMPONENT_HANDLE_STATE.REQUEST_DATA
 		return [request_data,[],[user,user_player_node,target,target_player_node],null]
 	

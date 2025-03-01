@@ -86,6 +86,31 @@ func get_content_or_wrap(array,index) :
 		index -= array.size()
 	return array[index]
 
+func check_stamina() :
+	var order = player_order_data[speed_order[current_handling_order]]
+	var user_node = order["player_node"]
+	var user = user_node.team[ms_constants.position_to_index(ms_constants.POSITION.CENTER)]
+	var action = get_current_action(order["player_node"].team[ms_constants.position_to_index(ms_constants.POSITION.CENTER)],order["action_index"])
+	
+	var log = {
+				"log_type" : ms_constants.BATTLE_LOG.START_ACTION,
+				"pid":speed_order[current_handling_order],
+				"spirit": ms_constants.position_to_index(ms_constants.POSITION.CENTER),
+				"action": order["action_index"],
+				"success": false,
+			}
+	
+	
+	if user.current_stamina < action.cost :
+		log["success"] = false
+		battle_log.push_back(log)
+		return false
+	else :
+		log["success"] = true
+		user.current_stamina -= action.cost
+		battle_log.push_back(log)
+		return true
+
 func start_side() :
 	var order = player_order_data[speed_order[current_handling_order]]
 	var user_node = order["player_node"]
@@ -93,7 +118,8 @@ func start_side() :
 	var user = user_node.team[ms_constants.position_to_index(ms_constants.POSITION.CENTER)]
 	var enemy = enemy_node.team[ms_constants.position_to_index(ms_constants.POSITION.CENTER)]
 	target_info = [user,user_node,enemy,enemy_node]
-	calculate_next()
+	if check_stamina() :
+		calculate_next()
 
 func calculate_next() :
 	var order = player_order_data[speed_order[current_handling_order]]

@@ -136,6 +136,15 @@ func handle_battle_logs(battle_logs) :
 				var pid = log["pid"]
 				rotate_visual(pid,log["old_index"],pid,log["new_index"])
 				continue
+			ms_constants.BATTLE_LOG.START_ACTION :
+				var log_player_id = log["pid"]
+				var _team = friend_team if log_player_id == player_id else enemy_team
+				var _spirit = _team[log["spirit"]]
+				var _action = _spirit.get_actions_combined_converted()[log["action"]]
+				#TODO : dialog
+				if log["success"] :
+					_spirit.current_stamina -= _action.cost
+				continue
 			ms_constants.BATTLE_LOG.ACTION :
 				pass # Honestly, probably won't be used
 		var target_info = log["target_info"]
