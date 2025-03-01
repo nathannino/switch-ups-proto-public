@@ -26,4 +26,5 @@ key = "jump"
 name = "TR_ACT_JUMP"
 type = 0
 cost = 1
+priority = 0
 effects = Array[ExtResource("1_2oajx")]([SubResource("Resource_2f7l1"), SubResource("Resource_ainrw")])

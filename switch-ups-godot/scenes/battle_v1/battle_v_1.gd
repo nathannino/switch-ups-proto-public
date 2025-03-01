@@ -89,6 +89,7 @@ func rotate_visual(pid_one,spirit_one_index,pid_two,spirit_two_index) :
 	var spirit_two = team_two[spirit_two_index]
 	
 	#TODO : Animations =D
+	#WARNING : Animations should take into consideration the posibility of a target not being active at the moment
 	
 	team_one[spirit_one_index] = spirit_two
 	team_two[spirit_two_index] = spirit_one

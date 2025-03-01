@@ -14,6 +14,7 @@ script/source = "extends Control
 
 @export var none_label : Label
 @export var button : Button
+@export var hightlight_rect : ColorRect
 
 signal pressed_option(index : int)
 var _current_spirit : ms_spirit_active
@@ -156,6 +157,8 @@ func _ready() :
 			hide_options()
 	)
 
+func set_hightlight_color(color : Color) :
+	hightlight_rect.color = color
 
 func _on_button_mouse_entered() -> void:
 	button.grab_focus()
@@ -164,7 +167,7 @@ func _on_button_mouse_entered() -> void:
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_76o8l"]
 
-[node name="MonsterButton" type="Control" node_paths=PackedStringArray("spr", "name_label", "health_label", "stamina", "Type1", "Type2", "none_label", "button", "options_root")]
+[node name="MonsterButton" type="Control" node_paths=PackedStringArray("spr", "name_label", "health_label", "stamina", "Type1", "Type2", "none_label", "button", "hightlight_rect", "options_root")]
 custom_minimum_size = Vector2(100, 110)
 layout_mode = 3
 anchors_preset = 15
@@ -183,6 +186,7 @@ Type1 = NodePath("VBoxContainer/Control/VBoxContainer/HBoxContainer/HBoxContaine
 Type2 = NodePath("VBoxContainer/Control/VBoxContainer/HBoxContainer/HBoxContainer/Type2")
 none_label = NodePath("CenterContainer/Label")
 button = NodePath("Button")
+hightlight_rect = NodePath("HighlightColor")
 options_root = NodePath("HBoxContainer")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
@@ -249,6 +253,16 @@ bbcode_enabled = true
 text = "Type2"
 fit_content = true
 autowrap_mode = 0
+
+[node name="HighlightColor" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 1, 1, 0)
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 visible = false
