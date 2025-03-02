@@ -113,10 +113,12 @@ func _on_pressed() -> void:
 script/source = "extends Button
 
 @export var move_list : Control
+@export var battle_root : Control
 
 
 func _on_pressed() -> void:
 	move_list.show_moves()
+	battle_root.cancel_show_node = move_list
 "
 
 [sub_resource type="GDScript" id="GDScript_lilf8"]
@@ -135,10 +137,13 @@ func _on_pressed() -> void:
 script/source = "extends Button
 
 @export var battle_root : Control
+@export var action_root : Control
 
 const action = preload(\"uid://ia42qhobbyee\")
 
 func _on_pressed() -> void:
+	battle_root.cancel_show_node = action_root
+	action_root.hide()
 	battle_root._on_move_selected(-2,action)
 	pass # Replace with function body.
 "
@@ -366,7 +371,7 @@ alignment = 1
 
 [node name="LeftButton" type="Button" parent="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer" node_paths=PackedStringArray("menu_root")]
 layout_mode = 2
-text = "Rotate Left"
+text = "TR_BTL_ROT_LEFT"
 script = SubResource("GDScript_wqnbj")
 menu_root = NodePath("../..")
 
@@ -375,28 +380,29 @@ layout_mode = 2
 alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="AttackButton" type="Button" parent="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/HBoxContainer" node_paths=PackedStringArray("move_list")]
+[node name="AttackButton" type="Button" parent="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/HBoxContainer" node_paths=PackedStringArray("move_list", "battle_root")]
 layout_mode = 2
-text = "Attack"
+text = "TR_BTL_ATTACK"
 script = SubResource("GDScript_pq3xb")
 move_list = NodePath("../../../../../../MoveList")
+battle_root = NodePath("../../../../../../../..")
 
 [node name="DefenseButton" type="Button" parent="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/HBoxContainer" node_paths=PackedStringArray("battle_root")]
 layout_mode = 2
-text = "Defense"
+text = "TR_BTL_DEFENSE"
 script = SubResource("GDScript_lilf8")
 battle_root = NodePath("../../../../../../../..")
 
-[node name="PartyButton" type="Button" parent="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/HBoxContainer" node_paths=PackedStringArray("battle_root")]
+[node name="PartyButton" type="Button" parent="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/HBoxContainer" node_paths=PackedStringArray("battle_root", "action_root")]
 layout_mode = 2
-text = "Switch"
+text = "TR_BTL_SWITCH"
 script = SubResource("GDScript_gvnmd")
 battle_root = NodePath("../../../../../../../..")
+action_root = NodePath("../../../../..")
 
 [node name="RightButton" type="Button" parent="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer" node_paths=PackedStringArray("menu_root")]
 layout_mode = 2
-text = "Rotate Right
-"
+text = "TR_BTL_ROT_RIGHT"
 script = SubResource("GDScript_3dv3g")
 menu_root = NodePath("../..")
 
@@ -443,7 +449,7 @@ size_flags_horizontal = 3
 
 [node name="LeftButton" type="Button" parent="VBoxContainer/Actions/MoveList/BackContainer/AspectRatioContainer" node_paths=PackedStringArray("action_box", "move_list")]
 layout_mode = 2
-text = "Back"
+text = "TR_BACK"
 script = SubResource("GDScript_sfrxn")
 action_box = NodePath("../../../../ActionBox")
 move_list = NodePath("../../..")
@@ -454,7 +460,7 @@ size_flags_horizontal = 3
 
 [node name="CenterButton" type="Button" parent="VBoxContainer/Actions/MoveList/BackContainer/AspectRatioContainer2" node_paths=PackedStringArray("action_box", "move_list")]
 layout_mode = 2
-text = "Back"
+text = "TR_BACK"
 script = SubResource("GDScript_sfrxn")
 action_box = NodePath("../../../../ActionBox")
 move_list = NodePath("../../..")
@@ -465,7 +471,7 @@ size_flags_horizontal = 3
 
 [node name="RightButton" type="Button" parent="VBoxContainer/Actions/MoveList/BackContainer/AspectRatioContainer3" node_paths=PackedStringArray("action_box", "move_list")]
 layout_mode = 2
-text = "Back"
+text = "TR_BACK"
 script = SubResource("GDScript_sfrxn")
 action_box = NodePath("../../../../ActionBox")
 move_list = NodePath("../../..")

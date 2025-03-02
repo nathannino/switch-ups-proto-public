@@ -114,7 +114,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="HBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "text"
+text = "TR_ACUI_SWITCH"
 horizontal_alignment = 1
 
 [node name="Button" type="Button" parent="HBoxContainer/HBoxContainer" node_paths=PackedStringArray("scene_root")]
@@ -145,7 +145,7 @@ battle_root = NodePath("../../..")
 
 [node name="ConfirmButton" type="Button" parent="HBoxContainer" node_paths=PackedStringArray("SceneRoot")]
 layout_mode = 2
-text = "Submit"
+text = "TR_SUBMIT"
 script = SubResource("GDScript_q4bii")
 SceneRoot = NodePath("../..")
 

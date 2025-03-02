@@ -10,7 +10,7 @@ script = ExtResource("2_0f0v1")
 [resource]
 script = ExtResource("2_g6upd")
 key = "sp_switch"
-name = "TR_ACT_SP_JUMP"
+name = "TR_ACT_SP_SWITCH"
 type = 8
 cost = 0
 priority = 99

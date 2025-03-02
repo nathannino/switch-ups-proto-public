@@ -10,7 +10,7 @@ script = ExtResource("2_63vsx")
 [resource]
 script = ExtResource("2_bbx7j")
 key = "sp_defend"
-name = "TR_ACT_SP_JUMP"
+name = "TR_ACT_SP_DEFEND"
 type = 8
 cost = 0
 priority = 100

@@ -7,6 +7,7 @@ TR_CREDIT_TITLE;Credits;Crédits
 TR_END;Exit;Quitter
 TR_CLOSE;Close;Fermer
 TR_BACK;Back;Retour
+TR_SUBMIT;Submit;Soumettre
 TR_CREDIT_LICENSE;License;Licence
 TR_CREDIT_MUSIC;Music;Musique
 TR_CREDIT_THIRD;Third-Party;Licences de tiers
@@ -38,3 +39,11 @@ TR_HOST;Host game;Héberger le serveur
 TR_JOIN;Join game;Joindre le serveur
 TR_PORT;Server port;Port du serveur
 TR_ADDRESS;Server address;Adresse du serveur
+TR_BTL_ROT_LEFT;Rotate Left;Pivot à gauche
+TR_BTL_ROT_RIGHT;Rotate Right;Pivot à droite
+TR_BTL_ATTACK;Attack;Attaquer
+TR_BTL_DEFENSE;Defend;Défendre
+TR_BTL_SWITCH;Swap;Échanger
+TR_BTL_HEALTH;HP : {curr}/{max};PV : {curr}/{max}
+TR_BTL_STAMINA;Stamina : {st};Énergie : {st}
+TR_ACUI_SWITCH;Select an active and a reserve party member;Sélectionnez un membre actif et un membre en réserve de l’équipe

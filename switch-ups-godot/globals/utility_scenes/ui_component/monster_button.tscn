@@ -39,10 +39,10 @@ func update_health(old, new) :
 	set_health(new,SpiritDictionary.spirits[current_spirit.key].health)
 
 func update_stamina(old,new) :
-	\"Stamina : %s\" % new
+	tr(\"TR_BTL_STAMINA\").format({\"st\":new})
 
 func set_health(curr_health : float, max_health : float) :
-	health_label.text = \"HP : {curr}/{max}\".format({\"curr\":curr_health,\"max\":max_health})
+	health_label.text = tr(\"TR_BTL_HEALTH\").format({\"curr\":curr_health,\"max\":max_health})
 
 func reset() :
 	current_spirit = null

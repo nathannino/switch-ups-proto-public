@@ -10,6 +10,11 @@ var battle_root : Node
 @export var back_button : Button
 @export var grid : GridContainer
 
+func _notification(what: int) -> void:
+	match what:
+		NOTIFICATION_TRANSLATION_CHANGED :
+			set_label()
+
 func set_label() :
 	match target_type :
 		ms_constants.TARGETS.ALLY_SPIRIT, ms_constants.TARGETS.ALLY_EXCLUDE_SELF_SPIRIT, ms_constants.TARGETS.ENEMY_SPIRIT, ms_constants.TARGETS.ENEMY_EXCLUDE_ACTIVE_SPIRIT :

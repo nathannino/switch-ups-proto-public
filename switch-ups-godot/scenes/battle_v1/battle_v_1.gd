@@ -38,7 +38,7 @@ var enemy_hp : float :
 @export var enemy_team_ui : Control
 @export var friend_team_ui : Control
 
-
+var cancel_show_node : Control
 #region required by actions
 var friend_team : Array[ms_spirit_active] = []
 var enemy_team : Array[ms_spirit_active] = []
@@ -57,7 +57,7 @@ func submit_action_data(_data) :
 	if _data is Object :
 		if _data == CANCEL :
 			# TODO : Special case for switch maybe?
-			move_list.show()
+			cancel_show_node.show()
 			return
 	
 	action_data.push_back(_data)
