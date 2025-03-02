@@ -9,6 +9,9 @@ signal sync_team
 @export var interrupt_anchor : Control
 @export var await_cancel : Control
 
+var battle_logs = null
+var battle_logs_await = 0
+
 var _friend_hp = 0.0
 signal friend_hp_changed(old,new)
 var friend_hp : float :
@@ -47,6 +50,12 @@ var current_action : ms_action
 var current_action_index = 0
 var action_data = []
 var action_index = []
+
+func pause_battle_log() :
+	battle_logs_await += 1
+
+func play_battle_log() :
+	battle_logs_await -= 1
 
 var CANCEL = Object.new()
 func submit_action_data(_data) :
@@ -130,37 +139,35 @@ func _set_team_state(teams : Array) :
 	sync_team.emit()
 
 var current_action_battle_log
-func handle_battle_logs(battle_logs) :
-	for log in battle_logs : #TODO : Animations
-		var battle_log_type : ms_constants.BATTLE_LOG = log.get("log_type",ms_constants.BATTLE_LOG.ACTION)
-		match battle_log_type :
-			ms_constants.BATTLE_LOG.ROTATE :
-				var pid = log["pid"]
-				rotate_visual(pid,log["old_index"],pid,log["new_index"])
-				continue
-			ms_constants.BATTLE_LOG.START_ACTION :
-				var log_player_id = log["pid"]
-				var _team = friend_team if log_player_id == player_id else enemy_team
-				var _spirit = _team[log["spirit"]]
-				current_action_battle_log = _spirit.get_actions_combined_converted()[log["action"]]
-				#TODO : dialog
-				if log["success"] :
-					_spirit.current_stamina -= current_action_battle_log.cost
-				continue
-			ms_constants.BATTLE_LOG.ACTION :
-				pass # Honestly, probably won't be used
-		var target_info = log["target_info"]
-		var log_player_id = target_info["user_id"]
-		var _team = friend_team if log_player_id == player_id else enemy_team
-		var _spirit = _team[target_info["user"]]
-		var _action = current_action_battle_log
-		ms_action_index_manager.get_latest_component(_action,log["action_index_array"])
-	ClientWrapperAutoload.send(TcpPayload.new().set_type(TcpPayload.TYPE.BATTLE_AWAIT_ENDTURN).set_content(true))
+func handle_battle_logs() :
+	var log = battle_logs.pop_front()
+	var battle_log_type : ms_constants.BATTLE_LOG = log.get("log_type",ms_constants.BATTLE_LOG.ACTION)
+	match battle_log_type :
+		ms_constants.BATTLE_LOG.ROTATE :
+			var pid = log["pid"]
+			rotate_visual(pid,log["old_index"],pid,log["new_index"])
+		ms_constants.BATTLE_LOG.START_ACTION :
+			var log_player_id = log["pid"]
+			var _team = friend_team if log_player_id == player_id else enemy_team
+			var _spirit = _team[log["spirit"]]
+			current_action_battle_log = _spirit.get_action(log["action"])
+			#TODO : dialog
+			if log["success"] :
+				_spirit.current_stamina -= current_action_battle_log.cost
+		ms_constants.BATTLE_LOG.ACTION :
+			var target_info = log["target_info"]
+			var log_player_id = target_info["user_id"]
+			var _team = friend_team if log_player_id == player_id else enemy_team
+			var _spirit = _team[target_info["user"]]
+			var _action = current_action_battle_log
+			var component = ms_action_index_manager.get_latest_component(_action,log["action_index_array"])
+			component.handle_client(log, self)
 
 func _ready() :
 	ClientWrapperAutoload.battle_begin_turn.connect(begin_turn)
 	ClientWrapperAutoload.battle_team_synced.connect(_set_team_state)
-	ClientWrapperAutoload.battle_logs.connect(handle_battle_logs)
+	ClientWrapperAutoload.battle_logs.connect(func(_logs) :
+		battle_logs = _logs)
 	action_box.hide()
 	
 	timer.wait_time = 3 # Simulate a battle begin animation or smth
@@ -229,3 +236,13 @@ func _on_move_selected(_index: int, _action: ms_action) -> void:
 	
 	move_list.hide()
 	handle_action_component()
+
+func _process(_delta: float) -> void:
+	if battle_logs is Array :
+		if battle_logs_await > 0 :
+			return
+		if not battle_logs.is_empty() :
+			handle_battle_logs()
+		else :
+			battle_logs = null
+			ClientWrapperAutoload.send(TcpPayload.new().set_type(TcpPayload.TYPE.BATTLE_AWAIT_ENDTURN).set_content(true))

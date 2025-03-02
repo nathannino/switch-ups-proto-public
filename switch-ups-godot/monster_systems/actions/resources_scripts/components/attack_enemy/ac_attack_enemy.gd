@@ -27,7 +27,7 @@ func get_interrupt_action() -> Control :
 func handle_client(battle_log : Dictionary, battle_root : Node) :
 	var target_info = battle_log["target_info"]
 	var spirit = battle_root.get_active_spirit(target_info["target_id"],target_info["target"])
-	spirit.hp -= battle_log["spirit_damage"]
+	spirit.current_hp -= battle_log["spirit_damage"]
 	var player_dmg = battle_log["overflow_damage"]
 	if player_dmg > 0 :
 		battle_root.change_player_hp(target_info["target_id"],-player_dmg)

@@ -16,6 +16,8 @@ script/source = "extends Control
 @export var button : Button
 @export var hightlight_rect : ColorRect
 
+@export var battle_root : Control
+
 signal pressed_option(index : int)
 var _current_spirit : ms_spirit_active
 var current_spirit : ms_spirit_active :
@@ -36,7 +38,14 @@ var options = []
 @export var options_root : Control
 
 func update_health(old, new) :
-	set_health(new,SpiritDictionary.spirits[current_spirit.key].health)
+	var max_health = SpiritDictionary.spirits[current_spirit.key].health
+	if battle_root == null :
+		set_health(new,max_health)
+	else :
+		battle_root.pause_battle_log()
+		var tween = create_tween()
+		tween.tween_method(func(new): set_health(new,max_health),old,new,1)
+		tween.tween_callback(battle_root.play_battle_log)
 
 func update_stamina(old,new) :
 	tr(\"TR_BTL_STAMINA\").format({\"st\":new})

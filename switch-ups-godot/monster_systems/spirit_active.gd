@@ -176,11 +176,11 @@ func get_action_index(_action : ms_action) -> int :
 func get_action(action_index) -> ms_action :
 	if action_index == -2 :
 		return sp_switch_action
-	if action_index == -1 or (action_index == get_actions_array_converted().size() and key_equip == ""):
+	elif action_index == -1 or (action_index == moves.size() and key_equip == ""):
 		return sp_defend_action
-	if action_index in range(get_actions_array_converted().size()) :
+	elif action_index < moves.size() :
 		return get_actions_array_converted()[action_index]
-	if action_index == get_actions_array_converted().size() :
+	elif action_index == moves.size() :
 		return get_extra_action_converted()
 	
 	printerr("action not found wtf???")

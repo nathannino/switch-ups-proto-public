@@ -56,7 +56,7 @@ func _determine_move_order() :
 	
 	var temp_orders_speed_sort = player_order_data.duplicate()
 	temp_orders_speed_sort.sort_custom(func (a, b) :
-		return a["final_speed_stat"] < b["final_speed_stat"]
+		return a["final_speed_stat"] > b["final_speed_stat"]
 	)
 	
 	for dict in temp_orders_speed_sort :
@@ -172,7 +172,7 @@ func calculate_next() :
 			"target" : target_info[3].team.find(target_info[2]),
 			"target_id" : $"../ServerMain".get_children().find(target_info[3]),
 		}
-		result_data["action_index_array"] = action_index
+		result_data["action_index_array"] = action_index.duplicate()
 		
 		result_data["action_position"] = target_info[0].get_action_index(action)
 		
