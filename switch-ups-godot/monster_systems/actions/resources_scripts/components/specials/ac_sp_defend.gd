@@ -17,6 +17,7 @@ func get_interrupt_action() -> Control :
 	return null
 
 func handle_client(battle_log : Dictionary, battle_root : Node) :
+	battle_root.enter_log_text("TR_BTLLOG_AC_SP_DEFEND", {},{}, 1)
 	pass
 
 func already_handled_server(battle_log : Array, position : int) :

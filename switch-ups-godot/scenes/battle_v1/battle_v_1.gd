@@ -41,6 +41,10 @@ var enemy_hp : float :
 @export var enemy_team_ui : Control
 @export var friend_team_ui : Control
 
+@export_category("logs")
+@export var temp_log : RichTextLabel
+@export var temp_log_container : Container
+
 var cancel_show_node : Control
 #region required by actions
 var friend_team : Array[ms_spirit_active] = []
@@ -105,6 +109,40 @@ func rotate_visual(pid_one,spirit_one_index,pid_two,spirit_two_index) :
 	
 	enemy_team_ui.sync_team_state()
 	friend_team_ui.sync_team_state()
+
+var temp_log_array = []
+
+func _temp_log_text_single(_key : String, _format_vars : Dictionary) :
+	temp_log.append_text(tr(_key).format(_format_vars))
+	temp_log.newline()
+
+func temp_log_text() :
+	temp_log.clear()
+	for _text_log in temp_log_array :
+		var _very_translated_format_vars = {}
+		for _key in _text_log[2].keys() :
+			var _value = _text_log[2][_key]
+			_very_translated_format_vars[_key] = tr(_value)
+		_temp_log_text_single(_text_log[0],_text_log[1].merged(_very_translated_format_vars,true))
+
+func enter_log_text(_key : String, _format_vars : Dictionary = {}, _translated_format_vars : Dictionary = {}, _time : float = 0) :
+	BattleLogPanel.add_log(_key,_format_vars,_translated_format_vars)
+	temp_log_array.push_back([_key,_format_vars,_translated_format_vars])
+	
+	var _very_translated_format_vars = {}
+	for _dict_key in _translated_format_vars.keys() :
+		var _value = _translated_format_vars[_dict_key]
+		_very_translated_format_vars[_dict_key] = tr(_value)
+	
+	_temp_log_text_single(_key,_format_vars.merged(_very_translated_format_vars,true))
+	
+	if _time > 0 :
+		pause_battle_log()
+		timer.wait_time = _time
+		timer.timeout.connect(func () : 
+			play_battle_log()
+		, CONNECT_ONE_SHOT)
+		timer.start()
 #endregion
 
 func _init() :
@@ -120,6 +158,8 @@ func _notification(what: int) -> void:
 		NOTIFICATION_PREDELETE :
 			CANCEL.free()
 			CANCEL = null
+		NOTIFICATION_TRANSLATION_CHANGED :
+			temp_log_text()
 
 func _set_team_state(teams : Array) :
 	for index in range(teams.size()) :
@@ -145,15 +185,29 @@ func handle_battle_logs() :
 	match battle_log_type :
 		ms_constants.BATTLE_LOG.ROTATE :
 			var pid = log["pid"]
+			var new_name = SpiritDictionary.spirits[get_active_spirit(pid,log["old_index"]).key].name
+			var old_name = SpiritDictionary.spirits[get_active_spirit(pid,log["new_index"]).key].name
+			
+			if ms_constants.index_to_position(log["old_index"]) == ms_constants.POSITION.LEFT :
+				enter_log_text("TR_BTLLOG_ROT_LEFT",{},{"old":old_name,"new":new_name},0.7)
+			elif ms_constants.index_to_position(log["old_index"]) == ms_constants.POSITION.RIGHT :
+				enter_log_text("TR_BTLLOG_ROT_RIGHT",{},{"old":old_name,"new":new_name},0.7)
+			
+			#TODO : Allow full rotation???
 			rotate_visual(pid,log["old_index"],pid,log["new_index"])
 		ms_constants.BATTLE_LOG.START_ACTION :
 			var log_player_id = log["pid"]
 			var _team = friend_team if log_player_id == player_id else enemy_team
 			var _spirit = _team[log["spirit"]]
 			current_action_battle_log = _spirit.get_action(log["action"])
-			#TODO : dialog
-			if log["success"] :
+			
+			var _spirit_name = SpiritDictionary.spirits[_spirit.key].name
+			var _action_name = current_action_battle_log.name
+			if log["success"] :			#TODO : dialog
 				_spirit.current_stamina -= current_action_battle_log.cost
+				enter_log_text("TR_BTLLOG_USEACT_SUCCESS",{},{"spirit":_spirit_name,"action":_action_name},2)
+			else :
+				enter_log_text("TR_BTLLOG_USEACT_FAILURE",{},{"spirit":_spirit_name,"action":_action_name},2)
 		ms_constants.BATTLE_LOG.ACTION :
 			var target_info = log["target_info"]
 			var log_player_id = target_info["user_id"]
@@ -167,7 +221,10 @@ func _ready() :
 	ClientWrapperAutoload.battle_begin_turn.connect(begin_turn)
 	ClientWrapperAutoload.battle_team_synced.connect(_set_team_state)
 	ClientWrapperAutoload.battle_logs.connect(func(_logs) :
-		battle_logs = _logs)
+		battle_logs = _logs
+		temp_log_container.show()
+		await_cancel.hide()
+	)
 	action_box.hide()
 	
 	timer.wait_time = 3 # Simulate a battle begin animation or smth
@@ -175,6 +232,9 @@ func _ready() :
 		ClientWrapperAutoload.send(TcpPayload.new().set_type(TcpPayload.TYPE.BATTLE_AWAIT_ENDTURN).set_content(true))
 	, CONNECT_ONE_SHOT)
 	timer.start()
+	
+	BattleLogPanel.clear()
+	OptionsOverlay.set_in_battle(true)
 
 func begin_turn() :
 	current_action = null
@@ -184,6 +244,9 @@ func begin_turn() :
 	action_box.show()
 	await_cancel.hide()
 	main_action_menu.reset_center()
+	BattleLogPanel.new_turn()
+	temp_log.clear()
+	temp_log_container.hide()
 
 func get_spirit_in_field(_team : Array[ms_spirit_active], pos : ms_constants.POSITION) -> ms_spirit_active :
 	return _team[ms_constants.position_to_index(pos)]
@@ -246,3 +309,7 @@ func _process(_delta: float) -> void:
 		else :
 			battle_logs = null
 			ClientWrapperAutoload.send(TcpPayload.new().set_type(TcpPayload.TYPE.BATTLE_AWAIT_ENDTURN).set_content(true))
+
+func _exit_tree() -> void:
+	BattleLogPanel.clear()
+	OptionsOverlay.set_in_battle(false)

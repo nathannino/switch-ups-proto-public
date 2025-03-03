@@ -26,7 +26,14 @@ func get_interrupt_action() -> Control :
 func handle_client(battle_log : Dictionary, battle_root : Node) :
 	var target_info = battle_log["target_info"]
 	var spirit = battle_root.get_active_spirit(target_info["target_id"],target_info["target"])
-	spirit.stamina = battle_log["new_energy"] 
+	var change = battle_log["new_energy"] - spirit.stamina
+	spirit.stamina = battle_log["new_energy"]
+	if change > 0 :
+		battle_root.enter_log_text("TR_BTLLOG_AC_CH_ENERGY_PLUS", {"amount":abs(battle_log["new_energy"])}, {"spirit":SpiritDictionary.spirits[spirit.key].name}, 1)
+	elif change < 0 :
+		battle_root.enter_log_text("TR_BTLLOG_AC_CH_ENERGY_MINUS", {"amount":abs(battle_log["new_energy"])}, {"spirit":SpiritDictionary.spirits[spirit.key].name}, 1)
+	else :
+		battle_root.enter_log_text("TR_BTLLOG_AC_CH_ENERGY_NOTHING", {}, {"spirit":SpiritDictionary.spirits[spirit.key].name}, 1)
 
 func already_handled_server(battle_log : Array, position : int) :
 	return ms_constants.ACTION_COMPONENT_HANDLE_STATE.GET_SIBLING

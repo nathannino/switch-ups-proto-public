@@ -65,18 +65,18 @@ enum STATS {
 	LUCK
 }
 
-static func stats_to_bbcode(type : STATS) :
+static func stats_to_bbcode(type : STATS, translate = true) :
 	match type :
 		STATS.CON_ATK:
-			return TranslationServer.translate("TR_CONST_STATS_CONATK")
+			return TranslationServer.translate("TR_CONST_STATS_CONATK") if translate else "TR_CONST_STATS_CONATK"
 		STATS.ABS_ATK:
-			return TranslationServer.translate("TR_CONST_STATS_ABSATK")
+			return TranslationServer.translate("TR_CONST_STATS_ABSATK") if translate else "TR_CONST_STATS_ABSATK"
 		STATS.DEF:
-			return TranslationServer.translate("TR_CONST_STATS_DEF")
+			return TranslationServer.translate("TR_CONST_STATS_DEF") if translate else "TR_CONST_STATS_DEF"
 		STATS.SPEED:
-			return TranslationServer.translate("TR_CONST_STATS_SPEED")
+			return TranslationServer.translate("TR_CONST_STATS_SPEED") if translate else "TR_CONST_STATS_SPEED"
 		STATS.LUCK:
-			return TranslationServer.translate("TR_CONST_STATS_LUCK")
+			return TranslationServer.translate("TR_CONST_STATS_LUCK") if translate else "TR_CONST_STATS_LUCK"
 
 enum TARGETS {
 	ALLY_SPIRIT,

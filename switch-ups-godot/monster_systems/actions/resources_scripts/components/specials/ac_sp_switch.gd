@@ -15,7 +15,6 @@ func _select_screen(allow_back : bool) -> Control :
 	instance.allow_back = allow_back
 	return instance
 
-
 func get_precommit() -> Control :
 	return _select_screen(true)
 
@@ -27,7 +26,8 @@ func get_interrupt_action() -> Control :
 
 func handle_client(battle_log : Dictionary, battle_root : Node) :
 	var target_info = battle_log["target_info"]
-	battle_root.rotate_visual(target_info["target_id"],battle_log["active"],battle_log["target_id"],battle_log["reserve"])
+	battle_root.rotate_visual(battle_log["pid"],battle_log["active"],battle_log["pid"],battle_log["reserve"])
+	battle_root.enter_log_text("TR_BTLLOG_AC_SP_SWITCH", {},{"active":SpiritDictionary.spirits[battle_log["active_key"]].name,"reserve":SpiritDictionary.spirits[battle_log["reserve_key"]].name}, 1)
 	pass # TODO : idk figure it out later
 
 func already_handled_server(battle_log : Array, position : int) :
@@ -53,4 +53,11 @@ func handle_server(turn_calc : Node,user:ms_spirit_active, user_player_node : No
 	target_team[reserve_index] = active_spirit
 	
 	return [ms_constants.ACTION_COMPONENT_HANDLE_STATE.GET_CHILD,[],
-	[user,user_player_node,target,target_player_node],{"active":active_index,"reserve":reserve_index}]
+	[user,user_player_node,target,target_player_node],
+	{
+		"pid":user_player_node.team_id,
+		"active":active_index,
+		"active_key":active_spirit.key,
+		"reserve":reserve_index,
+		"reserve_key":reserve_spirit.key}
+	]

@@ -27,17 +27,26 @@ func handle_client(battle_log : Dictionary, battle_root : Node) :
 	var target_info = battle_log["target_info"]
 	var spirit = battle_root.get_active_spirit(target_info["target_id"],target_info["target"])
 	var value = battle_log["changed_by"]
-	match battle_log["stat_changed"] :
+	
+	var tr_dict = {"spirit":SpiritDictionary.spirits[spirit.key].name,"stat":ms_constants.stats_to_bbcode(battle_log["stat_changed"],false)}
+	var notr_dict = {"lv":abs(value)}
+	var keyadd = "PLUS" if value >= 0 else "MINUS"
+	match stat :
 		ms_constants.STATS.CON_ATK:
 			spirit.atk_concrete_change += value
+			battle_root.enter_log_text("TR_BTLLOG_CH_STAT_LEVEL_"+keyadd+"_M", notr_dict, tr_dict, 1)
 		ms_constants.STATS.ABS_ATK:
 			spirit.atk_abstract_change += value
+			battle_root.enter_log_text("TR_BTLLOG_CH_STAT_LEVEL_"+keyadd+"_M", notr_dict, tr_dict, 1)
 		ms_constants.STATS.DEF:
 			spirit.defense_change += value
+			battle_root.enter_log_text("TR_BTLLOG_CH_STAT_LEVEL_"+keyadd+"_F", notr_dict, tr_dict, 1)
 		ms_constants.STATS.SPEED:
 			spirit.speed_change += value
+			battle_root.enter_log_text("TR_BTLLOG_CH_STAT_LEVEL_"+keyadd+"_F", notr_dict, tr_dict, 1)
 		ms_constants.STATS.LUCK:
 			spirit.luck_change += value
+			battle_root.enter_log_text("TR_BTLLOG_CH_STAT_LEVEL_"+keyadd+"_F", notr_dict, tr_dict, 1)
 
 func already_handled_server(battle_log : Array, position : int) :
 	return ms_constants.ACTION_COMPONENT_HANDLE_STATE.GET_SIBLING

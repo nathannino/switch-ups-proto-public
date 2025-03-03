@@ -24,6 +24,11 @@ func get_interrupt_action() -> Control :
 	return null
 
 func handle_client(battle_log : Dictionary, battle_root : Node) :
+	if battle_log["lucky_status"] :
+		battle_root.enter_log_text("TR_BTLLOG_AC_LUCK_LUCKY" if battle_log["luck_result"] else "TR_BTLLOG_AC_LUCK_UNLUCKY", {}, {}, 0.5)
+	elif not battle_log["luck_result"] :
+		battle_root.enter_log_text("TR_BTLLOG_AC_LUCK_MISS", {}, {}, 0.5)
+	
 	pass # TODO : idk figure it out later
 
 func already_handled_server(battle_log : Array, position : int) :
@@ -35,10 +40,12 @@ func handle_server(turn_calc : Node,user:ms_spirit_active, user_player_node : No
 	
 	var success = not (random > base_chance_percent)
 	
+	var lucky_status = (random < base_chance_percent + 0.05 and random > base_chance_percent - 0.05)
 	
 	return [ms_constants.ACTION_COMPONENT_HANDLE_STATE.GET_CHILD if success else ms_constants.ACTION_COMPONENT_HANDLE_STATE.GET_SIBLING,
 	[],
 	[user,user_player_node,target,target_player_node],
 	{
 		"luck_result": success,
+		"lucky_status": lucky_status
 	}]

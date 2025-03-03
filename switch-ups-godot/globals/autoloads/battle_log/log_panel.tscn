@@ -1,0 +1,65 @@
+[gd_scene load_steps=5 format=3 uid="uid://brlt0rnjj6iia"]
+
+[ext_resource type="Script" path="res://globals/autoloads/battle_log/log_panel.gd" id="1_wfcof"]
+
+[sub_resource type="Gradient" id="Gradient_ta75u"]
+colors = PackedColorArray(0.588235, 0.588235, 0.588235, 0.588235, 0.588235, 0.588235, 0.588235, 0.588235)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_t02b2"]
+gradient = SubResource("Gradient_ta75u")
+width = 1
+height = 1
+
+[sub_resource type="GDScript" id="GDScript_3fsud"]
+script/source = "extends Button
+
+@export var scene_root : Control 
+
+
+func _on_pressed() -> void:
+	scene_root.hide()
+"
+
+[node name="Control" type="Panel" node_paths=PackedStringArray("logs")]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wfcof")
+line = SubResource("GradientTexture2D_t02b2")
+logs = NodePath("VBoxContainer/VBoxContainer2/VBoxContainer")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "TR_OPTIONS_LOGS"
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="VBoxContainer/HBoxContainer" node_paths=PackedStringArray("scene_root")]
+layout_mode = 2
+text = "TR_CLOSE"
+script = SubResource("GDScript_3fsud")
+scene_root = NodePath("../../..")
+
+[node name="VBoxContainer2" type="ScrollContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Button" to="VBoxContainer/HBoxContainer/Button" method="_on_pressed"]

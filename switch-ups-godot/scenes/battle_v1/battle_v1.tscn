@@ -232,7 +232,7 @@ func _on_pressed() -> void:
 	root_node.hide()
 "
 
-[node name="BattleV1" type="Control" node_paths=PackedStringArray("timer", "interrupt_anchor", "await_cancel", "action_box", "main_action_menu", "move_list", "enemy_team_ui", "friend_team_ui")]
+[node name="BattleV1" type="Control" node_paths=PackedStringArray("timer", "interrupt_anchor", "await_cancel", "action_box", "main_action_menu", "move_list", "enemy_team_ui", "friend_team_ui", "temp_log", "temp_log_container")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -248,6 +248,8 @@ main_action_menu = NodePath("VBoxContainer/Actions/ActionBox/Control2/MainAction
 move_list = NodePath("VBoxContainer/Actions/MoveList")
 enemy_team_ui = NodePath("VBoxContainer/EnemyTeam")
 friend_team_ui = NodePath("VBoxContainer/PlayerTeam")
+temp_log = NodePath("VBoxContainer/Actions/PanelContainer/TempLogTurn")
+temp_log_container = NodePath("VBoxContainer/Actions/PanelContainer")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
@@ -321,7 +323,6 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="ActionBox" type="HBoxContainer" parent="VBoxContainer/Actions"]
-visible = false
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -486,6 +487,21 @@ move_list = NodePath("../../..")
 [node name="Spacer" type="Control" parent="VBoxContainer/Actions/MoveList"]
 custom_minimum_size = Vector2(0, 3.205)
 layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/Actions"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TempLogTurn" type="RichTextLabel" parent="VBoxContainer/Actions/PanelContainer"]
+layout_mode = 2
+bbcode_enabled = true
+fit_content = true
+scroll_following = true
 
 [node name="PlayerTeam" type="HBoxContainer" parent="VBoxContainer" node_paths=PackedStringArray("battle_root", "summary_container", "spirit_left", "spirit_center", "spirit_right")]
 layout_mode = 2

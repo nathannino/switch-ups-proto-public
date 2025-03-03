@@ -1,0 +1,17 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://ccee61gobanqu"
+
+[deps]
+
+files=["res://translations/battlelog.en.translation", "res://translations/battlelog.fr.translation"]
+
+source_file="res://translations/battlelog.csv"
+dest_files=["res://translations/battlelog.en.translation", "res://translations/battlelog.fr.translation"]
+
+[params]
+
+compress=true
+delimiter=1

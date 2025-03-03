@@ -23,6 +23,7 @@ func get_interrupt_action() -> Control :
 
 func handle_client(battle_log : Dictionary, battle_root : Node) :
 	battle_root.rotate_visual(battle_log["old_pid"],battle_log["old_index"],battle_log["new_pid"],battle_log["new_index"])
+	battle_root.enter_log_text("TR_BTLLOG_AC_CH_ACTIVE",{},{"spirit1":SpiritDictionary.spirits[battle_log["old_key"]].name,"spirit2":SpiritDictionary.spirits[battle_log["new_key"]].name},1)
 
 func already_handled_server(battle_log : Array, position : int) :
 	return ms_constants.ACTION_COMPONENT_HANDLE_STATE.GET_SIBLING
@@ -41,7 +42,8 @@ func handle_server(turn_calc : Node,user:ms_spirit_active, user_player_node : No
 	{
 		"old_pid" : target_player_node.team_id,
 		"old_index" : old_index,
+		"old_key" : user.key,
 		"new_pid" : user_player_node.team_id,
 		"new_index" : new_index,
-			
+		"new_key" : target.key,
 	}]
