@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="scene_dictionary" load_steps=3 format=3 uid="uid://dij5s68mjhkud"]
+
+[ext_resource type="Script" path="res://globals/one_off_resources_scripts/scene_dictionary_entry.gd" id="1_61s64"]
+[ext_resource type="Script" path="res://globals/one_off_resources_scripts/scene_dictionary.gd" id="2_fekdw"]
+
+[resource]
+script = ExtResource("2_fekdw")
+scenes = Array[ExtResource("1_61s64")]([])

@@ -1,0 +1,109 @@
+[gd_scene load_steps=21 format=3 uid="uid://bwkkxdlm0ixxc"]
+
+[ext_resource type="PackedScene" uid="uid://d0vl7y7q6sesm" path="res://Kenney Assets/Animated Characters Bundle/Models/characterLargeMale.fbx" id="1_u16pj"]
+[ext_resource type="Texture2D" uid="uid://nd8fch8r40dt" path="res://Kenney Assets/Animated Characters Bundle/Skins/businessMaleA.png" id="2_dadg8"]
+[ext_resource type="AnimationLibrary" uid="uid://dlxiyv1tttfal" path="res://Kenney Assets/Animated Characters Bundle/Animations/attack.fbx" id="3_vp2wp"]
+[ext_resource type="AnimationLibrary" uid="uid://b7kp8rn0sbq70" path="res://Kenney Assets/Animated Characters Bundle/Animations/crouch.fbx" id="4_eg6le"]
+[ext_resource type="AnimationLibrary" uid="uid://c6ecdmdguflyy" path="res://Kenney Assets/Animated Characters Bundle/Animations/crouchIdle.fbx" id="5_xau6k"]
+[ext_resource type="AnimationLibrary" uid="uid://djtjuq8hleui3" path="res://Kenney Assets/Animated Characters Bundle/Animations/crouchWalk.fbx" id="6_yumty"]
+[ext_resource type="AnimationLibrary" uid="uid://kmqg40fp24jo" path="res://Kenney Assets/Animated Characters Bundle/Animations/death.fbx" id="7_a7f8i"]
+[ext_resource type="AnimationLibrary" uid="uid://2oasq2tj27k4" path="res://Kenney Assets/Animated Characters Bundle/Animations/idle.fbx" id="8_4un32"]
+[ext_resource type="AnimationLibrary" uid="uid://cjvgxbxgsa6qq" path="res://Kenney Assets/Animated Characters Bundle/Animations/interactGround.fbx" id="9_08pq0"]
+[ext_resource type="AnimationLibrary" uid="uid://bxt878s4ci86t" path="res://Kenney Assets/Animated Characters Bundle/Animations/interactStanding.fbx" id="10_mt0ve"]
+[ext_resource type="AnimationLibrary" uid="uid://dymaig5wx7rwi" path="res://Kenney Assets/Animated Characters Bundle/Animations/jump.fbx" id="11_vjs88"]
+[ext_resource type="AnimationLibrary" uid="uid://cra13jssba2fs" path="res://Kenney Assets/Animated Characters Bundle/Animations/kick.fbx" id="12_d6s5b"]
+[ext_resource type="AnimationLibrary" uid="uid://benbydktmiy5x" path="res://Kenney Assets/Animated Characters Bundle/Animations/punch.fbx" id="13_cs1ot"]
+[ext_resource type="AnimationLibrary" uid="uid://bctrboiscq2ow" path="res://Kenney Assets/Animated Characters Bundle/Animations/racingIdle.fbx" id="14_43b0p"]
+[ext_resource type="AnimationLibrary" uid="uid://bsea6xelaifix" path="res://Kenney Assets/Animated Characters Bundle/Animations/racingLeft.fbx" id="15_iqmuq"]
+[ext_resource type="AnimationLibrary" uid="uid://ce4w8wjswkxhr" path="res://Kenney Assets/Animated Characters Bundle/Animations/racingRight.fbx" id="16_n7tat"]
+[ext_resource type="AnimationLibrary" uid="uid://dcwdn5wkcjd7c" path="res://Kenney Assets/Animated Characters Bundle/Animations/run.fbx" id="17_s2k2g"]
+[ext_resource type="AnimationLibrary" uid="uid://ddshfh78ah3fs" path="res://Kenney Assets/Animated Characters Bundle/Animations/shoot.fbx" id="18_imokf"]
+[ext_resource type="AnimationLibrary" uid="uid://j4d01r6u15kx" path="res://Kenney Assets/Animated Characters Bundle/Animations/walk.fbx" id="19_ginm3"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ut5m7"]
+albedo_texture = ExtResource("2_dadg8")
+
+[node name="characterLargeMale" instance=ExtResource("1_u16pj")]
+
+[node name="Root" parent="." index="0"]
+transform = Transform3D(50, 0, 0, 0, -2.18557e-06, 50, 0, -50, -2.18557e-06, 0, 0, 0)
+
+[node name="Skeleton3D" parent="Root" index="0"]
+bones/0/rotation = Quaternion(-0.428388, -0.562568, 0.562569, 0.428388)
+bones/1/rotation = Quaternion(-0.507512, 0.508228, -0.491907, -0.492101)
+bones/2/rotation = Quaternion(0.0157359, -0.00207779, 0.994625, -0.102322)
+bones/3/rotation = Quaternion(0.946129, -0.0218709, 0.0755026, -0.314104)
+bones/5/rotation = Quaternion(0.5, 0.5, -0.5, 0.5)
+bones/7/position = Vector3(-0.00617958, -0.00541466, 0.000286412)
+bones/7/rotation = Quaternion(-0.707107, 9.4157e-08, 0.707107, 9.4157e-08)
+bones/9/position = Vector3(-0.0020752, -0.000304607, 0.00193205)
+bones/9/rotation = Quaternion(-0.527626, -0.470756, 0.470756, 0.527626)
+bones/10/rotation = Quaternion(-0.507686, 0.507902, -0.491728, -0.492437)
+bones/11/rotation = Quaternion(0.0383366, 0.225285, 0.968777, 0.0961708)
+bones/12/rotation = Quaternion(0.948112, 0.011445, -0.0440932, -0.314656)
+bones/14/rotation = Quaternion(0.599824, 0.374449, -0.599823, 0.374449)
+bones/16/position = Vector3(-0.00617958, -0.00541466, -0.000286408)
+bones/16/rotation = Quaternion(-0.707107, 9.4157e-08, 0.707107, 9.4157e-08)
+bones/18/position = Vector3(-4.99155e-07, -0.00104, 0.0148206)
+bones/18/rotation = Quaternion(-0.000954701, -0.707106, 0.707106, -0.00108624)
+bones/19/position = Vector3(4.64598e-06, 0.00321951, -4.47063e-10)
+bones/19/rotation = Quaternion(5.28985e-05, -0.0277724, 0.999613, 0.00144519)
+bones/20/rotation = Quaternion(-0.00436648, -1.02209e-08, -1.11125e-08, 0.999991)
+bones/21/rotation = Quaternion(0.0623484, -0.0448529, -0.00280481, 0.997042)
+bones/22/rotation = Quaternion(0.0940942, -3.88806e-09, 7.88308e-10, 0.995563)
+bones/23/rotation = Quaternion(0.0766157, 6.71362e-10, -2.3352e-10, 0.997061)
+bones/24/rotation = Quaternion(-0.10883, 0.0437293, -0.0103631, 0.993044)
+bones/26/rotation = Quaternion(0.597656, 0.395508, 0.565647, -0.407951)
+bones/27/rotation = Quaternion(-0.359614, 0.67303, -0.240337, 0.599955)
+bones/28/rotation = Quaternion(0.351215, -0.0730593, -0.07077, 0.930754)
+bones/29/rotation = Quaternion(0.00441296, 0.72176, -0.042056, 0.69085)
+bones/31/rotation = Quaternion(0.771667, 0.0466405, 0.00196554, 0.634311)
+bones/32/rotation = Quaternion(0.410935, -0.0278593, 0.0125054, 0.911153)
+bones/34/rotation = Quaternion(-0.213061, 0.695039, 0.358431, 0.585707)
+bones/35/rotation = Quaternion(0.660648, -0.0754557, 0.119352, 0.737296)
+bones/37/rotation = Quaternion(0.678186, -0.48571, 0.463529, 0.298814)
+bones/38/rotation = Quaternion(0.0472987, 0.906256, 0.401212, -0.124471)
+bones/39/rotation = Quaternion(-0.0678256, -0.0210802, 0.351795, 0.933378)
+bones/40/rotation = Quaternion(-0.0108135, 0.109294, -0.0332857, 0.993393)
+bones/41/rotation = Quaternion(-0.01625, -0.0775783, -4.25526e-05, 0.996854)
+bones/42/rotation = Quaternion(-0.7474, 0.0422067, 0.00765555, 0.662988)
+bones/43/rotation = Quaternion(-0.410937, -0.0278582, -0.0125049, 0.911152)
+bones/45/rotation = Quaternion(-0.23102, 0.802493, -0.347127, -0.426776)
+bones/46/rotation = Quaternion(-0.595143, 0.0459219, 0.310654, 0.739723)
+bones/48/rotation = Quaternion(0.996598, 0.0689332, -0.00274996, 0.0451002)
+bones/48/scale = Vector3(1.00001, 1, 1)
+bones/49/rotation = Quaternion(0.34591, 0.0305003, 0.12914, 0.928837)
+bones/49/scale = Vector3(1, 1, 1)
+bones/50/rotation = Quaternion(-0.660567, -0.159216, -0.15747, 0.716592)
+bones/50/scale = Vector3(1, 1, 1)
+bones/51/rotation = Quaternion(-0.0198179, 0.952287, -0.298255, 0.0616519)
+bones/53/rotation = Quaternion(0.972735, -0.0543278, -0.152305, 0.166251)
+bones/53/scale = Vector3(1.00001, 1, 1)
+bones/54/rotation = Quaternion(0.391448, 0.0105369, -0.166705, 0.904913)
+bones/54/scale = Vector3(1, 1, 1)
+bones/55/rotation = Quaternion(-0.617624, 0.218594, 0.171985, 0.735649)
+bones/56/rotation = Quaternion(0.0282598, 0.953941, -0.297574, -0.0254472)
+
+[node name="characterLargeMale" parent="Root/Skeleton3D" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_ut5m7")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1"]
+libraries = {
+"attack": ExtResource("3_vp2wp"),
+"crouch": ExtResource("4_eg6le"),
+"crouchIdle": ExtResource("5_xau6k"),
+"crouchWalk": ExtResource("6_yumty"),
+"death": ExtResource("7_a7f8i"),
+"idle": ExtResource("8_4un32"),
+"interactGround": ExtResource("9_08pq0"),
+"interactStanding": ExtResource("10_mt0ve"),
+"jump": ExtResource("11_vjs88"),
+"kick": ExtResource("12_d6s5b"),
+"punch": ExtResource("13_cs1ot"),
+"racingIdle": ExtResource("14_43b0p"),
+"racingLeft": ExtResource("15_iqmuq"),
+"racingRight": ExtResource("16_n7tat"),
+"run": ExtResource("17_s2k2g"),
+"shoot": ExtResource("18_imokf"),
+"walk": ExtResource("19_ginm3")
+}

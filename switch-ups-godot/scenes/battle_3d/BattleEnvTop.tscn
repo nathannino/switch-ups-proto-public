@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://dxrerm5c44rry"]
+
+[ext_resource type="PackedScene" uid="uid://cdg20pv0w45x1" path="res://globals/utility_scenes/size_preserving_sub_viewport_container.tscn" id="1_62sd4"]
+[ext_resource type="PackedScene" uid="uid://de73tp04igcgo" path="res://scenes/battle_3d/BattleEnv.tscn" id="2_4b5k8"]
+
+[node name="BattleEnvTop" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SizePreservingSubViewportContainer" parent="." instance=ExtResource("1_62sd4")]
+layout_mode = 1
+
+[node name="BattleEnv" parent="SizePreservingSubViewportContainer" instance=ExtResource("2_4b5k8")]

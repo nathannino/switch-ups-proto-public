@@ -159,6 +159,12 @@ text = "TR_COMPENDIUM"
 script = ExtResource("2_330wo")
 key = "compendium"
 
+[node name="CompendiumButton2" type="Button" parent="MainMenuMargins/Control/VBoxContainer"]
+layout_mode = 2
+text = "3D scene test"
+script = ExtResource("2_330wo")
+key = "batt;e_env"
+
 [node name="CreditsButton" type="Button" parent="MainMenuMargins/Control/VBoxContainer"]
 layout_mode = 2
 text = "TR_CREDIT_TITLE"

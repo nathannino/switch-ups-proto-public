@@ -5,6 +5,9 @@ var target_size : Vector2i
 #var target_size = Vector2i(3840,2160) # 4k
 var target_aspect_ratio : float
 
+signal size_ratio_changed
+var size_ratio : window_constants.WINDOW_ORI
+
 func get_parent_viewport() -> Viewport :
 	return $"..".get_viewport()
 
@@ -36,9 +39,12 @@ func resize() :
 	if (window_aspect_ratio < target_aspect_ratio) :
 		width = floor(float(target_size.x))
 		height = floor(float(target_size.x) / window_aspect_ratio)
+		size_ratio = window_constants.WINDOW_ORI.HEIGHT
 	else :
 		width = floor(float(target_size.y) * window_aspect_ratio)
 		height = floor(float(target_size.y))
+		size_ratio = window_constants.WINDOW_ORI.WIDTH
 
 	size_2d_override = Vector2i(width,height)
+	size_ratio_changed.emit()
 	print("Window resized or scene entered tree! %s's size is now %v" % [name, size_2d_override])

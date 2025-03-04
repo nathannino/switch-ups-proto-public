@@ -40,6 +40,10 @@ project/assembly_name="Switch-ups"
 
 enabled=PackedStringArray()
 
+[filesystem]
+
+import/blender/enabled=false
+
 [gui]
 
 theme/default_font_generate_mipmaps=true

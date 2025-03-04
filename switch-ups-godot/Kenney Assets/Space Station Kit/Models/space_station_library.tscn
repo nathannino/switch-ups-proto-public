@@ -1,0 +1,295 @@
+[gd_scene load_steps=98 format=3 uid="uid://x2pg26s7fo7f"]
+
+[ext_resource type="PackedScene" uid="uid://chssupbh1dpgp" path="res://Kenney Assets/Space Station Kit/Models/GLB format/balcony-floor-center.glb" id="1_lihqq"]
+[ext_resource type="PackedScene" uid="uid://ddr6m6nasnjnu" path="res://Kenney Assets/Space Station Kit/Models/GLB format/balcony-floor-corner.glb" id="2_kop3l"]
+[ext_resource type="PackedScene" uid="uid://b0vbk5otv847c" path="res://Kenney Assets/Space Station Kit/Models/GLB format/balcony-floor.glb" id="3_5enf0"]
+[ext_resource type="PackedScene" uid="uid://c37vieisagtrw" path="res://Kenney Assets/Space Station Kit/Models/GLB format/balcony-rail-center.glb" id="4_2xuew"]
+[ext_resource type="PackedScene" uid="uid://dyuhlp6gn1y51" path="res://Kenney Assets/Space Station Kit/Models/GLB format/balcony-rail-corner.glb" id="5_051ll"]
+[ext_resource type="PackedScene" uid="uid://dfrd7b6pgms1m" path="res://Kenney Assets/Space Station Kit/Models/GLB format/balcony-rail.glb" id="6_6tp72"]
+[ext_resource type="PackedScene" uid="uid://cb84vxnkn483h" path="res://Kenney Assets/Space Station Kit/Models/GLB format/bed-double-cover.glb" id="7_q40pb"]
+[ext_resource type="PackedScene" uid="uid://dvl1rhijkb4fi" path="res://Kenney Assets/Space Station Kit/Models/GLB format/bed-double.glb" id="8_ik26k"]
+[ext_resource type="PackedScene" uid="uid://dt3l3c2n01mlo" path="res://Kenney Assets/Space Station Kit/Models/GLB format/bed-single-cover.glb" id="9_el2t0"]
+[ext_resource type="PackedScene" uid="uid://bkne8s4g1py6t" path="res://Kenney Assets/Space Station Kit/Models/GLB format/bed-single.glb" id="10_27ge4"]
+[ext_resource type="PackedScene" uid="uid://bvajftpolybfi" path="res://Kenney Assets/Space Station Kit/Models/GLB format/chair-armrest-headrest.glb" id="11_22wqw"]
+[ext_resource type="PackedScene" uid="uid://80nto7xw62kx" path="res://Kenney Assets/Space Station Kit/Models/GLB format/chair-armrest.glb" id="12_47s4m"]
+[ext_resource type="PackedScene" uid="uid://qjjwlqm6lr3k" path="res://Kenney Assets/Space Station Kit/Models/GLB format/chair-cushion-headrest.glb" id="13_2vis5"]
+[ext_resource type="PackedScene" uid="uid://dj6faaivaaihu" path="res://Kenney Assets/Space Station Kit/Models/GLB format/chair-cushion.glb" id="14_wu1rp"]
+[ext_resource type="PackedScene" uid="uid://c4rd0na655xhi" path="res://Kenney Assets/Space Station Kit/Models/GLB format/chair-headrest.glb" id="15_36r8c"]
+[ext_resource type="PackedScene" uid="uid://cxllqrd1telun" path="res://Kenney Assets/Space Station Kit/Models/GLB format/chair.glb" id="16_0gw5c"]
+[ext_resource type="PackedScene" uid="uid://b0bseaqlaa17i" path="res://Kenney Assets/Space Station Kit/Models/GLB format/computer-screen.glb" id="17_ycq8v"]
+[ext_resource type="PackedScene" uid="uid://cptk85ori785a" path="res://Kenney Assets/Space Station Kit/Models/GLB format/computer-system.glb" id="18_ox3kq"]
+[ext_resource type="PackedScene" uid="uid://csf87cp75sii4" path="res://Kenney Assets/Space Station Kit/Models/GLB format/computer-wide.glb" id="19_2r2dm"]
+[ext_resource type="PackedScene" uid="uid://y0wqo3sqh6pc" path="res://Kenney Assets/Space Station Kit/Models/GLB format/computer.glb" id="20_nmanf"]
+[ext_resource type="PackedScene" uid="uid://bnscwaywa8d2g" path="res://Kenney Assets/Space Station Kit/Models/GLB format/container-flat-open.glb" id="21_qfan5"]
+[ext_resource type="PackedScene" uid="uid://s4yn30o1e3d2" path="res://Kenney Assets/Space Station Kit/Models/GLB format/container-flat.glb" id="22_mle2m"]
+[ext_resource type="PackedScene" uid="uid://dj4wk1t8lb58u" path="res://Kenney Assets/Space Station Kit/Models/GLB format/container-tall.glb" id="23_au8ff"]
+[ext_resource type="PackedScene" uid="uid://cjvsdavxd83rf" path="res://Kenney Assets/Space Station Kit/Models/GLB format/container-wide.glb" id="24_3k77w"]
+[ext_resource type="PackedScene" uid="uid://b2ea4sqm4nv51" path="res://Kenney Assets/Space Station Kit/Models/GLB format/container.glb" id="25_arvog"]
+[ext_resource type="PackedScene" uid="uid://cb33farlyarv7" path="res://Kenney Assets/Space Station Kit/Models/GLB format/display-wall-wide.glb" id="26_v2g2i"]
+[ext_resource type="PackedScene" uid="uid://dj08rak2asffq" path="res://Kenney Assets/Space Station Kit/Models/GLB format/display-wall.glb" id="27_uuhos"]
+[ext_resource type="PackedScene" uid="uid://1e3pxucv67s6" path="res://Kenney Assets/Space Station Kit/Models/GLB format/door-double-closed.glb" id="28_ipy0u"]
+[ext_resource type="PackedScene" uid="uid://cb4wj7ppinwvi" path="res://Kenney Assets/Space Station Kit/Models/GLB format/door-double-half.glb" id="29_fdb73"]
+[ext_resource type="PackedScene" uid="uid://can0dg208c5f4" path="res://Kenney Assets/Space Station Kit/Models/GLB format/door-double.glb" id="30_swr8a"]
+[ext_resource type="PackedScene" uid="uid://vrx1f46h5rwi" path="res://Kenney Assets/Space Station Kit/Models/GLB format/door-single-closed.glb" id="31_1av0s"]
+[ext_resource type="PackedScene" uid="uid://b4u8buoelusaa" path="res://Kenney Assets/Space Station Kit/Models/GLB format/door-single-half.glb" id="32_xrt4p"]
+[ext_resource type="PackedScene" uid="uid://b6re3dwvntixt" path="res://Kenney Assets/Space Station Kit/Models/GLB format/door-single.glb" id="33_dvnrx"]
+[ext_resource type="PackedScene" uid="uid://bh2math7fjug4" path="res://Kenney Assets/Space Station Kit/Models/GLB format/floor-corner.glb" id="34_4hxd6"]
+[ext_resource type="PackedScene" uid="uid://sssfbcy353h" path="res://Kenney Assets/Space Station Kit/Models/GLB format/floor-detail.glb" id="35_apcfk"]
+[ext_resource type="PackedScene" uid="uid://cew2fox1473oc" path="res://Kenney Assets/Space Station Kit/Models/GLB format/floor-panel-corner.glb" id="36_fpl7f"]
+[ext_resource type="PackedScene" uid="uid://gopydxjl0ytc" path="res://Kenney Assets/Space Station Kit/Models/GLB format/floor-panel-end.glb" id="37_epabk"]
+[ext_resource type="PackedScene" uid="uid://e2mcbmw4rks4" path="res://Kenney Assets/Space Station Kit/Models/GLB format/floor-panel-straight.glb" id="38_c35di"]
+[ext_resource type="PackedScene" uid="uid://d4bbqoqqrl2lu" path="res://Kenney Assets/Space Station Kit/Models/GLB format/floor-panel.glb" id="39_7e0hk"]
+[ext_resource type="PackedScene" uid="uid://exl30j2q47up" path="res://Kenney Assets/Space Station Kit/Models/GLB format/floor.glb" id="40_uju0i"]
+[ext_resource type="PackedScene" uid="uid://bpbj8j71qfyb3" path="res://Kenney Assets/Space Station Kit/Models/GLB format/pipe-bend-diagonal.glb" id="41_tnnir"]
+[ext_resource type="PackedScene" uid="uid://ofmugj1evcfu" path="res://Kenney Assets/Space Station Kit/Models/GLB format/pipe-bend.glb" id="42_nttie"]
+[ext_resource type="PackedScene" uid="uid://bgkldnoswajou" path="res://Kenney Assets/Space Station Kit/Models/GLB format/pipe-end-colored.glb" id="43_866er"]
+[ext_resource type="PackedScene" uid="uid://dhqaly65lhr5r" path="res://Kenney Assets/Space Station Kit/Models/GLB format/pipe-end.glb" id="44_kf4jk"]
+[ext_resource type="PackedScene" uid="uid://vvn6tjkpij0" path="res://Kenney Assets/Space Station Kit/Models/GLB format/pipe-ring-colored.glb" id="45_66eiq"]
+[ext_resource type="PackedScene" uid="uid://ct73i3cx4ipyl" path="res://Kenney Assets/Space Station Kit/Models/GLB format/pipe-ring.glb" id="46_co072"]
+[ext_resource type="PackedScene" uid="uid://c0e224iufbf03" path="res://Kenney Assets/Space Station Kit/Models/GLB format/pipe.glb" id="47_v7ms0"]
+[ext_resource type="PackedScene" uid="uid://bb4ishde3a2bp" path="res://Kenney Assets/Space Station Kit/Models/GLB format/rail-narrow.glb" id="48_avsr1"]
+[ext_resource type="PackedScene" uid="uid://ikmhiug0df5c" path="res://Kenney Assets/Space Station Kit/Models/GLB format/rail.glb" id="49_rd1m4"]
+[ext_resource type="PackedScene" uid="uid://bogi3r6eqt0nf" path="res://Kenney Assets/Space Station Kit/Models/GLB format/rocks.glb" id="50_f5yoh"]
+[ext_resource type="PackedScene" uid="uid://d3oq7v8p4bhno" path="res://Kenney Assets/Space Station Kit/Models/GLB format/skip-rocks.glb" id="51_xki4r"]
+[ext_resource type="PackedScene" uid="uid://duht2ufhtawy" path="res://Kenney Assets/Space Station Kit/Models/GLB format/skip.glb" id="52_qykk7"]
+[ext_resource type="PackedScene" uid="uid://cvlwntxr8jvm3" path="res://Kenney Assets/Space Station Kit/Models/GLB format/stairs-corner-inner.glb" id="53_kuv6h"]
+[ext_resource type="PackedScene" uid="uid://c36nvd8byosyh" path="res://Kenney Assets/Space Station Kit/Models/GLB format/stairs-corner.glb" id="54_8vl6p"]
+[ext_resource type="PackedScene" uid="uid://c4judtitoayjh" path="res://Kenney Assets/Space Station Kit/Models/GLB format/stairs-handrail-single.glb" id="55_n25j6"]
+[ext_resource type="PackedScene" uid="uid://63ichlvyvw4q" path="res://Kenney Assets/Space Station Kit/Models/GLB format/stairs-handrail.glb" id="56_ygpg1"]
+[ext_resource type="PackedScene" uid="uid://kojq8e4oukq4" path="res://Kenney Assets/Space Station Kit/Models/GLB format/stairs-ramp.glb" id="57_wdsfv"]
+[ext_resource type="PackedScene" uid="uid://ildto7oig4dp" path="res://Kenney Assets/Space Station Kit/Models/GLB format/stairs-small-center.glb" id="58_ktcwf"]
+[ext_resource type="PackedScene" uid="uid://cqjp48i4bft3" path="res://Kenney Assets/Space Station Kit/Models/GLB format/stairs-small-corner-inner.glb" id="59_u7u42"]
+[ext_resource type="PackedScene" uid="uid://b6x6sfiwqyutg" path="res://Kenney Assets/Space Station Kit/Models/GLB format/stairs-small-corner.glb" id="60_wdg2d"]
+[ext_resource type="PackedScene" uid="uid://dktpju2b1xafv" path="res://Kenney Assets/Space Station Kit/Models/GLB format/stairs-small-edge-handrail.glb" id="61_plpbn"]
+[ext_resource type="PackedScene" uid="uid://bxbuihjfxjmfw" path="res://Kenney Assets/Space Station Kit/Models/GLB format/stairs-small-edge.glb" id="62_6v3pa"]
+[ext_resource type="PackedScene" uid="uid://2xnveqfkg46k" path="res://Kenney Assets/Space Station Kit/Models/GLB format/stairs-small-edges-handrail.glb" id="63_7882h"]
+[ext_resource type="PackedScene" uid="uid://vaf1y4kiyugf" path="res://Kenney Assets/Space Station Kit/Models/GLB format/stairs-small-edges.glb" id="64_f5fe2"]
+[ext_resource type="PackedScene" uid="uid://rfrivll115sq" path="res://Kenney Assets/Space Station Kit/Models/GLB format/stairs.glb" id="65_n0ehn"]
+[ext_resource type="PackedScene" uid="uid://danckgem6vsrs" path="res://Kenney Assets/Space Station Kit/Models/GLB format/structure-barrier-high.glb" id="66_k717m"]
+[ext_resource type="PackedScene" uid="uid://bwkc18dle4pth" path="res://Kenney Assets/Space Station Kit/Models/GLB format/structure-barrier.glb" id="67_16f8v"]
+[ext_resource type="PackedScene" uid="uid://c5yaat5b4xn4s" path="res://Kenney Assets/Space Station Kit/Models/GLB format/structure-panel.glb" id="68_1sx5c"]
+[ext_resource type="PackedScene" uid="uid://bwaoqr85fbob3" path="res://Kenney Assets/Space Station Kit/Models/GLB format/structure.glb" id="69_wrx0d"]
+[ext_resource type="PackedScene" uid="uid://cvles7u7cg4t1" path="res://Kenney Assets/Space Station Kit/Models/GLB format/table-display-planet.glb" id="70_uqvxi"]
+[ext_resource type="PackedScene" uid="uid://w4c2l26wbnbp" path="res://Kenney Assets/Space Station Kit/Models/GLB format/table-display-small.glb" id="71_csesa"]
+[ext_resource type="PackedScene" uid="uid://cbs4the8s3fgr" path="res://Kenney Assets/Space Station Kit/Models/GLB format/table-display.glb" id="72_37ggd"]
+[ext_resource type="PackedScene" uid="uid://cpap5qvxlkicg" path="res://Kenney Assets/Space Station Kit/Models/GLB format/table-inset-small.glb" id="73_prhwn"]
+[ext_resource type="PackedScene" uid="uid://ckqaap1wqsu2r" path="res://Kenney Assets/Space Station Kit/Models/GLB format/table-inset.glb" id="74_jgr8k"]
+[ext_resource type="PackedScene" uid="uid://sli7aqbjwhv1" path="res://Kenney Assets/Space Station Kit/Models/GLB format/table-large.glb" id="75_m43wu"]
+[ext_resource type="PackedScene" uid="uid://cbqcson12iv7x" path="res://Kenney Assets/Space Station Kit/Models/GLB format/table.glb" id="76_6mybt"]
+[ext_resource type="PackedScene" uid="uid://cqxpf7uo51t71" path="res://Kenney Assets/Space Station Kit/Models/GLB format/wall-banner.glb" id="77_m1om2"]
+[ext_resource type="PackedScene" uid="uid://ckdbihmbkpkfv" path="res://Kenney Assets/Space Station Kit/Models/GLB format/wall-corner-banner.glb" id="78_c0b5i"]
+[ext_resource type="PackedScene" uid="uid://ch1ihb13hs0ef" path="res://Kenney Assets/Space Station Kit/Models/GLB format/wall-corner-round-banner.glb" id="79_u0lck"]
+[ext_resource type="PackedScene" uid="uid://biqlnggmw2x2x" path="res://Kenney Assets/Space Station Kit/Models/GLB format/wall-corner-round.glb" id="80_2sexy"]
+[ext_resource type="PackedScene" uid="uid://bxngs8jn1dk80" path="res://Kenney Assets/Space Station Kit/Models/GLB format/wall-corner.glb" id="81_blh1q"]
+[ext_resource type="PackedScene" uid="uid://c21kc84l4d0fa" path="res://Kenney Assets/Space Station Kit/Models/GLB format/wall-detail.glb" id="82_odisx"]
+[ext_resource type="PackedScene" uid="uid://bcyru7cnssyjm" path="res://Kenney Assets/Space Station Kit/Models/GLB format/wall-door-banner.glb" id="83_gdoom"]
+[ext_resource type="PackedScene" uid="uid://dot5l4akd1q4g" path="res://Kenney Assets/Space Station Kit/Models/GLB format/wall-door-center.glb" id="84_ckpfq"]
+[ext_resource type="PackedScene" uid="uid://iavesms0ethm" path="res://Kenney Assets/Space Station Kit/Models/GLB format/wall-door-edge-banner.glb" id="85_eaqrg"]
+[ext_resource type="PackedScene" uid="uid://cqys2w76difhq" path="res://Kenney Assets/Space Station Kit/Models/GLB format/wall-door-edge.glb" id="86_1v6s6"]
+[ext_resource type="PackedScene" uid="uid://b4i4rgm7m10wc" path="res://Kenney Assets/Space Station Kit/Models/GLB format/wall-door-wide-banner.glb" id="87_464dn"]
+[ext_resource type="PackedScene" uid="uid://drbiwpybo3rdg" path="res://Kenney Assets/Space Station Kit/Models/GLB format/wall-door-wide.glb" id="88_lxgwe"]
+[ext_resource type="PackedScene" uid="uid://bgajghe7t8mi7" path="res://Kenney Assets/Space Station Kit/Models/GLB format/wall-door.glb" id="89_hqic3"]
+[ext_resource type="PackedScene" uid="uid://dbxnvngemjxh7" path="res://Kenney Assets/Space Station Kit/Models/GLB format/wall-pillar-banner.glb" id="90_yas4p"]
+[ext_resource type="PackedScene" uid="uid://bipcqpwle67r1" path="res://Kenney Assets/Space Station Kit/Models/GLB format/wall-pillar.glb" id="91_2254k"]
+[ext_resource type="PackedScene" uid="uid://bwrg0qvyqtfp1" path="res://Kenney Assets/Space Station Kit/Models/GLB format/wall-switch.glb" id="92_0neuc"]
+[ext_resource type="PackedScene" uid="uid://ceshbujcp42fn" path="res://Kenney Assets/Space Station Kit/Models/GLB format/wall-window-banner.glb" id="93_j7ymv"]
+[ext_resource type="PackedScene" uid="uid://0u62kha0xi3s" path="res://Kenney Assets/Space Station Kit/Models/GLB format/wall-window-frame.glb" id="94_pkfa8"]
+[ext_resource type="PackedScene" uid="uid://vtkcnptjd1gv" path="res://Kenney Assets/Space Station Kit/Models/GLB format/wall-window-shutters.glb" id="95_r6t74"]
+[ext_resource type="PackedScene" uid="uid://x5igqsiecftd" path="res://Kenney Assets/Space Station Kit/Models/GLB format/wall-window.glb" id="96_u6a04"]
+[ext_resource type="PackedScene" uid="uid://84k5sj14ynvv" path="res://Kenney Assets/Space Station Kit/Models/GLB format/wall.glb" id="97_dw60l"]
+
+[node name="SpaceStationLibrary" type="Node3D"]
+
+[node name="balcony-floor-center2" parent="." instance=ExtResource("1_lihqq")]
+
+[node name="balcony-floor-corner2" parent="." instance=ExtResource("2_kop3l")]
+
+[node name="balcony-floor2" parent="." instance=ExtResource("3_5enf0")]
+
+[node name="balcony-rail-center2" parent="." instance=ExtResource("4_2xuew")]
+
+[node name="balcony-rail-corner2" parent="." instance=ExtResource("5_051ll")]
+
+[node name="balcony-rail2" parent="." instance=ExtResource("6_6tp72")]
+
+[node name="bed-double-cover2" parent="." instance=ExtResource("7_q40pb")]
+
+[node name="bed-double2" parent="." instance=ExtResource("8_ik26k")]
+
+[node name="bed-single-cover2" parent="." instance=ExtResource("9_el2t0")]
+
+[node name="bed-single2" parent="." instance=ExtResource("10_27ge4")]
+
+[node name="chair-armrest-headrest2" parent="." instance=ExtResource("11_22wqw")]
+
+[node name="chair-armrest2" parent="." instance=ExtResource("12_47s4m")]
+
+[node name="chair-cushion-headrest2" parent="." instance=ExtResource("13_2vis5")]
+
+[node name="chair-cushion2" parent="." instance=ExtResource("14_wu1rp")]
+
+[node name="chair-headrest2" parent="." instance=ExtResource("15_36r8c")]
+
+[node name="chair2" parent="." instance=ExtResource("16_0gw5c")]
+
+[node name="computer-screen2" parent="." instance=ExtResource("17_ycq8v")]
+
+[node name="computer-system2" parent="." instance=ExtResource("18_ox3kq")]
+
+[node name="computer-wide2" parent="." instance=ExtResource("19_2r2dm")]
+
+[node name="computer2" parent="." instance=ExtResource("20_nmanf")]
+
+[node name="container-flat-open2" parent="." instance=ExtResource("21_qfan5")]
+
+[node name="container-flat2" parent="." instance=ExtResource("22_mle2m")]
+
+[node name="container-tall2" parent="." instance=ExtResource("23_au8ff")]
+
+[node name="container-wide2" parent="." instance=ExtResource("24_3k77w")]
+
+[node name="container2" parent="." instance=ExtResource("25_arvog")]
+
+[node name="display-wall-wide2" parent="." instance=ExtResource("26_v2g2i")]
+
+[node name="display-wall2" parent="." instance=ExtResource("27_uuhos")]
+
+[node name="door-double-closed2" parent="." instance=ExtResource("28_ipy0u")]
+
+[node name="door-double-half2" parent="." instance=ExtResource("29_fdb73")]
+
+[node name="door-double2" parent="." instance=ExtResource("30_swr8a")]
+
+[node name="door-single-closed2" parent="." instance=ExtResource("31_1av0s")]
+
+[node name="door-single-half2" parent="." instance=ExtResource("32_xrt4p")]
+
+[node name="door-single2" parent="." instance=ExtResource("33_dvnrx")]
+
+[node name="floor-corner2" parent="." instance=ExtResource("34_4hxd6")]
+
+[node name="floor-detail2" parent="." instance=ExtResource("35_apcfk")]
+
+[node name="floor-panel-corner2" parent="." instance=ExtResource("36_fpl7f")]
+
+[node name="floor-panel-end2" parent="." instance=ExtResource("37_epabk")]
+
+[node name="floor-panel-straight2" parent="." instance=ExtResource("38_c35di")]
+
+[node name="floor-panel2" parent="." instance=ExtResource("39_7e0hk")]
+
+[node name="floor2" parent="." instance=ExtResource("40_uju0i")]
+
+[node name="pipe-bend-diagonal2" parent="." instance=ExtResource("41_tnnir")]
+
+[node name="pipe-bend2" parent="." instance=ExtResource("42_nttie")]
+
+[node name="pipe-end-colored2" parent="." instance=ExtResource("43_866er")]
+
+[node name="pipe-end2" parent="." instance=ExtResource("44_kf4jk")]
+
+[node name="pipe-ring-colored2" parent="." instance=ExtResource("45_66eiq")]
+
+[node name="pipe-ring2" parent="." instance=ExtResource("46_co072")]
+
+[node name="pipe2" parent="." instance=ExtResource("47_v7ms0")]
+
+[node name="rail-narrow2" parent="." instance=ExtResource("48_avsr1")]
+
+[node name="rail2" parent="." instance=ExtResource("49_rd1m4")]
+
+[node name="rocks2" parent="." instance=ExtResource("50_f5yoh")]
+
+[node name="skip-rocks2" parent="." instance=ExtResource("51_xki4r")]
+
+[node name="skip2" parent="." instance=ExtResource("52_qykk7")]
+
+[node name="stairs-corner-inner2" parent="." instance=ExtResource("53_kuv6h")]
+
+[node name="stairs-corner2" parent="." instance=ExtResource("54_8vl6p")]
+
+[node name="stairs-handrail-single2" parent="." instance=ExtResource("55_n25j6")]
+
+[node name="stairs-handrail2" parent="." instance=ExtResource("56_ygpg1")]
+
+[node name="stairs-ramp2" parent="." instance=ExtResource("57_wdsfv")]
+
+[node name="stairs-small-center2" parent="." instance=ExtResource("58_ktcwf")]
+
+[node name="stairs-small-corner-inner2" parent="." instance=ExtResource("59_u7u42")]
+
+[node name="stairs-small-corner2" parent="." instance=ExtResource("60_wdg2d")]
+
+[node name="stairs-small-edge-handrail2" parent="." instance=ExtResource("61_plpbn")]
+
+[node name="stairs-small-edge2" parent="." instance=ExtResource("62_6v3pa")]
+
+[node name="stairs-small-edges-handrail2" parent="." instance=ExtResource("63_7882h")]
+
+[node name="stairs-small-edges2" parent="." instance=ExtResource("64_f5fe2")]
+
+[node name="stairs2" parent="." instance=ExtResource("65_n0ehn")]
+
+[node name="structure-barrier-high" parent="." instance=ExtResource("66_k717m")]
+
+[node name="structure-barrier" parent="." instance=ExtResource("67_16f8v")]
+
+[node name="structure-panel2" parent="." instance=ExtResource("68_1sx5c")]
+
+[node name="structure" parent="." instance=ExtResource("69_wrx0d")]
+
+[node name="table-display-planet2" parent="." instance=ExtResource("70_uqvxi")]
+
+[node name="table-display-small2" parent="." instance=ExtResource("71_csesa")]
+
+[node name="table-display2" parent="." instance=ExtResource("72_37ggd")]
+
+[node name="table-inset-small2" parent="." instance=ExtResource("73_prhwn")]
+
+[node name="table-inset2" parent="." instance=ExtResource("74_jgr8k")]
+
+[node name="table-large2" parent="." instance=ExtResource("75_m43wu")]
+
+[node name="table2" parent="." instance=ExtResource("76_6mybt")]
+
+[node name="wall-banner2" parent="." instance=ExtResource("77_m1om2")]
+
+[node name="wall-corner-banner2" parent="." instance=ExtResource("78_c0b5i")]
+
+[node name="wall-corner-round-banner2" parent="." instance=ExtResource("79_u0lck")]
+
+[node name="wall-corner-round2" parent="." instance=ExtResource("80_2sexy")]
+
+[node name="wall-corner2" parent="." instance=ExtResource("81_blh1q")]
+
+[node name="wall-detail2" parent="." instance=ExtResource("82_odisx")]
+
+[node name="wall-door-banner2" parent="." instance=ExtResource("83_gdoom")]
+
+[node name="wall-door-center2" parent="." instance=ExtResource("84_ckpfq")]
+
+[node name="wall-door-edge-banner2" parent="." instance=ExtResource("85_eaqrg")]
+
+[node name="wall-door-edge2" parent="." instance=ExtResource("86_1v6s6")]
+
+[node name="wall-door-wide-banner2" parent="." instance=ExtResource("87_464dn")]
+
+[node name="wall-door-wide2" parent="." instance=ExtResource("88_lxgwe")]
+
+[node name="wall-door2" parent="." instance=ExtResource("89_hqic3")]
+
+[node name="wall-pillar-banner2" parent="." instance=ExtResource("90_yas4p")]
+
+[node name="wall-pillar2" parent="." instance=ExtResource("91_2254k")]
+
+[node name="wall-switch2" parent="." instance=ExtResource("92_0neuc")]
+
+[node name="wall-window-banner2" parent="." instance=ExtResource("93_j7ymv")]
+
+[node name="wall-window-frame2" parent="." instance=ExtResource("94_pkfa8")]
+
+[node name="wall-window-shutters2" parent="." instance=ExtResource("95_r6t74")]
+
+[node name="wall-window2" parent="." instance=ExtResource("96_u6a04")]
+
+[node name="wall2" parent="." instance=ExtResource("97_dw60l")]
