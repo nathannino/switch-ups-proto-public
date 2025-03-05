@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://ope0vgwhns7r"]
+[gd_scene load_steps=10 format=3 uid="uid://ope0vgwhns7r"]
 
 [ext_resource type="Texture2D" uid="uid://masa1osx0s86" path="res://monster_systems/spirits/art/unknown.png" id="1_plwqg"]
 [ext_resource type="Shader" path="res://shaders/spirit_ball.gdshader" id="1_uvler"]
@@ -9,7 +9,7 @@ script/source = "extends Node3D
 @export var center : Node3D
 var camera : Camera3D
 
-@export var sprite : Sprite3D
+@export var spirit_spirte : MeshInstance3D
 
 func _process(delta: float) -> void:
 	if not camera == null :
@@ -18,12 +18,20 @@ func _process(delta: float) -> void:
 func set_spirit(spirit : ms_spirit) :
 	if not is_node_ready() :
 		await ready
-	sprite.texture = spirit.sprite
+	var mat = spirit_spirte.get_active_material(0)
+	if mat is StandardMaterial3D :
+		mat.albedo_texture = spirit.sprite
+	else :
+		printerr(\"???????????????????????? set_spirit material is not StandardMaterial3D\")
 	pass
 
 func set_spirit_active(_spirit_active : ms_spirit_active) :
 	set_spirit(SpiritDictionary.spirits[_spirit_active.key])
 "
+
+[sub_resource type="SphereMesh" id="SphereMesh_wmpj6"]
+radius = 1.0
+height = 2.0
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_d7wlw"]
 
@@ -32,6 +40,7 @@ seamless = true
 noise = SubResource("FastNoiseLite_d7wlw")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qxfs0"]
+resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("1_uvler")
 shader_parameter/time_speed = 0.1
@@ -48,23 +57,30 @@ shader_parameter/color3 = Color(0.98, 0.95, 0.53, 1)
 shader_parameter/color4 = Color(1, 1, 1, 1)
 shader_parameter/noise_texture = SubResource("NoiseTexture2D_n7s4d")
 
-[sub_resource type="SphereMesh" id="SphereMesh_wmpj6"]
-material = SubResource("ShaderMaterial_qxfs0")
-radius = 1.0
-height = 2.0
+[sub_resource type="PlaneMesh" id="PlaneMesh_sefvg"]
+size = Vector2(3.5, 3.5)
 
-[node name="Spirit" type="Node3D" node_paths=PackedStringArray("center", "sprite")]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bxpr0"]
+resource_local_to_scene = true
+transparency = 4
+albedo_texture = ExtResource("1_plwqg")
+emission = Color(0, 0, 0.8, 1)
+backlight_enabled = true
+backlight = Color(1, 1, 1, 1)
+
+[node name="Spirit" type="Node3D" node_paths=PackedStringArray("center", "spirit_spirte")]
 script = SubResource("GDScript_fq4ef")
 center = NodePath("center")
-sprite = NodePath("center/Sprite3D")
+spirit_spirte = NodePath("center/MeshInstance3D")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
 mesh = SubResource("SphereMesh_wmpj6")
+surface_material_override/0 = SubResource("ShaderMaterial_qxfs0")
 
 [node name="center" type="Node3D" parent="."]
 
-[node name="Sprite3D" type="Sprite3D" parent="center"]
-transform = Transform3D(-2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 0, -1.006)
-texture_filter = 0
-texture = ExtResource("1_plwqg")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="center"]
+transform = Transform3D(-1, -8.74228e-08, 3.82137e-15, 0, -4.37114e-08, -1, 8.74228e-08, -1, 4.37114e-08, 0, 0, -0.999637)
+mesh = SubResource("PlaneMesh_sefvg")
+surface_material_override/0 = SubResource("StandardMaterial3D_bxpr0")
