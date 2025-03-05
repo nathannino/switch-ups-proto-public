@@ -101,6 +101,8 @@ func start_init() :
 		
 	var packed_scene = ResourceLoader.load_threaded_get(path)
 	node = packed_scene.instantiate()
+	if node.has_method("_deferred_init") :
+		node._deferred_init.call_deferred()
 	if node.has_signal("preinit_complete") :
 		node.preinit_complete.connect(func() : 
 			_preinit_complete = true

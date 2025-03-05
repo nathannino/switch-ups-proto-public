@@ -1,17 +1,41 @@
 [gd_scene load_steps=3 format=3 uid="uid://dxrerm5c44rry"]
 
 [ext_resource type="PackedScene" uid="uid://cdg20pv0w45x1" path="res://globals/utility_scenes/size_preserving_sub_viewport_container.tscn" id="1_62sd4"]
-[ext_resource type="PackedScene" uid="uid://de73tp04igcgo" path="res://scenes/battle_3d/BattleEnv.tscn" id="2_4b5k8"]
 
-[node name="BattleEnvTop" type="Control"]
+[sub_resource type="GDScript" id="GDScript_erg37"]
+script/source = "extends Control
+
+@export var battle_env_root : Node3D
+
+signal scene_loaded
+var battle_env : Node3D
+
+func get_env() -> Node3D :
+	return battle_env_root.get_child(0)
+
+func load_scene(scene_key : String) :
+	for child in battle_env_root.get_children() :
+		child.queue_free()
+	
+	var scene_dict_entry = ServerWrapper.battle_subscenes.get_scene_dictionary_entry(scene_key)
+	ResourceLoader.load_threaded_request(scene_dict_entry.scene)
+	var scene_resource = await ResourceLoader.load_threaded_get(scene_dict_entry.scene)
+	battle_env = scene_resource.instantiate()
+	battle_env_root.add_child(battle_env)
+	scene_loaded.emit.call_deferred()
+"
+
+[node name="BattleEnvTop" type="Control" node_paths=PackedStringArray("battle_env_root")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = SubResource("GDScript_erg37")
+battle_env_root = NodePath("SizePreservingSubViewportContainer/BattleEnvRoot")
 
 [node name="SizePreservingSubViewportContainer" parent="." instance=ExtResource("1_62sd4")]
 layout_mode = 1
 
-[node name="BattleEnv" parent="SizePreservingSubViewportContainer" instance=ExtResource("2_4b5k8")]
+[node name="BattleEnvRoot" type="Node3D" parent="SizePreservingSubViewportContainer"]

@@ -8,6 +8,18 @@ signal sync_team
 @export var timer : Timer
 @export var interrupt_anchor : Control
 @export var await_cancel : Control
+@export var battle_env_root : Control
+var battle_env_top : Control
+const BATTLE_ENV_TOP_SCENE = preload("uid://dxrerm5c44rry")
+
+var battle_env : Node3D :
+	get: return battle_env_top.get_env()
+
+var friend_character : Node3D :
+	get: return battle_env.friend_player
+
+var enemy_character : Node3D :
+	get: return battle_env.enemy_player
 
 var battle_logs = null
 var battle_logs_await = 0
@@ -151,7 +163,17 @@ func _init() :
 	ClientWrapperAutoload.battle_all_loaded.connect.call_deferred(func() :
 		preinit_complete.emit.call_deferred()
 	, CONNECT_ONE_SHOT)
-	ClientWrapperAutoload.send.call_deferred(TcpPayload.new().set_type(TcpPayload.TYPE.BATTLE_AWAIT_INIT).set_content(null))
+	
+
+# this is so dumb...
+func _deferred_init() :
+	battle_env_top = BATTLE_ENV_TOP_SCENE.instantiate()
+	battle_env_root.add_child(battle_env_top)
+
+	battle_env_top.scene_loaded.connect(func() :
+		ClientWrapperAutoload.send.call_deferred(TcpPayload.new().set_type(TcpPayload.TYPE.BATTLE_AWAIT_INIT).set_content(null))
+	)
+	battle_env_top.load_scene(DeferredLoadingManager.get_holding_data(DeferredLoadingManager.add_prefix(ClientWrapperAutoload.AWAIT_PREFIX,TcpPayload.TYPE.BATTLE_SETUP_BATTLEENV)))
 
 func _notification(what: int) -> void:
 	match what: 
@@ -176,6 +198,9 @@ func _set_team_state(teams : Array) :
 			enemy_hp = player["hp"]
 	if not is_node_ready() :
 		await ready
+	
+	friend_character.sync_spirits(friend_team)
+	enemy_character.sync_spirits(enemy_team)
 	sync_team.emit()
 
 var current_action_battle_log

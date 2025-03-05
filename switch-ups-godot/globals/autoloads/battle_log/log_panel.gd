@@ -41,6 +41,7 @@ func add_log(key : String, format_vars : Dictionary = {},translated_format_vars 
 	_add_log(key,format_vars.merged(_very_translated_format_vars,true),current_label)
 
 func clear() :
+	current_label = null
 	turn_history = []
 	for child in logs.get_children() :
 		child.queue_free()

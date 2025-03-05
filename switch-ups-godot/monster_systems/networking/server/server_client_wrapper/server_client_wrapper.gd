@@ -22,16 +22,17 @@ func state_teambuilding() :
 	change_scene("build_team","wipe_rect",[TcpPayload.TYPE.TEAMBUILD_LAST_TEAM])
 	send(TcpPayload.new().set_type(TcpPayload.TYPE.TEAMBUILD_LAST_TEAM).set_content(team_to_dict()))
 
-func state_startbattle() :
+func state_startbattle(scene_key : String) :
 	reset_team_stats()
 	in_battle = true
 	battle_loaded = false
 	await_endturn = false
 	selected_action_dict = null
 	team_id = get_parent().get_children().find(self)
-	change_scene("battle_v1","fade_to_black",[TcpPayload.TYPE.BATTLE_SETUP_PLAYERID,TcpPayload.TYPE.BATTLE_SETUP_SYNCTEAM])
+	change_scene("battle_v1","fade_to_black",[TcpPayload.TYPE.BATTLE_SETUP_PLAYERID,TcpPayload.TYPE.BATTLE_SETUP_BATTLEENV, TcpPayload.TYPE.BATTLE_SETUP_SYNCTEAM])
 	
 	send(TcpPayload.new().set_type(TcpPayload.TYPE.BATTLE_SETUP_PLAYERID).set_content(get_index()))
+	send(TcpPayload.new().set_type(TcpPayload.TYPE.BATTLE_SETUP_BATTLEENV).set_content(scene_key))
 	sync_teams.call_deferred() # Making sure every server_client_wrapper had state_startbattle() called
 
 func state_startturn() :

@@ -2,6 +2,7 @@ extends Node
 
 @export var server_client_wrapper : PackedScene
 @export var error_root : Control
+@export var battle_subscenes : scene_dictionary
 
 const MAX_PLAYERS = 2
 
@@ -14,6 +15,9 @@ enum BATTLE_STEPS {
 }
 
 var battle_next : BATTLE_STEPS = BATTLE_STEPS.NONE
+
+func _ready() -> void:
+	battle_subscenes.populate_scene_dictionary()
 
 func start_server(_bind_address : String, _port : int) -> bool :
 	match $ServerMain.start_server(_bind_address,_port,server_client_wrapper,global_payload_received) :
@@ -40,8 +44,10 @@ func set_state_teambuilding() :
 
 func set_state_battle_start() :
 	battle_next = BATTLE_STEPS.NONE
+	var battle_scene_def = battle_subscenes.get_scene_dictionary().values().pick_random()
+	
 	for child in $ServerMain.get_children() :
-		child.state_startbattle()
+		child.state_startbattle(battle_scene_def.key)
 
 func global_payload_received(_client : Node, payload : TcpPayload) -> void :
 	match payload.get_type() :

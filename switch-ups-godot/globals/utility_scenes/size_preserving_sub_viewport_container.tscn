@@ -64,7 +64,7 @@ stretch = true
 [node name="SizePreservingSubViewport" type="SubViewport" parent="SubViewportContainer"]
 editor_description = "The name is a reference to \"DrawSizePreservingFillContainer\" from osu!framework, which doesn't do the same thing, but that I am using for the same purpose as the time I used osu!framework for a school project (veille)"
 handle_input_locally = false
-size = Vector2i(1920, 1080)
+size = Vector2i(720, 720)
 size_2d_override_stretch = true
 render_target_update_mode = 4
 script = ExtResource("1_pv03i")

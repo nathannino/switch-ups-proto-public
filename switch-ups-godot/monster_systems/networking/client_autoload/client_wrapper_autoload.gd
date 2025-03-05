@@ -74,7 +74,7 @@ func _on_main_client_payload_received(payload: TcpPayload) -> void:
 			SceneLoadWrapper.create().from_key(dict["scene_key"]).with_preloaded_generations(preload_dict).background_await().prepare(),
 			SceneLoadWrapper.create().as_transition(dict["transition_key"]).prepare()
 			)
-		TcpPayload.TYPE.TEAMBUILD_LAST_TEAM, TcpPayload.TYPE.BATTLE_SETUP_PLAYERID:
+		TcpPayload.TYPE.TEAMBUILD_LAST_TEAM, TcpPayload.TYPE.BATTLE_SETUP_PLAYERID, TcpPayload.TYPE.BATTLE_SETUP_BATTLEENV:
 			DeferredLoadingManager._set_holding_data(DeferredLoadingManager.add_prefix(AWAIT_PREFIX,payload.get_type()),payload.get_content())
 		TcpPayload.TYPE.BATTLE_SETUP_SYNCTEAM :
 			DeferredLoadingManager._set_holding_data(DeferredLoadingManager.add_prefix(AWAIT_PREFIX,payload.get_type()),payload.get_content())

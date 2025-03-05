@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://d2lcdsh40reie"]
+[gd_scene load_steps=7 format=3 uid="uid://d2lcdsh40reie"]
 
 [ext_resource type="Script" path="res://globals/simple_scripts/button_change_scene_simple.gd" id="1_57t8v"]
 
@@ -88,6 +88,28 @@ func _on_pressed() -> void:
 	pass # Replace with function body.
 "
 
+[sub_resource type="GDScript" id="GDScript_vf1g8"]
+script/source = "extends Button
+
+@export var key : String
+@export var transition_key = \"wipe_rect\"
+@export var block_change_scene : bool
+
+
+func _ready() -> void:
+	pressed.connect(change_scene)
+
+func change_scene() :
+	var target = SceneLoadWrapper.create().background_preload().from_key(key).prepare()
+	var transition = SceneLoadWrapper.create().as_transition(\"wipe_rect\").prepare()
+	OptionsOverlay.hide()
+	BgmManager.stop_override(BgmManager.TRANSITIONS.FADE_OUT_IN)
+	DeferredLoadingManager.change_scene(target,transition)
+	if block_change_scene : DeferredLoadingManager.prevent_change_scene()
+	ServerWrapper.close_server()
+	ClientWrapperAutoload.disconnect_client()
+"
+
 [node name="Control" type="Control" node_paths=PackedStringArray("return_main_menu_button")]
 visible = false
 layout_mode = 3
@@ -136,11 +158,11 @@ text = "TR_OPTIONS_LOGS"
 script = SubResource("GDScript_5poeu")
 root = NodePath("../../..")
 
-[node name="Button2" type="Button" parent="CenterContainer/VBoxContainer" node_paths=PackedStringArray("root")]
+[node name="Button2" type="Button" parent="CenterContainer/VBoxContainer"]
 layout_mode = 2
 text = "TR_OPTIONS_MAINMENU"
-script = SubResource("GDScript_5poeu")
-root = NodePath("../../..")
+script = SubResource("GDScript_vf1g8")
+key = "main_menu"
 
 [node name="Button3" type="Button" parent="CenterContainer/VBoxContainer"]
 layout_mode = 2

@@ -13,6 +13,7 @@ func _ready() -> void:
 	transition = SceneLoadWrapper.create().as_transition("wipe_rect").prepare()
 
 func change_scene() :
+	OptionsOverlay.hide()
 	BgmManager.stop_override(BgmManager.TRANSITIONS.FADE_OUT_IN)
 	DeferredLoadingManager.change_scene(target,transition)
 	if block_change_scene : DeferredLoadingManager.prevent_change_scene()

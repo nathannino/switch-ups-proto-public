@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://b2tpdem416owt"]
+[gd_scene load_steps=9 format=3 uid="uid://b2tpdem416owt"]
 
 [ext_resource type="Script" path="res://monster_systems/networking/server/server_wrapper.gd" id="1_5rxyd"]
 [ext_resource type="PackedScene" uid="uid://bg6nha4tn60d1" path="res://monster_systems/networking/server/server_client_wrapper/server_client_wrapper.tscn" id="2_iesxm"]
 [ext_resource type="PackedScene" uid="uid://b1dfhsdyhw75g" path="res://TCP_server_project/server/tcp_server.tscn" id="2_pr3k4"]
+[ext_resource type="Resource" uid="uid://dij5s68mjhkud" path="res://scenes/battle_3d/battle_subscene.tres" id="3_6fiib"]
 [ext_resource type="Script" path="res://monster_systems/networking/server/turn_calculator.gd" id="4_tdqmj"]
 
 [sub_resource type="GDScript" id="GDScript_gxxs3"]
@@ -33,6 +34,7 @@ func _on_pressed() -> void:
 script = ExtResource("1_5rxyd")
 server_client_wrapper = ExtResource("2_iesxm")
 error_root = NodePath("ErrorRoot")
+battle_subscenes = ExtResource("3_6fiib")
 
 [node name="ServerMain" parent="." instance=ExtResource("2_pr3k4")]
 
