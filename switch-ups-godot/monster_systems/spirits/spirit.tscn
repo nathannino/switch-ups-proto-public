@@ -10,6 +10,30 @@ script/source = "extends Node3D
 var camera : Camera3D
 
 @export var spirit_spirte : MeshInstance3D
+@export var radius : float
+
+func _tween() :
+	var pos = get_point()
+	var tween = create_tween()
+	tween.set_trans(Tween.TRANS_BACK)
+	tween.tween_property(self,\"position\",pos,position.distance_to(pos)/0.01)
+	tween.tween_callback(_tween)
+
+func _ready() :
+	_tween()
+
+# https://karthikkaranth.me/blog/generating-random-points-in-a-sphere/#discarding-values-outside-the-sphere
+func get_point() -> Vector3 :
+	var x = 0.0
+	var y = 0.0
+	var z = 0.0
+	var _distance = 2
+	while (_distance > 1) :
+		x = randf() * 2.0 - 1.0
+		y = randf() * 2.0 - 1.0
+		z = randf() * 2.0 - 1.0
+		_distance = x*x + y*y + z*z
+	return Vector3(x*radius,y*radius,z*radius)
 
 func _process(delta: float) -> void:
 	if not camera == null :
@@ -72,6 +96,7 @@ backlight = Color(1, 1, 1, 1)
 script = SubResource("GDScript_fq4ef")
 center = NodePath("center")
 spirit_spirte = NodePath("center/MeshInstance3D")
+radius = 0.1
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)

@@ -32,8 +32,9 @@ func set_camera(_camera : Camera3D) :
 	spirit_right.camera = _camera
 
 func set_spirit_size() :
+	# FIXME : Handle spirit rotations =/
 	var size = friend_spirit_size if is_friend else enemy_spirit_size
-	spirit_front.scale = Vector3(size,size,size)
+	spirit_front.scale = Vector3(enemy_spirit_size,enemy_spirit_size,enemy_spirit_size)
 	spirit_left.scale = Vector3(size,size,size)
 	spirit_right.scale = Vector3(size,size,size)
 
