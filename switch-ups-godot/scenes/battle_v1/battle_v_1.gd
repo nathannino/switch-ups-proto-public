@@ -15,12 +15,6 @@ const BATTLE_ENV_TOP_SCENE = preload("uid://dxrerm5c44rry")
 var battle_env : Node3D :
 	get: return battle_env_top.get_env()
 
-var friend_character : Node3D :
-	get: return battle_env.friend_player
-
-var enemy_character : Node3D :
-	get: return battle_env.enemy_player
-
 var battle_logs = null
 var battle_logs_await = 0
 
@@ -66,6 +60,12 @@ var current_action : ms_action
 var current_action_index = 0
 var action_data = []
 var action_index = []
+
+var friend_character : Node3D :
+	get: return battle_env.friend_player
+
+var enemy_character : Node3D :
+	get: return battle_env.enemy_player
 
 func pause_battle_log() :
 	battle_logs_await += 1
@@ -252,14 +252,21 @@ func _ready() :
 	)
 	action_box.hide()
 	
-	timer.wait_time = 3 # Simulate a battle begin animation or smth
+	timer.wait_time = 0.5 # Simulate a battle begin animation or smth
 	timer.timeout.connect(func () : 
-		ClientWrapperAutoload.send(TcpPayload.new().set_type(TcpPayload.TYPE.BATTLE_AWAIT_ENDTURN).set_content(true))
+		_begin_battle.call_deferred()
 	, CONNECT_ONE_SHOT)
 	timer.start()
 	
 	BattleLogPanel.clear()
 	OptionsOverlay.set_in_battle(true)
+
+func _begin_battle() :
+	friend_character.begin_battle()
+	enemy_character.begin_battle()
+	friend_character.animation_done.connect(func() :
+		ClientWrapperAutoload.send(TcpPayload.new().set_type(TcpPayload.TYPE.BATTLE_AWAIT_ENDTURN).set_content(true))
+	,CONNECT_ONE_SHOT)
 
 func begin_turn() :
 	current_action = null

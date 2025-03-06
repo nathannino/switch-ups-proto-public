@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://bwkkxdlm0ixxc"]
+[gd_scene load_steps=24 format=3 uid="uid://bwkkxdlm0ixxc"]
 
 [ext_resource type="PackedScene" uid="uid://d0vl7y7q6sesm" path="res://Kenney Assets/Animated Characters Bundle/Models/characterLargeMale.fbx" id="1_u16pj"]
 [ext_resource type="Texture2D" uid="uid://nd8fch8r40dt" path="res://Kenney Assets/Animated Characters Bundle/Skins/businessMaleA.png" id="2_dadg8"]
@@ -21,16 +21,22 @@
 [ext_resource type="AnimationLibrary" uid="uid://ddshfh78ah3fs" path="res://Kenney Assets/Animated Characters Bundle/Animations/shoot.fbx" id="18_imokf"]
 [ext_resource type="AnimationLibrary" uid="uid://j4d01r6u15kx" path="res://Kenney Assets/Animated Characters Bundle/Animations/walk.fbx" id="19_ginm3"]
 [ext_resource type="PackedScene" uid="uid://ope0vgwhns7r" path="res://monster_systems/spirits/spirit.tscn" id="20_mf166"]
+[ext_resource type="Script" path="res://monster_systems/3d_generic/spirit_anchor.gd" id="21_bldix"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ut5m7"]
 albedo_texture = ExtResource("2_dadg8")
 
-[node name="characterLargeMale" node_paths=PackedStringArray("spirit_center_anchor", "spirit_front_anchor", "spirit_left_anchor", "spirit_right_anchor") instance=ExtResource("1_u16pj")]
+[node name="characterLargeMale" node_paths=PackedStringArray("skeleton", "spirit_front_anchor", "spirit_left_anchor", "spirit_right_anchor", "spirit_center_target", "spirit_front_target", "spirit_left_target", "spirit_right_target") instance=ExtResource("1_u16pj")]
 script = ExtResource("2_htyke")
-spirit_center_anchor = NodePath("SpiritCenter")
-spirit_front_anchor = NodePath("SpiritCenter/SpiritFrontPos")
-spirit_left_anchor = NodePath("SpiritCenter/SpiritLeftPos")
-spirit_right_anchor = NodePath("SpiritCenter/SpiritRightPos")
+skeleton = NodePath("Root/Skeleton3D")
+hand_bone_name = "RightHand"
+spirit_front_anchor = NodePath("SpiritZeroAnchor")
+spirit_left_anchor = NodePath("SpiritOneAnchor")
+spirit_right_anchor = NodePath("SpiritTwoAnchor")
+spirit_center_target = NodePath("SpiritCenterTarget")
+spirit_front_target = NodePath("SpiritCenterTarget/SpiritFrontTarget")
+spirit_left_target = NodePath("SpiritCenterTarget/SpiritLeftTarget")
+spirit_right_target = NodePath("SpiritCenterTarget/SpiritRightTarget")
 friend_spirit_size = 0.05
 enemy_spirit_size = 0.1
 
@@ -117,23 +123,35 @@ libraries = {
 "walk": ExtResource("19_ginm3")
 }
 
-[node name="SpiritCenter" type="Node3D" parent="." index="2"]
+[node name="SpiritZeroAnchor" type="Node3D" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.878015, 0.653439)
+script = ExtResource("21_bldix")
+
+[node name="Spirit" parent="SpiritZeroAnchor" index="0" instance=ExtResource("20_mf166")]
+transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0, 0, 0)
+
+[node name="SpiritOneAnchor" type="Node3D" parent="." index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.835739, 1.10563, -0.242773)
+script = ExtResource("21_bldix")
+
+[node name="Spirit" parent="SpiritOneAnchor" index="0" instance=ExtResource("20_mf166")]
+transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0, 0, 0)
+
+[node name="SpiritTwoAnchor" type="Node3D" parent="." index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.660146, 1.29823, -0.343568)
+script = ExtResource("21_bldix")
+
+[node name="Spirit" parent="SpiritTwoAnchor" index="0" instance=ExtResource("20_mf166")]
+transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0, 0, 0)
+
+[node name="SpiritCenterTarget" type="Node3D" parent="." index="5"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.04065, 0)
 
-[node name="SpiritFrontPos" type="Node3D" parent="SpiritCenter" index="0"]
+[node name="SpiritFrontTarget" type="Node3D" parent="SpiritCenterTarget" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.162635, 0.653439)
 
-[node name="Spirit" parent="SpiritCenter/SpiritFrontPos" index="0" instance=ExtResource("20_mf166")]
-transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0, 0, 0)
-
-[node name="SpiritLeftPos" type="Node3D" parent="SpiritCenter" index="1"]
+[node name="SpiritLeftTarget" type="Node3D" parent="SpiritCenterTarget" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.835739, 0.0649805, -0.242773)
 
-[node name="Spirit" parent="SpiritCenter/SpiritLeftPos" index="0" instance=ExtResource("20_mf166")]
-transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0, 0, 0)
-
-[node name="SpiritRightPos" type="Node3D" parent="SpiritCenter" index="2"]
+[node name="SpiritRightTarget" type="Node3D" parent="SpiritCenterTarget" index="2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.660146, 0.257585, -0.343568)
-
-[node name="Spirit" parent="SpiritCenter/SpiritRightPos" index="0" instance=ExtResource("20_mf166")]
-transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0, 0, 0)
