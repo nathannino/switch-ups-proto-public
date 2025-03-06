@@ -108,16 +108,39 @@ func change_player_hp(pid,change_value) :
 
 func rotate_visual(pid_one,spirit_one_index,pid_two,spirit_two_index) :
 	var team_one = friend_team if pid_one == player_id else enemy_team
+	var team_3d_one = friend_character if pid_one == player_id else enemy_character
 	var team_two = friend_team if pid_two == player_id else enemy_team
+	var team_3d_two = friend_character if pid_two == player_id else enemy_character
 	
 	var spirit_one = team_one[spirit_one_index]
+	var spirit_3d_one = team_3d_one.get_spirit_anchor_from_pos(ms_constants.index_to_position(spirit_one_index))
 	var spirit_two = team_two[spirit_two_index]
-	
-	#TODO : Animations =D
-	#WARNING : Animations should take into consideration the posibility of a target not being active at the moment
+	var spirit_3d_two = team_3d_two.get_spirit_anchor_from_pos(ms_constants.index_to_position(spirit_two_index))
 	
 	team_one[spirit_one_index] = spirit_two
 	team_two[spirit_two_index] = spirit_one
+	
+	#region animations
+	if spirit_3d_one == null and spirit_3d_two == null :
+		return # There is no animations
+	
+	# Note that in this case, we make the same assumption sp_switch is doing
+	if spirit_3d_one == null or spirit_3d_two == null :
+		var _position = ms_constants.index_to_position(spirit_one_index) if not ms_constants.index_to_position(spirit_one_index) == ms_constants.POSITION.PARTY else ms_constants.index_to_position(spirit_two_index)
+		var _new_spirit = spirit_one if ms_constants.index_to_position(spirit_one_index) == ms_constants.POSITION.PARTY else spirit_two
+		
+		pause_battle_log()
+		team_3d_one.animation_done.connect(func() :
+			play_battle_log.call_deferred()
+		,CONNECT_ONE_SHOT)
+		team_3d_one.switch_spirit(_position, _new_spirit)
+		pass # Switch time
+	else :
+		pass # rotate time
+	
+	#endregion
+	#TODO : Animations =D
+	#WARNING : Animations should take into consideration the posibility of a target not being active at the moment
 	
 	enemy_team_ui.sync_team_state()
 	friend_team_ui.sync_team_state()

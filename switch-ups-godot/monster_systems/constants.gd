@@ -115,6 +115,7 @@ enum POSITION {
 	LEFT,
 	CENTER,
 	RIGHT,
+	PARTY,
 }
 
 static func index_to_position(_index : int) :
@@ -122,6 +123,7 @@ static func index_to_position(_index : int) :
 		1: return POSITION.LEFT
 		0: return POSITION.CENTER
 		2: return POSITION.RIGHT
+		_: return POSITION.PARTY
 
 static func position_to_index(_pos : POSITION) :
 	match _pos :

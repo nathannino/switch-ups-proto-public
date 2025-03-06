@@ -25,10 +25,11 @@ func get_interrupt_action() -> Control :
 	return _select_screen(false)
 
 func handle_client(battle_log : Dictionary, battle_root : Node) :
+	# TODO : Note that this and rotate_visual() assumes that both pid is the same in this case. If this ever not becomes the case, this AND battle_root.rotate_visual() has to be updated
 	var target_info = battle_log["target_info"]
 	battle_root.rotate_visual(battle_log["pid"],battle_log["active"],battle_log["pid"],battle_log["reserve"])
 	battle_root.enter_log_text("TR_BTLLOG_AC_SP_SWITCH", {},{"active":SpiritDictionary.spirits[battle_log["active_key"]].name,"reserve":SpiritDictionary.spirits[battle_log["reserve_key"]].name}, 1)
-	pass # TODO : idk figure it out later
+	pass
 
 func already_handled_server(battle_log : Array, position : int) :
 	return ms_constants.ACTION_COMPONENT_HANDLE_STATE.GET_SIBLING
