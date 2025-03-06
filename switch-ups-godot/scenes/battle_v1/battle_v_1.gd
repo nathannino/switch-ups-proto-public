@@ -136,6 +136,12 @@ func rotate_visual(pid_one,spirit_one_index,pid_two,spirit_two_index) :
 		team_3d_one.switch_spirit(_position, _new_spirit)
 		pass # Switch time
 	else :
+		pause_battle_log()
+		team_3d_two.rotate_spirit(spirit_3d_one,ms_constants.index_to_position(spirit_one_index),ms_constants.index_to_position(spirit_two_index),0)
+		team_3d_one.rotate_spirit(spirit_3d_two,ms_constants.index_to_position(spirit_two_index),ms_constants.index_to_position(spirit_one_index),1)
+		team_3d_one.animation_done.connect(func() :
+			play_battle_log.call_deferred()
+		,CONNECT_ONE_SHOT)
 		pass # rotate time
 	
 	#endregion

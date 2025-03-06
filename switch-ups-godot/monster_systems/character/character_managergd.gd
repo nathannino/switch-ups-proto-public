@@ -27,9 +27,51 @@ var hand_watch : PhysicalBone3D
 
 @export_category("Spirit properties")
 @export var friend_spirit_size : float
+@export var friend_right_spirit_size_override : float
 @export var enemy_spirit_size : float
 
 var is_friend = false
+
+func rotate_spirit(_spirit_3d : Node3D,_old_pos : ms_constants.POSITION, _position : ms_constants.POSITION, target_circle_child : int) :
+	const _DURATION = 1
+	
+	var _global_pos_old = _spirit_3d.global_position
+	var _global_pos_old_target = Node3D.new()
+	add_child(_global_pos_old_target)
+	_global_pos_old_target.global_position = _global_pos_old
+	
+	_spirit_3d.get_parent().remove_child(_spirit_3d)
+	add_child(_spirit_3d)
+	_spirit_3d.global_position = _global_pos_old
+	
+	var target
+	match _position:
+		ms_constants.POSITION.LEFT:
+			spirit_left_anchor = _spirit_3d
+			target = spirit_left_target
+		ms_constants.POSITION.RIGHT:
+			spirit_right_anchor = _spirit_3d
+			target = spirit_right_target
+		ms_constants.POSITION.CENTER:
+			spirit_front_anchor = _spirit_3d
+			target = spirit_front_target
+	_spirit_3d.change_spirit_size(get_spirit_scale(ms_constants.position_to_index(_position)), _DURATION)
+	
+	var circle_target
+	if ((_old_pos == ms_constants.POSITION.LEFT or _old_pos == ms_constants.POSITION.RIGHT) 
+		and (_position == ms_constants.POSITION.LEFT or _position == ms_constants.POSITION.RIGHT)) :
+		circle_target = spirit_left_right_circle_target
+	elif (_position == ms_constants.POSITION.LEFT or _old_pos == ms_constants.POSITION.LEFT) : # elif to take less space
+		circle_target = spirit_center_left_circle_target
+	else :
+		circle_target = spirit_center_right_circle_target
+	
+	_spirit_3d.movement_done.connect(func() :
+		_global_pos_old_target.queue_free()
+		animation_done.emit.call_deferred()
+	, CONNECT_ONE_SHOT)
+	_spirit_3d.move_to_bezier(_global_pos_old_target, target, circle_target.get_child(target_circle_child), _DURATION, Tween.EASE_IN_OUT, Tween.TRANS_LINEAR)
+	
 
 func get_spirit_target_from_pos(_position : ms_constants.POSITION) :
 	match _position :
@@ -61,6 +103,8 @@ func set_camera(_camera : Camera3D) :
 func get_spirit_scale(_position : int) -> float :
 	if _position == ms_constants.position_to_index(ms_constants.POSITION.CENTER) :
 		return enemy_spirit_size
+	if _position == ms_constants.position_to_index(ms_constants.POSITION.RIGHT) and is_friend :
+		return friend_right_spirit_size_override
 	return friend_spirit_size if is_friend else enemy_spirit_size
 
 func set_spirit_size() :

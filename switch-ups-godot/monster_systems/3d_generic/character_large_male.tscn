@@ -79,7 +79,8 @@ spirit_left_right_circle_target = NodePath("SpiritCenterTarget/RotateLeftRightCi
 spirit_center_left_circle_target = NodePath("SpiritCenterTarget/RotateCenterLeftCircle")
 spirit_center_right_circle_target = NodePath("SpiritCenterTarget/RotateCenterRightCircle")
 spirit_party_circle_target = NodePath("SpiritCenterTarget/RotatePartyCircle")
-friend_spirit_size = 0.05
+friend_spirit_size = 0.07
+friend_right_spirit_size_override = 0.07
 enemy_spirit_size = 0.1
 
 [node name="Root" parent="." index="0"]
@@ -176,14 +177,14 @@ script = ExtResource("21_bldix")
 transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0, 0, 0)
 
 [node name="SpiritOneAnchor" type="Node3D" parent="." index="3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.835739, 1.10563, -0.242773)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.835739, 1.24428, -0.242773)
 script = ExtResource("21_bldix")
 
 [node name="Spirit" parent="SpiritOneAnchor" index="0" instance=ExtResource("20_mf166")]
 transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0, 0, 0)
 
 [node name="SpiritTwoAnchor" type="Node3D" parent="." index="4"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.660146, 1.29823, -0.343568)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.660146, 1.28287, -0.343568)
 script = ExtResource("21_bldix")
 
 [node name="Spirit" parent="SpiritTwoAnchor" index="0" instance=ExtResource("20_mf166")]
@@ -196,10 +197,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.04065, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.162635, 0.653439)
 
 [node name="SpiritLeftTarget" type="Node3D" parent="SpiritCenterTarget" index="1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.835739, 0.0649805, -0.242773)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.835739, 0.181268, -0.242773)
 
 [node name="SpiritRightTarget" type="Node3D" parent="SpiritCenterTarget" index="2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.660146, 0.257585, -0.343568)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.660146, 0.242788, -0.343568)
 
 [node name="SpiritPartyTarget" type="Node3D" parent="SpiritCenterTarget" index="3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.244023, -0.368548, 0.00652775)
