@@ -214,4 +214,21 @@ func begin_battle() :
 			animation_done.emit.call_deferred()
 		,CONNECT_ONE_SHOT)
 	
+func change_stat(_position : ms_constants.POSITION, _change : float) :
+	var _spirit
 	
+	match _position :
+		ms_constants.POSITION.CENTER :
+			_spirit = spirit_front_anchor.get_child(0)
+		ms_constants.POSITION.LEFT :
+			_spirit = spirit_left_anchor.get_child(0)
+		ms_constants.POSITION.RIGHT :
+			_spirit = spirit_right_anchor.get_child(0)
+		_ :
+			animation_done.emit() # Technically possible? In any case, this shouldn't crash
+			return
+	
+	_spirit.play_stat_change(_change)
+	_spirit.stat_change_anim_done.connect(func() :
+		animation_done.emit()
+	, CONNECT_ONE_SHOT)

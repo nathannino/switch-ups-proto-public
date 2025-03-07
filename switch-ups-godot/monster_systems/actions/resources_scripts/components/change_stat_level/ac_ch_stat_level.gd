@@ -47,6 +47,12 @@ func handle_client(battle_log : Dictionary, battle_root : Node) :
 		ms_constants.STATS.LUCK:
 			spirit.luck_change += value
 			battle_root.enter_log_text("TR_BTLLOG_CH_STAT_LEVEL_"+keyadd+"_F", notr_dict, tr_dict, 1)
+	battle_root.pause_battle_log()
+	var char = battle_root.get_3d_character(target_info["target_id"])
+	char.animation_done.connect(func() :
+		battle_root.play_battle_log()
+	, CONNECT_ONE_SHOT)
+	char.change_stat(ms_constants.index_to_position(target_info["target"]), value)
 
 func already_handled_server(battle_log : Array, position : int) :
 	return ms_constants.ACTION_COMPONENT_HANDLE_STATE.GET_SIBLING

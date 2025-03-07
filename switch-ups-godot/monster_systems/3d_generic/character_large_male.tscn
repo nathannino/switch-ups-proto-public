@@ -20,7 +20,7 @@
 [ext_resource type="AnimationLibrary" uid="uid://dcwdn5wkcjd7c" path="res://Kenney Assets/Animated Characters Bundle/Animations/run.fbx" id="17_s2k2g"]
 [ext_resource type="AnimationLibrary" uid="uid://ddshfh78ah3fs" path="res://Kenney Assets/Animated Characters Bundle/Animations/shoot.fbx" id="18_imokf"]
 [ext_resource type="AnimationLibrary" uid="uid://j4d01r6u15kx" path="res://Kenney Assets/Animated Characters Bundle/Animations/walk.fbx" id="19_ginm3"]
-[ext_resource type="PackedScene" uid="uid://ope0vgwhns7r" path="res://monster_systems/spirits/spirit.tscn" id="20_mf166"]
+[ext_resource type="PackedScene" uid="uid://ope0vgwhns7r" path="res://monster_systems/spirits/3d/spirit.tscn" id="20_mf166"]
 [ext_resource type="Script" path="res://monster_systems/3d_generic/spirit_anchor.gd" id="21_bldix"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ut5m7"]

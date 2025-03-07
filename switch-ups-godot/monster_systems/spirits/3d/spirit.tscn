@@ -1,7 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://ope0vgwhns7r"]
+[gd_scene load_steps=12 format=3 uid="uid://ope0vgwhns7r"]
 
 [ext_resource type="Texture2D" uid="uid://masa1osx0s86" path="res://monster_systems/spirits/art/unknown.png" id="1_plwqg"]
 [ext_resource type="Shader" path="res://shaders/spirit_ball.gdshader" id="1_uvler"]
+[ext_resource type="PackedScene" uid="uid://cytuswl4xhq50" path="res://monster_systems/spirits/3d/stat_lower.tscn" id="3_mfgpo"]
+[ext_resource type="PackedScene" uid="uid://c0ef3gpu7n0nx" path="res://monster_systems/spirits/3d/stat_higher.tscn" id="4_dpklx"]
 
 [sub_resource type="GDScript" id="GDScript_fq4ef"]
 script/source = "extends Node3D
@@ -11,6 +13,12 @@ var camera : Camera3D
 
 @export var spirit_spirte : MeshInstance3D
 @export var radius : float
+
+@export_category(\"stat anims\")
+@export var stat_anim_lower : Node3D
+@export var stat_anim_higher : Node3D
+
+signal stat_change_anim_done
 
 func _tween() :
 	var pos = get_point()
@@ -51,6 +59,18 @@ func set_spirit(spirit : ms_spirit) :
 
 func set_spirit_active(_spirit_active : ms_spirit_active) :
 	set_spirit(SpiritDictionary.spirits[_spirit_active.key])
+
+func play_stat_change(change: int) :
+	if change > 0 :
+		stat_anim_higher.play()
+		stat_anim_higher.animation_done.connect(func() :
+			stat_change_anim_done.emit()
+		, CONNECT_ONE_SHOT)
+	else :
+		stat_anim_lower.play()
+		stat_anim_lower.animation_done.connect(func() :
+			stat_change_anim_done.emit()
+		, CONNECT_ONE_SHOT)
 "
 
 [sub_resource type="SphereMesh" id="SphereMesh_wmpj6"]
@@ -92,11 +112,14 @@ emission = Color(0, 0, 0.8, 1)
 backlight_enabled = true
 backlight = Color(1, 1, 1, 1)
 
-[node name="Spirit" type="Node3D" node_paths=PackedStringArray("center", "spirit_spirte")]
+[node name="Spirit" type="Node3D" node_paths=PackedStringArray("center", "spirit_spirte", "stat_anim_lower", "stat_anim_higher")]
+transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0, 0, 0)
 script = SubResource("GDScript_fq4ef")
 center = NodePath("center")
 spirit_spirte = NodePath("center/MeshInstance3D")
 radius = 0.1
+stat_anim_lower = NodePath("StatLower")
+stat_anim_higher = NodePath("StatHigher")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
@@ -109,3 +132,7 @@ surface_material_override/0 = SubResource("ShaderMaterial_qxfs0")
 transform = Transform3D(-1, -8.74228e-08, 3.82137e-15, 0, -4.37114e-08, -1, 8.74228e-08, -1, 4.37114e-08, 0, 0, -0.999637)
 mesh = SubResource("PlaneMesh_sefvg")
 surface_material_override/0 = SubResource("StandardMaterial3D_bxpr0")
+
+[node name="StatLower" parent="." instance=ExtResource("3_mfgpo")]
+
+[node name="StatHigher" parent="." instance=ExtResource("4_dpklx")]

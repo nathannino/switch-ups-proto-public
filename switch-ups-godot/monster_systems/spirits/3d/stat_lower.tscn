@@ -1,0 +1,74 @@
+[gd_scene load_steps=10 format=3 uid="uid://cytuswl4xhq50"]
+
+[ext_resource type="Script" path="res://monster_systems/spirits/3d/stat_anim_3d.gd" id="1_ekbuf"]
+[ext_resource type="Shader" uid="uid://dlcbb7iofx6g5" path="res://monster_systems/spirits/3d/stat_change_shader.tres" id="1_q0lwc"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_u5f0e"]
+lightmap_size_hint = Vector2i(17, 9)
+radius = 4.0
+height = 8.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e5x4p"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("1_q0lwc")
+shader_parameter/color = Color(0.0588235, 0.054902, 1, 1)
+shader_parameter/progress = 0.364
+
+[sub_resource type="Curve" id="Curve_8v04f"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.118211, 1), 0.0, 0.0, 0, 0, Vector2(0.686901, 1), 0.0, 0.0, 0, 0, Vector2(0.926518, 0), 0.41534, 0.41534, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 5
+
+[sub_resource type="CurveTexture" id="CurveTexture_2qjei"]
+curve = SubResource("Curve_8v04f")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_20et1"]
+emission_shape_scale = Vector3(0.5, 0.5, 0.5)
+emission_shape = 6
+emission_ring_axis = Vector3(0, 1, 0)
+emission_ring_height = 0.0
+emission_ring_radius = 9.0
+emission_ring_inner_radius = 8.0
+direction = Vector3(0, -1, 0)
+spread = 0.0
+initial_velocity_min = 16.0
+initial_velocity_max = 16.0
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_2qjei")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_obkxu"]
+resource_local_to_scene = true
+albedo_color = Color(1.02609e-05, 0.0166567, 0.131498, 1)
+metallic = 0.67
+metallic_specular = 1.0
+metallic_texture_channel = 2
+roughness_texture_channel = 2
+emission_enabled = true
+emission = Color(0.0018216, 0.0527034, 0.582073, 1)
+emission_energy_multiplier = 9.0
+rim_enabled = true
+clearcoat = 0.63
+anisotropy = -1.0
+disable_receive_shadows = true
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_xqigx"]
+material = SubResource("StandardMaterial3D_obkxu")
+radius = 0.05
+height = 0.3
+
+[node name="Node3D" type="Node3D" node_paths=PackedStringArray("ball", "particles")]
+script = ExtResource("1_ekbuf")
+ball = NodePath("MeshInstance3D")
+particles = NodePath("GPUParticles3D")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_u5f0e")
+surface_material_override/0 = SubResource("ShaderMaterial_e5x4p")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.01139, 0)
+amount = 10
+lifetime = 0.5
+explosiveness = 0.37
+process_material = SubResource("ParticleProcessMaterial_20et1")
+draw_pass_1 = SubResource("CapsuleMesh_xqigx")

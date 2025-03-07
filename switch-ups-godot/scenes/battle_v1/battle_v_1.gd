@@ -100,6 +100,12 @@ func get_active_spirit(pid,sindex) :
 	else :
 		return enemy_team[sindex]
 
+func get_3d_character(pid) :
+	if pid == player_id :
+		return friend_character
+	else :
+		return enemy_character
+
 func change_player_hp(pid,change_value) :
 	if pid == player_id :
 		friend_hp += change_value
