@@ -5,8 +5,7 @@ extends MeshInstance3D
 signal animation_done
 
 const CONCRETE = "concrete_attack"
-#const ABSTRACT = "abstract_attack" # TODO : implement this
-const ABSTRACT = "concrete_attack" # FIXME : delete this
+const ABSTRACT = "abstract_attack" # TODO : implement this
 
 func _ready() -> void:
 	animation.animation_finished.connect(func(_value) :

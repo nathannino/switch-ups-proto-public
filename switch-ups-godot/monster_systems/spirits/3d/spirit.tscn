@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://ope0vgwhns7r"]
+[gd_scene load_steps=24 format=3 uid="uid://ope0vgwhns7r"]
 
 [ext_resource type="Texture2D" uid="uid://masa1osx0s86" path="res://monster_systems/spirits/art/unknown.png" id="1_plwqg"]
 [ext_resource type="Shader" path="res://shaders/spirit_ball.gdshader" id="1_uvler"]
@@ -7,6 +7,7 @@
 [ext_resource type="Shader" uid="uid://x3k1pjjplqdd" path="res://monster_systems/spirits/3d/attack_effect.tres" id="5_v7aob"]
 [ext_resource type="Texture2D" uid="uid://beunnlf5g35ur" path="res://monster_systems/actions/effects/attack_concrete.svg" id="5_xm3yf"]
 [ext_resource type="Script" path="res://monster_systems/spirits/3d/animations.gd" id="6_42c40"]
+[ext_resource type="Texture2D" uid="uid://b1pawseunm44f" path="res://monster_systems/actions/effects/attack_abstract.svg" id="8_dx6dt"]
 
 [sub_resource type="GDScript" id="GDScript_fq4ef"]
 script/source = "extends Node3D
@@ -17,7 +18,9 @@ var camera : Camera3D
 @export var spirit_spirte : MeshInstance3D
 @export var radius : float
 
+@export_category(\"2d effects\")
 @export var attack_anim : Node3D
+
 
 @export_category(\"stat anims\")
 @export var stat_anim_lower : Node3D
@@ -34,6 +37,7 @@ func _tween() :
 	tween.tween_callback(_tween)
 
 func _ready() :
+	attack_anim.hide() # perf reasons
 	_tween()
 
 # https://karthikkaranth.me/blog/generating-random-points-in-a-sphere/#discarding-values-outside-the-sphere
@@ -79,15 +83,19 @@ func play_stat_change(change: int) :
 		, CONNECT_ONE_SHOT)
 
 func attack_concrete(color : Color, damage : float) :
+	attack_anim.show()
 	attack_anim.set_color(color)
 	attack_anim.animation_done.connect(func() :
+		attack_anim.hide()
 		damage_anim_done.emit()
 	, CONNECT_ONE_SHOT)
 	attack_anim.play_concrete()
 
 func attack_abstract(color : Color, damage : float) :
+	attack_anim.show()
 	attack_anim.set_color(color)
 	attack_anim.animation_done.connect(func() :
+		attack_anim.hide()
 		damage_anim_done.emit()
 	, CONNECT_ONE_SHOT)
 	attack_anim.play_abstract()
@@ -146,37 +154,9 @@ resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("5_v7aob")
 shader_parameter/color = Color(1, 1, 1, 1)
-shader_parameter/percent = 0.5
+shader_parameter/dotfrequency = 100.0
+shader_parameter/percent = 0.2
 shader_parameter/tex_frg_2 = SubResource("ViewportTexture_n6j3j")
-
-[sub_resource type="Animation" id="Animation_iotvf"]
-resource_name = "concrete_attack"
-length = 1.0
-step = 0.0166667
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ConcreteAttackFirst:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.633333),
-"transitions": PackedFloat32Array(1, 0.5),
-"update": 0,
-"values": [Vector2(1, 1), Vector2(0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("ConcreteAttackSecond:scale")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0.366667, 0.916667),
-"transitions": PackedFloat32Array(1, 0.5),
-"update": 0,
-"values": [Vector2(1, 1), Vector2(1e-05, 1e-05)]
-}
 
 [sub_resource type="Animation" id="Animation_r60ys"]
 length = 0.001
@@ -190,7 +170,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(1, 1)]
+"values": [Vector2(0, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -204,10 +184,115 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(1e-05, 1e-05)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AbstractAttackFirst:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AbstractAttackThird:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1.49697, 1.49697)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("AbstractAttackSecond:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.8, 0.8)]
+}
+
+[sub_resource type="Animation" id="Animation_ftkcg"]
+resource_name = "abstract_attack"
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AbstractAttackFirst:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.633333),
+"transitions": PackedFloat32Array(1, 0.5),
+"update": 0,
+"values": [Vector2(0.8, 0.8), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AbstractAttackThird:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.366667, 0.916667),
+"transitions": PackedFloat32Array(1, 0.5),
+"update": 0,
+"values": [Vector2(0.8, 0.8), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AbstractAttackSecond:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.2, 0.766667),
+"transitions": PackedFloat32Array(1, 0.5),
+"update": 0,
+"values": [Vector2(0.8, 0.8), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_iotvf"]
+resource_name = "concrete_attack"
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ConcreteAttackFirst:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.633333),
+"transitions": PackedFloat32Array(1, 0.5),
+"update": 0,
+"values": [Vector2(2.6, 2.6), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ConcreteAttackSecond:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.366667, 0.916667),
+"transitions": PackedFloat32Array(1, 0.5),
+"update": 0,
+"values": [Vector2(2.6, 2.6), Vector2(1e-05, 1e-05)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_u5y0y"]
 _data = {
 "RESET": SubResource("Animation_r60ys"),
+"abstract_attack": SubResource("Animation_ftkcg"),
 "concrete_attack": SubResource("Animation_iotvf")
 }
 
@@ -246,6 +331,7 @@ texture = SubResource("ViewportTexture_flufn")
 
 [node name="Animations" type="MeshInstance3D" parent="." node_paths=PackedStringArray("animation")]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -3.21511)
+cast_shadow = 0
 mesh = SubResource("PlaneMesh_f2w53")
 surface_material_override/0 = SubResource("ShaderMaterial_h0m6t")
 script = ExtResource("6_42c40")
@@ -254,6 +340,8 @@ animation = NodePath("SubViewport/AnimationPlayer")
 [node name="SubViewport" type="SubViewport" parent="Animations"]
 disable_3d = true
 transparent_bg = true
+use_hdr_2d = true
+canvas_cull_mask = 4293918721
 size = Vector2i(500, 500)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Animations/SubViewport"]
@@ -263,9 +351,25 @@ libraries = {
 
 [node name="ConcreteAttackFirst" type="Sprite2D" parent="Animations/SubViewport"]
 position = Vector2(250, 250)
+scale = Vector2(1e-05, 1e-05)
 texture = ExtResource("5_xm3yf")
+
+[node name="AbstractAttackFirst" type="Sprite2D" parent="Animations/SubViewport"]
+position = Vector2(250, 250)
+scale = Vector2(1e-05, 1e-05)
+texture = ExtResource("8_dx6dt")
+
+[node name="AbstractAttackSecond" type="Sprite2D" parent="Animations/SubViewport"]
+position = Vector2(250, 250)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("8_dx6dt")
 
 [node name="ConcreteAttackSecond" type="Sprite2D" parent="Animations/SubViewport"]
 position = Vector2(250, 250)
 scale = Vector2(1e-05, 1e-05)
 texture = ExtResource("5_xm3yf")
+
+[node name="AbstractAttackThird" type="Sprite2D" parent="Animations/SubViewport"]
+position = Vector2(250, 250)
+scale = Vector2(1.49697, 1.49697)
+texture = ExtResource("8_dx6dt")

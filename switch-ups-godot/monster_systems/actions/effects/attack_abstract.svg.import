@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://beunnlf5g35ur"
-path="res://.godot/imported/attack_concrete.svg-e4825e4f1965e99605944920c523a838.ctex"
+uid="uid://b1pawseunm44f"
+path="res://.godot/imported/attack_abstract.svg-9ab636771ae542cca48c3d8bf26b8557.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://monster_systems/actions/effects/attack_concrete.svg"
-dest_files=["res://.godot/imported/attack_concrete.svg-e4825e4f1965e99605944920c523a838.ctex"]
+source_file="res://monster_systems/actions/effects/attack_abstract.svg"
+dest_files=["res://.godot/imported/attack_abstract.svg-9ab636771ae542cca48c3d8bf26b8557.ctex"]
 
 [params]
 
@@ -32,6 +32,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=0
-svg/scale=2.0
+svg/scale=1.0
 editor/scale_with_editor_scale=false
 editor/convert_colors_with_editor_theme=false
