@@ -48,22 +48,22 @@ default_input_values = [0, 0.0, 1, 1.5]
 operator = 2
 
 [sub_resource type="VisualShaderNodeFrame" id="VisualShaderNodeFrame_msmdk"]
-size = Vector2(764, 406)
+size = Vector2(764, 138)
 title = "horizontal"
 attached_nodes = PackedInt32Array(13, 15, 14)
 
 [sub_resource type="VisualShaderNodeFrame" id="VisualShaderNodeFrame_d3df4"]
-size = Vector2(584, 386)
+size = Vector2(584, 138)
 title = "Position"
 attached_nodes = PackedInt32Array(4, 5)
 
 [sub_resource type="VisualShaderNodeFrame" id="VisualShaderNodeFrame_6vsci"]
-size = Vector2(744, 451)
+size = Vector2(744, 138)
 title = "Second Stripe"
 attached_nodes = PackedInt32Array(18, 20, 22)
 
 [sub_resource type="VisualShaderNodeFrame" id="VisualShaderNodeFrame_6iy4n"]
-size = Vector2(604, 451)
+size = Vector2(604, 218)
 title = "First Stripe"
 attached_nodes = PackedInt32Array(16, 12)
 
@@ -170,7 +170,6 @@ void fragment() {
 
 }
 "
-graph_offset = Vector2(-832.004, -279.481)
 modes/cull = 2
 nodes/fragment/3/node = SubResource("VisualShaderNodeFloatParameter_8xv8r")
 nodes/fragment/3/position = Vector2(-1300, -260)

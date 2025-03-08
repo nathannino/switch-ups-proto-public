@@ -1,9 +1,12 @@
-[gd_scene load_steps=12 format=3 uid="uid://ope0vgwhns7r"]
+[gd_scene load_steps=22 format=3 uid="uid://ope0vgwhns7r"]
 
 [ext_resource type="Texture2D" uid="uid://masa1osx0s86" path="res://monster_systems/spirits/art/unknown.png" id="1_plwqg"]
 [ext_resource type="Shader" path="res://shaders/spirit_ball.gdshader" id="1_uvler"]
 [ext_resource type="PackedScene" uid="uid://cytuswl4xhq50" path="res://monster_systems/spirits/3d/stat_lower.tscn" id="3_mfgpo"]
 [ext_resource type="PackedScene" uid="uid://c0ef3gpu7n0nx" path="res://monster_systems/spirits/3d/stat_higher.tscn" id="4_dpklx"]
+[ext_resource type="Shader" uid="uid://x3k1pjjplqdd" path="res://monster_systems/spirits/3d/attack_effect.tres" id="5_v7aob"]
+[ext_resource type="Texture2D" uid="uid://beunnlf5g35ur" path="res://monster_systems/actions/effects/attack_concrete.svg" id="5_xm3yf"]
+[ext_resource type="Script" path="res://monster_systems/spirits/3d/animations.gd" id="6_42c40"]
 
 [sub_resource type="GDScript" id="GDScript_fq4ef"]
 script/source = "extends Node3D
@@ -14,11 +17,14 @@ var camera : Camera3D
 @export var spirit_spirte : MeshInstance3D
 @export var radius : float
 
+@export var attack_anim : Node3D
+
 @export_category(\"stat anims\")
 @export var stat_anim_lower : Node3D
 @export var stat_anim_higher : Node3D
 
 signal stat_change_anim_done
+signal damage_anim_done
 
 func _tween() :
 	var pos = get_point()
@@ -71,6 +77,20 @@ func play_stat_change(change: int) :
 		stat_anim_lower.animation_done.connect(func() :
 			stat_change_anim_done.emit()
 		, CONNECT_ONE_SHOT)
+
+func attack_concrete(color : Color, damage : float) :
+	attack_anim.set_color(color)
+	attack_anim.animation_done.connect(func() :
+		damage_anim_done.emit()
+	, CONNECT_ONE_SHOT)
+	attack_anim.play_concrete()
+
+func attack_abstract(color : Color, damage : float) :
+	attack_anim.set_color(color)
+	attack_anim.animation_done.connect(func() :
+		damage_anim_done.emit()
+	, CONNECT_ONE_SHOT)
+	attack_anim.play_abstract()
 "
 
 [sub_resource type="SphereMesh" id="SphereMesh_wmpj6"]
@@ -112,12 +132,92 @@ emission = Color(0, 0, 0.8, 1)
 backlight_enabled = true
 backlight = Color(1, 1, 1, 1)
 
-[node name="Spirit" type="Node3D" node_paths=PackedStringArray("center", "spirit_spirte", "stat_anim_lower", "stat_anim_higher")]
+[sub_resource type="ViewportTexture" id="ViewportTexture_flufn"]
+viewport_path = NodePath("Animations/SubViewport")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_f2w53"]
+size = Vector2(20, 20)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_n6j3j"]
+viewport_path = NodePath("Animations/SubViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h0m6t"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("5_v7aob")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/percent = 0.5
+shader_parameter/tex_frg_2 = SubResource("ViewportTexture_n6j3j")
+
+[sub_resource type="Animation" id="Animation_iotvf"]
+resource_name = "concrete_attack"
+length = 1.0
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ConcreteAttackFirst:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.633333),
+"transitions": PackedFloat32Array(1, 0.5),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ConcreteAttackSecond:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.366667, 0.916667),
+"transitions": PackedFloat32Array(1, 0.5),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1e-05, 1e-05)]
+}
+
+[sub_resource type="Animation" id="Animation_r60ys"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ConcreteAttackFirst:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ConcreteAttackSecond:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_u5y0y"]
+_data = {
+"RESET": SubResource("Animation_r60ys"),
+"concrete_attack": SubResource("Animation_iotvf")
+}
+
+[node name="Spirit" type="Node3D" node_paths=PackedStringArray("center", "spirit_spirte", "attack_anim", "stat_anim_lower", "stat_anim_higher")]
 transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0, 0, 0)
 script = SubResource("GDScript_fq4ef")
 center = NodePath("center")
 spirit_spirte = NodePath("center/MeshInstance3D")
 radius = 0.1
+attack_anim = NodePath("Animations")
 stat_anim_lower = NodePath("StatLower")
 stat_anim_higher = NodePath("StatHigher")
 
@@ -134,5 +234,38 @@ mesh = SubResource("PlaneMesh_sefvg")
 surface_material_override/0 = SubResource("StandardMaterial3D_bxpr0")
 
 [node name="StatLower" parent="." instance=ExtResource("3_mfgpo")]
+visible = false
 
 [node name="StatHigher" parent="." instance=ExtResource("4_dpklx")]
+visible = false
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -3.1916)
+visible = false
+texture = SubResource("ViewportTexture_flufn")
+
+[node name="Animations" type="MeshInstance3D" parent="." node_paths=PackedStringArray("animation")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -3.21511)
+mesh = SubResource("PlaneMesh_f2w53")
+surface_material_override/0 = SubResource("ShaderMaterial_h0m6t")
+script = ExtResource("6_42c40")
+animation = NodePath("SubViewport/AnimationPlayer")
+
+[node name="SubViewport" type="SubViewport" parent="Animations"]
+disable_3d = true
+transparent_bg = true
+size = Vector2i(500, 500)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Animations/SubViewport"]
+libraries = {
+"": SubResource("AnimationLibrary_u5y0y")
+}
+
+[node name="ConcreteAttackFirst" type="Sprite2D" parent="Animations/SubViewport"]
+position = Vector2(250, 250)
+texture = ExtResource("5_xm3yf")
+
+[node name="ConcreteAttackSecond" type="Sprite2D" parent="Animations/SubViewport"]
+position = Vector2(250, 250)
+scale = Vector2(1e-05, 1e-05)
+texture = ExtResource("5_xm3yf")

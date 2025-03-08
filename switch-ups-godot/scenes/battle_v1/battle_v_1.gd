@@ -52,6 +52,7 @@ var enemy_hp : float :
 @export var temp_log_container : Container
 
 var cancel_show_node : Control
+var action_type : ms_constants.TYPE
 #region required by actions
 var friend_team : Array[ms_spirit_active] = []
 var enemy_team : Array[ms_spirit_active] = []
@@ -111,6 +112,17 @@ func change_player_hp(pid,change_value) :
 		friend_hp += change_value
 	else :
 		enemy_hp += change_value
+
+# TODO : Handle damage number, player damage, animations, etc...
+func damage_visual(_pid : int,_spos : ms_constants.POSITION,_sdmg : float,_pdmg : float,_weak : ms_constants.WEAK_RES,_flavor : ms_constants.ATK_FLAVOR) :
+	var char = friend_character if _pid == player_id else enemy_character
+	var _color = Color(1,1,1)
+	pause_battle_log()
+	char.animation_done.connect(func() :
+		play_battle_log()
+	, CONNECT_ONE_SHOT)
+	char.attack_3d(_spos,_sdmg,_pdmg,_weak,_flavor,_color)
+	pass
 
 func rotate_visual(pid_one,spirit_one_index,pid_two,spirit_two_index) :
 	var team_one = friend_team if pid_one == player_id else enemy_team
@@ -260,6 +272,8 @@ func handle_battle_logs() :
 			var _team = friend_team if log_player_id == player_id else enemy_team
 			var _spirit = _team[log["spirit"]]
 			current_action_battle_log = _spirit.get_action(log["action"])
+			
+			action_type = current_action_battle_log.type
 			
 			var _spirit_name = SpiritDictionary.spirits[_spirit.key].name
 			var _action_name = current_action_battle_log.name

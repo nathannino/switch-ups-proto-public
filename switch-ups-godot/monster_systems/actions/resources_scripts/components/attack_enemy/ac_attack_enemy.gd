@@ -34,6 +34,7 @@ func handle_client(battle_log : Dictionary, battle_root : Node) :
 	if player_dmg > 0 :
 		battle_root.change_player_hp(target_info["target_id"],-player_dmg)
 		battle_root.enter_log_text("TR_BTLLOG_AC_ATTACK_OVERFLOW",{"dmg":player_dmg})
+	battle_root.damage_visual(target_info["target_id"],ms_constants.index_to_position(target_info["target"]),battle_log["spirit_damage"],player_dmg,battle_log["weak_status"],atk_flavor)
 
 func already_handled_server(battle_log : Array, position : int) :
 	return ms_constants.ACTION_COMPONENT_HANDLE_STATE.GET_SIBLING

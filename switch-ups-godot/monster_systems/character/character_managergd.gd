@@ -232,3 +232,15 @@ func change_stat(_position : ms_constants.POSITION, _change : float) :
 	_spirit.stat_change_anim_done.connect(func() :
 		animation_done.emit()
 	, CONNECT_ONE_SHOT)
+
+func attack_3d(_spos : ms_constants.POSITION,_sdmg : float,_pdmg : float,_weak : ms_constants.WEAK_RES,_flavor : ms_constants.ATK_FLAVOR,_color : Color) :
+	var _spirit = get_spirit_anchor_from_pos(_spos).get_child(0)
+	_spirit.damage_anim_done.connect(func() :
+		animation_done.emit() # TODO : Handle player damage + damage number or whatever
+	, CONNECT_ONE_SHOT)
+	match _flavor :
+		ms_constants.ATK_FLAVOR.CONCRETE :
+			_spirit.attack_concrete(_color, _sdmg)
+		ms_constants.ATK_FLAVOR.ABSTRACT :
+			_spirit.attack_abstract(_color, _sdmg)
+	pass
