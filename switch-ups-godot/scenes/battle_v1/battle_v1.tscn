@@ -1,12 +1,15 @@
-[gd_scene load_steps=25 format=3 uid="uid://cwp5xmvuwvhph"]
+[gd_scene load_steps=28 format=3 uid="uid://cwp5xmvuwvhph"]
 
 [ext_resource type="Script" path="res://scenes/battle_v1/battle_v_1.gd" id="1_hot38"]
 [ext_resource type="PackedScene" uid="uid://bjwcj7an8i718" path="res://globals/utility_scenes/ui_component/monster_button.tscn" id="2_12bl6"]
-[ext_resource type="Script" path="res://scenes/battle_v1/team_display_row.gd" id="2_ur35w"]
+[ext_resource type="Script" path="res://scenes/battle_v1/uiv1/team_display_row.gd" id="2_ur35w"]
 [ext_resource type="PackedScene" uid="uid://diohlpvbxl3oh" path="res://globals/utility_scenes/menus/spirit_summary/spirit_summary.tscn" id="4_5f312"]
-[ext_resource type="Script" path="res://scenes/battle_v1/move_list.gd" id="4_6ihod"]
+[ext_resource type="Script" path="res://scenes/battle_v1/uiv1/move_list.gd" id="4_6ihod"]
 [ext_resource type="Script" path="res://monster_systems/constants.gd" id="4_6ymry"]
 [ext_resource type="PackedScene" uid="uid://l5cmnn36hklt" path="res://globals/utility_scenes/ui_component/move_holder.tscn" id="5_vk5bl"]
+[ext_resource type="Script" path="res://scenes/battle_v1/uiv2/uiv2_team.gd" id="8_jhuc8"]
+[ext_resource type="PackedScene" uid="uid://bejpglhgtx7ds" path="res://scenes/battle_v1/uiv2/SpiritTeamDisplay/spirit_team_display.tscn" id="8_q2phu"]
+[ext_resource type="Script" path="res://scenes/battle_v1/uiv2/rotate_button.gd" id="9_y30e1"]
 
 [sub_resource type="Gradient" id="Gradient_yw4tm"]
 colors = PackedColorArray(0.0901961, 0.0901961, 0.0901961, 1, 0.0885599, 0.0885599, 0.0885599, 1)
@@ -244,13 +247,13 @@ timer = NodePath("ActionTimer")
 interrupt_anchor = NodePath("InterruptAnchor")
 await_cancel = NodePath("AwaitCancel")
 battle_env_root = NodePath("BattleEnvRoot")
-action_box = NodePath("VBoxContainer/Actions/ActionBox")
-main_action_menu = NodePath("VBoxContainer/Actions/ActionBox/Control2/MainActionMenu")
-move_list = NodePath("VBoxContainer/Actions/MoveList")
-enemy_team_ui = NodePath("VBoxContainer/EnemyTeam")
-friend_team_ui = NodePath("VBoxContainer/PlayerTeam")
-temp_log = NodePath("VBoxContainer/Actions/PanelContainer/TempLogTurn")
-temp_log_container = NodePath("VBoxContainer/Actions/PanelContainer")
+action_box = NodePath("OldUi/Actions/ActionBox")
+main_action_menu = NodePath("OldUi/Actions/ActionBox/Control2/MainActionMenu")
+move_list = NodePath("OldUi/Actions/MoveList")
+enemy_team_ui = NodePath("OldUi/EnemyTeam")
+friend_team_ui = NodePath("OldUi/PlayerTeam")
+temp_log = NodePath("OldUi/Actions/PanelContainer/TempLogTurn")
+temp_log_container = NodePath("OldUi/Actions/PanelContainer")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
@@ -269,7 +272,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="OldUi" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -277,7 +280,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="EnemyHP" type="TextureProgressBar" parent="VBoxContainer" node_paths=PackedStringArray("battle_root", "label")]
+[node name="EnemyHP" type="TextureProgressBar" parent="OldUi" node_paths=PackedStringArray("battle_root", "label")]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 max_value = 1000.0
@@ -289,7 +292,7 @@ script = SubResource("GDScript_rkjtq")
 battle_root = NodePath("../..")
 label = NodePath("Label")
 
-[node name="Label" type="Label" parent="VBoxContainer/EnemyHP"]
+[node name="Label" type="Label" parent="OldUi/EnemyHP"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -306,7 +309,7 @@ text = "1000
 "
 horizontal_alignment = 1
 
-[node name="EnemyTeam" type="HBoxContainer" parent="VBoxContainer" node_paths=PackedStringArray("battle_root", "summary_container", "spirit_left", "spirit_center", "spirit_right")]
+[node name="EnemyTeam" type="HBoxContainer" parent="OldUi" node_paths=PackedStringArray("battle_root", "summary_container", "spirit_left", "spirit_center", "spirit_right")]
 layout_mode = 2
 script = ExtResource("2_ur35w")
 battle_root = NodePath("../..")
@@ -315,23 +318,23 @@ spirit_left = NodePath("MonsterButtonLeft")
 spirit_center = NodePath("MonsterButtonActive")
 spirit_right = NodePath("MonsterButtonRight")
 
-[node name="MonsterButtonLeft" parent="VBoxContainer/EnemyTeam" node_paths=PackedStringArray("battle_root") instance=ExtResource("2_12bl6")]
+[node name="MonsterButtonLeft" parent="OldUi/EnemyTeam" node_paths=PackedStringArray("battle_root") instance=ExtResource("2_12bl6")]
 layout_mode = 2
 battle_root = NodePath("../../..")
 
-[node name="MonsterButtonActive" parent="VBoxContainer/EnemyTeam" node_paths=PackedStringArray("battle_root") instance=ExtResource("2_12bl6")]
+[node name="MonsterButtonActive" parent="OldUi/EnemyTeam" node_paths=PackedStringArray("battle_root") instance=ExtResource("2_12bl6")]
 layout_mode = 2
 battle_root = NodePath("../../..")
 
-[node name="MonsterButtonRight" parent="VBoxContainer/EnemyTeam" node_paths=PackedStringArray("battle_root") instance=ExtResource("2_12bl6")]
+[node name="MonsterButtonRight" parent="OldUi/EnemyTeam" node_paths=PackedStringArray("battle_root") instance=ExtResource("2_12bl6")]
 layout_mode = 2
 battle_root = NodePath("../../..")
 
-[node name="Actions" type="Control" parent="VBoxContainer"]
+[node name="Actions" type="Control" parent="OldUi"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ActionBox" type="HBoxContainer" parent="VBoxContainer/Actions"]
+[node name="ActionBox" type="HBoxContainer" parent="OldUi/Actions"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -341,16 +344,16 @@ grow_horizontal = 2
 grow_vertical = 0
 script = ExtResource("4_6ymry")
 
-[node name="Control" type="Control" parent="VBoxContainer/Actions/ActionBox"]
+[node name="Control" type="Control" parent="OldUi/Actions/ActionBox"]
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Control2" type="Control" parent="VBoxContainer/Actions/ActionBox"]
+[node name="Control2" type="Control" parent="OldUi/Actions/ActionBox"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="MainActionMenu" type="Control" parent="VBoxContainer/Actions/ActionBox/Control2" node_paths=PackedStringArray("left_control", "center_control", "right_control", "left_button", "right_button")]
+[node name="MainActionMenu" type="Control" parent="OldUi/Actions/ActionBox/Control2" node_paths=PackedStringArray("left_control", "center_control", "right_control", "left_button", "right_button")]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -370,7 +373,7 @@ right_control = NodePath("../../Control3")
 left_button = NodePath("ActionContainer/LeftButton")
 right_button = NodePath("ActionContainer/RightButton")
 
-[node name="ActionContainer" type="HBoxContainer" parent="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu"]
+[node name="ActionContainer" type="HBoxContainer" parent="OldUi/Actions/ActionBox/Control2/MainActionMenu"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -385,49 +388,49 @@ grow_vertical = 0
 theme_override_constants/separation = 40
 alignment = 1
 
-[node name="LeftButton" type="Button" parent="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer" node_paths=PackedStringArray("menu_root")]
+[node name="LeftButton" type="Button" parent="OldUi/Actions/ActionBox/Control2/MainActionMenu/ActionContainer" node_paths=PackedStringArray("menu_root")]
 layout_mode = 2
 text = "TR_BTL_ROT_LEFT"
 script = SubResource("GDScript_wqnbj")
 menu_root = NodePath("../..")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="OldUi/Actions/ActionBox/Control2/MainActionMenu/ActionContainer"]
 layout_mode = 2
 alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="AttackButton" type="Button" parent="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/HBoxContainer" node_paths=PackedStringArray("move_list", "battle_root")]
+[node name="AttackButton" type="Button" parent="OldUi/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/HBoxContainer" node_paths=PackedStringArray("move_list", "battle_root")]
 layout_mode = 2
 text = "TR_BTL_ATTACK"
 script = SubResource("GDScript_pq3xb")
 move_list = NodePath("../../../../../../MoveList")
 battle_root = NodePath("../../../../../../../..")
 
-[node name="DefenseButton" type="Button" parent="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/HBoxContainer" node_paths=PackedStringArray("battle_root", "action_root")]
+[node name="DefenseButton" type="Button" parent="OldUi/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/HBoxContainer" node_paths=PackedStringArray("battle_root", "action_root")]
 layout_mode = 2
 text = "TR_BTL_DEFENSE"
 script = SubResource("GDScript_lilf8")
 battle_root = NodePath("../../../../../../../..")
 action_root = NodePath("../../../../..")
 
-[node name="PartyButton" type="Button" parent="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/HBoxContainer" node_paths=PackedStringArray("battle_root", "action_root")]
+[node name="PartyButton" type="Button" parent="OldUi/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/HBoxContainer" node_paths=PackedStringArray("battle_root", "action_root")]
 layout_mode = 2
 text = "TR_BTL_SWITCH"
 script = SubResource("GDScript_gvnmd")
 battle_root = NodePath("../../../../../../../..")
 action_root = NodePath("../../../../..")
 
-[node name="RightButton" type="Button" parent="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer" node_paths=PackedStringArray("menu_root")]
+[node name="RightButton" type="Button" parent="OldUi/Actions/ActionBox/Control2/MainActionMenu/ActionContainer" node_paths=PackedStringArray("menu_root")]
 layout_mode = 2
 text = "TR_BTL_ROT_RIGHT"
 script = SubResource("GDScript_3dv3g")
 menu_root = NodePath("../..")
 
-[node name="Control3" type="Control" parent="VBoxContainer/Actions/ActionBox"]
+[node name="Control3" type="Control" parent="OldUi/Actions/ActionBox"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="MoveList" type="VBoxContainer" parent="VBoxContainer/Actions" node_paths=PackedStringArray("move_holder", "battle_root", "main_action_menu", "action_box", "back_left", "back_center", "back_right")]
+[node name="MoveList" type="VBoxContainer" parent="OldUi/Actions" node_paths=PackedStringArray("move_holder", "battle_root", "main_action_menu", "action_box", "back_left", "back_center", "back_right")]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -444,60 +447,60 @@ back_left = NodePath("BackContainer/AspectRatioContainer/LeftButton")
 back_center = NodePath("BackContainer/AspectRatioContainer2/CenterButton")
 back_right = NodePath("BackContainer/AspectRatioContainer3/RightButton")
 
-[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/Actions/MoveList"]
+[node name="PanelContainer" type="PanelContainer" parent="OldUi/Actions/MoveList"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/Actions/MoveList/PanelContainer" node_paths=PackedStringArray("battle_root")]
+[node name="ScrollContainer" type="ScrollContainer" parent="OldUi/Actions/MoveList/PanelContainer" node_paths=PackedStringArray("battle_root")]
 layout_mode = 2
 script = SubResource("GDScript_rx87q")
 battle_root = NodePath("../../../../..")
 
-[node name="MoveHolder" parent="VBoxContainer/Actions/MoveList/PanelContainer/ScrollContainer" instance=ExtResource("5_vk5bl")]
+[node name="MoveHolder" parent="OldUi/Actions/MoveList/PanelContainer/ScrollContainer" instance=ExtResource("5_vk5bl")]
 layout_mode = 2
 
-[node name="BackContainer" type="HBoxContainer" parent="VBoxContainer/Actions/MoveList"]
+[node name="BackContainer" type="HBoxContainer" parent="OldUi/Actions/MoveList"]
 layout_mode = 2
 alignment = 1
 
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="VBoxContainer/Actions/MoveList/BackContainer"]
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="OldUi/Actions/MoveList/BackContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="LeftButton" type="Button" parent="VBoxContainer/Actions/MoveList/BackContainer/AspectRatioContainer" node_paths=PackedStringArray("action_box", "move_list")]
+[node name="LeftButton" type="Button" parent="OldUi/Actions/MoveList/BackContainer/AspectRatioContainer" node_paths=PackedStringArray("action_box", "move_list")]
 layout_mode = 2
 text = "TR_BACK"
 script = SubResource("GDScript_sfrxn")
 action_box = NodePath("../../../../ActionBox")
 move_list = NodePath("../../..")
 
-[node name="AspectRatioContainer2" type="AspectRatioContainer" parent="VBoxContainer/Actions/MoveList/BackContainer"]
+[node name="AspectRatioContainer2" type="AspectRatioContainer" parent="OldUi/Actions/MoveList/BackContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="CenterButton" type="Button" parent="VBoxContainer/Actions/MoveList/BackContainer/AspectRatioContainer2" node_paths=PackedStringArray("action_box", "move_list")]
+[node name="CenterButton" type="Button" parent="OldUi/Actions/MoveList/BackContainer/AspectRatioContainer2" node_paths=PackedStringArray("action_box", "move_list")]
 layout_mode = 2
 text = "TR_BACK"
 script = SubResource("GDScript_sfrxn")
 action_box = NodePath("../../../../ActionBox")
 move_list = NodePath("../../..")
 
-[node name="AspectRatioContainer3" type="AspectRatioContainer" parent="VBoxContainer/Actions/MoveList/BackContainer"]
+[node name="AspectRatioContainer3" type="AspectRatioContainer" parent="OldUi/Actions/MoveList/BackContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="RightButton" type="Button" parent="VBoxContainer/Actions/MoveList/BackContainer/AspectRatioContainer3" node_paths=PackedStringArray("action_box", "move_list")]
+[node name="RightButton" type="Button" parent="OldUi/Actions/MoveList/BackContainer/AspectRatioContainer3" node_paths=PackedStringArray("action_box", "move_list")]
 layout_mode = 2
 text = "TR_BACK"
 script = SubResource("GDScript_sfrxn")
 action_box = NodePath("../../../../ActionBox")
 move_list = NodePath("../../..")
 
-[node name="Spacer" type="Control" parent="VBoxContainer/Actions/MoveList"]
+[node name="Spacer" type="Control" parent="OldUi/Actions/MoveList"]
 custom_minimum_size = Vector2(0, 3.205)
 layout_mode = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/Actions"]
+[node name="PanelContainer" type="PanelContainer" parent="OldUi/Actions"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -506,13 +509,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TempLogTurn" type="RichTextLabel" parent="VBoxContainer/Actions/PanelContainer"]
+[node name="TempLogTurn" type="RichTextLabel" parent="OldUi/Actions/PanelContainer"]
 layout_mode = 2
 bbcode_enabled = true
 fit_content = true
 scroll_following = true
 
-[node name="PlayerTeam" type="HBoxContainer" parent="VBoxContainer" node_paths=PackedStringArray("battle_root", "summary_container", "spirit_left", "spirit_center", "spirit_right")]
+[node name="PlayerTeam" type="HBoxContainer" parent="OldUi" node_paths=PackedStringArray("battle_root", "summary_container", "spirit_left", "spirit_center", "spirit_right")]
 layout_mode = 2
 script = ExtResource("2_ur35w")
 battle_root = NodePath("../..")
@@ -522,19 +525,19 @@ spirit_left = NodePath("MonsterButtonLeft")
 spirit_center = NodePath("MonsterButtonActive")
 spirit_right = NodePath("MonsterButtonRight")
 
-[node name="MonsterButtonLeft" parent="VBoxContainer/PlayerTeam" node_paths=PackedStringArray("battle_root") instance=ExtResource("2_12bl6")]
+[node name="MonsterButtonLeft" parent="OldUi/PlayerTeam" node_paths=PackedStringArray("battle_root") instance=ExtResource("2_12bl6")]
 layout_mode = 2
 battle_root = NodePath("../../..")
 
-[node name="MonsterButtonActive" parent="VBoxContainer/PlayerTeam" node_paths=PackedStringArray("battle_root") instance=ExtResource("2_12bl6")]
+[node name="MonsterButtonActive" parent="OldUi/PlayerTeam" node_paths=PackedStringArray("battle_root") instance=ExtResource("2_12bl6")]
 layout_mode = 2
 battle_root = NodePath("../../..")
 
-[node name="MonsterButtonRight" parent="VBoxContainer/PlayerTeam" node_paths=PackedStringArray("battle_root") instance=ExtResource("2_12bl6")]
+[node name="MonsterButtonRight" parent="OldUi/PlayerTeam" node_paths=PackedStringArray("battle_root") instance=ExtResource("2_12bl6")]
 layout_mode = 2
 battle_root = NodePath("../../..")
 
-[node name="FriendHP" type="TextureProgressBar" parent="VBoxContainer" node_paths=PackedStringArray("battle_root", "label")]
+[node name="FriendHP" type="TextureProgressBar" parent="OldUi" node_paths=PackedStringArray("battle_root", "label")]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 max_value = 1000.0
@@ -546,7 +549,7 @@ script = SubResource("GDScript_08te3")
 battle_root = NodePath("../..")
 label = NodePath("Label")
 
-[node name="Label" type="Label" parent="VBoxContainer/FriendHP"]
+[node name="Label" type="Label" parent="OldUi/FriendHP"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -562,6 +565,71 @@ grow_vertical = 2
 text = "1000
 "
 horizontal_alignment = 1
+
+[node name="FriendTeam" type="Control" parent="." node_paths=PackedStringArray("battle_root", "summary_container", "spirit_team_display", "action_root")]
+visible = false
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 254.0
+offset_top = -135.0
+offset_right = 294.0
+offset_bottom = -95.0
+grow_vertical = 0
+script = ExtResource("8_jhuc8")
+battle_root = NodePath("..")
+is_self = true
+summary_container = NodePath("../SummaryContainer")
+spirit_team_display = NodePath("SpiritTeamDisplay")
+action_root = NodePath("ActionRoot")
+
+[node name="SpiritTeamDisplay" parent="FriendTeam" instance=ExtResource("8_q2phu")]
+
+[node name="ActionRoot" type="Control" parent="FriendTeam"]
+anchors_preset = 0
+offset_left = -29.0
+offset_right = 11.0
+offset_bottom = 40.0
+
+[node name="RotateLeft" type="Button" parent="FriendTeam/ActionRoot" node_paths=PackedStringArray("team_root")]
+layout_mode = 0
+offset_left = -193.0
+offset_top = -76.0
+offset_right = -149.0
+offset_bottom = -45.0
+text = "LEFT"
+script = ExtResource("9_y30e1")
+team_root = NodePath("../..")
+
+[node name="RotateRight" type="Button" parent="FriendTeam/ActionRoot" node_paths=PackedStringArray("team_root")]
+layout_mode = 0
+offset_left = 139.0
+offset_top = -78.0
+offset_right = 195.0
+offset_bottom = -47.0
+text = "RIGHT"
+script = ExtResource("9_y30e1")
+team_root = NodePath("../..")
+rotate = 1
+
+[node name="EnemyTeam" type="Control" parent="." node_paths=PackedStringArray("battle_root", "summary_container", "spirit_team_display")]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -236.0
+offset_top = 146.0
+offset_right = -196.0
+offset_bottom = 186.0
+grow_horizontal = 0
+script = ExtResource("8_jhuc8")
+battle_root = NodePath("..")
+summary_container = NodePath("../SummaryContainer")
+spirit_team_display = NodePath("SpiritTeamDisplay")
+
+[node name="SpiritTeamDisplay" parent="EnemyTeam" instance=ExtResource("8_q2phu")]
 
 [node name="InterruptAnchor" type="Panel" parent="."]
 visible = false
@@ -638,15 +706,15 @@ size_flags_vertical = 3
 
 [node name="ActionTimer" type="Timer" parent="."]
 
-[connection signal="value_changed" from="VBoxContainer/EnemyHP" to="VBoxContainer/EnemyHP" method="_on_value_changed"]
-[connection signal="pressed" from="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/LeftButton" to="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/LeftButton" method="_on_pressed"]
-[connection signal="pressed" from="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/HBoxContainer/AttackButton" to="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/HBoxContainer/AttackButton" method="_on_pressed"]
-[connection signal="pressed" from="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/HBoxContainer/DefenseButton" to="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/HBoxContainer/DefenseButton" method="_on_pressed"]
-[connection signal="pressed" from="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/HBoxContainer/PartyButton" to="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/HBoxContainer/PartyButton" method="_on_pressed"]
-[connection signal="pressed" from="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/RightButton" to="VBoxContainer/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/RightButton" method="_on_pressed"]
-[connection signal="move_selected" from="VBoxContainer/Actions/MoveList/PanelContainer/ScrollContainer/MoveHolder" to="VBoxContainer/Actions/MoveList/PanelContainer/ScrollContainer" method="_on_move_holder_move_selected"]
-[connection signal="pressed" from="VBoxContainer/Actions/MoveList/BackContainer/AspectRatioContainer/LeftButton" to="VBoxContainer/Actions/MoveList/BackContainer/AspectRatioContainer/LeftButton" method="_on_pressed"]
-[connection signal="pressed" from="VBoxContainer/Actions/MoveList/BackContainer/AspectRatioContainer2/CenterButton" to="VBoxContainer/Actions/MoveList/BackContainer/AspectRatioContainer2/CenterButton" method="_on_pressed"]
-[connection signal="pressed" from="VBoxContainer/Actions/MoveList/BackContainer/AspectRatioContainer3/RightButton" to="VBoxContainer/Actions/MoveList/BackContainer/AspectRatioContainer3/RightButton" method="_on_pressed"]
+[connection signal="value_changed" from="OldUi/EnemyHP" to="OldUi/EnemyHP" method="_on_value_changed"]
+[connection signal="pressed" from="OldUi/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/LeftButton" to="OldUi/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/LeftButton" method="_on_pressed"]
+[connection signal="pressed" from="OldUi/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/HBoxContainer/AttackButton" to="OldUi/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/HBoxContainer/AttackButton" method="_on_pressed"]
+[connection signal="pressed" from="OldUi/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/HBoxContainer/DefenseButton" to="OldUi/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/HBoxContainer/DefenseButton" method="_on_pressed"]
+[connection signal="pressed" from="OldUi/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/HBoxContainer/PartyButton" to="OldUi/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/HBoxContainer/PartyButton" method="_on_pressed"]
+[connection signal="pressed" from="OldUi/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/RightButton" to="OldUi/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/RightButton" method="_on_pressed"]
+[connection signal="move_selected" from="OldUi/Actions/MoveList/PanelContainer/ScrollContainer/MoveHolder" to="OldUi/Actions/MoveList/PanelContainer/ScrollContainer" method="_on_move_holder_move_selected"]
+[connection signal="pressed" from="OldUi/Actions/MoveList/BackContainer/AspectRatioContainer/LeftButton" to="OldUi/Actions/MoveList/BackContainer/AspectRatioContainer/LeftButton" method="_on_pressed"]
+[connection signal="pressed" from="OldUi/Actions/MoveList/BackContainer/AspectRatioContainer2/CenterButton" to="OldUi/Actions/MoveList/BackContainer/AspectRatioContainer2/CenterButton" method="_on_pressed"]
+[connection signal="pressed" from="OldUi/Actions/MoveList/BackContainer/AspectRatioContainer3/RightButton" to="OldUi/Actions/MoveList/BackContainer/AspectRatioContainer3/RightButton" method="_on_pressed"]
 [connection signal="pressed" from="AwaitCancel/MarginContainer/VBoxContainer/Button" to="AwaitCancel/MarginContainer/VBoxContainer/Button" method="_on_pressed"]
 [connection signal="pressed" from="SummaryContainer/VBoxContainer/HBoxContainer/Button" to="SummaryContainer/VBoxContainer/HBoxContainer/Button" method="_on_pressed"]

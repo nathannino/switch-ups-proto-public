@@ -1,0 +1,200 @@
+[gd_scene load_steps=4 format=3 uid="uid://bejpglhgtx7ds"]
+
+[ext_resource type="Script" path="res://scenes/battle_v1/uiv2/SpiritTeamDisplay/monsterbutton_anchorgroup.gd" id="1_wnqjc"]
+[ext_resource type="PackedScene" uid="uid://bjwcj7an8i718" path="res://globals/utility_scenes/ui_component/monster_button.tscn" id="2_fjeqp"]
+
+[sub_resource type="GDScript" id="GDScript_jr23e"]
+script/source = "extends Control
+
+#region to setup
+var summary_container : Container
+#endregion
+
+@export_category(\"monster_buttons\")
+@export var spirit_left : Control
+@export var spirit_center : Control
+@export var spirit_right : Control
+@export_category(\"anchor groups\")
+@export var friend_anchor : Control
+@export var enemy_anchor : Control
+
+var spirit_list = []
+
+var anchors : Control :
+	get : return friend_anchor if is_friend else enemy_anchor 
+
+var _is_friend = false
+var is_friend : bool :
+	get : return _is_friend
+	set(value) :
+		_is_friend = value
+		reset_all_pos()
+
+var _selected_position : ms_constants.POSITION = ms_constants.POSITION.CENTER
+var selected_position : ms_constants.POSITION :
+	get : return _selected_position
+	set(_value) :
+		_selected_position = _value 
+		
+		var _active_msbutton = get_msbutton_by_position(_value)
+		
+		for _msbutton in spirit_list :
+			if _msbutton == _active_msbutton :
+				_msbutton.set_hightlight_color(Color(1,1,1,0.1))
+			else :
+				_msbutton.set_hightlight_color(Color(0,0,0,0.2))
+
+func reset_all_pos() :
+	spirit_left.position = anchors.get_ms_anchor(ms_constants.POSITION.LEFT).position
+	spirit_center.position = anchors.get_ms_anchor(ms_constants.POSITION.CENTER).position
+	spirit_right.position = anchors.get_ms_anchor(ms_constants.POSITION.RIGHT).position
+	pass
+
+func set_spirit(_spirit : ms_spirit_active, _position : ms_constants.POSITION) :
+	match _position :
+		ms_constants.POSITION.LEFT :
+			spirit_left.set_monster(_spirit) # TODO : Set options
+		ms_constants.POSITION.CENTER :
+			spirit_center.set_monster(_spirit)
+		ms_constants.POSITION.RIGHT :
+			spirit_right.set_monster(_spirit)
+
+func set_selectable(_selectable : bool, _position : ms_constants.POSITION) :
+	pass
+
+func _ready() -> void:
+	spirit_list = [spirit_left,spirit_center,spirit_right]
+
+func get_msbutton_by_position(_position : ms_constants.POSITION) :
+	match _position :
+		ms_constants.POSITION.CENTER :
+			return spirit_center
+		ms_constants.POSITION.LEFT :
+			return spirit_left
+		ms_constants.POSITION.RIGHT :
+			return spirit_right
+	return null
+
+func reset_colors() :
+	for _msbutton in spirit_list :
+		_msbutton.set_hightlight_color(Color(0,0,0,0))
+
+func show_summary(monster_button : Node) :
+	summary_container.show()
+	summary_container.set_summary_active(monster_button.current_spirit)
+"
+
+[node name="SpiritTeamDisplay" type="Control" node_paths=PackedStringArray("spirit_left", "spirit_center", "spirit_right", "friend_anchor", "enemy_anchor")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = SubResource("GDScript_jr23e")
+spirit_left = NodePath("MonsterButtons/MonsterButton2")
+spirit_center = NodePath("MonsterButtons/MonsterButton")
+spirit_right = NodePath("MonsterButtons/MonsterButton3")
+friend_anchor = NodePath("FriendAnchor")
+enemy_anchor = NodePath("EnemyAnchor")
+
+[node name="FriendAnchor" type="Control" parent="." node_paths=PackedStringArray("center", "left", "right", "party")]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_wnqjc")
+center = NodePath("Center")
+left = NodePath("Left")
+right = NodePath("Right")
+party = NodePath(".")
+
+[node name="Center" type="Control" parent="FriendAnchor"]
+anchors_preset = 0
+offset_left = -152.0
+offset_top = -118.0
+offset_right = -112.0
+offset_bottom = -78.0
+
+[node name="Left" type="Control" parent="FriendAnchor"]
+anchors_preset = 0
+offset_left = -254.0
+offset_top = -7.0
+offset_right = -214.0
+offset_bottom = 33.0
+
+[node name="Right" type="Control" parent="FriendAnchor"]
+anchors_preset = 0
+offset_left = 2.0
+offset_top = -7.0
+offset_right = 42.0
+offset_bottom = 33.0
+
+[node name="EnemyAnchor" type="Control" parent="." node_paths=PackedStringArray("center", "left", "right", "party")]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_wnqjc")
+center = NodePath("Center")
+left = NodePath("Left")
+right = NodePath("Right")
+party = NodePath(".")
+
+[node name="Center" type="Control" parent="EnemyAnchor"]
+anchors_preset = 0
+offset_left = -152.0
+offset_top = -7.0
+offset_right = -112.0
+offset_bottom = 33.0
+
+[node name="Left" type="Control" parent="EnemyAnchor"]
+anchors_preset = 0
+offset_left = -254.0
+offset_top = -118.0
+offset_right = -214.0
+offset_bottom = -78.0
+
+[node name="Right" type="Control" parent="EnemyAnchor"]
+anchors_preset = 0
+offset_left = 2.0
+offset_top = -118.0
+offset_right = 42.0
+offset_bottom = -78.0
+
+[node name="MonsterButtons" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MonsterButton" parent="MonsterButtons" instance=ExtResource("2_fjeqp")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -172.0
+offset_top = -138.0
+offset_right = 83.0
+offset_bottom = -28.0
+
+[node name="MonsterButton2" parent="MonsterButtons" instance=ExtResource("2_fjeqp")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -274.0
+offset_top = -27.0
+offset_right = -19.0
+offset_bottom = 83.0
+
+[node name="MonsterButton3" parent="MonsterButtons" instance=ExtResource("2_fjeqp")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -18.0
+offset_top = -27.0
+offset_right = 237.0
+offset_bottom = 83.0

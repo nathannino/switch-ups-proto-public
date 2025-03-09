@@ -1,5 +1,7 @@
 extends SubViewport
 
+@onready var timer = $"../../Timer"
+
 #TODO : Move magic Vector2i to globals
 var target_size : Vector2i
 #var target_size = Vector2i(3840,2160) # 4k
@@ -18,11 +20,24 @@ func _ready() -> void:
 	pass # Replace with function body.
 
 func _enter_tree() -> void:
-	get_window().size_changed.connect(resize)
+	get_window().size_changed.connect(resize_delayed)
 
 func _exit_tree() -> void:
-	get_window().size_changed.disconnect(resize)
+	get_window().size_changed.disconnect(resize_delayed)
 
+var is_queued = false
+
+func resize_delayed() :
+	if is_queued :
+		return
+	
+	if timer.is_stopped() :
+		timer.start(0.5)
+		is_queued = true
+	else :
+		await timer.timeout
+	resize()
+	is_queued = false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

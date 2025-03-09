@@ -4,6 +4,8 @@ signal preinit_complete
 var player_id : int
 
 signal sync_team
+signal turn_start
+signal battlelog_start
 
 @export var timer : Timer
 @export var interrupt_anchor : Control
@@ -295,6 +297,7 @@ func _ready() :
 	ClientWrapperAutoload.battle_begin_turn.connect(begin_turn)
 	ClientWrapperAutoload.battle_team_synced.connect(_set_team_state)
 	ClientWrapperAutoload.battle_logs.connect(func(_logs) :
+		battlelog_start.emit.call_deferred()
 		battle_logs = _logs
 		temp_log_container.show()
 		await_cancel.hide()
@@ -318,6 +321,7 @@ func _begin_battle() :
 	,CONNECT_ONE_SHOT)
 
 func begin_turn() :
+	turn_start.emit()
 	current_action = null
 	action_data = []
 	action_index = []

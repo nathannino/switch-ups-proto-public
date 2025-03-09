@@ -23,6 +23,7 @@ func _enter_tree() -> void:
 func move_scene_child_to_viewport() :
 	var container = get_node_or_null(\"SubViewportContainer\")
 	var child_root = get_node_or_null(\"SubViewportContainer/SizePreservingSubViewport\")
+	var timer = get_node_or_null(\"Timer\")
 	has_called = false
 	
 	if container == null or child_root == null :
@@ -30,7 +31,7 @@ func move_scene_child_to_viewport() :
 	
 	for child in get_children() :
 		# print(\"name : %s , parent : %s , owner : %s\" % [child.name, child.get_parent().name, child.owner])
-		if child == container : continue
+		if child == container or child == timer : continue
 		reparent_but_good(child,child_root)
 
 func _notification(what: int) -> void:
@@ -64,7 +65,10 @@ stretch = true
 [node name="SizePreservingSubViewport" type="SubViewport" parent="SubViewportContainer"]
 editor_description = "The name is a reference to \"DrawSizePreservingFillContainer\" from osu!framework, which doesn't do the same thing, but that I am using for the same purpose as the time I used osu!framework for a school project (veille)"
 handle_input_locally = false
-size = Vector2i(720, 720)
+size = Vector2i(1920, 1080)
 size_2d_override_stretch = true
 render_target_update_mode = 4
 script = ExtResource("1_pv03i")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.1

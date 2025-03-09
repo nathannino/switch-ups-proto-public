@@ -1,8 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://ci4fwae3invkg"]
+[gd_scene load_steps=5 format=3 uid="uid://ci4fwae3invkg"]
 
 [ext_resource type="Script" path="res://scenes/splash/splash.gd" id="1_3h00b"]
 [ext_resource type="Texture2D" uid="uid://css5cwgy07oyi" path="res://scenes/splash/LogoN_Gray .png" id="1_42k42"]
-[ext_resource type="PackedScene" uid="uid://cdg20pv0w45x1" path="res://globals/utility_scenes/size_preserving_sub_viewport_container.tscn" id="2_3qr01"]
 [ext_resource type="Texture2D" uid="uid://bqjlpodu8budu" path="res://scenes/splash/CircleClassic_Gray.png" id="2_ghd4l"]
 [ext_resource type="Script" path="res://globals/simple_scripts/avatar_rotate.gd" id="4_n1tfx"]
 
@@ -19,10 +18,7 @@ script = ExtResource("1_3h00b")
 wait_time = 3.0
 autostart = true
 
-[node name="SizePreservingSubViewportContainer" parent="." instance=ExtResource("2_3qr01")]
-layout_mode = 1
-
-[node name="CenterAnchor" type="Control" parent="SizePreservingSubViewportContainer"]
+[node name="CenterAnchor" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -30,7 +26,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="AvatarLogo" type="TextureRect" parent="SizePreservingSubViewportContainer/CenterAnchor"]
+[node name="AvatarLogo" type="TextureRect" parent="CenterAnchor"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -46,7 +42,7 @@ grow_vertical = 2
 texture = ExtResource("1_42k42")
 expand_mode = 1
 
-[node name="CircleClassicGray" type="TextureRect" parent="SizePreservingSubViewportContainer/CenterAnchor/AvatarLogo"]
+[node name="CircleClassicGray" type="TextureRect" parent="CenterAnchor/AvatarLogo"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -65,7 +61,7 @@ expand_mode = 1
 script = ExtResource("4_n1tfx")
 metadata/_edit_use_anchors_ = true
 
-[node name="Username" type="Label" parent="SizePreservingSubViewportContainer/CenterAnchor"]
+[node name="Username" type="Label" parent="CenterAnchor"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5

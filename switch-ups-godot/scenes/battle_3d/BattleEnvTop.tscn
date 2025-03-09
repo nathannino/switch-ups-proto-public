@@ -1,6 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://dxrerm5c44rry"]
-
-[ext_resource type="PackedScene" uid="uid://cdg20pv0w45x1" path="res://globals/utility_scenes/size_preserving_sub_viewport_container.tscn" id="1_62sd4"]
+[gd_scene load_steps=2 format=3 uid="uid://dxrerm5c44rry"]
 
 [sub_resource type="GDScript" id="GDScript_erg37"]
 script/source = "extends Control
@@ -10,6 +8,9 @@ script/source = "extends Control
 signal scene_loaded
 var battle_env : Node3D
 
+func _join_thread(thread : Thread) :
+	thread.wait_to_finish()
+
 func get_env() -> Node3D :
 	return battle_env_root.get_child(0)
 
@@ -18,11 +19,16 @@ func load_scene(scene_key : String) :
 		child.queue_free()
 	
 	var scene_dict_entry = ServerWrapper.battle_subscenes.get_scene_dictionary_entry(scene_key)
-	ResourceLoader.load_threaded_request(scene_dict_entry.scene)
-	var scene_resource = await ResourceLoader.load_threaded_get(scene_dict_entry.scene)
-	battle_env = scene_resource.instantiate()
-	battle_env_root.add_child(battle_env)
-	scene_loaded.emit.call_deferred()
+	var thread = Thread.new()
+	thread.start(func() :
+		ResourceLoader.load_threaded_request(scene_dict_entry.scene)
+		var scene_resource = await ResourceLoader.load_threaded_get(scene_dict_entry.scene)
+		battle_env = scene_resource.instantiate()
+		battle_env_root.add_child.call_deferred(battle_env)
+		scene_loaded.emit.call_deferred()
+		_join_thread.call_deferred(thread)
+	)
+	
 "
 
 [node name="BattleEnvTop" type="Control" node_paths=PackedStringArray("battle_env_root")]
@@ -33,9 +39,18 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = SubResource("GDScript_erg37")
-battle_env_root = NodePath("SizePreservingSubViewportContainer/BattleEnvRoot")
+battle_env_root = NodePath("SubViewportContainer/SubViewport/BattleEnvRoot")
 
-[node name="SizePreservingSubViewportContainer" parent="." instance=ExtResource("1_62sd4")]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
 
-[node name="BattleEnvRoot" type="Node3D" parent="SizePreservingSubViewportContainer"]
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+size = Vector2i(1920, 1080)
+
+[node name="BattleEnvRoot" type="Node3D" parent="SubViewportContainer/SubViewport"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://ope0vgwhns7r"]
+[gd_scene load_steps=23 format=3 uid="uid://ope0vgwhns7r"]
 
 [ext_resource type="Texture2D" uid="uid://masa1osx0s86" path="res://monster_systems/spirits/art/unknown.png" id="1_plwqg"]
 [ext_resource type="Shader" path="res://shaders/spirit_ball.gdshader" id="1_uvler"]
@@ -139,9 +139,6 @@ albedo_texture = ExtResource("1_plwqg")
 emission = Color(0, 0, 0.8, 1)
 backlight_enabled = true
 backlight = Color(1, 1, 1, 1)
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_flufn"]
-viewport_path = NodePath("Animations/SubViewport")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_f2w53"]
 size = Vector2(20, 20)
@@ -324,13 +321,8 @@ visible = false
 [node name="StatHigher" parent="." instance=ExtResource("4_dpklx")]
 visible = false
 
-[node name="Sprite3D" type="Sprite3D" parent="."]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -3.1916)
-visible = false
-texture = SubResource("ViewportTexture_flufn")
-
 [node name="Animations" type="MeshInstance3D" parent="." node_paths=PackedStringArray("animation")]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -3.21511)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -2.53639)
 cast_shadow = 0
 mesh = SubResource("PlaneMesh_f2w53")
 surface_material_override/0 = SubResource("ShaderMaterial_h0m6t")

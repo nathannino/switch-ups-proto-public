@@ -52,21 +52,25 @@ volumetric_fog_length = 124.68
 script/source = "extends Camera3D
 
 @export var timer : Timer
+var default_rotation : Vector3
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	default_rotation = global_rotation
 	timer.one_shot = true
 	timer.wait_time = 0.5
 
 var delayed_ready = true
 var already_waiting = false
 var viewport
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	if delayed_ready :
 		delayed_ready = false
 		viewport = get_viewport()
-		viewport.size_ratio_changed.connect(resize)
+		viewport.size_changed.connect(resize)
+		resize()
 
 func resize() :
 	if already_waiting :
@@ -78,7 +82,7 @@ func resize() :
 		already_waiting = true
 		await $Timer.timeout
 		already_waiting = false
-	if viewport.size_ratio == window_constants.WINDOW_ORI.WIDTH :
+	if window_constants.get_orientation(viewport.size) == window_constants.WINDOW_ORI.WIDTH :
 		keep_aspect = KEEP_HEIGHT
 	else :
 		keep_aspect = KEEP_WIDTH
@@ -95,11 +99,12 @@ environment = SubResource("Environment_4gmsu")
 
 [node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("timer")]
 transform = Transform3D(-0.71934, 0.191474, -0.667748, 0, 0.961262, 0.275637, 0.694658, 0.198277, -0.691474, -2.01851, 1.865, -0.996152)
+keep_aspect = 0
+fov = 89.8
 script = SubResource("GDScript_kd2r6")
 timer = NodePath("Timer")
 
 [node name="Timer" type="Timer" parent="Camera3D"]
-wait_time = 0.5
 one_shot = true
 
 [node name="FriendPlayer" parent="." instance=ExtResource("3_xb8f0")]

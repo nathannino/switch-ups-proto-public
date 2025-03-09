@@ -1,4 +1,4 @@
-extends HBoxContainer
+extends Control
 
 @export var battle_root : Node
 @export var is_self : bool
