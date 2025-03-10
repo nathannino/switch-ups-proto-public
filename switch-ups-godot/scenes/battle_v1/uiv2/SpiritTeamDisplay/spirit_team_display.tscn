@@ -36,6 +36,9 @@ var selected_position : ms_constants.POSITION :
 	set(_value) :
 		_selected_position = _value 
 		
+		if not is_friend :
+			return
+		
 		var _active_msbutton = get_msbutton_by_position(_value)
 		
 		for _msbutton in spirit_list :
@@ -85,6 +88,7 @@ func show_summary(monster_button : Node) :
 "
 
 [node name="SpiritTeamDisplay" type="Control" node_paths=PackedStringArray("spirit_left", "spirit_center", "spirit_right", "friend_anchor", "enemy_anchor")]
+custom_minimum_size = Vector2(510, 225)
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -98,8 +102,10 @@ enemy_anchor = NodePath("EnemyAnchor")
 
 [node name="FriendAnchor" type="Control" parent="." node_paths=PackedStringArray("center", "left", "right", "party")]
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 254.0
+offset_top = 118.0
+offset_right = 294.0
+offset_bottom = 158.0
 script = ExtResource("1_wnqjc")
 center = NodePath("Center")
 left = NodePath("Left")
@@ -108,29 +114,31 @@ party = NodePath(".")
 
 [node name="Center" type="Control" parent="FriendAnchor"]
 anchors_preset = 0
-offset_left = -152.0
+offset_left = -121.0
 offset_top = -118.0
-offset_right = -112.0
+offset_right = -81.0
 offset_bottom = -78.0
 
 [node name="Left" type="Control" parent="FriendAnchor"]
 anchors_preset = 0
-offset_left = -254.0
-offset_top = -7.0
-offset_right = -214.0
-offset_bottom = 33.0
+offset_left = -223.0
+offset_top = 11.0
+offset_right = -183.0
+offset_bottom = 51.0
 
 [node name="Right" type="Control" parent="FriendAnchor"]
 anchors_preset = 0
-offset_left = 2.0
-offset_top = -7.0
-offset_right = 42.0
-offset_bottom = 33.0
+offset_left = 66.0
+offset_top = 11.0
+offset_right = 106.0
+offset_bottom = 51.0
 
 [node name="EnemyAnchor" type="Control" parent="." node_paths=PackedStringArray("center", "left", "right", "party")]
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 254.0
+offset_top = 118.0
+offset_right = 294.0
+offset_bottom = 158.0
 script = ExtResource("1_wnqjc")
 center = NodePath("Center")
 left = NodePath("Left")
@@ -139,29 +147,31 @@ party = NodePath(".")
 
 [node name="Center" type="Control" parent="EnemyAnchor"]
 anchors_preset = 0
-offset_left = -152.0
-offset_top = -7.0
-offset_right = -112.0
-offset_bottom = 33.0
+offset_left = -121.0
+offset_top = 11.0
+offset_right = -81.0
+offset_bottom = 51.0
 
 [node name="Left" type="Control" parent="EnemyAnchor"]
 anchors_preset = 0
-offset_left = -254.0
+offset_left = -223.0
 offset_top = -118.0
-offset_right = -214.0
+offset_right = -183.0
 offset_bottom = -78.0
 
 [node name="Right" type="Control" parent="EnemyAnchor"]
 anchors_preset = 0
-offset_left = 2.0
+offset_left = 66.0
 offset_top = -118.0
-offset_right = 42.0
+offset_right = 106.0
 offset_bottom = -78.0
 
 [node name="MonsterButtons" type="Control" parent="."]
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 254.0
+offset_top = 118.0
+offset_right = 294.0
+offset_bottom = 158.0
 
 [node name="MonsterButton" parent="MonsterButtons" instance=ExtResource("2_fjeqp")]
 layout_mode = 1
@@ -170,10 +180,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -172.0
+offset_left = -141.0
 offset_top = -138.0
-offset_right = 83.0
-offset_bottom = -28.0
+offset_right = 144.0
+offset_bottom = -12.0
 
 [node name="MonsterButton2" parent="MonsterButtons" instance=ExtResource("2_fjeqp")]
 layout_mode = 1
@@ -182,10 +192,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -274.0
-offset_top = -27.0
-offset_right = -19.0
-offset_bottom = 83.0
+offset_left = -273.0
+offset_top = -9.0
+offset_right = 12.0
+offset_bottom = 117.0
 
 [node name="MonsterButton3" parent="MonsterButtons" instance=ExtResource("2_fjeqp")]
 layout_mode = 1
@@ -194,7 +204,7 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -18.0
-offset_top = -27.0
-offset_right = 237.0
-offset_bottom = 83.0
+offset_left = 46.0
+offset_top = -9.0
+offset_right = 331.0
+offset_bottom = 117.0

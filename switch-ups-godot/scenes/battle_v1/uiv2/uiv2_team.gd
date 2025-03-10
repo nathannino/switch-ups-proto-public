@@ -3,6 +3,7 @@ extends Control
 @export var battle_root : Node
 @export var is_self : bool
 @export var summary_container : Container
+@export var ui_globals : Node
 
 @export_category("monster_buttons")
 @export var spirit_team_display : Control
@@ -10,12 +11,10 @@ extends Control
 @export_category("actions_containers")
 @export var action_root : Control
 
-var _selected_position : ms_constants.POSITION = ms_constants.POSITION.CENTER
+var _selected_position : ms_constants.POSITION
 var selected_position : ms_constants.POSITION :
-	get : return _selected_position
-	set(_value) :
-		_selected_position = _value 
-		spirit_team_display.selected_position = _value
+	get : return ui_globals.selected_position
+	set(_value) : ui_globals.selected_position = _value
 
 func begin_turn() :
 	if not is_self :
@@ -34,6 +33,10 @@ func begin_battlelog() :
 func _ready() -> void:
 	spirit_team_display.summary_container = summary_container
 	spirit_team_display.is_friend = is_self
+	
+	ui_globals.selected_position_changed.connect(func() :
+		spirit_team_display.selected_position = ui_globals.selected_position
+	)
 	
 	battle_root.sync_team.connect(sync_team_state)
 	battle_root.turn_start.connect(begin_turn)

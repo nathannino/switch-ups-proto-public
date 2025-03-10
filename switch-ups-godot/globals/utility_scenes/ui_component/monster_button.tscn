@@ -187,12 +187,12 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = SubResource("GDScript_k40d3")
-spr = NodePath("VBoxContainer/Control/VBoxContainer/TextureRect")
-name_label = NodePath("VBoxContainer/Control/VBoxContainer/HBoxContainer/Name")
-health_label = NodePath("VBoxContainer/Control/VBoxContainer/HBoxContainer/Health")
-stamina = NodePath("VBoxContainer/Control/VBoxContainer/HBoxContainer/Stamina")
-Type1 = NodePath("VBoxContainer/Control/VBoxContainer/HBoxContainer/HBoxContainer/Type1")
-Type2 = NodePath("VBoxContainer/Control/VBoxContainer/HBoxContainer/HBoxContainer/Type2")
+spr = NodePath("VBoxContainer/Control/MarginContainer/VBoxContainer/TextureRect")
+name_label = NodePath("VBoxContainer/Control/MarginContainer/VBoxContainer/HBoxContainer/Name")
+health_label = NodePath("VBoxContainer/Control/MarginContainer/VBoxContainer/HBoxContainer/Health")
+stamina = NodePath("VBoxContainer/Control/MarginContainer/VBoxContainer/HBoxContainer/Stamina")
+Type1 = NodePath("VBoxContainer/Control/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer/Type1")
+Type2 = NodePath("VBoxContainer/Control/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer/Type2")
 none_label = NodePath("CenterContainer/Label")
 button = NodePath("Button")
 hightlight_rect = NodePath("HighlightColor")
@@ -210,15 +210,22 @@ grow_vertical = 2
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="VBoxContainer" type="HBoxContainer" parent="VBoxContainer/Control"]
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/Control"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
 
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer/Control/VBoxContainer"]
+[node name="VBoxContainer" type="HBoxContainer" parent="VBoxContainer/Control/MarginContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/Control/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -227,36 +234,36 @@ texture = ExtResource("1_doi4o")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="HBoxContainer" type="VBoxContainer" parent="VBoxContainer/Control/VBoxContainer"]
+[node name="HBoxContainer" type="VBoxContainer" parent="VBoxContainer/Control/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 alignment = 1
 
-[node name="Name" type="Label" parent="VBoxContainer/Control/VBoxContainer/HBoxContainer"]
+[node name="Name" type="Label" parent="VBoxContainer/Control/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Name"
 
-[node name="Health" type="Label" parent="VBoxContainer/Control/VBoxContainer/HBoxContainer"]
+[node name="Health" type="Label" parent="VBoxContainer/Control/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Health
 "
 
-[node name="Stamina" type="Label" parent="VBoxContainer/Control/VBoxContainer/HBoxContainer"]
+[node name="Stamina" type="Label" parent="VBoxContainer/Control/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Stamina
 "
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Control/VBoxContainer/HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Control/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="Type1" type="RichTextLabel" parent="VBoxContainer/Control/VBoxContainer/HBoxContainer/HBoxContainer"]
+[node name="Type1" type="RichTextLabel" parent="VBoxContainer/Control/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer"]
 layout_mode = 2
 bbcode_enabled = true
 text = "Type1"
 fit_content = true
 autowrap_mode = 0
 
-[node name="Type2" type="RichTextLabel" parent="VBoxContainer/Control/VBoxContainer/HBoxContainer/HBoxContainer"]
+[node name="Type2" type="RichTextLabel" parent="VBoxContainer/Control/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer"]
 layout_mode = 2
 bbcode_enabled = true
 text = "Type2"

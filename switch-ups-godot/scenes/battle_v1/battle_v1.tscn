@@ -1,7 +1,8 @@
-[gd_scene load_steps=28 format=3 uid="uid://cwp5xmvuwvhph"]
+[gd_scene load_steps=35 format=3 uid="uid://cwp5xmvuwvhph"]
 
 [ext_resource type="Script" path="res://scenes/battle_v1/battle_v_1.gd" id="1_hot38"]
 [ext_resource type="PackedScene" uid="uid://bjwcj7an8i718" path="res://globals/utility_scenes/ui_component/monster_button.tscn" id="2_12bl6"]
+[ext_resource type="Script" path="res://scenes/battle_v1/uiv2/ui_variables.gd" id="2_tam1c"]
 [ext_resource type="Script" path="res://scenes/battle_v1/uiv1/team_display_row.gd" id="2_ur35w"]
 [ext_resource type="PackedScene" uid="uid://diohlpvbxl3oh" path="res://globals/utility_scenes/menus/spirit_summary/spirit_summary.tscn" id="4_5f312"]
 [ext_resource type="Script" path="res://scenes/battle_v1/uiv1/move_list.gd" id="4_6ihod"]
@@ -10,6 +11,7 @@
 [ext_resource type="Script" path="res://scenes/battle_v1/uiv2/uiv2_team.gd" id="8_jhuc8"]
 [ext_resource type="PackedScene" uid="uid://bejpglhgtx7ds" path="res://scenes/battle_v1/uiv2/SpiritTeamDisplay/spirit_team_display.tscn" id="8_q2phu"]
 [ext_resource type="Script" path="res://scenes/battle_v1/uiv2/rotate_button.gd" id="9_y30e1"]
+[ext_resource type="Script" path="res://scenes/battle_v1/uiv2/main_action_root.gd" id="11_g6cpu"]
 
 [sub_resource type="Gradient" id="Gradient_yw4tm"]
 colors = PackedColorArray(0.0901961, 0.0901961, 0.0901961, 1, 0.0885599, 0.0885599, 0.0885599, 1)
@@ -199,6 +201,62 @@ func _on_value_changed(value: float) -> void:
 	label.text = str(value)
 "
 
+[sub_resource type="GDScript" id="GDScript_vvuw8"]
+script/source = "extends Control
+
+@export var ui_globals : Node
+
+
+func _ready() :
+	ui_globals.show_adsactionroot.connect(func() :
+		show()
+	)
+	ui_globals.hide_adsactionroot.connect(func() :
+		hide()
+	)
+"
+
+[sub_resource type="GDScript" id="GDScript_iepl6"]
+script/source = "extends Button
+
+@export var ui_globals : Node
+
+func _on_pressed() -> void:
+	ui_globals.show_movelist()
+"
+
+[sub_resource type="GDScript" id="GDScript_rxeu4"]
+script/source = "extends Button
+
+@export var ui_globals : Node
+
+const action = preload(\"uid://bret6c1vixpf5\")
+
+func _on_pressed() -> void:
+	ui_globals.submit_moves(-1,action)
+"
+
+[sub_resource type="GDScript" id="GDScript_r4xbt"]
+script/source = "extends Button
+
+@export var ui_globals : Node
+
+const action = preload(\"uid://ia42qhobbyee\")
+
+func _on_pressed() -> void:
+	ui_globals.submit_moves(-1,action)
+"
+
+[sub_resource type="GDScript" id="GDScript_ywxgc"]
+script/source = "extends Button
+
+@export var ui_globals : Node
+
+
+func _on_pressed() -> void:
+	ui_globals.show_ads()
+"
+
 [sub_resource type="GDScript" id="GDScript_lmsix"]
 script/source = "extends Button
 
@@ -273,6 +331,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="OldUi" type="VBoxContainer" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -431,7 +490,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="MoveList" type="VBoxContainer" parent="OldUi/Actions" node_paths=PackedStringArray("move_holder", "battle_root", "main_action_menu", "action_box", "back_left", "back_center", "back_right")]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -566,8 +624,7 @@ text = "1000
 "
 horizontal_alignment = 1
 
-[node name="FriendTeam" type="Control" parent="." node_paths=PackedStringArray("battle_root", "summary_container", "spirit_team_display", "action_root")]
-visible = false
+[node name="FriendTeam" type="Control" parent="." node_paths=PackedStringArray("battle_root", "summary_container", "ui_globals", "spirit_team_display", "action_root")]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -581,10 +638,16 @@ script = ExtResource("8_jhuc8")
 battle_root = NodePath("..")
 is_self = true
 summary_container = NodePath("../SummaryContainer")
+ui_globals = NodePath("../UiGlobalState")
 spirit_team_display = NodePath("SpiritTeamDisplay")
 action_root = NodePath("ActionRoot")
 
 [node name="SpiritTeamDisplay" parent="FriendTeam" instance=ExtResource("8_q2phu")]
+offset_left = -253.0
+offset_top = -87.0
+offset_right = 257.0
+offset_bottom = 138.0
+scale = Vector2(0.75, 0.75)
 
 [node name="ActionRoot" type="Control" parent="FriendTeam"]
 anchors_preset = 0
@@ -592,44 +655,138 @@ offset_left = -29.0
 offset_right = 11.0
 offset_bottom = 40.0
 
-[node name="RotateLeft" type="Button" parent="FriendTeam/ActionRoot" node_paths=PackedStringArray("team_root")]
+[node name="RotateLeft" type="Button" parent="FriendTeam/ActionRoot" node_paths=PackedStringArray("team_root", "ui_globals")]
 layout_mode = 0
-offset_left = -193.0
-offset_top = -76.0
-offset_right = -149.0
-offset_bottom = -45.0
+offset_left = -189.0
+offset_top = -55.0
+offset_right = -145.0
+offset_bottom = -24.0
 text = "LEFT"
 script = ExtResource("9_y30e1")
 team_root = NodePath("../..")
+ui_globals = NodePath("../../../UiGlobalState")
 
-[node name="RotateRight" type="Button" parent="FriendTeam/ActionRoot" node_paths=PackedStringArray("team_root")]
+[node name="RotateRight" type="Button" parent="FriendTeam/ActionRoot" node_paths=PackedStringArray("team_root", "ui_globals")]
 layout_mode = 0
-offset_left = 139.0
-offset_top = -78.0
-offset_right = 195.0
-offset_bottom = -47.0
+offset_left = 105.0
+offset_top = -54.0
+offset_right = 161.0
+offset_bottom = -23.0
 text = "RIGHT"
 script = ExtResource("9_y30e1")
 team_root = NodePath("../..")
 rotate = 1
+ui_globals = NodePath("../../../UiGlobalState")
 
-[node name="EnemyTeam" type="Control" parent="." node_paths=PackedStringArray("battle_root", "summary_container", "spirit_team_display")]
-visible = false
+[node name="ADSActionRoot" type="Control" parent="FriendTeam/ActionRoot" node_paths=PackedStringArray("ui_globals")]
+anchors_preset = 0
+offset_top = 30.0
+offset_right = 40.0
+offset_bottom = 70.0
+script = SubResource("GDScript_vvuw8")
+ui_globals = NodePath("../../../UiGlobalState")
+
+[node name="Action" type="Button" parent="FriendTeam/ActionRoot/ADSActionRoot" node_paths=PackedStringArray("ui_globals")]
+layout_mode = 0
+offset_left = -185.0
+offset_top = -164.0
+offset_right = -56.0
+offset_bottom = -133.0
+text = "TR_BTL_ATTACK"
+script = SubResource("GDScript_iepl6")
+ui_globals = NodePath("../../../../UiGlobalState")
+
+[node name="Defense" type="Button" parent="FriendTeam/ActionRoot/ADSActionRoot" node_paths=PackedStringArray("ui_globals")]
+layout_mode = 0
+offset_left = -25.0
+offset_top = -165.0
+offset_right = 113.0
+offset_bottom = -134.0
+text = "TR_BTL_DEFENSE"
+script = SubResource("GDScript_rxeu4")
+ui_globals = NodePath("../../../../UiGlobalState")
+
+[node name="Switch" type="Button" parent="FriendTeam/ActionRoot/ADSActionRoot" node_paths=PackedStringArray("ui_globals")]
+layout_mode = 0
+offset_left = 135.0
+offset_top = -166.0
+offset_right = 265.0
+offset_bottom = -135.0
+text = "TR_BTL_SWITCH"
+script = SubResource("GDScript_r4xbt")
+ui_globals = NodePath("../../../../UiGlobalState")
+
+[node name="EnemyTeam" type="Control" parent="." node_paths=PackedStringArray("battle_root", "summary_container", "ui_globals", "spirit_team_display")]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -236.0
-offset_top = 146.0
-offset_right = -196.0
-offset_bottom = 186.0
+offset_left = -40.0
+offset_bottom = 40.0
 grow_horizontal = 0
 script = ExtResource("8_jhuc8")
 battle_root = NodePath("..")
 summary_container = NodePath("../SummaryContainer")
+ui_globals = NodePath("../UiGlobalState")
 spirit_team_display = NodePath("SpiritTeamDisplay")
 
 [node name="SpiritTeamDisplay" parent="EnemyTeam" instance=ExtResource("8_q2phu")]
+offset_left = -409.0
+offset_right = 101.0
+offset_bottom = 225.0
+scale = Vector2(0.75, 0.75)
+
+[node name="SpiritActionRoot" type="HBoxContainer" parent="." node_paths=PackedStringArray("panel_container", "battle_root", "ui_globals", "move_holder")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("11_g6cpu")
+panel_container = NodePath("VBoxContainer/MarginContainer/PanelContainer")
+battle_root = NodePath("..")
+ui_globals = NodePath("../UiGlobalState")
+move_holder = NodePath("VBoxContainer/MarginContainer/PanelContainer/ScrollContainer/MoveHolder")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SpiritActionRoot"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="SpiritActionRoot/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_bottom = 10
+
+[node name="PanelContainer" type="PanelContainer" parent="SpiritActionRoot/VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="SpiritActionRoot/VBoxContainer/MarginContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="MoveHolder" parent="SpiritActionRoot/VBoxContainer/MarginContainer/PanelContainer/ScrollContainer" instance=ExtResource("5_vk5bl")]
+layout_mode = 2
+
+[node name="BackButton" type="Button" parent="SpiritActionRoot/VBoxContainer" node_paths=PackedStringArray("ui_globals")]
+layout_mode = 2
+text = "TR_BACK"
+script = SubResource("GDScript_ywxgc")
+ui_globals = NodePath("../../../UiGlobalState")
+
+[node name="Control" type="Control" parent="SpiritActionRoot/VBoxContainer"]
+custom_minimum_size = Vector2(0, 235)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Control" type="Control" parent="SpiritActionRoot"]
+custom_minimum_size = Vector2(600, 0)
+layout_mode = 2
+mouse_filter = 2
 
 [node name="InterruptAnchor" type="Panel" parent="."]
 visible = false
@@ -706,6 +863,11 @@ size_flags_vertical = 3
 
 [node name="ActionTimer" type="Timer" parent="."]
 
+[node name="UiGlobalState" type="Node" parent="." node_paths=PackedStringArray("battle_root")]
+script = ExtResource("2_tam1c")
+battle_root = NodePath("..")
+
+[connection signal="turn_start" from="." to="UiGlobalState" method="_on_battle_v_1_turn_start"]
 [connection signal="value_changed" from="OldUi/EnemyHP" to="OldUi/EnemyHP" method="_on_value_changed"]
 [connection signal="pressed" from="OldUi/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/LeftButton" to="OldUi/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/LeftButton" method="_on_pressed"]
 [connection signal="pressed" from="OldUi/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/HBoxContainer/AttackButton" to="OldUi/Actions/ActionBox/Control2/MainActionMenu/ActionContainer/HBoxContainer/AttackButton" method="_on_pressed"]
@@ -716,5 +878,9 @@ size_flags_vertical = 3
 [connection signal="pressed" from="OldUi/Actions/MoveList/BackContainer/AspectRatioContainer/LeftButton" to="OldUi/Actions/MoveList/BackContainer/AspectRatioContainer/LeftButton" method="_on_pressed"]
 [connection signal="pressed" from="OldUi/Actions/MoveList/BackContainer/AspectRatioContainer2/CenterButton" to="OldUi/Actions/MoveList/BackContainer/AspectRatioContainer2/CenterButton" method="_on_pressed"]
 [connection signal="pressed" from="OldUi/Actions/MoveList/BackContainer/AspectRatioContainer3/RightButton" to="OldUi/Actions/MoveList/BackContainer/AspectRatioContainer3/RightButton" method="_on_pressed"]
+[connection signal="pressed" from="FriendTeam/ActionRoot/ADSActionRoot/Action" to="FriendTeam/ActionRoot/ADSActionRoot/Action" method="_on_pressed"]
+[connection signal="pressed" from="FriendTeam/ActionRoot/ADSActionRoot/Defense" to="FriendTeam/ActionRoot/ADSActionRoot/Defense" method="_on_pressed"]
+[connection signal="pressed" from="FriendTeam/ActionRoot/ADSActionRoot/Switch" to="FriendTeam/ActionRoot/ADSActionRoot/Switch" method="_on_pressed"]
+[connection signal="pressed" from="SpiritActionRoot/VBoxContainer/BackButton" to="SpiritActionRoot/VBoxContainer/BackButton" method="_on_pressed"]
 [connection signal="pressed" from="AwaitCancel/MarginContainer/VBoxContainer/Button" to="AwaitCancel/MarginContainer/VBoxContainer/Button" method="_on_pressed"]
 [connection signal="pressed" from="SummaryContainer/VBoxContainer/HBoxContainer/Button" to="SummaryContainer/VBoxContainer/HBoxContainer/Button" method="_on_pressed"]
