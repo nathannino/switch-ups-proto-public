@@ -23,11 +23,23 @@ func serv_requires_interrupt() -> bool :
 func get_interrupt_action() -> Control :
 	return null
 
+func _delay_battle_log(battle_root : Node) :
+	var thread = Thread.new()
+	thread.start(func() :
+		battle_root.pause_battle_log()
+		OS.delay_msec(500)
+		battle_root.play_battle_log()
+		thread.wait_to_finish.call_deferred()
+	)
+	
+
 func handle_client(battle_log : Dictionary, battle_root : Node) :
 	if battle_log["lucky_status"] :
 		battle_root.enter_log_text("TR_BTLLOG_AC_LUCK_LUCKY" if battle_log["luck_result"] else "TR_BTLLOG_AC_LUCK_UNLUCKY", {}, {}, 0.5)
+		_delay_battle_log(battle_root)
 	elif not battle_log["luck_result"] :
 		battle_root.enter_log_text("TR_BTLLOG_AC_LUCK_MISS", {}, {}, 0.5)
+		_delay_battle_log(battle_root)
 	
 	pass # TODO : idk figure it out later
 

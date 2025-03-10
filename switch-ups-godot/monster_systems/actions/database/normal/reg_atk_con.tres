@@ -15,4 +15,5 @@ key = "reg_atk_con"
 name = "TR_ACT_REG_ATK_CON"
 type = 9
 cost = 0
+priority = 0
 effects = Array[ExtResource("1_lu50t")]([SubResource("Resource_wo68q")])

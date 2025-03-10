@@ -46,6 +46,10 @@ func _ready() :
 		show_adsactionroot.emit()
 		back_target = BACK_TARGET.ADS_ACTION_ROOT
 	)
+	
+	battle_root.cancelled_action_exdata.connect(func() :
+		cancel_submit_moves()
+	)
 
 func show_ads() :
 	show_adsactionroot.emit()
@@ -69,5 +73,5 @@ func submit_moves(_index : int, _action : ms_action) :
 	hide_adsactionroot.emit()
 	hide_spiritactionroot.emit()
 	disable_rotation.emit()
-	print(tr(_action.name))
+	battle_root._on_move_selected(_index,_action)
 	pass

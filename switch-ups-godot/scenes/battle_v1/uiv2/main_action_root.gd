@@ -18,6 +18,10 @@ func _ready() -> void:
 	ui_globals.hide_spiritactionroot.connect(func() :
 		hide()
 	)
+	
+	move_holder.move_selected.connect(func(_index : int, _action : ms_action):
+		ui_globals.submit_moves(_index, _action)
+	)
 
 func populate_moves() :
 	var spirit_active = battle_root.get_spirit_in_field(battle_root.friend_team,selected_position)

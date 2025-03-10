@@ -27,4 +27,5 @@ key = "res_down"
 name = "TR_ACT_RES_DOWN"
 type = 0
 cost = 1
+priority = 0
 effects = Array[ExtResource("1_k31uy")]([SubResource("Resource_o276a"), SubResource("Resource_m1jd2")])
