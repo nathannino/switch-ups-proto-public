@@ -8,6 +8,10 @@ signal turn_start
 signal battlelog_start
 signal battlelog_next
 
+signal cancelled_action_exdata
+signal spirit_rotation(teamid,oldpos,newpos)
+signal spirit_switch(teamid_one,pos_one,spirit_one,teamid_two,pos_two,spirit_two)
+
 @export var timer : Timer
 @export var interrupt_anchor : Control
 @export var await_cancel : Control
@@ -43,11 +47,17 @@ var enemy_hp : float :
 @export_category("logs")
 @export var log_container : Container
 
-signal cancelled_action_exdata
+
 var action_type : ms_constants.TYPE
 #region required by actions
 var friend_team : Array[ms_spirit_active] = []
 var enemy_team : Array[ms_spirit_active] = []
+
+func get_team_by_id(_id : int) :
+	if _id == player_id :
+		return friend_team
+	else :
+		return enemy_team
 
 var current_action : ms_action
 var current_action_index = 0
@@ -144,11 +154,17 @@ func rotate_visual(pid_one,spirit_one_index,pid_two,spirit_two_index) :
 			play_battle_log.call_deferred()
 		,CONNECT_ONE_SHOT)
 		team_3d_one.switch_spirit(_position, _new_spirit)
+		spirit_switch.emit(pid_one,ms_constants.index_to_position(spirit_one_index),spirit_one,pid_two,ms_constants.index_to_position(spirit_two_index),spirit_two)
 		pass # Switch time
 	else :
 		pause_battle_log()
 		team_3d_two.rotate_spirit(spirit_3d_one,ms_constants.index_to_position(spirit_one_index),ms_constants.index_to_position(spirit_two_index),0)
 		team_3d_one.rotate_spirit(spirit_3d_two,ms_constants.index_to_position(spirit_two_index),ms_constants.index_to_position(spirit_one_index),1)
+		if team_3d_one == team_3d_two :
+			spirit_rotation.emit(pid_one,ms_constants.index_to_position(spirit_one_index),ms_constants.index_to_position(spirit_two_index))
+		else :
+			spirit_switch.emit(pid_one,spirit_one_index,pid_two,spirit_two_index)
+			
 		team_3d_one.animation_done.connect(func() :
 			play_battle_log.call_deferred()
 		,CONNECT_ONE_SHOT)

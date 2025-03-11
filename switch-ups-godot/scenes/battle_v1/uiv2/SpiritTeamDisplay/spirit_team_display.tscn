@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://bejpglhgtx7ds"]
+[gd_scene load_steps=5 format=3 uid="uid://bejpglhgtx7ds"]
 
 [ext_resource type="Script" path="res://scenes/battle_v1/uiv2/SpiritTeamDisplay/monsterbutton_anchorgroup.gd" id="1_wnqjc"]
 [ext_resource type="PackedScene" uid="uid://bjwcj7an8i718" path="res://globals/utility_scenes/ui_component/monster_button.tscn" id="2_fjeqp"]
+[ext_resource type="Script" path="res://scenes/battle_v1/uiv2/SpiritTeamDisplay/rotate_anchors.gd" id="2_po2ht"]
 
 [sub_resource type="GDScript" id="GDScript_jr23e"]
 script/source = "extends Control
@@ -10,6 +11,8 @@ script/source = "extends Control
 var summary_container : Container
 #endregion
 
+signal rotation_done
+
 @export_category(\"monster_buttons\")
 @export var spirit_left : Control
 @export var spirit_center : Control
@@ -17,11 +20,17 @@ var summary_container : Container
 @export_category(\"anchor groups\")
 @export var friend_anchor : Control
 @export var enemy_anchor : Control
+@export_category(\"rotate groups\")
+@export var friend_rotate_anchors : Control
+@export var enemy_rotate_anchors : Control
 
 var spirit_list = []
 
 var anchors : Control :
 	get : return friend_anchor if is_friend else enemy_anchor 
+
+var rotate_anchors : Control :
+	get : return friend_rotate_anchors if is_friend else enemy_rotate_anchors
 
 var _is_friend = false
 var is_friend : bool :
@@ -78,6 +87,15 @@ func get_msbutton_by_position(_position : ms_constants.POSITION) :
 			return spirit_right
 	return null
 
+func set_msbutton_by_position(_ms_button : Control,_position : ms_constants.POSITION) :
+	match _position :
+		ms_constants.POSITION.CENTER :
+			spirit_center = _ms_button
+		ms_constants.POSITION.LEFT :
+			spirit_left = _ms_button
+		ms_constants.POSITION.RIGHT :
+			spirit_right = _ms_button
+
 func reset_colors() :
 	for _msbutton in spirit_list :
 		_msbutton.set_hightlight_color(Color(0,0,0,0))
@@ -85,9 +103,62 @@ func reset_colors() :
 func show_summary(monster_button : Node) :
 	summary_container.show()
 	summary_container.set_summary_active(monster_button.current_spirit)
+
+var _move_to_bezier_counter = 0
+var move_to_bezier_counter : int :
+	get : return _move_to_bezier_counter
+	set(value) :
+		_move_to_bezier_counter = max(value,0)
+		if _move_to_bezier_counter <= 0 :
+			rotation_done.emit()
+
+func move_to_bezier(_ms_button : Control, _old_pos : Control, _new_pos : Control, _circle_anchor : Control, _duration : float, _easing : Tween.EaseType, _trans : Tween.TransitionType = Tween.TRANS_LINEAR) :
+	move_to_bezier_counter += 1
+	_ms_button.position = _old_pos.position
+	var tween = create_tween()
+	tween.set_ease(_easing)
+	tween.set_trans(_trans)
+	tween.tween_method(func(_progress) :
+		_ms_button.position = global_func.quadratic_bezier(_old_pos.position,_circle_anchor.position,_new_pos.position,_progress)
+	,0.0,1.0,_duration)
+	tween.tween_callback(func() : move_to_bezier_counter -= 1)
+
+func rotate_spirit(_old_pos : ms_constants.POSITION, _new_pos : ms_constants.POSITION) :
+	var _ms_button_old_pos = get_msbutton_by_position(_old_pos)
+	var _ms_button_new_pos = get_msbutton_by_position(_new_pos)
+	
+	set_msbutton_by_position(_ms_button_old_pos,_new_pos)
+	set_msbutton_by_position(_ms_button_new_pos,_old_pos)
+	
+	move_to_bezier(_ms_button_old_pos,anchors.get_ms_anchor(_old_pos),anchors.get_ms_anchor(_new_pos),rotate_anchors.get_anchors(_old_pos,_new_pos)[0],1,Tween.EASE_IN_OUT)
+	move_to_bezier(_ms_button_new_pos,anchors.get_ms_anchor(_new_pos),anchors.get_ms_anchor(_old_pos),rotate_anchors.get_anchors(_old_pos,_new_pos)[1],1,Tween.EASE_IN_OUT)
+
+# TODO : 3d is able to detach a spirit_anchor and move it to the oponnent's side. Do we want to do this with the monster_buttons as well?
+func switch_spirit(_spirit : ms_spirit_active,_pos : ms_constants.POSITION) :
+	var _ms_button = get_msbutton_by_position(_pos)
+	if _ms_button == null :
+		rotation_done.emit()
+		return # FIXME : I don't like the fact that we are silently failling, but this should only be used for switching two spirits, so it should be fine...?
+	
+	var _anchor = anchors.get_ms_anchor(_pos)
+	var _offscreen_anchor = rotate_anchors.offscreen_anchor
+	
+	var tween = create_tween()
+	tween.set_ease(Tween.EASE_IN)
+	tween.set_trans(Tween.TRANS_QUART)
+	tween.tween_property(_ms_button,\"position\",Vector2(_ms_button.position.x,_offscreen_anchor.position.y),1)
+	tween.tween_callback(func() :
+		set_spirit(_spirit, _pos)
+	)
+	tween.set_trans(Tween.TRANS_BOUNCE)
+	tween.set_ease(Tween.EASE_OUT)
+	tween.tween_property(_ms_button,\"position\",_anchor.position,1)
+	tween.tween_callback(func() :
+		rotation_done.emit.call_deferred()
+	)
 "
 
-[node name="SpiritTeamDisplay" type="Control" node_paths=PackedStringArray("spirit_left", "spirit_center", "spirit_right", "friend_anchor", "enemy_anchor")]
+[node name="SpiritTeamDisplay" type="Control" node_paths=PackedStringArray("spirit_left", "spirit_center", "spirit_right", "friend_anchor", "enemy_anchor", "friend_rotate_anchors", "enemy_rotate_anchors")]
 custom_minimum_size = Vector2(510, 225)
 layout_mode = 3
 anchors_preset = 0
@@ -99,6 +170,8 @@ spirit_center = NodePath("MonsterButtons/MonsterButton")
 spirit_right = NodePath("MonsterButtons/MonsterButton3")
 friend_anchor = NodePath("FriendAnchor")
 enemy_anchor = NodePath("EnemyAnchor")
+friend_rotate_anchors = NodePath("FriendRotateAnchor")
+enemy_rotate_anchors = NodePath("EnemyRotateAnchor")
 
 [node name="FriendAnchor" type="Control" parent="." node_paths=PackedStringArray("center", "left", "right", "party")]
 anchors_preset = 0
@@ -133,6 +206,53 @@ offset_top = 11.0
 offset_right = 106.0
 offset_bottom = 51.0
 
+[node name="FriendRotateAnchor" type="Control" parent="." node_paths=PackedStringArray("center_rotate_anchor", "left_rotate_anchor", "right_rotate_anchor", "bottom_rotate_anchor", "offscreen_anchor")]
+anchors_preset = 0
+offset_left = 254.0
+offset_top = 118.0
+offset_right = 294.0
+offset_bottom = 158.0
+script = ExtResource("2_po2ht")
+center_rotate_anchor = NodePath("CenterRotateAnchor")
+left_rotate_anchor = NodePath("LeftRotateAnchor")
+right_rotate_anchor = NodePath("RightRotateAnchor")
+bottom_rotate_anchor = NodePath("BottomRotateAnchor")
+offscreen_anchor = NodePath("OffscreenAnchor")
+
+[node name="CenterRotateAnchor" type="Control" parent="FriendRotateAnchor"]
+anchors_preset = 0
+offset_left = 7.0
+offset_top = 12.0
+offset_right = 9.0
+offset_bottom = 14.0
+
+[node name="BottomRotateAnchor" type="Control" parent="FriendRotateAnchor"]
+anchors_preset = 0
+offset_left = 7.0
+offset_top = 184.0
+offset_right = 9.0
+offset_bottom = 186.0
+
+[node name="LeftRotateAnchor" type="Control" parent="FriendRotateAnchor"]
+anchors_preset = 0
+offset_left = -184.0
+offset_top = -59.0
+offset_right = -182.0
+offset_bottom = -57.0
+
+[node name="RightRotateAnchor" type="Control" parent="FriendRotateAnchor"]
+anchors_preset = 0
+offset_left = 208.0
+offset_top = -59.0
+offset_right = 210.0
+offset_bottom = -57.0
+
+[node name="OffscreenAnchor" type="Control" parent="FriendRotateAnchor"]
+anchors_preset = 0
+offset_top = 263.0
+offset_right = 40.0
+offset_bottom = 303.0
+
 [node name="EnemyAnchor" type="Control" parent="." node_paths=PackedStringArray("center", "left", "right", "party")]
 anchors_preset = 0
 offset_left = 254.0
@@ -165,6 +285,53 @@ offset_left = 66.0
 offset_top = -118.0
 offset_right = 106.0
 offset_bottom = -78.0
+
+[node name="EnemyRotateAnchor" type="Control" parent="." node_paths=PackedStringArray("center_rotate_anchor", "left_rotate_anchor", "right_rotate_anchor", "bottom_rotate_anchor", "offscreen_anchor")]
+anchors_preset = 0
+offset_left = 254.0
+offset_top = 118.0
+offset_right = 294.0
+offset_bottom = 158.0
+script = ExtResource("2_po2ht")
+center_rotate_anchor = NodePath("CenterRotateAnchor")
+left_rotate_anchor = NodePath("LeftRotateAnchor")
+right_rotate_anchor = NodePath("RightRotateAnchor")
+bottom_rotate_anchor = NodePath("BottomRotateAnchor")
+offscreen_anchor = NodePath("OffscreenAnchor")
+
+[node name="CenterRotateAnchor" type="Control" parent="EnemyRotateAnchor"]
+anchors_preset = 0
+offset_left = 7.0
+offset_top = 12.0
+offset_right = 9.0
+offset_bottom = 14.0
+
+[node name="BottomRotateAnchor" type="Control" parent="EnemyRotateAnchor"]
+anchors_preset = 0
+offset_left = 7.0
+offset_top = -208.0
+offset_right = 9.0
+offset_bottom = -206.0
+
+[node name="LeftRotateAnchor" type="Control" parent="EnemyRotateAnchor"]
+anchors_preset = 0
+offset_left = -184.0
+offset_top = 75.0
+offset_right = -182.0
+offset_bottom = 77.0
+
+[node name="RightRotateAnchor" type="Control" parent="EnemyRotateAnchor"]
+anchors_preset = 0
+offset_left = 208.0
+offset_top = 75.0
+offset_right = 210.0
+offset_bottom = 77.0
+
+[node name="OffscreenAnchor" type="Control" parent="EnemyRotateAnchor"]
+anchors_preset = 0
+offset_top = -348.0
+offset_right = 40.0
+offset_bottom = -308.0
 
 [node name="MonsterButtons" type="Control" parent="."]
 anchors_preset = 0

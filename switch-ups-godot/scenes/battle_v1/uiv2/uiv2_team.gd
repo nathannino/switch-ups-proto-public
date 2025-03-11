@@ -41,6 +41,34 @@ func _ready() -> void:
 	battle_root.sync_team.connect(sync_team_state)
 	battle_root.turn_start.connect(begin_turn)
 	battle_root.battlelog_start.connect(begin_battlelog)
+	
+	battle_root.spirit_rotation.connect(func(_teamid,_old_pos,_new_pos) :
+		var id_self = _teamid == battle_root.player_id
+		if (id_self and is_self) or not (id_self or is_self) :
+			battle_root.pause_battle_log()
+			spirit_team_display.rotate_spirit(_old_pos, _new_pos)
+			spirit_team_display.rotation_done.connect(func() :
+				battle_root.play_battle_log()
+			,CONNECT_ONE_SHOT)
+			pass
+	)
+	
+	battle_root.spirit_switch.connect(func(_teamid_one,_pos_one,_spirit_one,_teamid_two,_pos_two,_spirit_two) :
+		var is_teamone = (_teamid_one == battle_root.player_id) == is_self
+		var is_teamtwo = (_teamid_two == battle_root.player_id) == is_self
+		
+		if is_teamone :
+			battle_root.pause_battle_log()
+			spirit_team_display.switch_spirit(_spirit_two,_pos_one)
+			spirit_team_display.rotation_done.connect(_switch_spirit_rotation_done,CONNECT_REFERENCE_COUNTED)
+		if is_teamtwo :
+			battle_root.pause_battle_log()
+			spirit_team_display.switch_spirit(_spirit_one,_pos_two)
+			spirit_team_display.rotation_done.connect(_switch_spirit_rotation_done,CONNECT_REFERENCE_COUNTED)
+	)
+
+func _switch_spirit_rotation_done() :
+	battle_root.play_battle_log()
 
 func show_summary(monster_button : Node) :
 	summary_container.show()

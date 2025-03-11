@@ -10,6 +10,33 @@
 [ext_resource type="Script" path="res://scenes/battle_v1/uiv2/rotate_button.gd" id="9_y30e1"]
 [ext_resource type="Script" path="res://scenes/battle_v1/uiv2/main_action_root.gd" id="11_g6cpu"]
 
+[sub_resource type="Gradient" id="Gradient_yw4tm"]
+colors = PackedColorArray(0.0901961, 0.0901961, 0.0901961, 1, 0.0885599, 0.0885599, 0.0885599, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_1weiw"]
+gradient = SubResource("Gradient_yw4tm")
+
+[sub_resource type="Gradient" id="Gradient_775m0"]
+colors = PackedColorArray(0, 0.658824, 0, 1, 0, 0.658824, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_xumci"]
+gradient = SubResource("Gradient_775m0")
+
+[sub_resource type="GDScript" id="GDScript_08te3"]
+script/source = "extends TextureProgressBar
+
+@export var battle_root : Control
+@export var label : Label
+
+func _ready() -> void:
+	battle_root.friend_hp_changed.connect(func(old,new) :
+		value = new
+	)
+
+func _on_value_changed(value: float) -> void:
+	label.text = str(value)
+"
+
 [sub_resource type="GDScript" id="GDScript_vvuw8"]
 script/source = "extends Control
 
@@ -53,34 +80,7 @@ script/source = "extends Button
 const action = preload(\"uid://ia42qhobbyee\")
 
 func _on_pressed() -> void:
-	ui_globals.submit_moves(-1,action)
-"
-
-[sub_resource type="Gradient" id="Gradient_yw4tm"]
-colors = PackedColorArray(0.0901961, 0.0901961, 0.0901961, 1, 0.0885599, 0.0885599, 0.0885599, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_1weiw"]
-gradient = SubResource("Gradient_yw4tm")
-
-[sub_resource type="Gradient" id="Gradient_775m0"]
-colors = PackedColorArray(0, 0.658824, 0, 1, 0, 0.658824, 0, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_xumci"]
-gradient = SubResource("Gradient_775m0")
-
-[sub_resource type="GDScript" id="GDScript_08te3"]
-script/source = "extends TextureProgressBar
-
-@export var battle_root : Control
-@export var label : Label
-
-func _ready() -> void:
-	battle_root.friend_hp_changed.connect(func(old,new) :
-		value = new
-	)
-
-func _on_value_changed(value: float) -> void:
-	label.text = str(value)
+	ui_globals.submit_moves(-2,action)
 "
 
 [sub_resource type="GDScript" id="GDScript_rkjtq"]
@@ -194,6 +194,39 @@ ui_globals = NodePath("../UiGlobalState")
 spirit_team_display = NodePath("SpiritTeamDisplay")
 action_root = NodePath("ActionRoot")
 
+[node name="FriendHP" type="TextureProgressBar" parent="FriendTeam" node_paths=PackedStringArray("battle_root", "label")]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 0
+offset_left = -256.0
+offset_top = 99.0
+offset_right = 91.0
+offset_bottom = 129.0
+max_value = 1000.0
+value = 1000.0
+nine_patch_stretch = true
+texture_under = SubResource("GradientTexture1D_1weiw")
+texture_progress = SubResource("GradientTexture1D_xumci")
+script = SubResource("GDScript_08te3")
+battle_root = NodePath("../..")
+label = NodePath("Label")
+
+[node name="Label" type="Label" parent="FriendTeam/FriendHP"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "1000
+"
+horizontal_alignment = 1
+
 [node name="SpiritTeamDisplay" parent="FriendTeam" instance=ExtResource("8_q2phu")]
 offset_left = -253.0
 offset_top = -87.0
@@ -268,39 +301,6 @@ text = "TR_BTL_SWITCH"
 script = SubResource("GDScript_r4xbt")
 ui_globals = NodePath("../../../../UiGlobalState")
 
-[node name="FriendHP" type="TextureProgressBar" parent="FriendTeam" node_paths=PackedStringArray("battle_root", "label")]
-custom_minimum_size = Vector2(0, 30)
-layout_mode = 0
-offset_left = -256.0
-offset_top = 99.0
-offset_right = 91.0
-offset_bottom = 129.0
-max_value = 1000.0
-value = 1000.0
-nine_patch_stretch = true
-texture_under = SubResource("GradientTexture1D_1weiw")
-texture_progress = SubResource("GradientTexture1D_xumci")
-script = SubResource("GDScript_08te3")
-battle_root = NodePath("../..")
-label = NodePath("Label")
-
-[node name="Label" type="Label" parent="FriendTeam/FriendHP"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -11.5
-offset_right = 20.0
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-text = "1000
-"
-horizontal_alignment = 1
-
 [node name="EnemyTeam" type="Control" parent="." node_paths=PackedStringArray("battle_root", "summary_container", "ui_globals", "spirit_team_display")]
 layout_mode = 1
 anchors_preset = 1
@@ -314,13 +314,6 @@ battle_root = NodePath("..")
 summary_container = NodePath("../SummaryContainer")
 ui_globals = NodePath("../UiGlobalState")
 spirit_team_display = NodePath("SpiritTeamDisplay")
-
-[node name="SpiritTeamDisplay" parent="EnemyTeam" instance=ExtResource("8_q2phu")]
-offset_left = -409.0
-offset_top = 25.0
-offset_right = 101.0
-offset_bottom = 250.0
-scale = Vector2(0.75, 0.75)
 
 [node name="EnemyHP" type="TextureProgressBar" parent="EnemyTeam" node_paths=PackedStringArray("battle_root", "label")]
 custom_minimum_size = Vector2(0, 30)
@@ -353,6 +346,13 @@ grow_vertical = 2
 text = "1000
 "
 horizontal_alignment = 1
+
+[node name="SpiritTeamDisplay" parent="EnemyTeam" instance=ExtResource("8_q2phu")]
+offset_left = -409.0
+offset_top = 25.0
+offset_right = 101.0
+offset_bottom = 250.0
+scale = Vector2(0.75, 0.75)
 
 [node name="SpiritActionRoot" type="HBoxContainer" parent="." node_paths=PackedStringArray("panel_container", "battle_root", "ui_globals", "move_holder")]
 layout_mode = 1
@@ -464,6 +464,7 @@ battle_root = NodePath("..")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="BattleLogsContainer"]
 layout_mode = 2
+mouse_filter = 2
 alignment = 2
 
 [node name="SummaryContainer" type="PanelContainer" parent="." node_paths=PackedStringArray("summary_node")]

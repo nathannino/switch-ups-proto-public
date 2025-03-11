@@ -316,10 +316,8 @@ mesh = SubResource("PlaneMesh_sefvg")
 surface_material_override/0 = SubResource("StandardMaterial3D_bxpr0")
 
 [node name="StatLower" parent="." instance=ExtResource("3_mfgpo")]
-visible = false
 
 [node name="StatHigher" parent="." instance=ExtResource("4_dpklx")]
-visible = false
 
 [node name="Animations" type="MeshInstance3D" parent="." node_paths=PackedStringArray("animation")]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -2.53639)
