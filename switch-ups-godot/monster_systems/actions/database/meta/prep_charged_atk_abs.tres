@@ -26,4 +26,5 @@ key = "prep_charged_atk_abs"
 name = "TR_ACT_PREP_CHG_ATK_ABS"
 type = 8
 cost = 2
+priority = 0
 effects = Array[ExtResource("1_5g7ik")]([SubResource("Resource_i8wdn")])

@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="ms_spirit" load_steps=5 format=3 uid="uid://25yxnwmwv3b3"]
+
+[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/action.gd" id="1_l77mq"]
+[ext_resource type="Resource" uid="uid://bxpn0enwtueuh" path="res://monster_systems/actions/database/normal/reg_atk_abs.tres" id="2_8aid1"]
+[ext_resource type="Script" path="res://monster_systems/spirits/resources_scripts/spirit.gd" id="2_iafx6"]
+[ext_resource type="Texture2D" uid="uid://masa1osx0s86" path="res://monster_systems/spirits/art/unknown.png" id="4_wnwp6"]
+
+[resource]
+script = ExtResource("2_iafx6")
+key = "target"
+name = "TR_SPIRIT_TARGET"
+sprite = ExtResource("4_wnwp6")
+type = 2
+health = 265
+atk_concrete = 140
+atk_abstract = 60
+defense = 60
+speed = 140
+luck = 10
+actions = Array[ExtResource("1_l77mq")]([ExtResource("2_8aid1"), ExtResource("2_8aid1"), ExtResource("2_8aid1")])

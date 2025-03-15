@@ -85,20 +85,20 @@ func play_stat_change(change: int) :
 func attack_concrete(color : Color, damage : float) :
 	attack_anim.show()
 	attack_anim.set_color(color)
+	attack_anim.play_concrete()
 	attack_anim.animation_done.connect(func() :
 		attack_anim.hide()
 		damage_anim_done.emit()
 	, CONNECT_ONE_SHOT)
-	attack_anim.play_concrete()
 
 func attack_abstract(color : Color, damage : float) :
 	attack_anim.show()
 	attack_anim.set_color(color)
+	attack_anim.play_abstract()
 	attack_anim.animation_done.connect(func() :
 		attack_anim.hide()
 		damage_anim_done.emit()
 	, CONNECT_ONE_SHOT)
-	attack_anim.play_abstract()
 "
 
 [sub_resource type="SphereMesh" id="SphereMesh_wmpj6"]
