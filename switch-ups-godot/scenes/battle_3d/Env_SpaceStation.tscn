@@ -45,6 +45,7 @@ ambient_light_color = Color(0.654902, 0.654902, 0.823529, 1)
 ambient_light_energy = 0.64
 tonemap_mode = 2
 glow_enabled = true
+glow_blend_mode = 0
 volumetric_fog_density = 0.1
 volumetric_fog_length = 124.68
 

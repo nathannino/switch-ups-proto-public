@@ -131,6 +131,11 @@ func await_selection(button_node : Control) :
 	spirit_list.set_cancel_button(false)
 
 func _on_button_pressed(node : Control, index : int) :
+	for child in get_children() :
+		child.is_selected = false
+	
+	node.is_selected = true
+	
 	match index :
 		-1 :
 			await_selection(node)

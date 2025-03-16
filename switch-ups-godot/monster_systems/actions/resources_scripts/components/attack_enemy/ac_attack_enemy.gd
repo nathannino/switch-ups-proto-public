@@ -66,8 +66,11 @@ func handle_server(turn_calc : Node,user:ms_spirit_active, user_player_node : No
 	if target.is_defending :
 		damage *= 0.5
 	
+	damage = floor(damage)
+	
 	var player_damage = 0
 	var spirit_damage = damage
+	
 	
 	target.current_hp -= damage
 	if target.current_hp < 0 :

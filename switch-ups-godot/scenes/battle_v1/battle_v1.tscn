@@ -242,9 +242,9 @@ offset_bottom = 40.0
 
 [node name="RotateLeft" type="Button" parent="FriendTeam/ActionRoot" node_paths=PackedStringArray("team_root", "ui_globals")]
 layout_mode = 0
-offset_left = -189.0
+offset_left = -154.0
 offset_top = -55.0
-offset_right = -145.0
+offset_right = -110.0
 offset_bottom = -24.0
 text = "LEFT"
 script = ExtResource("9_y30e1")
@@ -253,9 +253,9 @@ ui_globals = NodePath("../../../UiGlobalState")
 
 [node name="RotateRight" type="Button" parent="FriendTeam/ActionRoot" node_paths=PackedStringArray("team_root", "ui_globals")]
 layout_mode = 0
-offset_left = 105.0
+offset_left = 237.0
 offset_top = -54.0
-offset_right = 161.0
+offset_right = 293.0
 offset_bottom = -23.0
 text = "RIGHT"
 script = ExtResource("9_y30e1")
@@ -263,40 +263,39 @@ team_root = NodePath("../..")
 rotate = 1
 ui_globals = NodePath("../../../UiGlobalState")
 
-[node name="ADSActionRoot" type="Control" parent="FriendTeam/ActionRoot" node_paths=PackedStringArray("ui_globals")]
-anchors_preset = 0
-offset_top = 30.0
-offset_right = 40.0
-offset_bottom = 70.0
+[node name="ADSActionRoot" type="HBoxContainer" parent="FriendTeam/ActionRoot" node_paths=PackedStringArray("ui_globals")]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -152.0
+offset_top = -179.0
+offset_right = 253.0
+offset_bottom = -139.0
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset = Vector2(208, 0)
+theme_override_constants/separation = 10
+alignment = 1
 script = SubResource("GDScript_vvuw8")
 ui_globals = NodePath("../../../UiGlobalState")
 
 [node name="Action" type="Button" parent="FriendTeam/ActionRoot/ADSActionRoot" node_paths=PackedStringArray("ui_globals")]
-layout_mode = 0
-offset_left = -185.0
-offset_top = -164.0
-offset_right = -56.0
-offset_bottom = -133.0
+layout_mode = 2
 text = "TR_BTL_ATTACK"
 script = SubResource("GDScript_iepl6")
 ui_globals = NodePath("../../../../UiGlobalState")
 
 [node name="Defense" type="Button" parent="FriendTeam/ActionRoot/ADSActionRoot" node_paths=PackedStringArray("ui_globals")]
-layout_mode = 0
-offset_left = -25.0
-offset_top = -165.0
-offset_right = 113.0
-offset_bottom = -134.0
+layout_mode = 2
 text = "TR_BTL_DEFENSE"
 script = SubResource("GDScript_rxeu4")
 ui_globals = NodePath("../../../../UiGlobalState")
 
 [node name="Switch" type="Button" parent="FriendTeam/ActionRoot/ADSActionRoot" node_paths=PackedStringArray("ui_globals")]
-layout_mode = 0
-offset_left = 135.0
-offset_top = -166.0
-offset_right = 265.0
-offset_bottom = -135.0
+layout_mode = 2
 text = "TR_BTL_SWITCH"
 script = SubResource("GDScript_r4xbt")
 ui_globals = NodePath("../../../../UiGlobalState")
@@ -348,9 +347,9 @@ text = "1000
 horizontal_alignment = 1
 
 [node name="SpiritTeamDisplay" parent="EnemyTeam" instance=ExtResource("8_q2phu")]
-offset_left = -409.0
+offset_left = -544.0
 offset_top = 25.0
-offset_right = 101.0
+offset_right = -34.0
 offset_bottom = 250.0
 scale = Vector2(0.75, 0.75)
 

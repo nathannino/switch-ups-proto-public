@@ -53,8 +53,10 @@ var selected_position : ms_constants.POSITION :
 		for _msbutton in spirit_list :
 			if _msbutton == _active_msbutton :
 				_msbutton.set_hightlight_color(Color(1,1,1,0.1))
+				_msbutton.is_selected = true
 			else :
-				_msbutton.set_hightlight_color(Color(0,0,0,0.2))
+				_msbutton.set_hightlight_color(Color(0,0,0,0))
+				_msbutton.is_selected = false
 
 func reset_all_pos() :
 	spirit_left.position = anchors.get_ms_anchor(ms_constants.POSITION.LEFT).position
@@ -98,6 +100,7 @@ func set_msbutton_by_position(_ms_button : Control,_position : ms_constants.POSI
 
 func reset_colors() :
 	for _msbutton in spirit_list :
+		#_msbutton.is_selected = false
 		_msbutton.set_hightlight_color(Color(0,0,0,0))
 
 func show_summary(monster_button : Node) :
@@ -187,23 +190,23 @@ party = NodePath(".")
 
 [node name="Center" type="Control" parent="FriendAnchor"]
 anchors_preset = 0
-offset_left = -121.0
+offset_left = -63.0
 offset_top = -118.0
-offset_right = -81.0
+offset_right = -23.0
 offset_bottom = -78.0
 
 [node name="Left" type="Control" parent="FriendAnchor"]
 anchors_preset = 0
-offset_left = -223.0
+offset_left = -253.0
 offset_top = 11.0
-offset_right = -183.0
+offset_right = -213.0
 offset_bottom = 51.0
 
 [node name="Right" type="Control" parent="FriendAnchor"]
 anchors_preset = 0
-offset_left = 66.0
+offset_left = 138.0
 offset_top = 11.0
-offset_right = 106.0
+offset_right = 178.0
 offset_bottom = 51.0
 
 [node name="FriendRotateAnchor" type="Control" parent="." node_paths=PackedStringArray("center_rotate_anchor", "left_rotate_anchor", "right_rotate_anchor", "bottom_rotate_anchor", "offscreen_anchor")]
@@ -267,23 +270,23 @@ party = NodePath(".")
 
 [node name="Center" type="Control" parent="EnemyAnchor"]
 anchors_preset = 0
-offset_left = -121.0
+offset_left = -63.0
 offset_top = 11.0
-offset_right = -81.0
+offset_right = -23.0
 offset_bottom = 51.0
 
 [node name="Left" type="Control" parent="EnemyAnchor"]
 anchors_preset = 0
-offset_left = -223.0
+offset_left = -253.0
 offset_top = -118.0
-offset_right = -183.0
+offset_right = -213.0
 offset_bottom = -78.0
 
 [node name="Right" type="Control" parent="EnemyAnchor"]
 anchors_preset = 0
-offset_left = 66.0
+offset_left = 138.0
 offset_top = -118.0
-offset_right = 106.0
+offset_right = 178.0
 offset_bottom = -78.0
 
 [node name="EnemyRotateAnchor" type="Control" parent="." node_paths=PackedStringArray("center_rotate_anchor", "left_rotate_anchor", "right_rotate_anchor", "bottom_rotate_anchor", "offscreen_anchor")]
@@ -347,9 +350,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -141.0
+offset_left = -83.0
 offset_top = -138.0
-offset_right = 144.0
+offset_right = 306.0
 offset_bottom = -12.0
 
 [node name="MonsterButton2" parent="MonsterButtons" instance=ExtResource("2_fjeqp")]
@@ -361,7 +364,7 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -273.0
 offset_top = -9.0
-offset_right = 12.0
+offset_right = 114.0
 offset_bottom = 117.0
 
 [node name="MonsterButton3" parent="MonsterButtons" instance=ExtResource("2_fjeqp")]
@@ -371,7 +374,7 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 46.0
+offset_left = 118.0
 offset_top = -9.0
-offset_right = 331.0
+offset_right = 506.0
 offset_bottom = 117.0

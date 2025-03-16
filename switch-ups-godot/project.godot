@@ -91,3 +91,4 @@ locale/translations=PackedStringArray("res://translations/Actions.en.translation
 [rendering]
 
 environment/defaults/default_clear_color=Color(0, 0, 0, 1)
+viewport/hdr_2d=true
