@@ -24,6 +24,7 @@ theme_override_constants/margin_bottom = 5
 [node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer"]
 layout_mode = 2
 mouse_filter = 2
+theme_override_font_sizes/bold_font_size = 20
 bbcode_enabled = true
 text = "this is text yippee"
 fit_content = true

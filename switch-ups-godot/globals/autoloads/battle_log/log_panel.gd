@@ -22,6 +22,8 @@ func new_turn() :
 	current_label.scroll_active = false
 	current_label.fit_content = true
 	current_label.bbcode_enabled = true
+	# current_label.add_theme_font_override("bold_font",BOLD_FONT)
+	current_label.add_theme_font_size_override("bold_font_size",20)
 	logs.add_child(current_label)
 	turn_history.push_back([])
 	
