@@ -17,6 +17,8 @@ signal spirit_switch(teamid_one,pos_one,spirit_one,teamid_two,pos_two,spirit_two
 @export var await_cancel : Control
 @export var battle_env_root : Control
 @export var ui_globals : Node
+@export var summary_container : Control
+
 var battle_env_top : Control
 const BATTLE_ENV_TOP_SCENE = preload("uid://dxrerm5c44rry")
 
@@ -114,6 +116,10 @@ func change_player_hp(pid,change_value) :
 		friend_hp += change_value
 	else :
 		enemy_hp += change_value
+
+func show_summary(_spirit : ms_spirit_active) :
+	summary_container.show()
+	summary_container.set_summary_active(_spirit)
 
 # TODO : Handle damage number, player damage, animations, etc...
 func damage_visual(_pid : int,_spos : ms_constants.POSITION,_sdmg : float,_pdmg : float,_weak : ms_constants.WEAK_RES,_flavor : ms_constants.ATK_FLAVOR) :
