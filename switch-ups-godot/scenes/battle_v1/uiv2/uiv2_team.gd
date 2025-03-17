@@ -35,7 +35,7 @@ func _ready() -> void:
 	spirit_team_display.is_friend = is_self
 	
 	ui_globals.selected_position_changed.connect(func() :
-		spirit_team_display.selected_position = ui_globals.selected_position
+		if is_self : spirit_team_display.selected_position = ui_globals.selected_position
 	)
 	
 	spirit_team_display.ms_pressed.connect(func(index : int, _pos : ms_constants.POSITION) :

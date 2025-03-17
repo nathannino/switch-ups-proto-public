@@ -105,7 +105,7 @@ func send_team_to_server() :
 	
 
 func get_options_array() -> Array :
-	return [\"Summary\",\"Change\"]
+	return [\"TR_SUMMARY\",\"TR_CHANGE\"]
 
 var current_callable : Callable
 

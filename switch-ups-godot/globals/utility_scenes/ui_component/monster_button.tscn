@@ -116,7 +116,6 @@ func show_extra_info() :
 func set_spirit_inactive(spirit_inactive : ms_spirit, _options : Array = []) :
 	current_spirit = null
 	current_spirit_inactive = spirit_inactive
-	options = _options
 	name_label.text = tr(spirit_inactive.name)
 	spr.texture = spirit_inactive.sprite
 	hide_extra_info(false)
@@ -124,12 +123,11 @@ func set_spirit_inactive(spirit_inactive : ms_spirit, _options : Array = []) :
 	Type2.text = \"\"
 	none_label.text = \"\"
 	button.show()
-	populate_options()
+	set_options(_options)
 
 func set_monster(spirit_active : ms_spirit_active, _options : Array = []) :
 	current_spirit = spirit_active
 	current_spirit_inactive = null
-	options = _options
 	var spirit : ms_spirit = SpiritDictionary.spirits[spirit_active.key]
 	name_label.text = tr(spirit.name)
 	spr.texture = spirit.sprite
@@ -144,9 +142,13 @@ func set_monster(spirit_active : ms_spirit_active, _options : Array = []) :
 		Type2.text = \"\"
 	none_label.text = \"\"
 	button.show()
-	populate_options()
+	set_options(_options)
 	if not keep_hidden :
 		show_extra_info()
+
+func set_options(_options : Array) :
+	options = _options
+	populate_options()
 
 func set_button_state(enabled : bool) :
 	button.visible = enabled

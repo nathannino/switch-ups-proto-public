@@ -1,6 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://dob82wo6k22hm"]
+[gd_scene load_steps=7 format=3 uid="uid://dob82wo6k22hm"]
 
 [ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/specials/sp_switch_data.gd" id="1_f03kt"]
+[ext_resource type="PackedScene" uid="uid://bejpglhgtx7ds" path="res://scenes/battle_v1/uiv2/SpiritTeamDisplay/spirit_team_display.tscn" id="2_4y2du"]
+[ext_resource type="PackedScene" uid="uid://bjwcj7an8i718" path="res://globals/utility_scenes/ui_component/monster_button.tscn" id="3_5m83c"]
 
 [sub_resource type="GDScript" id="GDScript_6u3vw"]
 script/source = "extends Button
@@ -9,66 +11,6 @@ script/source = "extends Button
 
 func _on_pressed() -> void:
 	scene_root.return_value(scene_root.battle_root.CANCEL)
-"
-
-[sub_resource type="GDScript" id="GDScript_47ru2"]
-script/source = "extends VBoxContainer
-
-@export var battle_root : Control
-
-const monster_button = preload(\"uid://bjwcj7an8i718\")
-
-func set_options(team) :
-	for child in get_children() :
-		child.queue_free()
-	
-	for index in range(team.size()) :
-		var spirit = team[index]
-		var instance = monster_button.instantiate()
-		instance.set_monster(spirit)
-		instance.pressed_option.connect(func(_option : int) :
-			confirm(spirit,index)
-		)
-		add_child(instance)
-	pass
-
-func confirm(spirit,index) :
-	battle_root.team_active_representative = spirit
-	
-	for child_index in range(get_child_count()) :
-		var child = get_child(child_index)
-		
-		child.set_hightlight_color(battle_root.selected_color if child_index == index else Color(0,0,0,0))
-"
-
-[sub_resource type="GDScript" id="GDScript_yo4e1"]
-script/source = "extends VBoxContainer
-
-@export var battle_root : Control
-
-const monster_button = preload(\"uid://bjwcj7an8i718\")
-
-func set_options(team) :
-	for child in get_children() :
-		child.queue_free()
-	
-	for index in range(team.size()) :
-		var spirit = team[index]
-		var instance = monster_button.instantiate()
-		instance.set_monster(spirit)
-		instance.pressed_option.connect(func(_option : int) :
-			confirm(spirit,index)
-		)
-		add_child(instance)
-	pass
-
-func confirm(spirit,index) :
-	battle_root.team_reserve_representative = spirit
-	
-	for child_index in range(get_child_count()) :
-		var child = get_child(child_index)
-		
-		child.set_hightlight_color(battle_root.selected_color if child_index == index else Color(0,0,0,0))
 "
 
 [sub_resource type="GDScript" id="GDScript_q4bii"]
@@ -86,7 +28,44 @@ func _on_pressed() -> void:
 	})
 "
 
-[node name="SpSwitchData" type="Control" node_paths=PackedStringArray("back_button", "active_team_list", "reserve_team_list", "confirm_button")]
+[sub_resource type="GDScript" id="GDScript_vbd8d"]
+script/source = "extends HBoxContainer
+
+@export var commit_root : Control
+
+const monster_button = preload(\"uid://bjwcj7an8i718\")
+
+func set_options(team,options) :
+	for child in get_children() :
+		child.queue_free()
+	
+	for index in range(team.size()) :
+		var spirit = team[index]
+		var instance = monster_button.instantiate()
+		instance.set_monster(spirit,options)
+		instance.pressed_option.connect(func(_option : int) :
+			if _option == 0 :
+				commit_root.battle_root.show_summary(spirit)
+			else :
+				confirm(spirit,index)
+		)
+		add_child(instance)
+	pass
+
+func confirm(spirit,index) :
+	commit_root.team_reserve_representative = spirit
+	
+	for child_index in range(get_child_count()) :
+		var child = get_child(child_index)
+		if child_index == index :
+			child.set_hightlight_color(Color(1,1,1,0.05))
+			child.is_selected = true
+		else :
+			child.set_hightlight_color(Color(0,0,0,0))
+			child.is_selected = false
+"
+
+[node name="SpSwitchData" type="Control" node_paths=PackedStringArray("back_button", "active_team_display", "reserve_team_list", "confirm_button")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -95,9 +74,8 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_f03kt")
 back_button = NodePath("HBoxContainer/HBoxContainer/Button")
-active_team_list = NodePath("HBoxContainer/HBoxContainer2/TeamActive")
-reserve_team_list = NodePath("HBoxContainer/HBoxContainer2/TeamReserve")
-selected_color = Color(0.392157, 0.392157, 0.392157, 0.588235)
+active_team_display = NodePath("SpiritTeamDisplay")
+reserve_team_list = NodePath("MarginContainer/TeamReserve")
 confirm_button = NodePath("HBoxContainer/ConfirmButton")
 
 [node name="HBoxContainer" type="VBoxContainer" parent="."]
@@ -123,31 +101,71 @@ text = "TR_BACK"
 script = SubResource("GDScript_6u3vw")
 scene_root = NodePath("../../..")
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer"]
+[node name="Control" type="Control" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-
-[node name="TeamActive" type="VBoxContainer" parent="HBoxContainer/HBoxContainer2" node_paths=PackedStringArray("battle_root")]
-layout_mode = 2
-size_flags_horizontal = 3
-script = SubResource("GDScript_47ru2")
-battle_root = NodePath("../../..")
-
-[node name="Label" type="Label" parent="HBoxContainer/HBoxContainer2"]
-layout_mode = 2
-text = "<-->"
-
-[node name="TeamReserve" type="VBoxContainer" parent="HBoxContainer/HBoxContainer2" node_paths=PackedStringArray("battle_root")]
-layout_mode = 2
-size_flags_horizontal = 3
-script = SubResource("GDScript_yo4e1")
-battle_root = NodePath("../../..")
 
 [node name="ConfirmButton" type="Button" parent="HBoxContainer" node_paths=PackedStringArray("SceneRoot")]
 layout_mode = 2
 text = "TR_SUBMIT"
 script = SubResource("GDScript_q4bii")
 SceneRoot = NodePath("../..")
+
+[node name="SpiritTeamDisplay" parent="." instance=ExtResource("2_4y2du")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -391.5
+offset_top = -257.0
+offset_right = 391.5
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.5
+offset_top = 35.5
+offset_right = 16.5
+offset_bottom = 56.5
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 1.5708
+pivot_offset = Vector2(16.5, 10.5)
+text = "<-->"
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = 90.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 20
+
+[node name="TeamReserve" type="HBoxContainer" parent="MarginContainer" node_paths=PackedStringArray("commit_root")]
+layout_mode = 2
+theme_override_constants/separation = 20
+script = SubResource("GDScript_vbd8d")
+commit_root = NodePath("../..")
+
+[node name="MonsterButton" parent="MarginContainer/TeamReserve" instance=ExtResource("3_5m83c")]
+layout_mode = 2
+
+[node name="MonsterButton2" parent="MarginContainer/TeamReserve" instance=ExtResource("3_5m83c")]
+layout_mode = 2
 
 [connection signal="pressed" from="HBoxContainer/HBoxContainer/Button" to="HBoxContainer/HBoxContainer/Button" method="_on_pressed"]
 [connection signal="pressed" from="HBoxContainer/ConfirmButton" to="HBoxContainer/ConfirmButton" method="_on_pressed"]
