@@ -1,9 +1,9 @@
 [gd_resource type="Resource" script_class="ms_action" load_steps=7 format=3 uid="uid://56cq4vm2p6gy"]
 
-[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/action_component.gd" id="1_xleel"]
-[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/action.gd" id="2_csnoh"]
-[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/attack_enemy/ac_attack_enemy.gd" id="2_kb2id"]
-[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/luck/ac_luck.gd" id="3_fa4ky"]
+[ext_resource type="Script" uid="uid://csiv0ccgqvmtb" path="res://monster_systems/actions/resources_scripts/components/action_component.gd" id="1_xleel"]
+[ext_resource type="Script" uid="uid://cuoh85b8m5ubn" path="res://monster_systems/actions/resources_scripts/action.gd" id="2_csnoh"]
+[ext_resource type="Script" uid="uid://tratffjr38fv" path="res://monster_systems/actions/resources_scripts/components/attack_enemy/ac_attack_enemy.gd" id="2_kb2id"]
+[ext_resource type="Script" uid="uid://gku76ur12em4" path="res://monster_systems/actions/resources_scripts/components/luck/ac_luck.gd" id="3_fa4ky"]
 
 [sub_resource type="Resource" id="Resource_ubaqx"]
 script = ExtResource("2_kb2id")
@@ -21,4 +21,5 @@ key = "lucky_shot"
 name = "TR_ACT_LUCKY_SHOT"
 type = 8
 cost = 1
+priority = 0
 effects = Array[ExtResource("1_xleel")]([SubResource("Resource_0rjxy")])

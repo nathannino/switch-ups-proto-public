@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bx6ravvup2qf2"]
 
-[ext_resource type="Script" path="res://scenes/battle_v1/uiv2/battle_log_single.gd" id="1_uiw4x"]
+[ext_resource type="Script" uid="uid://d04xw62fj50s" path="res://scenes/battle_v1/uiv2/battle_log_single.gd" id="1_uiw4x"]
 
 [node name="BattleLogSingle" type="PanelContainer" node_paths=PackedStringArray("label", "timer")]
 anchors_preset = 15

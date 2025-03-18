@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://dhobuev3lfdfk"]
 
 [ext_resource type="Theme" uid="uid://dkfvpx50nyurp" path="res://scenes/main_menu/credits/music_credits/temp_music_credits_title.tres" id="1_3tsna"]
-[ext_resource type="Script" path="res://scenes/main_menu/credits/music_credits/music_panel.gd" id="1_m0gaa"]
+[ext_resource type="Script" uid="uid://by408cs61h83j" path="res://scenes/main_menu/credits/music_credits/music_panel.gd" id="1_m0gaa"]
 
 [sub_resource type="GDScript" id="GDScript_fxm7r"]
 script/source = "extends RichTextLabel

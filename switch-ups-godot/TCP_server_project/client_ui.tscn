@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dvxwh8a4ypmfq"]
 
-[ext_resource type="Script" path="res://TCP_server_project/client_ui.gd" id="1_o5bxw"]
+[ext_resource type="Script" uid="uid://dxolc7cv2swun" path="res://TCP_server_project/client_ui.gd" id="1_o5bxw"]
 
 [node name="ClientUi" type="Control"]
 layout_mode = 3

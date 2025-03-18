@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://d2lcdsh40reie"]
 
-[ext_resource type="Script" path="res://globals/simple_scripts/button_change_scene_simple.gd" id="1_57t8v"]
+[ext_resource type="Script" uid="uid://1yl6aj3ibwlh" path="res://globals/simple_scripts/button_change_scene_simple.gd" id="1_57t8v"]
 
 [sub_resource type="GDScript" id="GDScript_cc25f"]
 script/source = "extends Control

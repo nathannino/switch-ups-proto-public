@@ -1,10 +1,10 @@
 [gd_resource type="Resource" script_class="ms_action" load_steps=9 format=3 uid="uid://btja4176bhm51"]
 
-[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/action_component.gd" id="1_aoxga"]
-[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/action.gd" id="2_6u6r8"]
-[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/attack_enemy/ac_attack_enemy.gd" id="2_nwwnh"]
-[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/change_stat_level/ac_ch_stat_level.gd" id="3_50cyi"]
-[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/luck/ac_luck.gd" id="4_h52gk"]
+[ext_resource type="Script" uid="uid://csiv0ccgqvmtb" path="res://monster_systems/actions/resources_scripts/components/action_component.gd" id="1_aoxga"]
+[ext_resource type="Script" uid="uid://cuoh85b8m5ubn" path="res://monster_systems/actions/resources_scripts/action.gd" id="2_6u6r8"]
+[ext_resource type="Script" uid="uid://tratffjr38fv" path="res://monster_systems/actions/resources_scripts/components/attack_enemy/ac_attack_enemy.gd" id="2_nwwnh"]
+[ext_resource type="Script" uid="uid://b5o4adhfhkldn" path="res://monster_systems/actions/resources_scripts/components/change_stat_level/ac_ch_stat_level.gd" id="3_50cyi"]
+[ext_resource type="Script" uid="uid://gku76ur12em4" path="res://monster_systems/actions/resources_scripts/components/luck/ac_luck.gd" id="4_h52gk"]
 
 [sub_resource type="Resource" id="Resource_edgor"]
 script = ExtResource("2_nwwnh")
@@ -27,4 +27,5 @@ key = "bite"
 name = "TR_ACT_BITE"
 type = 1
 cost = 1
+priority = 0
 effects = Array[ExtResource("1_aoxga")]([SubResource("Resource_edgor"), SubResource("Resource_ewfs6")])

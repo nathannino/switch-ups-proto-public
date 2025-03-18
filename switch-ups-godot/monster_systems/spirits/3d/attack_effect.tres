@@ -239,8 +239,8 @@ render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_lambert, specular_s
 
 uniform vec4 color : source_color;
 uniform sampler2D tex_frg_2;
-uniform float dotfrequency = 50;
-uniform float percent : hint_range(0.0010000000475, 1) = 0.10000000149012;
+uniform float dotfrequency = 50.0;
+uniform float percent : hint_range(0.0010000000475, 1.0) = 0.10000000149012;
 
 
 

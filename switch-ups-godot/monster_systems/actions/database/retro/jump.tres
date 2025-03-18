@@ -1,9 +1,9 @@
 [gd_resource type="Resource" script_class="ms_action" load_steps=8 format=3 uid="uid://ch4nupwhlm6il"]
 
-[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/action_component.gd" id="1_2oajx"]
-[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/attack_enemy/ac_attack_enemy.gd" id="2_7fryq"]
-[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/action.gd" id="2_vjbmw"]
-[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/luck/ac_luck.gd" id="3_roohp"]
+[ext_resource type="Script" uid="uid://csiv0ccgqvmtb" path="res://monster_systems/actions/resources_scripts/components/action_component.gd" id="1_2oajx"]
+[ext_resource type="Script" uid="uid://tratffjr38fv" path="res://monster_systems/actions/resources_scripts/components/attack_enemy/ac_attack_enemy.gd" id="2_7fryq"]
+[ext_resource type="Script" uid="uid://cuoh85b8m5ubn" path="res://monster_systems/actions/resources_scripts/action.gd" id="2_vjbmw"]
+[ext_resource type="Script" uid="uid://gku76ur12em4" path="res://monster_systems/actions/resources_scripts/components/luck/ac_luck.gd" id="3_roohp"]
 
 [sub_resource type="Resource" id="Resource_2f7l1"]
 script = ExtResource("2_7fryq")

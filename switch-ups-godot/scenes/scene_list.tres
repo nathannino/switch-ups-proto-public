@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="scene_dictionary" load_steps=13 format=3 uid="uid://dcsgbdv63ak16"]
 
-[ext_resource type="Script" path="res://globals/one_off_resources_scripts/scene_dictionary_entry.gd" id="1_kd84q"]
-[ext_resource type="Script" path="res://globals/one_off_resources_scripts/scene_dictionary.gd" id="2_b33rt"]
+[ext_resource type="Script" uid="uid://lgq5dlr8aaod" path="res://globals/one_off_resources_scripts/scene_dictionary_entry.gd" id="1_kd84q"]
+[ext_resource type="Script" uid="uid://b03ksv7cnprv3" path="res://globals/one_off_resources_scripts/scene_dictionary.gd" id="2_b33rt"]
 
 [sub_resource type="Resource" id="Resource_d2k66"]
 script = ExtResource("1_kd84q")

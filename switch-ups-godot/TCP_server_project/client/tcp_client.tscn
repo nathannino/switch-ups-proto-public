@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bd1kyiefxpy52"]
 
-[ext_resource type="Script" path="res://TCP_server_project/client/tcp_client.gd" id="1_hcg8w"]
+[ext_resource type="Script" uid="uid://dqt0ypkemuwk0" path="res://TCP_server_project/client/tcp_client.gd" id="1_hcg8w"]
 
 [node name="MainClient" type="Node"]
 script = ExtResource("1_hcg8w")

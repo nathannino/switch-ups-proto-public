@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="ms_action" load_steps=5 format=3 uid="uid://ia42qhobbyee"]
 
-[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/action_component.gd" id="1_sll8v"]
-[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/specials/ac_sp_switch.gd" id="2_0f0v1"]
-[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/action.gd" id="2_g6upd"]
+[ext_resource type="Script" uid="uid://csiv0ccgqvmtb" path="res://monster_systems/actions/resources_scripts/components/action_component.gd" id="1_sll8v"]
+[ext_resource type="Script" uid="uid://ds76wdi4nq6gf" path="res://monster_systems/actions/resources_scripts/components/specials/ac_sp_switch.gd" id="2_0f0v1"]
+[ext_resource type="Script" uid="uid://cuoh85b8m5ubn" path="res://monster_systems/actions/resources_scripts/action.gd" id="2_g6upd"]
 
 [sub_resource type="Resource" id="Resource_uctxt"]
 script = ExtResource("2_0f0v1")

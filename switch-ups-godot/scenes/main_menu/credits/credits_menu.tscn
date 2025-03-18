@@ -1,9 +1,9 @@
 [gd_scene load_steps=9 format=3 uid="uid://c61v7qckif4d1"]
 
-[ext_resource type="Script" path="res://scenes/main_menu/credits/music_credits/music_library.gd" id="1_4rm8s"]
-[ext_resource type="Script" path="res://globals/simple_scripts/button_change_scene_simple.gd" id="1_wmp6k"]
-[ext_resource type="Script" path="res://globals/simple_scripts/flowgrid.gd" id="2_tluex"]
-[ext_resource type="Script" path="res://globals/simple_scripts/set_parent_tab_name.gd" id="3_ntjgm"]
+[ext_resource type="Script" uid="uid://bpgo2ajdqaijx" path="res://scenes/main_menu/credits/music_credits/music_library.gd" id="1_4rm8s"]
+[ext_resource type="Script" uid="uid://1yl6aj3ibwlh" path="res://globals/simple_scripts/button_change_scene_simple.gd" id="1_wmp6k"]
+[ext_resource type="Script" uid="uid://cp0h1sybiqu0t" path="res://globals/simple_scripts/flowgrid.gd" id="2_tluex"]
+[ext_resource type="Script" uid="uid://22xiljhyb07p" path="res://globals/simple_scripts/set_parent_tab_name.gd" id="3_ntjgm"]
 
 [sub_resource type="GDScript" id="GDScript_xo24i"]
 script/source = "extends MarginContainer

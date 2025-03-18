@@ -1,10 +1,12 @@
 extends Node
 
+const MAX_HEALTH = 300
+
 # TODO : Make sure this is reset when needed, this is very important state to sync omg
 #region Client variables
 var teambuilding_is_ready = false
 var teambuilding_received_team = false
-var in_battle = false
+var in_battle = false 
 var battle_loaded = false
 var team_id = 0
 var team = []
@@ -54,7 +56,7 @@ func team_to_dict() :
 	return dict_team
 
 func reset_team_stats() :
-	player_health = 1000
+	player_health = MAX_HEALTH
 	for member in team :
 		member.reset_stats()
 

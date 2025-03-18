@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://dob82wo6k22hm"]
 
-[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/specials/sp_switch_data.gd" id="1_f03kt"]
+[ext_resource type="Script" uid="uid://cdn1fh8fg4iks" path="res://monster_systems/actions/resources_scripts/components/specials/sp_switch_data.gd" id="1_f03kt"]
 [ext_resource type="PackedScene" uid="uid://bejpglhgtx7ds" path="res://scenes/battle_v1/uiv2/SpiritTeamDisplay/spirit_team_display.tscn" id="2_4y2du"]
 [ext_resource type="PackedScene" uid="uid://bjwcj7an8i718" path="res://globals/utility_scenes/ui_component/monster_button.tscn" id="3_5m83c"]
 

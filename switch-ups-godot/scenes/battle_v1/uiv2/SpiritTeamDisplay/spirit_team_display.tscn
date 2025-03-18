@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://bejpglhgtx7ds"]
 
-[ext_resource type="Script" path="res://scenes/battle_v1/uiv2/SpiritTeamDisplay/monsterbutton_anchorgroup.gd" id="1_wnqjc"]
+[ext_resource type="Script" uid="uid://cswta6107hyld" path="res://scenes/battle_v1/uiv2/SpiritTeamDisplay/monsterbutton_anchorgroup.gd" id="1_wnqjc"]
 [ext_resource type="PackedScene" uid="uid://bjwcj7an8i718" path="res://globals/utility_scenes/ui_component/monster_button.tscn" id="2_fjeqp"]
-[ext_resource type="Script" path="res://scenes/battle_v1/uiv2/SpiritTeamDisplay/rotate_anchors.gd" id="2_po2ht"]
+[ext_resource type="Script" uid="uid://drjl11vm6w0kb" path="res://scenes/battle_v1/uiv2/SpiritTeamDisplay/rotate_anchors.gd" id="2_po2ht"]
 
 [sub_resource type="GDScript" id="GDScript_jr23e"]
 script/source = "extends Control

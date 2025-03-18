@@ -1,9 +1,9 @@
 [gd_resource type="Resource" script_class="ms_spirit" load_steps=7 format=3 uid="uid://bghlhmejgwuy7"]
 
-[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/action.gd" id="1_gmbej"]
+[ext_resource type="Script" uid="uid://cuoh85b8m5ubn" path="res://monster_systems/actions/resources_scripts/action.gd" id="1_gmbej"]
 [ext_resource type="Resource" uid="uid://cea7mp2f86a1h" path="res://monster_systems/actions/database/normal/reg_atk_con.tres" id="2_nd846"]
 [ext_resource type="Resource" uid="uid://btja4176bhm51" path="res://monster_systems/actions/database/creature/bite.tres" id="3_7tkv1"]
-[ext_resource type="Script" path="res://monster_systems/spirits/resources_scripts/spirit.gd" id="4_cs0fq"]
+[ext_resource type="Script" uid="uid://dqioysnx33r70" path="res://monster_systems/spirits/resources_scripts/spirit.gd" id="4_cs0fq"]
 [ext_resource type="Resource" uid="uid://7b5mkdx1uxjo" path="res://monster_systems/actions/database/fear/lash_out.tres" id="4_uyrgl"]
 [ext_resource type="Texture2D" uid="uid://masa1osx0s86" path="res://monster_systems/spirits/art/unknown.png" id="5_bvb6w"]
 

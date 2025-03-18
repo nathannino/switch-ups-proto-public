@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://cmjl5hcgm2r7w"]
 
-[ext_resource type="Script" path="res://globals/utility_scenes/menus/spirit_summary/spirit_list.gd" id="1_wdcg7"]
+[ext_resource type="Script" uid="uid://6klcb23ixnlm" path="res://globals/utility_scenes/menus/spirit_summary/spirit_list.gd" id="1_wdcg7"]
 [ext_resource type="PackedScene" uid="uid://daut2jgtjtnbo" path="res://globals/utility_scenes/menus/spirit_summary/spirit_list_button.tscn" id="2_nb18j"]
 
 [sub_resource type="GDScript" id="GDScript_e72b4"]

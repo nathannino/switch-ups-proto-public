@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://brlt0rnjj6iia"]
 
-[ext_resource type="Script" path="res://globals/autoloads/battle_log/log_panel.gd" id="1_wfcof"]
+[ext_resource type="Script" uid="uid://ks7w3thld605" path="res://globals/autoloads/battle_log/log_panel.gd" id="1_wfcof"]
 
 [sub_resource type="Gradient" id="Gradient_ta75u"]
 colors = PackedColorArray(0.588235, 0.588235, 0.588235, 0.588235, 0.588235, 0.588235, 0.588235, 0.588235)
