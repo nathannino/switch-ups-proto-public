@@ -1,10 +1,10 @@
 [gd_resource type="Resource" script_class="ms_action" load_steps=9 format=3 uid="uid://beu45wfgfrwkc"]
 
-[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/action_component.gd" id="1_fr0uj"]
-[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/change_stat_level/ac_ch_stat_level.gd" id="2_2du5e"]
-[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/change_active/change_active.gd" id="3_dfohr"]
-[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/select_target/ac_target.gd" id="4_as3td"]
-[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/action.gd" id="5_s7pyh"]
+[ext_resource type="Script" uid="uid://csiv0ccgqvmtb" path="res://monster_systems/actions/resources_scripts/components/action_component.gd" id="1_fr0uj"]
+[ext_resource type="Script" uid="uid://b5o4adhfhkldn" path="res://monster_systems/actions/resources_scripts/components/change_stat_level/ac_ch_stat_level.gd" id="2_2du5e"]
+[ext_resource type="Script" uid="uid://dqn2rvx3u8sgp" path="res://monster_systems/actions/resources_scripts/components/change_active/change_active.gd" id="3_dfohr"]
+[ext_resource type="Script" uid="uid://bedoq515h1qxa" path="res://monster_systems/actions/resources_scripts/components/select_target/ac_target.gd" id="4_as3td"]
+[ext_resource type="Script" uid="uid://cuoh85b8m5ubn" path="res://monster_systems/actions/resources_scripts/action.gd" id="5_s7pyh"]
 
 [sub_resource type="Resource" id="Resource_7prsp"]
 script = ExtResource("2_2du5e")
@@ -26,4 +26,5 @@ key = "prep_charged_atk_con"
 name = "TR_ACT_PREP_CHG_ATK_CON"
 type = 8
 cost = 2
+priority = 0
 effects = Array[ExtResource("1_fr0uj")]([SubResource("Resource_nnauu")])

@@ -140,12 +140,12 @@ default_input_values = [0, 0.0, 1, 0.7, 2, 1e-05, 3, Vector3(0, 0, 0), 4, Vector
 
 [sub_resource type="VisualShaderNodeFrame" id="VisualShaderNodeFrame_rvi5i"]
 linked_parent_graph_frame = 49
-size = Vector2(2024, 1158)
+size = Vector2(2024, 1162)
 title = "center"
 attached_nodes = PackedInt32Array(31, 43, 42, 41, 40, 39, 38, 37, 36, 35, 34, 33, 32, 30)
 
 [sub_resource type="VisualShaderNodeFrame" id="VisualShaderNodeFrame_ggr78"]
-size = Vector2(3504, 3178)
+size = Vector2(3504, 3182)
 title = "DitherAmount"
 attached_nodes = PackedInt32Array(5, 44, 29, 28, 27, 26, 25, 22, 21, 20, 19, 18, 16, 14, 13, 12, 11, 10, 9, 8, 7, 6, 48)
 
@@ -214,7 +214,7 @@ linked_parent_graph_frame = 62
 constant = 0.7
 
 [sub_resource type="VisualShaderNodeFrame" id="VisualShaderNodeFrame_bbffr"]
-size = Vector2(2144, 578)
+size = Vector2(2144, 582)
 title = "dither but bad (triangle)"
 attached_nodes = PackedInt32Array(57, 60, 59, 56, 58, 53, 55, 54, 52, 51)
 
@@ -239,8 +239,8 @@ render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_lambert, specular_s
 
 uniform vec4 color : source_color;
 uniform sampler2D tex_frg_2;
-uniform float dotfrequency = 50;
-uniform float percent : hint_range(0.0010000000475, 1) = 0.10000000149012;
+uniform float dotfrequency = 50.0;
+uniform float percent : hint_range(0.0010000000475, 1.0) = 0.10000000149012;
 
 
 

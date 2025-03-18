@@ -1,12 +1,12 @@
 [gd_scene load_steps=23 format=3 uid="uid://ope0vgwhns7r"]
 
 [ext_resource type="Texture2D" uid="uid://masa1osx0s86" path="res://monster_systems/spirits/art/unknown.png" id="1_plwqg"]
-[ext_resource type="Shader" path="res://shaders/spirit_ball.gdshader" id="1_uvler"]
+[ext_resource type="Shader" uid="uid://bnsk4eami3u2c" path="res://shaders/spirit_ball.gdshader" id="1_uvler"]
 [ext_resource type="PackedScene" uid="uid://cytuswl4xhq50" path="res://monster_systems/spirits/3d/stat_lower.tscn" id="3_mfgpo"]
 [ext_resource type="PackedScene" uid="uid://c0ef3gpu7n0nx" path="res://monster_systems/spirits/3d/stat_higher.tscn" id="4_dpklx"]
 [ext_resource type="Shader" uid="uid://x3k1pjjplqdd" path="res://monster_systems/spirits/3d/attack_effect.tres" id="5_v7aob"]
 [ext_resource type="Texture2D" uid="uid://beunnlf5g35ur" path="res://monster_systems/actions/effects/attack_concrete.svg" id="5_xm3yf"]
-[ext_resource type="Script" path="res://monster_systems/spirits/3d/animations.gd" id="6_42c40"]
+[ext_resource type="Script" uid="uid://b4oph7gtxb7s0" path="res://monster_systems/spirits/3d/animations.gd" id="6_42c40"]
 [ext_resource type="Texture2D" uid="uid://b1pawseunm44f" path="res://monster_systems/actions/effects/attack_abstract.svg" id="8_dx6dt"]
 
 [sub_resource type="GDScript" id="GDScript_fq4ef"]
@@ -123,11 +123,11 @@ shader_parameter/horizontal_frequency = 1.0
 shader_parameter/vertical_frequency = 1.0
 shader_parameter/size = -0.3
 shader_parameter/core_size = 1.0
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_n7s4d")
 shader_parameter/color1 = Color(0.286, 0.22, 0.733, 1)
 shader_parameter/color2 = Color(0.98, 0.38, 0.34, 1)
 shader_parameter/color3 = Color(0.98, 0.95, 0.53, 1)
 shader_parameter/color4 = Color(1, 1, 1, 1)
-shader_parameter/noise_texture = SubResource("NoiseTexture2D_n7s4d")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_sefvg"]
 size = Vector2(3.5, 3.5)
@@ -151,9 +151,9 @@ resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("5_v7aob")
 shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/tex_frg_2 = SubResource("ViewportTexture_n6j3j")
 shader_parameter/dotfrequency = 100.0
 shader_parameter/percent = 0.2
-shader_parameter/tex_frg_2 = SubResource("ViewportTexture_n6j3j")
 
 [sub_resource type="Animation" id="Animation_r60ys"]
 length = 0.001
@@ -288,9 +288,9 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_u5y0y"]
 _data = {
-"RESET": SubResource("Animation_r60ys"),
-"abstract_attack": SubResource("Animation_ftkcg"),
-"concrete_attack": SubResource("Animation_iotvf")
+&"RESET": SubResource("Animation_r60ys"),
+&"abstract_attack": SubResource("Animation_ftkcg"),
+&"concrete_attack": SubResource("Animation_iotvf")
 }
 
 [node name="Spirit" type="Node3D" node_paths=PackedStringArray("center", "spirit_spirte", "attack_anim", "stat_anim_lower", "stat_anim_higher")]

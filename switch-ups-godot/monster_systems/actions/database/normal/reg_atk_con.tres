@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="ms_action" load_steps=5 format=3 uid="uid://cea7mp2f86a1h"]
 
-[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/action_component.gd" id="1_lu50t"]
-[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/attack_enemy/ac_attack_enemy.gd" id="2_bco01"]
-[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/action.gd" id="3_a7qp8"]
+[ext_resource type="Script" uid="uid://csiv0ccgqvmtb" path="res://monster_systems/actions/resources_scripts/components/action_component.gd" id="1_lu50t"]
+[ext_resource type="Script" uid="uid://tratffjr38fv" path="res://monster_systems/actions/resources_scripts/components/attack_enemy/ac_attack_enemy.gd" id="2_bco01"]
+[ext_resource type="Script" uid="uid://cuoh85b8m5ubn" path="res://monster_systems/actions/resources_scripts/action.gd" id="3_a7qp8"]
 
 [sub_resource type="Resource" id="Resource_wo68q"]
 script = ExtResource("2_bco01")

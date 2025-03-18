@@ -20,7 +20,7 @@ linked_parent_graph_frame = 16
 parameter_name = "pivot"
 
 [sub_resource type="VisualShaderNodeFrame" id="VisualShaderNodeFrame_6shio"]
-size = Vector2(2004, 738)
+size = Vector2(2004, 742)
 title = "Rotate"
 attached_nodes = PackedInt32Array(4, 14, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32)
 
@@ -98,7 +98,7 @@ linked_parent_graph_frame = 16
 op_type = 0
 
 [sub_resource type="VisualShaderNodeFrame" id="VisualShaderNodeFrame_kxq0a"]
-size = Vector2(3024, 458)
+size = Vector2(3024, 462)
 title = "Transparency"
 attached_nodes = PackedInt32Array(13, 11, 10, 9, 65, 66, 67, 68)
 
@@ -174,7 +174,7 @@ linked_parent_graph_frame = 51
 input_name = "screen_pixel_size"
 
 [sub_resource type="VisualShaderNodeFrame" id="VisualShaderNodeFrame_gvu40"]
-size = Vector2(2044, 378)
+size = Vector2(2044, 382)
 title = "get amount"
 attached_nodes = PackedInt32Array(50, 52, 53, 54, 57, 58, 59, 60, 61, 62, 63)
 
@@ -225,7 +225,7 @@ linked_parent_graph_frame = 51
 function = 16
 
 [sub_resource type="VisualShaderNodeFrame" id="VisualShaderNodeFrame_g71jd"]
-size = Vector2(2424, 858)
+size = Vector2(2424, 862)
 title = "Rectangles"
 attached_nodes = PackedInt32Array(36, 39, 40, 41, 37, 42, 43, 48, 49, 47, 46, 44, 38, 3, 69, 70)
 
@@ -261,10 +261,10 @@ op_type = 0
 code = "shader_type canvas_item;
 render_mode blend_mix;
 
-uniform float rotation_deg : hint_range(0, 360);
+uniform float rotation_deg : hint_range(0.0, 360.0);
 uniform uint size = 400;
 uniform bool invert_order;
-uniform float progress : hint_range(0, 1);
+uniform float progress : hint_range(0.0, 1.0);
 
 
 

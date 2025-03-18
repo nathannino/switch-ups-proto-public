@@ -1,6 +1,6 @@
 [gd_scene load_steps=35 format=3 uid="uid://de73tp04igcgo"]
 
-[ext_resource type="Script" path="res://scenes/battle_3d/battle_env.gd" id="1_gjdnr"]
+[ext_resource type="Script" uid="uid://c0qb18g3a3hsy" path="res://scenes/battle_3d/battle_env.gd" id="1_gjdnr"]
 [ext_resource type="Texture2D" uid="uid://bgus2nb4f6dpy" path="res://skyboxes/modern_buildings_2_4k.hdr" id="2_i71ua"]
 [ext_resource type="PackedScene" uid="uid://bwkkxdlm0ixxc" path="res://monster_systems/3d_generic/character_large_male.tscn" id="3_xb8f0"]
 [ext_resource type="PackedScene" uid="uid://exl30j2q47up" path="res://Kenney Assets/Space Station Kit/Models/GLB format/floor.glb" id="4_n7uor"]

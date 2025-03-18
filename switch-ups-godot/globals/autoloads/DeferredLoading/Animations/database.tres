@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="scene_transition_anim" load_steps=6 format=3 uid="uid://c14ejtyo4e62"]
 
-[ext_resource type="Script" path="res://globals/autoloads/DeferredLoading/Animations/scene_transition_anim.gd" id="1_jjagi"]
-[ext_resource type="Script" path="res://globals/autoloads/DeferredLoading/Animations/scene_transition_anim_entry.gd" id="2_keuds"]
+[ext_resource type="Script" uid="uid://camgkou2gspm1" path="res://globals/autoloads/DeferredLoading/Animations/scene_transition_anim.gd" id="1_jjagi"]
+[ext_resource type="Script" uid="uid://dj08pari1whoi" path="res://globals/autoloads/DeferredLoading/Animations/scene_transition_anim_entry.gd" id="2_keuds"]
 
 [sub_resource type="Resource" id="Resource_mdd0u"]
 script = ExtResource("2_keuds")

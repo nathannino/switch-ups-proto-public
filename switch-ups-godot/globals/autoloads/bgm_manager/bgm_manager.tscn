@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bekn7hfyhclel"]
 
-[ext_resource type="Script" path="res://globals/autoloads/bgm_manager/bgm_manager.gd" id="1_gwp3a"]
+[ext_resource type="Script" uid="uid://ck0r03l12gf71" path="res://globals/autoloads/bgm_manager/bgm_manager.gd" id="1_gwp3a"]
 
 [node name="BgmManager" type="Node"]
 script = ExtResource("1_gwp3a")

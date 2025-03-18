@@ -35,7 +35,12 @@ func _ready() -> void:
 	spirit_team_display.is_friend = is_self
 	
 	ui_globals.selected_position_changed.connect(func() :
-		spirit_team_display.selected_position = ui_globals.selected_position
+		if is_self : spirit_team_display.selected_position = ui_globals.selected_position
+	)
+	
+	spirit_team_display.ms_pressed.connect(func(index : int, _pos : ms_constants.POSITION) :
+		var team = battle_root.friend_team if is_self else battle_root.enemy_team
+		battle_root.show_summary(team[ms_constants.position_to_index(_pos)])
 	)
 	
 	battle_root.sync_team.connect(sync_team_state)

@@ -1,11 +1,11 @@
 [gd_resource type="Resource" script_class="ms_spirit" load_steps=8 format=3 uid="uid://bm6oi7rmy2ir4"]
 
-[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/action.gd" id="1_20r1d"]
+[ext_resource type="Script" uid="uid://cuoh85b8m5ubn" path="res://monster_systems/actions/resources_scripts/action.gd" id="1_20r1d"]
 [ext_resource type="Resource" uid="uid://bxpn0enwtueuh" path="res://monster_systems/actions/database/normal/reg_atk_abs.tres" id="2_dnjd1"]
 [ext_resource type="Resource" uid="uid://fstlvpkct8rx" path="res://monster_systems/actions/database/meta/prep_charged_atk_abs.tres" id="3_vgobm"]
 [ext_resource type="Resource" uid="uid://beu45wfgfrwkc" path="res://monster_systems/actions/database/meta/prep_charged_atk_con.tres" id="4_8aotr"]
 [ext_resource type="Resource" uid="uid://56cq4vm2p6gy" path="res://monster_systems/actions/database/meta/lucky_shot.tres" id="5_7tk4w"]
-[ext_resource type="Script" path="res://monster_systems/spirits/resources_scripts/spirit.gd" id="5_37far"]
+[ext_resource type="Script" uid="uid://dqioysnx33r70" path="res://monster_systems/spirits/resources_scripts/spirit.gd" id="5_37far"]
 [ext_resource type="Texture2D" uid="uid://masa1osx0s86" path="res://monster_systems/spirits/art/unknown.png" id="6_ksui7"]
 
 [resource]

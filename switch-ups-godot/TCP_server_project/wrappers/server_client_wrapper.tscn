@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bge7w16mcqrkq"]
 
-[ext_resource type="Script" path="res://TCP_server_project/wrappers/server_client_wrapper.gd" id="1_a42xk"]
+[ext_resource type="Script" uid="uid://bsm3jc06r6l5e" path="res://TCP_server_project/wrappers/server_client_wrapper.gd" id="1_a42xk"]
 [ext_resource type="PackedScene" uid="uid://bsp4cm2qvhap7" path="res://TCP_server_project/server/server_client_node.tscn" id="2_rffwp"]
 
 [node name="ServerClientWrapper" type="Node"]

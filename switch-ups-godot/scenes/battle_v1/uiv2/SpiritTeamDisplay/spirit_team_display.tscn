@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://bejpglhgtx7ds"]
 
-[ext_resource type="Script" path="res://scenes/battle_v1/uiv2/SpiritTeamDisplay/monsterbutton_anchorgroup.gd" id="1_wnqjc"]
+[ext_resource type="Script" uid="uid://cswta6107hyld" path="res://scenes/battle_v1/uiv2/SpiritTeamDisplay/monsterbutton_anchorgroup.gd" id="1_wnqjc"]
 [ext_resource type="PackedScene" uid="uid://bjwcj7an8i718" path="res://globals/utility_scenes/ui_component/monster_button.tscn" id="2_fjeqp"]
-[ext_resource type="Script" path="res://scenes/battle_v1/uiv2/SpiritTeamDisplay/rotate_anchors.gd" id="2_po2ht"]
+[ext_resource type="Script" uid="uid://drjl11vm6w0kb" path="res://scenes/battle_v1/uiv2/SpiritTeamDisplay/rotate_anchors.gd" id="2_po2ht"]
 
 [sub_resource type="GDScript" id="GDScript_jr23e"]
 script/source = "extends Control
@@ -12,6 +12,7 @@ var summary_container : Container
 #endregion
 
 signal rotation_done
+signal ms_pressed(index : int, _pos : ms_constants.POSITION)
 
 @export_category(\"monster_buttons\")
 @export var spirit_left : Control
@@ -45,14 +46,14 @@ var selected_position : ms_constants.POSITION :
 	set(_value) :
 		_selected_position = _value 
 		
-		if not is_friend :
-			return
+		#if not is_friend :
+		#	return
 		
 		var _active_msbutton = get_msbutton_by_position(_value)
 		
 		for _msbutton in spirit_list :
 			if _msbutton == _active_msbutton :
-				_msbutton.set_hightlight_color(Color(1,1,1,0.1))
+				_msbutton.set_hightlight_color(Color(1,1,1,0.05))
 				_msbutton.is_selected = true
 			else :
 				_msbutton.set_hightlight_color(Color(0,0,0,0))
@@ -67,17 +68,25 @@ func reset_all_pos() :
 func set_spirit(_spirit : ms_spirit_active, _position : ms_constants.POSITION) :
 	match _position :
 		ms_constants.POSITION.LEFT :
-			spirit_left.set_monster(_spirit) # TODO : Set options
+			spirit_left.set_monster(_spirit,options) # TODO : Set options
 		ms_constants.POSITION.CENTER :
-			spirit_center.set_monster(_spirit)
+			spirit_center.set_monster(_spirit,options)
 		ms_constants.POSITION.RIGHT :
-			spirit_right.set_monster(_spirit)
+			spirit_right.set_monster(_spirit,options)
 
-func set_selectable(_selectable : bool, _position : ms_constants.POSITION) :
-	pass
+var options = []
+
+func set_options(_options : Array) :
+	options = _options
+	for _ms_button in spirit_list :
+		_ms_button.set_options(_options)
 
 func _ready() -> void:
 	spirit_list = [spirit_left,spirit_center,spirit_right]
+	for _msbutton in spirit_list :
+		_msbutton.pressed_option.connect(func(_opt_index : int) :
+			ms_pressed.emit(_opt_index, get_position_by_msbutton(_msbutton))
+		)
 
 func get_msbutton_by_position(_position : ms_constants.POSITION) :
 	match _position :
@@ -88,6 +97,14 @@ func get_msbutton_by_position(_position : ms_constants.POSITION) :
 		ms_constants.POSITION.RIGHT :
 			return spirit_right
 	return null
+
+func get_position_by_msbutton(_ms_button) -> ms_constants.POSITION:
+	if _ms_button == spirit_center :
+		return ms_constants.POSITION.CENTER
+	elif _ms_button == spirit_left :
+		return ms_constants.POSITION.LEFT
+	else :
+		return ms_constants.POSITION.RIGHT
 
 func set_msbutton_by_position(_ms_button : Control,_position : ms_constants.POSITION) :
 	match _position :

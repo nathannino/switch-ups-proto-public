@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://cedlvcxxgruty"]
 
-[ext_resource type="Script" path="res://monster_systems/actions/resources_scripts/components/select_target/target_select.gd" id="1_ax6tc"]
+[ext_resource type="Script" uid="uid://ca68hsqwrul85" path="res://monster_systems/actions/resources_scripts/components/select_target/target_select.gd" id="1_ax6tc"]
 
 [sub_resource type="GDScript" id="GDScript_ww61s"]
 script/source = "extends Button

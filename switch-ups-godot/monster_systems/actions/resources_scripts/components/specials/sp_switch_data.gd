@@ -4,11 +4,11 @@ var allow_back : bool
 
 var battle_root : Node
 
-@export var back_button : Button
-@export var active_team_list : VBoxContainer
-@export var reserve_team_list : VBoxContainer
+const OPTIONS_STRINGS = ["TR_SUMMARY","TR_SELECT"]
 
-@export var selected_color : Color
+@export var back_button : Button
+@export var active_team_display : Control
+@export var reserve_team_list : HBoxContainer
 @export var confirm_button : Button
 
 var _team_active_representative : ms_spirit_active
@@ -25,12 +25,14 @@ var team_reserve_representative : ms_spirit_active :
 		confirm_button.disabled = (_team_active_representative == null) or (_team_reserve_representative == null)
 
 func set_option() :
-	var options = []
 	var active_team = battle_root.friend_team.slice(0,3)
 	var reserve_team = battle_root.friend_team.slice(3)
+
+	reserve_team_list.set_options(reserve_team,OPTIONS_STRINGS)
 	
-	active_team_list.set_options(active_team)
-	reserve_team_list.set_options(reserve_team)
+	active_team_display.set_spirit(active_team[ms_constants.position_to_index(ms_constants.POSITION.CENTER)],ms_constants.POSITION.CENTER)
+	active_team_display.set_spirit(active_team[ms_constants.position_to_index(ms_constants.POSITION.LEFT)],ms_constants.POSITION.LEFT)
+	active_team_display.set_spirit(active_team[ms_constants.position_to_index(ms_constants.POSITION.RIGHT)],ms_constants.POSITION.RIGHT)
 
 func attach_ready(_battle_root : Node) :
 	battle_root = _battle_root
@@ -39,10 +41,16 @@ func attach_ready(_battle_root : Node) :
 	else :
 		back_button.hide()
 	set_option()
+	active_team_display.set_options(OPTIONS_STRINGS.duplicate())
+	active_team_display.ms_pressed.connect(func (index : int, _pos : ms_constants.POSITION) :
+		var _spirit = battle_root.friend_team[ms_constants.position_to_index(_pos)]
+		if index == 0 :
+			battle_root.show_summary(_spirit)
+		else :
+			active_team_display.selected_position = _pos
+			team_active_representative = _spirit
+	)
 	pass
-
-func pos_to_index(pos,container) :
-	return pos if container == active_team_list else pos + 3
 
 func return_value(data) :
 	battle_root.submit_action_data(data)

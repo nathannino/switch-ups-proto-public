@@ -48,22 +48,22 @@ default_input_values = [0, 0.0, 1, 1.5]
 operator = 2
 
 [sub_resource type="VisualShaderNodeFrame" id="VisualShaderNodeFrame_msmdk"]
-size = Vector2(764, 138)
+size = Vector2(764, 142)
 title = "horizontal"
 attached_nodes = PackedInt32Array(13, 15, 14)
 
 [sub_resource type="VisualShaderNodeFrame" id="VisualShaderNodeFrame_d3df4"]
-size = Vector2(584, 138)
+size = Vector2(584, 142)
 title = "Position"
 attached_nodes = PackedInt32Array(4, 5)
 
 [sub_resource type="VisualShaderNodeFrame" id="VisualShaderNodeFrame_6vsci"]
-size = Vector2(744, 138)
+size = Vector2(744, 142)
 title = "Second Stripe"
 attached_nodes = PackedInt32Array(18, 20, 22)
 
 [sub_resource type="VisualShaderNodeFrame" id="VisualShaderNodeFrame_6iy4n"]
-size = Vector2(604, 218)
+size = Vector2(604, 222)
 title = "First Stripe"
 attached_nodes = PackedInt32Array(16, 12)
 
@@ -90,7 +90,7 @@ code = "shader_type spatial;
 render_mode blend_mix, depth_draw_opaque, cull_disabled, diffuse_lambert, specular_schlick_ggx;
 
 uniform vec4 color : source_color;
-uniform float progress : hint_range(0, 1);
+uniform float progress : hint_range(0.0, 1.0);
 
 
 

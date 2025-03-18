@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://c0ef3gpu7n0nx"]
 
-[ext_resource type="Script" path="res://monster_systems/spirits/3d/stat_anim_3d.gd" id="1_0k3fc"]
+[ext_resource type="Script" uid="uid://bobvu1j6wlmlu" path="res://monster_systems/spirits/3d/stat_anim_3d.gd" id="1_0k3fc"]
 [ext_resource type="Shader" uid="uid://dlcbb7iofx6g5" path="res://monster_systems/spirits/3d/stat_change_shader.tres" id="1_fy2d8"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_u5f0e"]
@@ -29,6 +29,7 @@ emission_ring_axis = Vector3(0, 1, 0)
 emission_ring_height = 0.0
 emission_ring_radius = 9.0
 emission_ring_inner_radius = 8.0
+emission_ring_cone_angle = 90.0
 direction = Vector3(0, -1, 0)
 spread = 0.0
 initial_velocity_min = 16.0

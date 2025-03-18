@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://d0vl7y7q6sesm" path="res://Kenney Assets/Animated Characters Bundle/Models/characterLargeMale.fbx" id="1_u16pj"]
 [ext_resource type="Texture2D" uid="uid://nd8fch8r40dt" path="res://Kenney Assets/Animated Characters Bundle/Skins/businessMaleA.png" id="2_dadg8"]
-[ext_resource type="Script" path="res://monster_systems/character/character_managergd.gd" id="2_htyke"]
+[ext_resource type="Script" uid="uid://dpa35i4hmurvh" path="res://monster_systems/character/character_managergd.gd" id="2_htyke"]
 [ext_resource type="AnimationLibrary" uid="uid://dlxiyv1tttfal" path="res://Kenney Assets/Animated Characters Bundle/Animations/attack.fbx" id="3_vp2wp"]
 [ext_resource type="AnimationLibrary" uid="uid://b7kp8rn0sbq70" path="res://Kenney Assets/Animated Characters Bundle/Animations/crouch.fbx" id="4_eg6le"]
 [ext_resource type="AnimationLibrary" uid="uid://c6ecdmdguflyy" path="res://Kenney Assets/Animated Characters Bundle/Animations/crouchIdle.fbx" id="5_xau6k"]
@@ -21,7 +21,7 @@
 [ext_resource type="AnimationLibrary" uid="uid://ddshfh78ah3fs" path="res://Kenney Assets/Animated Characters Bundle/Animations/shoot.fbx" id="18_imokf"]
 [ext_resource type="AnimationLibrary" uid="uid://j4d01r6u15kx" path="res://Kenney Assets/Animated Characters Bundle/Animations/walk.fbx" id="19_ginm3"]
 [ext_resource type="PackedScene" uid="uid://ope0vgwhns7r" path="res://monster_systems/spirits/3d/spirit.tscn" id="20_mf166"]
-[ext_resource type="Script" path="res://monster_systems/3d_generic/spirit_anchor.gd" id="21_bldix"]
+[ext_resource type="Script" uid="uid://bnj4q65orvne6" path="res://monster_systems/3d_generic/spirit_anchor.gd" id="21_bldix"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ut5m7"]
 albedo_texture = ExtResource("2_dadg8")
@@ -38,7 +38,7 @@ tracks/0/keys = PackedFloat32Array(0, 1, -0.244023, -0.368548, 0.00652775)
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_tqeuq"]
 _data = {
-"RESET": SubResource("Animation_wy2bj")
+&"RESET": SubResource("Animation_wy2bj")
 }
 
 [sub_resource type="GDScript" id="GDScript_nscyr"]

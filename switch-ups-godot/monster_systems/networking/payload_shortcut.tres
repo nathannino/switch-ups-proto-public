@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="editor_script_shortcut" load_steps=3 format=3 uid="uid://46bkj34n8jqm"]
 
-[ext_resource type="Script" path="res://globals/one_off_resources_scripts/payload_shortcut.gd" id="1_dc56l"]
-[ext_resource type="Script" path="res://TCP_server_project/payload/TcpPayload.gd" id="2_8yyl0"]
+[ext_resource type="Script" uid="uid://duywk4iu33ter" path="res://globals/one_off_resources_scripts/payload_shortcut.gd" id="1_dc56l"]
+[ext_resource type="Script" uid="uid://ceq5weu8i2ftt" path="res://TCP_server_project/payload/TcpPayload.gd" id="2_8yyl0"]
 
 [resource]
 script = ExtResource("1_dc56l")
