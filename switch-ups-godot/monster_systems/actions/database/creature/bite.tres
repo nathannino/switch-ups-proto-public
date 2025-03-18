@@ -27,4 +27,5 @@ key = "bite"
 name = "TR_ACT_BITE"
 type = 1
 cost = 1
+priority = 0
 effects = Array[ExtResource("1_aoxga")]([SubResource("Resource_edgor"), SubResource("Resource_ewfs6")])

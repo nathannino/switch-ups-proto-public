@@ -15,4 +15,5 @@ key = "jetpack"
 name = "TR_ACT_JETPACK"
 type = 7
 cost = 1
+priority = 0
 effects = Array[ExtResource("1_pijh4")]([SubResource("Resource_yjnbm")])

@@ -28,4 +28,5 @@ key = "ittinary"
 name = "TR_ACT_ITTINARY"
 type = 2
 cost = 1
+priority = 0
 effects = Array[ExtResource("1_p8hll")]([SubResource("Resource_dsuk8"), SubResource("Resource_cnth5")])

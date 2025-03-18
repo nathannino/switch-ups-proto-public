@@ -21,4 +21,5 @@ key = "waterfall"
 name = "TR_ACT_WATERFALL"
 type = 5
 cost = 2
+priority = 0
 effects = Array[ExtResource("1_mdyui")]([SubResource("Resource_8h0ke"), SubResource("Resource_acm4x")])

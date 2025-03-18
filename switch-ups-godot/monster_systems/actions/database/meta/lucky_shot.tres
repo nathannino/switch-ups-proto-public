@@ -21,4 +21,5 @@ key = "lucky_shot"
 name = "TR_ACT_LUCKY_SHOT"
 type = 8
 cost = 1
+priority = 0
 effects = Array[ExtResource("1_xleel")]([SubResource("Resource_0rjxy")])

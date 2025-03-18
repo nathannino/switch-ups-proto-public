@@ -4,14 +4,14 @@
 [ext_resource type="Resource" uid="uid://bxpn0enwtueuh" path="res://monster_systems/actions/database/normal/reg_atk_abs.tres" id="2_41me7"]
 [ext_resource type="Resource" uid="uid://56cq4vm2p6gy" path="res://monster_systems/actions/database/meta/lucky_shot.tres" id="3_7u3me"]
 [ext_resource type="Script" path="res://monster_systems/spirits/resources_scripts/spirit.gd" id="3_8gv78"]
-[ext_resource type="Texture2D" uid="uid://masa1osx0s86" path="res://monster_systems/spirits/art/unknown.png" id="4_83bjp"]
 [ext_resource type="Resource" uid="uid://buvg75peoo6sc" path="res://monster_systems/actions/database/space/jetpack.tres" id="4_ou128"]
+[ext_resource type="Texture2D" uid="uid://bjxoquya1bmih" path="res://monster_systems/spirits/art/star.png" id="6_bt6h1"]
 
 [resource]
 script = ExtResource("3_8gv78")
 key = "star"
 name = "TR_SPIRIT_STAR"
-sprite = ExtResource("4_83bjp")
+sprite = ExtResource("6_bt6h1")
 type = 7
 health = 250
 atk_concrete = 50
