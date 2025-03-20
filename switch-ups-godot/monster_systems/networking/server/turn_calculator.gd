@@ -166,6 +166,7 @@ func calculate_next() :
 		current_data = {}
 		var special_actions = results[1] # FIXME : Do stuff with it
 		var result_data = results[3]
+		target_info = results[2]
 		result_data["target_info"] = {
 			"user" : target_info[1].team.find(target_info[0]),
 			"user_id" : $"../ServerMain".get_children().find(target_info[1]),
@@ -175,8 +176,6 @@ func calculate_next() :
 		result_data["action_index_array"] = action_index.duplicate()
 		
 		result_data["action_position"] = target_info[0].get_action_index(action)
-		
-		target_info = results[2]
 		
 		battle_log.push_back(result_data)
 		

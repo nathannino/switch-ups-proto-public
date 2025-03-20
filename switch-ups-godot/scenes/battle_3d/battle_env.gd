@@ -33,7 +33,7 @@ func camera_reset() :
 	pass
 
 func _rotate_camera() :
-	if is_equal_approx(camera_target.global_rotation.x, camera.global_rotation.x) and is_equal_approx(camera_target.global_rotation.y, camera.global_rotation.y) and is_equal_approx(camera_target.global_rotation.z, camera.global_rotation.z) :
+	if camera_target.global_rotation.is_equal_approx(camera.global_rotation) :
 		cam_rotation_done.emit()
 		return
 	
