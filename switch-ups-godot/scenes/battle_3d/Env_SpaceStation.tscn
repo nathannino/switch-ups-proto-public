@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://de73tp04igcgo"]
+[gd_scene load_steps=36 format=3 uid="uid://de73tp04igcgo"]
 
 [ext_resource type="Script" uid="uid://c0qb18g3a3hsy" path="res://scenes/battle_3d/battle_env.gd" id="1_gjdnr"]
 [ext_resource type="Texture2D" uid="uid://bgus2nb4f6dpy" path="res://skyboxes/modern_buildings_2_4k.hdr" id="2_i71ua"]
@@ -49,6 +49,16 @@ glow_blend_mode = 0
 volumetric_fog_density = 0.1
 volumetric_fog_length = 124.68
 
+[sub_resource type="GDScript" id="GDScript_4n3wx"]
+script/source = "extends Node3D
+
+@export var camera : Camera3D
+
+func _ready() :
+	global_position = camera.global_position
+	global_rotation = camera.global_rotation
+"
+
 [sub_resource type="GDScript" id="GDScript_kd2r6"]
 script/source = "extends Camera3D
 
@@ -89,14 +99,19 @@ func resize() :
 		keep_aspect = KEEP_WIDTH
 "
 
-[node name="BattleEnv" type="Node3D" node_paths=PackedStringArray("friend_player", "enemy_player", "camera")]
+[node name="BattleEnv" type="Node3D" node_paths=PackedStringArray("friend_player", "enemy_player", "camera", "camera_target")]
 script = ExtResource("1_gjdnr")
 friend_player = NodePath("FriendPlayer")
 enemy_player = NodePath("EnemyPlayer")
 camera = NodePath("Camera3D")
+camera_target = NodePath("CameraLookAt")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_4gmsu")
+
+[node name="CameraLookAt" type="Node3D" parent="." node_paths=PackedStringArray("camera")]
+script = SubResource("GDScript_4n3wx")
+camera = NodePath("../Camera3D")
 
 [node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("timer")]
 transform = Transform3D(-0.71934, 0.191474, -0.667748, 0, 0.961262, 0.275637, 0.694658, 0.198277, -0.691474, -2.01851, 1.865, -0.996152)

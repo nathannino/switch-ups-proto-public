@@ -155,6 +155,7 @@ func rotate_visual(pid_one,spirit_one_index,pid_two,spirit_two_index) :
 		var _position = ms_constants.index_to_position(spirit_one_index) if not ms_constants.index_to_position(spirit_one_index) == ms_constants.POSITION.PARTY else ms_constants.index_to_position(spirit_two_index)
 		var _new_spirit = spirit_one if ms_constants.index_to_position(spirit_one_index) == ms_constants.POSITION.PARTY else spirit_two
 		
+		camera_lookat_helper(ms_constants.POSITION.CENTER,pid_one if spirit_3d_two == null else pid_two)
 		pause_battle_log()
 		team_3d_one.animation_done.connect(func() :
 			play_battle_log.call_deferred()
@@ -167,8 +168,10 @@ func rotate_visual(pid_one,spirit_one_index,pid_two,spirit_two_index) :
 		team_3d_two.rotate_spirit(spirit_3d_one,ms_constants.index_to_position(spirit_one_index),ms_constants.index_to_position(spirit_two_index),0)
 		team_3d_one.rotate_spirit(spirit_3d_two,ms_constants.index_to_position(spirit_two_index),ms_constants.index_to_position(spirit_one_index),1)
 		if team_3d_one == team_3d_two :
+			camera_lookat_helper(ms_constants.POSITION.CENTER,pid_one)
 			spirit_rotation.emit(pid_one,ms_constants.index_to_position(spirit_one_index),ms_constants.index_to_position(spirit_two_index))
 		else :
+			camera_lookat_helper()
 			spirit_switch.emit(pid_one,spirit_one_index,pid_two,spirit_two_index)
 			
 		team_3d_one.animation_done.connect(func() :
@@ -231,6 +234,20 @@ func _set_team_state(teams : Array) :
 	enemy_character.sync_spirits(enemy_team)
 	sync_team.emit()
 
+func camera_lookat_helper(_pos : ms_constants.POSITION = ms_constants.POSITION.PARTY, _pid : int = -1) :
+	pause_battle_log()
+	battle_env.cam_rotation_done.connect(
+		_camera_rotation_done_callable
+	, CONNECT_REFERENCE_COUNTED)
+	if _pos == ms_constants.POSITION.PARTY :
+		battle_env.camera_reset()
+	else :
+		battle_env.camera_look_at(_pos, _pid == player_id)
+
+func _camera_rotation_done_callable() :
+	play_battle_log()
+	battle_env.cam_rotation_done.disconnect(_camera_rotation_done_callable)
+
 var current_action_battle_log
 func handle_battle_logs() :
 	var log = battle_logs.pop_front()
@@ -260,12 +277,13 @@ func handle_battle_logs() :
 			
 			var _spirit_name = SpiritDictionary.spirits[_spirit.key].name
 			var _action_name = current_action_battle_log.name
-			if log["success"] :			#TODO : dialog
+			if log["success"] :
 				_spirit.current_stamina -= current_action_battle_log.cost
 				enter_log_text("TR_BTLLOG_USEACT_SUCCESS",{},{"spirit":_spirit_name,"action":_action_name},DELAY)
 			else :
 				enter_log_text("TR_BTLLOG_USEACT_FAILURE",{},{"spirit":_spirit_name,"action":_action_name},DELAY)
 			
+			camera_lookat_helper(ms_constants.POSITION.CENTER,log_player_id)
 			pause_battle_log()
 			timer.timeout.connect(func() :
 				play_battle_log()
@@ -278,7 +296,9 @@ func handle_battle_logs() :
 			var _spirit = _team[target_info["user"]]
 			var _action = current_action_battle_log
 			var component = ms_action_index_manager.get_latest_component(_action,log["action_index_array"])
+			
 			component.handle_client(log, self)
+			camera_lookat_helper(ms_constants.index_to_position(target_info["target"]),target_info["target_id"])
 
 func _ready() :
 	ClientWrapperAutoload.battle_begin_turn.connect(begin_turn)
@@ -313,6 +333,7 @@ func begin_turn() :
 
 	await_cancel.hide()
 	BattleLogPanel.new_turn()
+	camera_lookat_helper()
 
 func get_spirit_in_field(_team : Array[ms_spirit_active], pos : ms_constants.POSITION) -> ms_spirit_active :
 	return _team[ms_constants.position_to_index(pos)]
