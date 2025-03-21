@@ -1,0 +1,64 @@
+[gd_scene load_steps=3 format=3 uid="uid://bhyel2s4sldmo"]
+
+[ext_resource type="FontFile" uid="uid://dp67v22cnsfxc" path="res://fonts/clickuper/Clickuper.ttf" id="1_w08an"]
+
+[sub_resource type="GDScript" id="GDScript_w08an"]
+script/source = "extends Control
+
+var _text : String
+var text : String :
+	get : return _text
+	set(value) : 
+		_text = value
+		if not is_node_ready() :
+			await ready
+		$Control/RichTextLabel.text = value
+
+signal dissapear
+
+var offset : Vector2 :
+	get : return $Control.position
+	set(value) : $Control.position = value
+"
+
+[node name="DamageNumber" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1.0
+offset_bottom = 1.0
+script = SubResource("GDScript_w08an")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -0.5
+offset_top = -0.5
+offset_right = 0.5
+offset_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -136.5
+offset_top = -64.5
+offset_right = 136.5
+offset_bottom = 64.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("1_w08an")
+theme_override_font_sizes/normal_font_size = 100
+bbcode_enabled = true
+text = "2222
+"
+scroll_active = false
+autowrap_mode = 0

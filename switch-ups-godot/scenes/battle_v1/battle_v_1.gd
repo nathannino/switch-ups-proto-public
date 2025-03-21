@@ -50,10 +50,33 @@ var enemy_hp : float :
 @export var log_container : Container
 
 
+var placeover_list = []
+
+func _placeover_place(_label, _teamid : int, _pos : ms_constants.POSITION, _offset : Vector2) :
+	var _team = friend_character if _teamid == player_id else enemy_character
+	var _spirit = _team.get_spirit_anchor_from_pos(_pos)
+	
+	var ui_pos = battle_env.camera.unproject_position(_spirit.global_position) + _offset
+	
+	_label.global_position = ui_pos
+
 var action_type : ms_constants.TYPE
 #region required by actions
 var friend_team : Array[ms_spirit_active] = []
 var enemy_team : Array[ms_spirit_active] = []
+
+func placeover_spirit_ui(_label : Control, _teamid : int, _pos : ms_constants.POSITION, _offset : Vector2 = Vector2.ZERO) :
+	add_child(_label)
+	
+	var _args = [_label,_teamid,_pos,_offset]
+	
+	placeover_list.push_back(_args)
+	_label.tree_exiting.connect(func() :
+		placeover_list.erase(_args)
+	, CONNECT_ONE_SHOT)
+	
+	_placeover_place(_label,_teamid,_pos,_offset)
+	pass
 
 func get_team_by_id(_id : int) :
 	if _id == player_id :
@@ -387,6 +410,9 @@ func _on_move_selected(_index: int, _action: ms_action) -> void:
 	handle_action_component()
 
 func _process(_delta: float) -> void:
+	for _args in placeover_list :
+		_placeover_place(_args[0], _args[1], _args[2], _args[3])
+	
 	if battle_logs is Array :
 		if battle_logs_await > 0 :
 			return
