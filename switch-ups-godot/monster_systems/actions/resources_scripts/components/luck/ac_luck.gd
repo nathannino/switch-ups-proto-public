@@ -5,6 +5,7 @@ class_name ms_ac_luck
 @export var action : Array[ms_action_component]
 
 const desc = preload("uid://cciubrosm577s")
+const placeover_label = preload("uid://bhyel2s4sldmo")
 
 func get_child_component(_index : int) -> ms_action_component :
 	return action[_index] if _index < action.size() else null
@@ -27,18 +28,31 @@ func _delay_battle_log(battle_root : Node) :
 	var thread = Thread.new()
 	thread.start(func() :
 		battle_root.pause_battle_log()
-		OS.delay_msec(500)
+		OS.delay_msec(800)
 		battle_root.play_battle_log()
 		thread.wait_to_finish.call_deferred()
 	)
-	
+
+func _place_label(battle_root : Node,_tr_key,_target,_pos,_offset,_delay,_lifetime) :
+	var _label = placeover_label.instantiate()
+	_label.text = _tr_key
+	_label.start_tween(battle_root, _target,_pos,_offset,_delay,_lifetime)
 
 func handle_client(battle_log : Dictionary, battle_root : Node) :
+	# target_info["target_id"],ms_constants.index_to_position(target_info["target"])
+	var target_info = battle_log["target_info"]
+	const LIFETIME = 1
+	
 	if battle_log["lucky_status"] :
 		battle_root.enter_log_text("TR_BTLLOG_AC_LUCK_LUCKY" if battle_log["luck_result"] else "TR_BTLLOG_AC_LUCK_UNLUCKY", {}, {}, 0.5)
+		if battle_log["luck_result"] :
+			_place_label(battle_root,"TR_BTLLOG_PLACEOVER_LUCK_LUCKY",target_info["user_id"],ms_constants.index_to_position(target_info["user"]),Vector2.ZERO,0,LIFETIME)
+		else :
+			_place_label(battle_root,"TR_BTLLOG_PLACEOVER_LUCK_UNLUCKY",target_info["target_id"],ms_constants.index_to_position(target_info["target"]),Vector2.ZERO,0,LIFETIME)
 		_delay_battle_log(battle_root)
 	elif not battle_log["luck_result"] :
 		battle_root.enter_log_text("TR_BTLLOG_AC_LUCK_MISS", {}, {}, 0.5)
+		_place_label(battle_root,"TR_BTLLOG_PLACEOVER_LUCK_MISS",target_info["target_id"],ms_constants.index_to_position(target_info["target"]),Vector2.ZERO,0,LIFETIME)
 		_delay_battle_log(battle_root)
 	
 	pass # TODO : idk figure it out later

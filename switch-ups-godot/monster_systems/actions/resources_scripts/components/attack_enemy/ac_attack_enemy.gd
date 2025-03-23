@@ -25,40 +25,10 @@ func serv_requires_interrupt() -> bool :
 func get_interrupt_action() -> Control :
 	return null
 
-func _get_label_text(dmg) -> String :
-	return "[center]" + str(dmg) + "[/center]"
-
 func _place_label(battle_root : Node,_leftpad,_dmg,_rightpad,_target,_pos,_offset,_delay,_lifetime) :
 	var _label = damage_number.instantiate()
-	_label.modulate = Color(1,1,1,0)
-	_label.offset = Vector2(-50,0)
-	_label.text = _leftpad + _get_label_text(_dmg) + _rightpad
-	_label.scale = Vector2(0,0)
-	
-	var tween_vanish : Tween = battle_root.create_tween()
-	tween_vanish.tween_interval(_lifetime*0.6)
-	tween_vanish.tween_property(_label,"modulate",Color(1,1,1,0),_lifetime*0.4)
-	tween_vanish.parallel().tween_property(_label,"scale",Vector2(0.7,0.7),_lifetime*0.4)
-	
-	var tween_scale : Tween = battle_root.create_tween()
-	tween_scale.set_trans(Tween.TRANS_BACK)
-	tween_scale.set_ease(Tween.EASE_OUT)
-	tween_scale.tween_property(_label,"scale",Vector2(1,1),_lifetime*0.2)
-	
-	
-	var tween : Tween = battle_root.create_tween()
-	tween.tween_interval(_delay)
-	tween.tween_callback(func() :
-		battle_root.placeover_spirit_ui(_label, _target, _pos, _offset)
-	)
-	tween.set_parallel(true)
-	tween.tween_property(_label,"modulate",Color(1,1,1,1),_lifetime*0.1)
-	tween.tween_property(_label,"offset",Vector2(50,0),_lifetime)
-	tween.tween_subtween(tween_scale)
-	tween.tween_subtween(tween_vanish)
-	tween.chain().tween_callback(func() :
-		_label.queue_free()
-	)
+	_label.text = _leftpad + str(_dmg) + _rightpad
+	_label.start_tween(battle_root, _target,_pos,_offset,_delay,_lifetime)
 
 func handle_client(battle_log : Dictionary, battle_root : Node) :
 	var _offset = Vector2(0,0)
@@ -71,7 +41,7 @@ func handle_client(battle_log : Dictionary, battle_root : Node) :
 	spirit.current_hp -= battle_log["spirit_damage"]
 	if battle_log["spirit_damage"] > 0 :
 		battle_root.enter_log_text("TR_BTLLOG_AC_ATTACK",{"dmg":battle_log["spirit_damage"]},{"spirit":SpiritDictionary.spirits[spirit.key].name})
-		_place_label(battle_root,"[color=#FFF176]",battle_log["spirit_damage"],"[/color]",target_info["target_id"],ms_constants.index_to_position(target_info["target"]),_offset,_delay,PLACE_LIFETIME)
+		_place_label(battle_root,"[color=#FFFFFF]",battle_log["spirit_damage"],"[/color]",target_info["target_id"],ms_constants.index_to_position(target_info["target"]),_offset,_delay,PLACE_LIFETIME)
 		_delay = 0.3
 		_offset = Vector2(50,50)
 	var player_dmg = battle_log["overflow_damage"]

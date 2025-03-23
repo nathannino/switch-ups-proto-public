@@ -48,5 +48,5 @@ TR_BTL_SWITCH;Swap;Échanger
 TR_BTL_HEALTH;HP : {curr}/{max};PV : {curr}/{max}
 TR_BTL_STAMINA;Stamina : {st}/5;Énergie : {st}/5
 TR_ACUI_SWITCH;Select an active and a reserve party member;Sélectionnez un membre actif et un membre en réserve de l’équipe
-TR_SUMMARY;View Summary;Voir les infos
-TR_SELECT;Select Spirit;Choisir l'esprit
+TR_SUMMARY_;View summary;Voir les infos
+TR_SELECT;Select spirit;Choisir l’esprit

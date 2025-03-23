@@ -1,0 +1,99 @@
+[gd_scene load_steps=3 format=3 uid="uid://bhyel2s4sldmo"]
+
+[ext_resource type="FontFile" uid="uid://dp67v22cnsfxc" path="res://fonts/clickuper/Clickuper.ttf" id="1_als84"]
+
+[sub_resource type="GDScript" id="GDScript_w08an"]
+script/source = "extends Control
+
+var _text : String
+var text : String :
+	get : return _text
+	set(value) : 
+		_text = value
+		if not is_node_ready() :
+			await ready
+		$Control/RichTextLabel.text = \"[outline_size=50][center]\" + tr(value) + \"[/center][/outline_size]\"
+
+func _notification(what: int) -> void:
+	match what:
+		NOTIFICATION_TRANSLATION_CHANGED :
+			text = text
+
+signal dissapear
+
+var offset : Vector2 :
+	get : return $Control.position
+	set(value) : $Control.position = value
+
+func start_tween(battle_root, _target,_pos,_offset,_delay,_lifetime) :
+	modulate = Color(1,1,1,0)
+	offset = Vector2(-50,0)
+	scale = Vector2(0,0)
+	
+	var tween_vanish : Tween = battle_root.create_tween()
+	tween_vanish.tween_interval(_lifetime*0.6)
+	tween_vanish.tween_property(self,\"modulate\",Color(1,1,1,0),_lifetime*0.4)
+	tween_vanish.parallel().tween_property(self,\"scale\",Vector2(0.7,0.7),_lifetime*0.4)
+	
+	var tween_scale : Tween = battle_root.create_tween()
+	tween_scale.set_trans(Tween.TRANS_BACK)
+	tween_scale.set_ease(Tween.EASE_OUT)
+	tween_scale.tween_property(self,\"scale\",Vector2(1,1),_lifetime*0.2)
+	
+	
+	var tween : Tween = battle_root.create_tween()
+	tween.tween_interval(_delay)
+	tween.tween_callback(func() :
+		battle_root.placeover_spirit_ui(self, _target, _pos, _offset)
+	)
+	tween.set_parallel(true)
+	tween.tween_property(self,\"modulate\",Color(1,1,1,1),_lifetime*0.1)
+	tween.tween_property(self,\"offset\",Vector2(50,0),_lifetime)
+	tween.tween_subtween(tween_scale)
+	tween.tween_subtween(tween_vanish)
+	tween.chain().tween_callback(func() :
+		self.queue_free()
+	)
+"
+
+[node name="DamageNumber" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1.0
+offset_bottom = 1.0
+script = SubResource("GDScript_w08an")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -0.5
+offset_top = -0.5
+offset_right = 0.5
+offset_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control"]
+clip_contents = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -227.5
+offset_top = -64.5
+offset_right = 227.5
+offset_bottom = 64.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("1_als84")
+theme_override_font_sizes/normal_font_size = 100
+bbcode_enabled = true
+text = "[center][outline_size=50]2222[/outline_size][/center]"
+scroll_active = false
+autowrap_mode = 0

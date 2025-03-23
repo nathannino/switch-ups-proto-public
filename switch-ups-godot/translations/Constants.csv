@@ -16,14 +16,14 @@ TR_CONST_STATS_ABSATK;Abstract Power;Pouvoir Abstrait
 TR_CONST_STATS_DEF;Defense;Défense
 TR_CONST_STATS_SPEED;Speed;Vitesse
 TR_CONST_STATS_LUCK;Luck;Chance
-TR_CONST_TARGET_ALLYSPIRIT;allied spirit;esprit alié
-TR_CONST_TARGET_ALLYEXCLUDESELFSPIRIT;allied spirit excluding the front spirit;esprit alié excluant l’esprit en avant
-TR_CONST_TARGET_ALLYSPOT;allied spot;emplacement alié
-TR_CONST_TARGET_ALLYEXCLUDESELFSPOT;allied spot excluding the front spot;emplacement alié excluant l’emplacement en avant
-TR_CONST_TARGET_ENEMYSPIRIT;enemy spirit;esprit adverse
-TR_CONST_TARGET_ENEMYEXCLUDESELFSPIRIT;enemy spirit excluding the front spirit;esprit adverse excluant l’esprit en avant
-TR_CONST_TARGET_ENEMYSPOT;enemy spot;emplacement adverse
-TR_CONST_TARGET_ENEMYEXCLUDESELFSPOT;enemy spot excluding the front spot;emplacement adverse excluant l’emplacement en avant
+TR_CONST_TARGET_ALLYSPIRIT;an allied spirit;un esprit alié
+TR_CONST_TARGET_ALLYEXCLUDESELFSPIRIT;an allied spirit excluding the front spirit;un esprit alié excluant l’esprit en avant
+TR_CONST_TARGET_ALLYSPOT;an allied spot;un emplacement alié
+TR_CONST_TARGET_ALLYEXCLUDESELFSPOT;an allied spot excluding the front spot;un emplacement alié excluant l’emplacement en avant
+TR_CONST_TARGET_ENEMYSPIRIT;an enemy spirit;un esprit adverse
+TR_CONST_TARGET_ENEMYEXCLUDESELFSPIRIT;an enemy spirit excluding the front spirit;un esprit adverse excluant l’esprit en avant
+TR_CONST_TARGET_ENEMYSPOT;an enemy spot;un emplacement adverse
+TR_CONST_TARGET_ENEMYEXCLUDESELFSPOT;an enemy spot excluding the front spot;un emplacement adverse excluant l’emplacement en avant
 TR_CONST_TARGET_SELF;this spirit;cet esprit
 TR_CONST_TARGET_SELECT_SPIRIT;Select a spirit;Sélectionner un esprit
 TR_CONST_TARGET_SELECT_SPOT;Select a spot;Sélectionner un endroit

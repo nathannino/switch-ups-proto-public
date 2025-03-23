@@ -3,7 +3,7 @@ TR_BTLLOG_STARTTURN;[font_size=20][b]Turn {turn}[/b][/font_size];[font_size=20][
 TR_BTLLOG_USEACT_SUCCESS;[b]{spirit}[/b] used [b]{action}[/b];[b]{spirit}[/b] utilise [b]{action}[/b]
 TR_BTLLOG_USEACT_FAILURE;[b]{spirit}[/b] failed to use [b]{action}[/b];[b]{spirit}[/b] est incapable d’utiliser [b]{action}[/b]
 TR_BTLLOG_AC_ATTACK;[b]{spirit}[/b] received [b]{dmg}[/b] damage;[b]{spirit}[/b] a subi [b]{dmg}[/b] dégâts
-TR_BTLLOG_AC_ATTACK_OVERFLOW;[font=res://fonts/Rubik_Glitch/RubikGlitch-Regular.ttf][shake rate=20.0 level=5 connected=1][b][color=red]{dmg} overflow damage!!![/color][/b][/shake][/font];[shake rate=20.0 level=5 connected=1][b][color=red]{dmg} dégâts de débordement!!![/color][/b][/shake]
+TR_BTLLOG_AC_ATTACK_OVERFLOW;[shake rate=20.0 level=5 connected=1][b][color=red]{dmg} overflow damage!!![/color][/b][/shake];[shake rate=20.0 level=5 connected=1][b][color=red]{dmg} dégâts de débordement!!![/color][/b][/shake]
 TR_BTLLOG_AC_CH_ACTIVE;[b]{spirit1}[/b] and [b]{spirit2}[/b] have switched positions;[b]{spirit1}[/b] et [b]{spirit2}[/b] ont échangé leurs positions
 TR_BTLLOG_CH_STAT_LEVEL_PLUS_F;[b]{spirit}[/b]’s {stat} has gained {lv} level(s);La {stat} de [b]{spirit}[/b] a gagné {lv} niveau(x)
 TR_BTLLOG_CH_STAT_LEVEL_PLUS_M;[b]{spirit}[/b]’s {stat} has gained {lv} level(s);Le {stat} de [b]{spirit}[/b] a gagné {lv} niveau(x)
@@ -19,3 +19,6 @@ TR_BTLLOG_AC_LUCK_UNLUCKY;[b]Unlucky[/b], it barely missed;[b]Malchance[/b], l�
 TR_BTLLOG_AC_LUCK_MISS;But it missed;Mais l’attaque a manqué
 TR_BTLLOG_ROT_LEFT;[b]{old}[/b] rotated left, making [b]{new}[/b] the new front;[b]{old}[/b] a tourné vers la gauche, faisant de [b]{new}[/b] le nouveau front
 TR_BTLLOG_ROT_RIGHT;[b]{old}[/b] rotated right, making [b]{new}[/b] the new front;[b]{old}[/b] a tourné vers la droite, faisant de [b]{new}[/b] le nouveau front
+TR_BTLLOG_PLACEOVER_LUCK_LUCKY;[rainbow freq=0.8 sat=1.0 val=0.8 speed=0.3][wave amp=50.0 freq=5.0 connected=1]Lucky[/wave][/rainbow];[rainbow freq=0.8 sat=1.0 val=0.8 speed=0.3][wave amp=50.0 freq=5.0 connected=1]Chanceux[/wave][/rainbow]
+TR_BTLLOG_PLACEOVER_LUCK_MISS;[color=#E0E0E0]Miss[/color];[color=#E0E0E0]Esquivé[/color]
+TR_BTLLOG_PLACEOVER_LUCK_UNLUCKY;[rainbow freq=0.8 sat=0.3 val=0.8 speed=0.3][wave amp=50.0 freq=5.0 connected=1][color=#E0E0E0]Miss[/color][/wave][/rainbow];[rainbow freq=0.8 sat=0.3 val=0.8 speed=0.3][wave amp=50.0 freq=5.0 connected=1][color=#E0E0E0]Esquivé[/color][/wave][/rainbow]
