@@ -4,7 +4,7 @@ class_name ms_ac_ch_energy
 
 @export var energy_change : int
 
-const desc = preload("uid://c50be86xg570j")
+const desc = preload("uid://cgab62apf6ena")
 
 func get_desc() -> Node :
 	var instance = desc.instantiate()
@@ -26,8 +26,8 @@ func get_interrupt_action() -> Control :
 func handle_client(battle_log : Dictionary, battle_root : Node) :
 	var target_info = battle_log["target_info"]
 	var spirit = battle_root.get_active_spirit(target_info["target_id"],target_info["target"])
-	var change = battle_log["new_energy"] - spirit.stamina
-	spirit.stamina = battle_log["new_energy"]
+	var change = battle_log["new_energy"] - spirit.current_stamina
+	spirit.current_stamina = battle_log["new_energy"]
 	if change > 0 :
 		battle_root.enter_log_text("TR_BTLLOG_AC_CH_ENERGY_PLUS", {"amount":abs(battle_log["new_energy"])}, {"spirit":SpiritDictionary.spirits[spirit.key].name}, 1)
 	elif change < 0 :

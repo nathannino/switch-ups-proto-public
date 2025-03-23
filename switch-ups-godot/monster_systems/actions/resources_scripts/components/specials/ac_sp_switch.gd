@@ -54,7 +54,7 @@ func handle_server(turn_calc : Node,user:ms_spirit_active, user_player_node : No
 	target_team[reserve_index] = active_spirit
 	
 	return [ms_constants.ACTION_COMPONENT_HANDLE_STATE.GET_CHILD,[],
-	[user,user_player_node,target,target_player_node],
+	[user,user_player_node,user,user_player_node],
 	{
 		"pid":user_player_node.team_id,
 		"active":active_index,

@@ -10,7 +10,7 @@ var speed_order = []
 var current_handling_order = 0
 var battle_log = []
 var action_index = []
-var target_info = []
+var target_info_stack = []
 var current_data = {}
 
 func get_players() :
@@ -118,17 +118,30 @@ func start_side() :
 	var enemy_node = player_order_data[get_content_or_wrap(speed_order,current_handling_order+1)]["player_node"]
 	var user = user_node.team[ms_constants.position_to_index(ms_constants.POSITION.CENTER)]
 	var enemy = enemy_node.team[ms_constants.position_to_index(ms_constants.POSITION.CENTER)]
-	target_info = [user,user_node,enemy,enemy_node]
+	target_info_stack = [[user,user_node,enemy,enemy_node]]
 	
 	selected_action = get_current_action(order["player_node"].team[ms_constants.position_to_index(ms_constants.POSITION.CENTER)],order["action_index"])
 	if check_stamina() :
 		calculate_next()
 
+# weh. I have to do both at the same time. This is FIXME : refactor worthy
+func increase_action_index_and_set_target(current_component, _current_target) :
+	match ms_action_index_manager.increase_action_index(current_component,action_index) :
+		ms_action_index_manager.INCREASE_RESULT.STAY :
+			pass # We only want to update down
+		ms_action_index_manager.INCREASE_RESULT.GO_DOWN :
+			target_info_stack.push_back(_current_target)
+		ms_action_index_manager.INCREASE_RESULT.GO_UP :
+			target_info_stack.pop_back()
+
 func calculate_next() :
 	var order = player_order_data[speed_order[current_handling_order]]
+	var user_node = order["player_node"]
 	var action = selected_action
 	
 	var _root_component : ms_action_component = action.get_child_component(action_index[0])
+	
+	var _target_info = target_info_stack[-1]
 	
 	if _root_component == null :
 		current_handling_order += 1
@@ -143,11 +156,12 @@ func calculate_next() :
 	
 	var current_component = ms_action_index_manager.get_latest_component(action,action_index)
 	if current_component == null :
+		increase_action_index_and_set_target(current_component, _target_info)
 		ms_action_index_manager.increase_action_index(current_component,action_index)
 		calculate_next()
 		return
 	
-	var results = current_component.handle_server(self,target_info[0],target_info[1],target_info[2],target_info[3],current_data)
+	var results = current_component.handle_server(self,_target_info[0],_target_info[1],_target_info[2],_target_info[3],current_data)
 	
 	var response = results[0]
 	if response == ms_constants.ACTION_COMPONENT_HANDLE_STATE.REQUEST_DATA and current_data.size() == 0 :
@@ -166,34 +180,36 @@ func calculate_next() :
 		current_data = {}
 		var special_actions = results[1] # FIXME : Do stuff with it
 		var result_data = results[3]
-		target_info = results[2]
+		var new_target_info = results[2]
 		result_data["target_info"] = {
-			"user" : target_info[1].team.find(target_info[0]),
-			"user_id" : $"../ServerMain".get_children().find(target_info[1]),
-			"target" : target_info[3].team.find(target_info[2]),
-			"target_id" : $"../ServerMain".get_children().find(target_info[3]),
+			"user" : new_target_info[1].team.find(new_target_info[0]),
+			"user_id" : $"../ServerMain".get_children().find(new_target_info[1]),
+			"target" : new_target_info[3].team.find(new_target_info[2]),
+			"target_id" : $"../ServerMain".get_children().find(new_target_info[3]),
 		}
 		result_data["action_index_array"] = action_index.duplicate()
 		
-		result_data["action_position"] = target_info[0].get_action_index(action)
+		result_data["action_position"] = order["action_index"]
 		
 		battle_log.push_back(result_data)
 		
 		if response == ms_constants.ACTION_COMPONENT_HANDLE_STATE.GET_CHILD :
-			ms_action_index_manager.increase_action_index(current_component,action_index)
+			increase_action_index_and_set_target(current_component, new_target_info)
 		elif response == ms_constants.ACTION_COMPONENT_HANDLE_STATE.GET_SIBLING :
 			action_index[-1] += 1
+			#target_info_stack[-1] = target_info # Keeping this as a comment, but we only want to update down.
 			#ms_action_index_manager.increase_action_index(null,action_index)
 		calculate_next()
 
+#FIXME : This part of the code still isn't tested, because client-side doesn't know how to handle this lol.
 func send_request_data() :
 	var order = player_order_data[speed_order[current_handling_order]]
 	var user_node = order["player_node"]
 	var action = get_current_action(order["player_node"].team[ms_constants.position_to_index(ms_constants.POSITION.CENTER)],order["action_index"])
 	var current_component = ms_action_index_manager.get_latest_component(action,action_index)
 	
-	user_node.send(TcpPayload.new().set_type(TcpPayload.TYPE.BATTLE_REQUEST_DATA).set_content({
+	target_info_stack[-1][1].send(TcpPayload.new().set_type(TcpPayload.TYPE.BATTLE_REQUEST_DATA).set_content({
 		"action_index" : order["action_index"],
-		"spirit_index" : target_info[1].team.find(target_info[0]),
+		"spirit_index" : target_info_stack[0][1].team.find(target_info_stack[0][0]),
 		"component_index" : action_index
 	}))
