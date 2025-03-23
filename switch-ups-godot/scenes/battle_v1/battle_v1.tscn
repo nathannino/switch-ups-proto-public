@@ -90,7 +90,7 @@ script/source = "extends TextureProgressBar
 @export var label : Label
 
 func _ready() -> void:
-	battle_root.friend_hp_changed.connect(func(old,new) :
+	battle_root.enemy_hp_changed.connect(func(old,new) :
 		value = new
 	)
 
