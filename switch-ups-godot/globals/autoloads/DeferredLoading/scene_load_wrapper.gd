@@ -13,6 +13,7 @@ const scene_dict = preload("res://scenes/scene_list.tres")
 var path : String
 var load_target : LOAD_TARGET
 var preload_generations = {}
+var await_keys = []
 var ready = false
 var corrupted = false
 var preload_progress = [0]
@@ -60,6 +61,12 @@ func with_preloaded_generations(_preload_generations = {}) -> SceneLoadWrapper :
 	preload_generations = _preload_generations
 	return self
 
+func with_await_keys(_await_keys = []) -> SceneLoadWrapper :
+	await_keys = []
+	for _key in _await_keys :
+		await_keys.push_back(str(_key))
+	return self
+
 func set_can_pause(_bool : bool) -> SceneLoadWrapper :
 	can_pause = _bool
 	return self
@@ -96,8 +103,16 @@ func increment_completed_steps() :
 
 func start_init() :
 	if load_target == LOAD_TARGET.PREINIT_AWAIT :
-		while not completed_steps+1 >= required_steps-1 :
-			OS.delay_msec(0.5)
+		var loop = true
+		while loop :
+			loop = false
+			for _key in await_keys :
+				var _value = DeferredLoadingManager.get_holding_data(_key)
+				if _value is Object :
+					if _value == DeferredLoadingManager.AWAITING :
+						loop = true
+			if loop :
+				OS.delay_msec(1)
 		
 	var packed_scene = ResourceLoader.load_threaded_get(path)
 	node = packed_scene.instantiate()

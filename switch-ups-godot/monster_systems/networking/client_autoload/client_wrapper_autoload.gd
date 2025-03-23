@@ -67,13 +67,14 @@ func _on_main_client_payload_received(payload: TcpPayload) -> void:
 	match payload.get_type():
 		TcpPayload.TYPE.CHANGE_SCENE :
 			var dict = payload.get_content()
-			var preload_dict = {}
-			for entry in dict["packet_await"] :
-				preload_dict[DeferredLoadingManager.add_prefix(AWAIT_PREFIX,entry)] = get_signal_anonymous_func(entry)
+			var keys = []
+			for _key in dict["packet_await"] :
+				keys.push_back(DeferredLoadingManager.add_prefix(AWAIT_PREFIX,int(_key)))
 			DeferredLoadingManager.change_scene(
-			SceneLoadWrapper.create().from_key(dict["scene_key"]).with_preloaded_generations(preload_dict).background_await().prepare(),
-			SceneLoadWrapper.create().as_transition(dict["transition_key"]).prepare()
+				SceneLoadWrapper.create().from_key(dict["scene_key"]).with_await_keys(keys).background_await().prepare(),
+				SceneLoadWrapper.create().as_transition(dict["transition_key"]).prepare()
 			)
+			send(TcpPayload.new().set_type(TcpPayload.TYPE.CHANGE_SCENE_RECEIVED))
 		TcpPayload.TYPE.TEAMBUILD_LAST_TEAM, TcpPayload.TYPE.BATTLE_SETUP_PLAYERID, TcpPayload.TYPE.BATTLE_SETUP_BATTLEENV:
 			DeferredLoadingManager._set_holding_data(DeferredLoadingManager.add_prefix(AWAIT_PREFIX,payload.get_type()),payload.get_content())
 		TcpPayload.TYPE.BATTLE_SETUP_SYNCTEAM :

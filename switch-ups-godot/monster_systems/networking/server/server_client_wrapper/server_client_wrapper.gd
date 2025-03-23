@@ -16,13 +16,19 @@ var await_endturn = false
 var selected_action_dict = null
 #endregion
 
+var change_scene_callable = func () : pass
+
+#func change_scene(_scene_key : String, _trans_key : String, _await_payloads : Array[TcpPayload.TYPE], response : Callable) :
+#	change_scene_callable = response
+
 #region state setters
 func state_teambuilding() :
 	reset_team_stats()
 	teambuilding_is_ready = false
 	teambuilding_received_team = false
-	change_scene("build_team","wipe_rect",[TcpPayload.TYPE.TEAMBUILD_LAST_TEAM])
-	send(TcpPayload.new().set_type(TcpPayload.TYPE.TEAMBUILD_LAST_TEAM).set_content(team_to_dict()))
+	change_scene("build_team","wipe_rect",[TcpPayload.TYPE.TEAMBUILD_LAST_TEAM], func() :
+		send(TcpPayload.new().set_type(TcpPayload.TYPE.TEAMBUILD_LAST_TEAM).set_content(team_to_dict()))
+	)
 
 func state_startbattle(scene_key : String) :
 	reset_team_stats()
@@ -31,11 +37,11 @@ func state_startbattle(scene_key : String) :
 	await_endturn = false
 	selected_action_dict = null
 	team_id = get_parent().get_children().find(self)
-	change_scene("battle_v1","fade_to_black",[TcpPayload.TYPE.BATTLE_SETUP_PLAYERID,TcpPayload.TYPE.BATTLE_SETUP_BATTLEENV, TcpPayload.TYPE.BATTLE_SETUP_SYNCTEAM])
-	
-	send(TcpPayload.new().set_type(TcpPayload.TYPE.BATTLE_SETUP_PLAYERID).set_content(get_index()))
-	send(TcpPayload.new().set_type(TcpPayload.TYPE.BATTLE_SETUP_BATTLEENV).set_content(scene_key))
-	sync_teams.call_deferred() # Making sure every server_client_wrapper had state_startbattle() called
+	change_scene("battle_v1","fade_to_black",[TcpPayload.TYPE.BATTLE_SETUP_PLAYERID,TcpPayload.TYPE.BATTLE_SETUP_BATTLEENV, TcpPayload.TYPE.BATTLE_SETUP_SYNCTEAM],func () :
+		send(TcpPayload.new().set_type(TcpPayload.TYPE.BATTLE_SETUP_PLAYERID).set_content(get_index()))
+		send(TcpPayload.new().set_type(TcpPayload.TYPE.BATTLE_SETUP_BATTLEENV).set_content(scene_key))
+		sync_teams()
+	)
 
 func state_startturn() :
 	sync_teams()
@@ -90,6 +96,10 @@ func _on_server_client_node_payload_received(payload: TcpPayload) -> void:
 			global_payload_received.emit(self,payload)
 		TcpPayload.TYPE.BATTLE_SUBMIT_ACTION :
 			selected_action_dict = payload.get_content()
+		TcpPayload.TYPE.CHANGE_SCENE_RECEIVED :
+			change_scene_callable.call()
+			change_scene_callable = func() : pass
+			pass
 		_:
 			printerr("Unkown type %s" % payload.get_type())
 	pass # Replace with function body.
@@ -105,7 +115,8 @@ func _on_server_client_node_disconnected() -> void:
 func send(_payload : TcpPayload) -> void :
 	$ServerClientNode.send(_payload)
 
-func change_scene(scene_key,transition_key,packet_await = []) :
+func change_scene(scene_key,transition_key,packet_await = [], response = func() : pass) :
+	change_scene_callable = response
 	send(TcpPayload.new().set_type(TcpPayload.TYPE.CHANGE_SCENE).set_content({"scene_key":scene_key,"transition_key":transition_key,"packet_await":packet_await}))
 
 func _on_server_client_node_accepted() -> void:

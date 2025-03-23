@@ -15,8 +15,8 @@ var workers_mutex = Mutex.new() # Jut to be safe...
 
 @onready var loading_circle_anim = $LoadingRoot/LoadingCircleAnchor/LoadingCircle/AnimationPlayer
 
-func add_prefix(prefix : String, value) :
-	return prefix + "%s" % value
+func add_prefix(prefix : String, value : int) :
+	return prefix + TcpPayload.TYPE.keys()[value]
 
 func is_ready(_key : String) -> bool :
 	var _data = get_holding_data(_key)
@@ -163,6 +163,9 @@ func start_deferred_generation(key : String, function : Callable, cleanup : Call
 		_end_thread.call_deferred(thread)
 	)
 
+func start_await_keys(key : String) -> void :
+	_set_holding_data(key,AWAITING)
+
 func get_holding_data(key : String) :
 	return holding.get(key)
 
@@ -188,6 +191,8 @@ func preload_scene(_scene : SceneLoadWrapper, _thread : Thread) :
 	_scene.ready = false
 	for key in _scene.preload_generations :
 		start_deferred_generation(key,_scene.preload_generations[key],_scene.increment_completed_steps)
+	for key in _scene.await_keys :
+		start_await_keys(key)
 	_scene.start_preload()
 	var preload_complete = false
 	while not preload_complete :
@@ -201,7 +206,7 @@ func preload_scene(_scene : SceneLoadWrapper, _thread : Thread) :
 				get_tree().quit(-1)
 				break
 			ResourceLoader.THREAD_LOAD_IN_PROGRESS :
-				OS.delay_msec(5)
+				OS.delay_msec(1)
 				break
 			ResourceLoader.THREAD_LOAD_LOADED :
 				preload_complete = true

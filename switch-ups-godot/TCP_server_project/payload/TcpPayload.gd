@@ -15,6 +15,7 @@ enum TYPE {
 	
 	# DeferredSceneManager
 	CHANGE_SCENE,
+	CHANGE_SCENE_RECEIVED,
 	
 	# Team setup
 	TEAMBUILD_LAST_TEAM, # Sends the state of the last team, to not have to start from scratch

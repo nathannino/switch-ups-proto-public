@@ -86,15 +86,17 @@ func global_payload_received(_client : Node, payload : TcpPayload) -> void :
 			printerr("Unkown global type : %s" % payload.get_type())
 	pass
 
+const MAX_NATURAL_STAMINA = 5
+
 func battle_next_main() :
 	match battle_next :
 		BATTLE_STEPS.SELECT_ACTION :
 			$ServerMain.send_all(TcpPayload.new().set_type(TcpPayload.TYPE.BATTLE_HIDE_CANCEL).set_content(false))
 			for child in $ServerMain.get_children() :
 				var _team = child.team
-				_team[0].current_stamina += 1
-				_team[1].current_stamina += 1
-				_team[2].current_stamina += 1
+				_team[0].current_stamina = min(_team[0].current_stamina + 1, max(_team[0].current_stamina, MAX_NATURAL_STAMINA))
+				_team[1].current_stamina = min(_team[1].current_stamina + 1, max(_team[1].current_stamina, MAX_NATURAL_STAMINA))
+				_team[2].current_stamina = min(_team[2].current_stamina + 1, max(_team[2].current_stamina, MAX_NATURAL_STAMINA))
 				for member in _team :
 					member.is_defending = false
 			for child in $ServerMain.get_children() :
