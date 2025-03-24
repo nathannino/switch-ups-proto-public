@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://diohlpvbxl3oh"]
+[gd_scene load_steps=10 format=3 uid="uid://diohlpvbxl3oh"]
 
 [ext_resource type="Script" uid="uid://cp0h1sybiqu0t" path="res://globals/simple_scripts/flowgrid.gd" id="1_tr2os"]
 [ext_resource type="Script" uid="uid://vsqkbruh3wt8" path="res://globals/utility_scenes/menus/spirit_summary/spirit_summary.gd" id="1_yovre"]
+[ext_resource type="Theme" uid="uid://bdlwh4csujdq0" path="res://globals/utility_scenes/menus/spirit_summary/summary.tres" id="2_vgem1"]
 [ext_resource type="PackedScene" uid="uid://bjwcj7an8i718" path="res://globals/utility_scenes/ui_component/monster_button.tscn" id="3_okbcr"]
 [ext_resource type="PackedScene" uid="uid://l5cmnn36hklt" path="res://globals/utility_scenes/ui_component/move_holder.tscn" id="4_ak8gb"]
 
@@ -129,6 +130,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("2_vgem1")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer"]
 layout_mode = 2

@@ -1,0 +1,76 @@
+[gd_resource type="Theme" load_steps=12 format=3 uid="uid://606up66y2qp"]
+
+[ext_resource type="Texture2D" uid="uid://hk7yw2y0651p" path="res://Kenney Assets/UI Pack - Sci-fi/button_square_header_large_rectangle_screws_blue.svg" id="1_w0mjg"]
+[ext_resource type="Texture2D" uid="uid://do8blfhvpn1c2" path="res://Kenney Assets/UI Pack - Sci-fi/button_square_header_large_rectangle_screws_gray.svg" id="2_umuke"]
+[ext_resource type="Texture2D" uid="uid://bmhsf67bmy8w1" path="res://Kenney Assets/UI Pack - Sci-fi/button_square_header_large_rectangle_screws_green.svg" id="3_t7r3y"]
+[ext_resource type="Texture2D" uid="uid://egnwbhnwlcm0" path="res://Kenney Assets/UI Pack - Sci-fi/button_square_header_large_rectangle_screws_yellow.svg" id="4_0otfu"]
+[ext_resource type="Texture2D" uid="uid://bgwhwrchf0esd" path="res://Kenney Assets/UI Pack - Sci-fi/button_square_header_large_rectangle_screws_red.svg" id="5_ikd3l"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bjtsl"]
+content_margin_bottom = 10.0
+texture = ExtResource("1_w0mjg")
+texture_margin_left = 13.1297
+texture_margin_top = 13.4894
+texture_margin_right = 12.4103
+texture_margin_bottom = 1.25901
+region_rect = Rect2(0, 0, 192, 32.6061)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mvs17"]
+content_margin_bottom = 10.0
+texture = ExtResource("2_umuke")
+texture_margin_left = 13.1297
+texture_margin_top = 13.4894
+texture_margin_right = 12.4103
+texture_margin_bottom = 1.25901
+region_rect = Rect2(0, 0, 192, 32.6061)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2qrxj"]
+content_margin_bottom = 10.0
+texture = ExtResource("3_t7r3y")
+texture_margin_left = 13.1297
+texture_margin_top = 13.4894
+texture_margin_right = 12.4103
+texture_margin_bottom = 1.25901
+region_rect = Rect2(0, 0, 192, 32.6061)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_m8b4p"]
+content_margin_bottom = 10.0
+texture = ExtResource("4_0otfu")
+texture_margin_left = 13.1297
+texture_margin_top = 13.4894
+texture_margin_right = 12.4103
+texture_margin_bottom = 1.25901
+region_rect = Rect2(0, 0, 192, 32.6061)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_s6dhm"]
+content_margin_bottom = 10.0
+texture = ExtResource("5_ikd3l")
+texture_margin_left = 13.1297
+texture_margin_top = 13.4894
+texture_margin_right = 12.4103
+texture_margin_bottom = 1.25901
+region_rect = Rect2(0, 0, 192, 32.6061)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hayc0"]
+content_margin_bottom = 10.0
+texture = ExtResource("4_0otfu")
+texture_margin_left = 13.1297
+texture_margin_top = 13.4894
+texture_margin_right = 12.4103
+texture_margin_bottom = 1.25901
+region_rect = Rect2(0, 0, 192, 32.6061)
+
+[resource]
+BluePanel/base_type = &"PanelContainer"
+BluePanel/styles/panel = SubResource("StyleBoxTexture_bjtsl")
+GrayPanel/base_type = &"PanelContainer"
+GrayPanel/styles/panel = SubResource("StyleBoxTexture_mvs17")
+GreenPanel/base_type = &"PanelContainer"
+GreenPanel/styles/panel = SubResource("StyleBoxTexture_2qrxj")
+Label/constants/outline_size = 20
+Label/font_sizes/font_size = 25
+PanelContainer/styles/panel = SubResource("StyleBoxTexture_m8b4p")
+RedPanel/base_type = &"PanelContainer"
+RedPanel/styles/panel = SubResource("StyleBoxTexture_s6dhm")
+YellowPanel/base_type = &"PanelContainer"
+YellowPanel/styles/panel = SubResource("StyleBoxTexture_hayc0")

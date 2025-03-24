@@ -1,6 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://d2lcdsh40reie"]
+[gd_scene load_steps=10 format=3 uid="uid://d2lcdsh40reie"]
 
 [ext_resource type="Script" uid="uid://1yl6aj3ibwlh" path="res://globals/simple_scripts/button_change_scene_simple.gd" id="1_57t8v"]
+[ext_resource type="Theme" uid="uid://bfeafrooqeg54" path="res://ScreenWide.tres" id="1_djnj0"]
+[ext_resource type="Theme" uid="uid://606up66y2qp" path="res://ScreenWideHeader.tres" id="2_whq1p"]
 
 [sub_resource type="GDScript" id="GDScript_cc25f"]
 script/source = "extends Control
@@ -122,6 +124,7 @@ func change_scene() :
 "
 
 [node name="Control" type="Control" node_paths=PackedStringArray("return_main_menu_button")]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -129,7 +132,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = SubResource("GDScript_cc25f")
-return_main_menu_button = NodePath("CenterContainer/VBoxContainer/Button2")
+return_main_menu_button = NodePath("CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/Button2")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
@@ -148,27 +151,47 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="CenterContainer"]
+layout_mode = 2
+theme = ExtResource("1_djnj0")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer"]
 layout_mode = 2
 
-[node name="Button" type="Button" parent="CenterContainer/VBoxContainer" node_paths=PackedStringArray("toplevel")]
+[node name="PanelContainer" type="PanelContainer" parent="CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_whq1p")
+
+[node name="Label" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/PanelContainer"]
+layout_mode = 2
+text = "TR_OPTIONS"
+horizontal_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer" node_paths=PackedStringArray("toplevel")]
 layout_mode = 2
 text = "TR_OPTIONS_RESUME"
 script = SubResource("GDScript_2nhgm")
-toplevel = NodePath("../../..")
+toplevel = NodePath("../../../../../..")
 
-[node name="OptionButton" type="OptionButton" parent="CenterContainer/VBoxContainer"]
+[node name="OptionButton" type="OptionButton" parent="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 script = SubResource("GDScript_ltcgg")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="CenterContainer/VBoxContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "TR_OPTIONS_UISCALE"
 
-[node name="HSlider" type="HSlider" parent="CenterContainer/VBoxContainer/HBoxContainer"]
+[node name="HSlider" type="HSlider" parent="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 min_value = 0.5
@@ -177,30 +200,30 @@ step = 0.1
 value = 1.0
 script = SubResource("GDScript_klnsa")
 
-[node name="Button4" type="Button" parent="CenterContainer/VBoxContainer" node_paths=PackedStringArray("root")]
+[node name="Button4" type="Button" parent="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer" node_paths=PackedStringArray("root")]
 visible = false
 layout_mode = 2
 text = "TR_OPTIONS_LOGS"
 script = SubResource("GDScript_5poeu")
-root = NodePath("../../..")
+root = NodePath("../../../../../..")
 
-[node name="Button2" type="Button" parent="CenterContainer/VBoxContainer"]
+[node name="Button2" type="Button" parent="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "TR_OPTIONS_MAINMENU"
 script = SubResource("GDScript_vf1g8")
 key = "main_menu"
 
-[node name="Button3" type="Button" parent="CenterContainer/VBoxContainer"]
+[node name="Button3" type="Button" parent="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "TR_OPTIONS_QUIT"
 script = ExtResource("1_57t8v")
 key = "kill"
 block_change_scene = true
 
-[connection signal="visibility_changed" from="." to="CenterContainer/VBoxContainer/Button2" method="_on_control_visibility_changed"]
-[connection signal="pressed" from="CenterContainer/VBoxContainer/Button" to="CenterContainer/VBoxContainer/Button" method="_on_pressed"]
-[connection signal="item_selected" from="CenterContainer/VBoxContainer/OptionButton" to="CenterContainer/VBoxContainer/OptionButton" method="_on_item_selected"]
-[connection signal="drag_ended" from="CenterContainer/VBoxContainer/HBoxContainer/HSlider" to="CenterContainer/VBoxContainer/HBoxContainer/HSlider" method="_on_drag_ended"]
-[connection signal="pressed" from="CenterContainer/VBoxContainer/Button4" to="CenterContainer/VBoxContainer/Button4" method="_on_pressed"]
-[connection signal="pressed" from="CenterContainer/VBoxContainer/Button2" to="CenterContainer/VBoxContainer/Button2" method="_on_pressed"]
-[connection signal="pressed" from="CenterContainer/VBoxContainer/Button3" to="." method="_on_button_3_pressed"]
+[connection signal="visibility_changed" from="." to="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/Button2" method="_on_control_visibility_changed"]
+[connection signal="pressed" from="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/Button" to="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/Button" method="_on_pressed"]
+[connection signal="item_selected" from="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/OptionButton" to="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/OptionButton" method="_on_item_selected"]
+[connection signal="drag_ended" from="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/HSlider" to="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/HSlider" method="_on_drag_ended"]
+[connection signal="pressed" from="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/Button4" to="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/Button4" method="_on_pressed"]
+[connection signal="pressed" from="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/Button2" to="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/Button2" method="_on_pressed"]
+[connection signal="pressed" from="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/Button3" to="." method="_on_button_3_pressed"]

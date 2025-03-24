@@ -1,3 +1,17 @@
-[gd_resource type="Theme" format=3 uid="uid://dpcwjf7x8gs47"]
+[gd_resource type="Theme" load_steps=4 format=3 uid="uid://bruhywdwinhc8"]
+
+[ext_resource type="FontFile" uid="uid://bxm17gmbt42qu" path="res://fonts/Righteous/Righteous-Regular.ttf" id="1_aasu4"]
+[ext_resource type="Texture2D" uid="uid://c03rd88ntfofg" path="res://Kenney Assets/Fantasy UI Borders/panel-transparent-center-028.png" id="1_feond"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_d01xl"]
+texture = ExtResource("1_feond")
+texture_margin_left = 25.0
+texture_margin_top = 25.0
+texture_margin_right = 25.0
+texture_margin_bottom = 25.0
 
 [resource]
+default_font = ExtResource("1_aasu4")
+Label/colors/font_color = Color(0, 0, 0, 1)
+Panel/styles/panel = SubResource("StyleBoxTexture_d01xl")
+RichTextLabel/colors/default_color = Color(0, 0, 0, 1)

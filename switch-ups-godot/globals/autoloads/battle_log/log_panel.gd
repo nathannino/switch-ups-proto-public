@@ -1,4 +1,4 @@
-extends Panel
+extends PanelContainer
 
 @export var line : Texture2D
 @export var logs : VBoxContainer

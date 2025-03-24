@@ -1,8 +1,20 @@
-[gd_scene load_steps=3 format=3 uid="uid://bw37jbhbgf6s0"]
+[gd_scene load_steps=7 format=3 uid="uid://bw37jbhbgf6s0"]
 
 [ext_resource type="Script" uid="uid://2nvnce5h6by0" path="res://globals/utility_scenes/ui_component/move_display.gd" id="1_k3w1v"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2hp1f"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tu01o"]
+bg_color = Color(0, 0, 0, 0.696)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xyyop"]
+bg_color = Color(0.145, 0.145, 0.145, 0.613)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y8a1e"]
+bg_color = Color(0.144, 0.144, 0.144, 0.464)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iq3e7"]
+bg_color = Color(0.145, 0.145, 0.145, 0.718)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tu01o"]
 
 [node name="MoveDisplay" type="PanelContainer" node_paths=PackedStringArray("name_label", "type_label", "cost_label", "desc_container", "button")]
 anchors_preset = 15
@@ -52,6 +64,10 @@ layout_mode = 2
 
 [node name="Button" type="Button" parent="."]
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_2hp1f")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_tu01o")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_xyyop")
+theme_override_styles/hover = SubResource("StyleBoxFlat_y8a1e")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_iq3e7")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_tu01o")
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

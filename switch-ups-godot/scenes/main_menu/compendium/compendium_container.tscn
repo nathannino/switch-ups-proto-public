@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://c68rkkrv3fojv"]
+[gd_scene load_steps=7 format=3 uid="uid://c68rkkrv3fojv"]
 
 [ext_resource type="Script" uid="uid://1yl6aj3ibwlh" path="res://globals/simple_scripts/button_change_scene_simple.gd" id="1_a2mc8"]
+[ext_resource type="Theme" uid="uid://bfeafrooqeg54" path="res://ScreenWide.tres" id="1_c4a41"]
 [ext_resource type="PackedScene" uid="uid://diohlpvbxl3oh" path="res://globals/utility_scenes/menus/spirit_summary/spirit_summary.tscn" id="1_k7hep"]
+[ext_resource type="Theme" uid="uid://606up66y2qp" path="res://ScreenWideHeader.tres" id="2_0luci"]
 [ext_resource type="PackedScene" uid="uid://cmjl5hcgm2r7w" path="res://globals/utility_scenes/menus/spirit_summary/spirit_list.tscn" id="2_ahrmi"]
 
 [sub_resource type="GDScript" id="GDScript_wwhen"]
@@ -36,20 +38,25 @@ summary = NodePath("PanelContainer/VBoxContainer/HSplitContainer/Control/SpiritS
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 2
+theme = ExtResource("1_c4a41")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_0luci")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer/PanelContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/PanelContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "TR_COMPENDIUM"
 horizontal_alignment = 1
 
-[node name="Button" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="Button" type="Button" parent="PanelContainer/VBoxContainer/PanelContainer/HBoxContainer"]
 layout_mode = 2
 text = "TR_CLOSE"
 script = ExtResource("1_a2mc8")
@@ -70,5 +77,5 @@ size_flags_horizontal = 3
 [node name="SpiritSummary" parent="PanelContainer/VBoxContainer/HSplitContainer/Control" instance=ExtResource("1_k7hep")]
 layout_mode = 1
 
-[connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer/Button" to="PanelContainer/VBoxContainer/HBoxContainer/Button" method="_on_pressed"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/PanelContainer/HBoxContainer/Button" to="PanelContainer/VBoxContainer/PanelContainer/HBoxContainer/Button" method="_on_pressed"]
 [connection signal="changed_selection" from="PanelContainer/VBoxContainer/HSplitContainer/SpiritList" to="." method="_on_spirit_list_changed_selection"]

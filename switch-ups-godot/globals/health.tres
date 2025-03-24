@@ -1,0 +1,13 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://dotxqdymgw0i2"]
+
+[ext_resource type="Texture2D" uid="uid://b277cnea7bq65" path="res://Kenney Assets/UI Pack - Sci-fi/bar_square_gloss_small_square.svg" id="1_aa1f6"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fvany"]
+texture = ExtResource("1_aa1f6")
+texture_margin_left = 35.0
+texture_margin_top = 35.0
+texture_margin_right = 35.0
+texture_margin_bottom = 35.0
+
+[resource]
+ProgressBar/styles/fill = SubResource("StyleBoxTexture_fvany")

@@ -1,0 +1,22 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://bfeafrooqeg54"]
+
+[ext_resource type="Texture2D" uid="uid://bgwhwrchf0esd" path="res://Kenney Assets/UI Pack - Sci-fi/button_square_header_large_rectangle_screws_red.svg" id="1_gscrc"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qx4my"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+texture = ExtResource("1_gscrc")
+texture_margin_left = 15.0
+texture_margin_top = 17.6897
+texture_margin_right = 15.0
+texture_margin_bottom = 28.9765
+region_rect = Rect2(0, 32.8449, 192, 31.1551)
+
+[resource]
+MarginContainer/constants/margin_bottom = 10
+MarginContainer/constants/margin_left = 15
+MarginContainer/constants/margin_right = 15
+MarginContainer/constants/margin_top = 0
+PanelContainer/styles/panel = SubResource("StyleBoxTexture_qx4my")
