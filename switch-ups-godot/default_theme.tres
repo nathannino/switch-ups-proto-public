@@ -1,6 +1,14 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://kuuw1wifbpbp"]
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://kuuw1wifbpbp"]
 
 [ext_resource type="FontFile" uid="uid://bxm17gmbt42qu" path="res://fonts/Righteous/Righteous-Regular.ttf" id="1_80jgj"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e7bfs"]
+bg_color = Color(0.104, 0.104, 0.104, 0.956)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
 [resource]
 default_font = ExtResource("1_80jgj")
+Panel/styles/panel = SubResource("StyleBoxFlat_e7bfs")

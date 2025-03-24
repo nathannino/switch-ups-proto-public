@@ -12,6 +12,7 @@ enum BATTLE_STEPS {
 	CALCULATE_MOVES,
 	AWAIT_MODIFICATION,
 	RESUME_MOVES,
+	END_FIGHT
 }
 
 var battle_next : BATTLE_STEPS = BATTLE_STEPS.NONE
@@ -49,6 +50,10 @@ func set_state_battle_start() :
 	for child in $ServerMain.get_children() :
 		child.state_startbattle(battle_scene_def.key)
 
+func set_state_battle_end() :
+	for child in $ServerMain.get_children() :
+		child.state_endfight()
+
 func global_payload_received(_client : Node, payload : TcpPayload) -> void :
 	match payload.get_type() :
 		TcpPayload.TYPE.TEAMBUILD_SET_READY_STATE :
@@ -58,6 +63,13 @@ func global_payload_received(_client : Node, payload : TcpPayload) -> void :
 					readys += 1
 			if readys >= MAX_PLAYERS :
 				$ServerMain.send_all(TcpPayload.new().set_type(TcpPayload.TYPE.TEAMBUILD_REQUEST_TEAM))
+		TcpPayload.TYPE.RESULT_SET_READY_STATE :
+			var readys = 0
+			for child in $ServerMain.get_children() :
+				if child.result_is_ready :
+					readys += 1
+			if readys >= MAX_PLAYERS :
+				set_state_teambuilding()
 		TcpPayload.TYPE.TEAMBUILD_SEND_TEAM :
 			var readys = 0
 			for child in $ServerMain.get_children() :
@@ -111,6 +123,8 @@ func battle_next_main() :
 			$TurnCalculator.send_request_data()
 		BATTLE_STEPS.RESUME_MOVES :
 			$TurnCalculator.calculate_next()
+		BATTLE_STEPS.END_FIGHT :
+			set_state_battle_end()
 		_ :
 			printerr("No next step : %s" % battle_next)
 
@@ -118,6 +132,10 @@ func battle_submit_logs_middle(logs) :
 	battle_next = BATTLE_STEPS.AWAIT_MODIFICATION
 	_battle_submit_logs(logs)
 	pass
+
+func battle_final_submit(logs) :
+	battle_next = BATTLE_STEPS.END_FIGHT
+	_battle_submit_logs(logs)
 
 func battle_submit_logs_end(logs) :
 	battle_next = BATTLE_STEPS.SELECT_ACTION

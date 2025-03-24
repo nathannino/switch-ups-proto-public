@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="scene_dictionary" load_steps=13 format=3 uid="uid://dcsgbdv63ak16"]
+[gd_resource type="Resource" script_class="scene_dictionary" load_steps=14 format=3 uid="uid://dcsgbdv63ak16"]
 
 [ext_resource type="Script" uid="uid://lgq5dlr8aaod" path="res://globals/one_off_resources_scripts/scene_dictionary_entry.gd" id="1_kd84q"]
 [ext_resource type="Script" uid="uid://b03ksv7cnprv3" path="res://globals/one_off_resources_scripts/scene_dictionary.gd" id="2_b33rt"]
@@ -63,6 +63,13 @@ key = "batt;e_env"
 scene = "res://scenes/battle_3d/BattleEnvTop.tscn"
 can_pause = true
 
+[sub_resource type="Resource" id="Resource_walqm"]
+script = ExtResource("1_kd84q")
+key = "endscreen"
+scene = "uid://d23vgejfywguc"
+can_pause = true
+metadata/_custom_type_script = "uid://lgq5dlr8aaod"
+
 [resource]
 script = ExtResource("2_b33rt")
-scenes = Array[ExtResource("1_kd84q")]([SubResource("Resource_d2k66"), SubResource("Resource_v6xim"), SubResource("Resource_bhrd2"), SubResource("Resource_5wk4i"), SubResource("Resource_jjp1p"), SubResource("Resource_3n38e"), SubResource("Resource_24nol"), SubResource("Resource_ruwtl"), SubResource("Resource_n6hil"), SubResource("Resource_ht131")])
+scenes = Array[ExtResource("1_kd84q")]([SubResource("Resource_d2k66"), SubResource("Resource_v6xim"), SubResource("Resource_bhrd2"), SubResource("Resource_5wk4i"), SubResource("Resource_jjp1p"), SubResource("Resource_3n38e"), SubResource("Resource_24nol"), SubResource("Resource_ruwtl"), SubResource("Resource_n6hil"), SubResource("Resource_ht131"), SubResource("Resource_walqm")])

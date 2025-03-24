@@ -17,7 +17,7 @@ atk_flavor = 0
 
 [sub_resource type="Resource" id="Resource_1cllj"]
 script = ExtResource("3_cdrrj")
-base_chance_percent = 0.95
+base_chance_percent = 0.85
 action = Array[ExtResource("1_2yupe")]([SubResource("Resource_t5lbs")])
 
 [sub_resource type="Resource" id="Resource_yvyet"]
@@ -27,7 +27,7 @@ atk_flavor = 0
 
 [sub_resource type="Resource" id="Resource_aftgu"]
 script = ExtResource("3_cdrrj")
-base_chance_percent = 0.9
+base_chance_percent = 0.7
 action = Array[ExtResource("1_2yupe")]([SubResource("Resource_yvyet")])
 
 [sub_resource type="Resource" id="Resource_vkx8e"]
@@ -37,7 +37,7 @@ atk_flavor = 0
 
 [sub_resource type="Resource" id="Resource_h6tvg"]
 script = ExtResource("3_cdrrj")
-base_chance_percent = 0.8
+base_chance_percent = 0.5
 action = Array[ExtResource("1_2yupe")]([SubResource("Resource_vkx8e")])
 
 [sub_resource type="Resource" id="Resource_xr0a1"]
@@ -47,7 +47,7 @@ atk_flavor = 0
 
 [sub_resource type="Resource" id="Resource_elyk3"]
 script = ExtResource("3_cdrrj")
-base_chance_percent = 0.75
+base_chance_percent = 0.4
 action = Array[ExtResource("1_2yupe")]([SubResource("Resource_xr0a1")])
 
 [resource]
@@ -55,6 +55,6 @@ script = ExtResource("2_q48g3")
 key = "lash_out"
 name = "TR_ACT_LASHOUT"
 type = 3
-cost = 2
+cost = 3
 priority = 0
 effects = Array[ExtResource("1_2yupe")]([SubResource("Resource_climf"), SubResource("Resource_1cllj"), SubResource("Resource_aftgu"), SubResource("Resource_h6tvg"), SubResource("Resource_elyk3")])

@@ -1,0 +1,310 @@
+[gd_scene load_steps=12 format=3 uid="uid://8ub8l473c6q7"]
+
+[ext_resource type="PackedScene" uid="uid://bwkkxdlm0ixxc" path="res://monster_systems/3d_generic/character_large_male.tscn" id="1_x4ilu"]
+
+[sub_resource type="GDScript" id="GDScript_x4ilu"]
+script/source = "extends Node3D
+
+@export var character : Node3D
+@export var animation_player : AnimationPlayer
+signal animation_done
+
+var _anim_done_counter = 0
+var anim_done_counter :
+	get : return _anim_done_counter
+	set(value) :
+		_anim_done_counter = value
+		if anim_done_counter >= 2 :
+			animation_done.emit()
+
+func we_lost() :
+	character.lose_anim()
+	animation_player.speed_scale = 0.5
+	animation_player.play(\"camera_win\")
+	pass
+
+func we_won() : 
+	animation_done.connect(func() :
+		character.win_anim_second_half()
+	, CONNECT_ONE_SHOT)
+	character.win_anim()
+	animation_player.speed_scale = 1
+	animation_player.play(\"win_anim\")
+	pass
+
+
+func _on_character_large_male_animation_done() -> void:
+	anim_done_counter += 1
+
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	anim_done_counter += 1
+"
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_x4ilu"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_34rtp"]
+sky_material = SubResource("ProceduralSkyMaterial_x4ilu")
+
+[sub_resource type="Environment" id="Environment_83is6"]
+background_mode = 2
+sky = SubResource("Sky_34rtp")
+tonemap_mode = 2
+ssao_enabled = true
+glow_enabled = true
+
+[sub_resource type="Animation" id="Animation_34rtp"]
+resource_name = "camera_win"
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array()
+tracks/1/type = "rotation_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera3D")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array()
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Camera3D:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.74),
+"transitions": PackedFloat32Array(1, 0.366021, 461.44),
+"update": 0,
+"values": [Vector3(-0.228394, -0.405196, 0), Vector3(-0.413036, -0.0727698, -9.48154e-09), Vector3(-0.911568, 0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Camera3D:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.74),
+"transitions": PackedFloat32Array(1, 0.615572, 19.6983),
+"update": 0,
+"values": [Vector3(-0.488599, 1.67738, 1.51893), Vector3(-0.138969, 1.49294, 0.964311), Vector3(0, 0.994954, -0.533151)]
+}
+
+[sub_resource type="Animation" id="Animation_x4ilu"]
+length = 0.001
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array()
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera3D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.911568, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Camera3D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0.994954, -0.533151)]
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Camera3D:position:x")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Camera3D:position:y")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0.994954, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Camera3D:position:z")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(-0.533151, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/6/type = "bezier"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Camera3D:rotation:x")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(-0.911568, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/7/type = "bezier"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Camera3D:rotation:y")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/8/type = "bezier"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Camera3D:rotation:z")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_83is6"]
+resource_name = "win_anim"
+length = 0.5
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0.270047, -0.25, 0, 0.25, 0, 0.270047, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0.0333333, 0.4)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera3D:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(1.54623, -0.25, 0, 0.25, 0, 1.12124, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0.0333333, 0.4)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Camera3D:position:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(1.36111, -0.25, 0, 0.25, 0, 0.739292, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0.0333333, 0.4)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Camera3D:rotation:x")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(1.29195, -0.25, 0, 0.25, 0, 0.503784, -0.25, 0, 0.25, 0, 0.00908442, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0.0333333, 0.0342121, 0.4)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Camera3D:rotation:y")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(-0.519107, -0.25, 0, 0.25, 0, 0.779912, -0.25, 0, 0.25, 0, 0.56343, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0.0333333, 0.0342121, 0.4)
+}
+tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Camera3D:rotation:z")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(-0.541827, -0.25, 0, 0.25, 0, -0.115575, -0.25, 0, 0.25, 0, -0.00866511, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0.0333333, 0.0342121, 0.4)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_83is6"]
+_data = {
+&"RESET": SubResource("Animation_x4ilu"),
+&"camera_win": SubResource("Animation_34rtp"),
+&"win_anim": SubResource("Animation_83is6")
+}
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_x4ilu"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_34rtp"]
+transparency = 1
+albedo_color = Color(0, 0, 0, 0.299)
+
+[node name="Node3D" type="Node3D" node_paths=PackedStringArray("character", "animation_player")]
+script = SubResource("GDScript_x4ilu")
+character = NodePath("characterLargeMale")
+animation_player = NodePath("AnimationPlayer")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.72303, 0.132903, -0.677912, 0.283917, -0.837443, -0.466991, -0.629777, -0.530119, 0.567763, -0.959817, 0.175318, -0.0810702)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_83is6")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.612507, 0.790465, 0, -0.790465, 0.612507, 0, 0.994954, -0.533151)
+
+[node name="characterLargeMale" parent="." instance=ExtResource("1_x4ilu")]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_83is6")
+}
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(14.1322, 0, 0, 0, 1, 0, 0, 0, 17.0201, 0, 0, 0)
+mesh = SubResource("PlaneMesh_x4ilu")
+surface_material_override/0 = SubResource("StandardMaterial3D_34rtp")
+
+[connection signal="animation_done" from="characterLargeMale" to="." method="_on_character_large_male_animation_done"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

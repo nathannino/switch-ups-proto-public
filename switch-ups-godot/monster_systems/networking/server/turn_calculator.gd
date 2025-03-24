@@ -124,6 +124,13 @@ func start_side() :
 	if check_stamina() :
 		calculate_next()
 
+func check_health() -> bool :
+	var order = player_order_data[speed_order[current_handling_order]]
+	var user_node = order["player_node"]
+	var enemy_node = player_order_data[get_content_or_wrap(speed_order,current_handling_order+1)]["player_node"]
+	
+	return user_node.player_health <= 0 or enemy_node.player_health <= 0
+
 # weh. I have to do both at the same time. This is FIXME : refactor worthy
 func increase_action_index_and_set_target(current_component, _current_target) :
 	match ms_action_index_manager.increase_action_index(current_component,action_index) :
@@ -199,7 +206,12 @@ func calculate_next() :
 			action_index[-1] += 1
 			#target_info_stack[-1] = target_info # Keeping this as a comment, but we only want to update down.
 			#ms_action_index_manager.increase_action_index(null,action_index)
-		calculate_next()
+		
+		if check_health() :
+			$"..".battle_final_submit(battle_log)
+			return # We done =D Yippee
+		else :
+			calculate_next()
 
 #FIXME : This part of the code still isn't tested, because client-side doesn't know how to handle this lol.
 func send_request_data() :

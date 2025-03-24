@@ -50,6 +50,7 @@ func print_current() :
 func freeze_attack() :
 	assigned_animation = \"attack/Root|Attack\"
 	speed_scale = 0
+	play()
 
 func play_idle() :
 	assigned_animation = \"idle/Root|Idle\"
@@ -59,6 +60,11 @@ func play_idle() :
 func play_switch() :
 	assigned_animation = \"shoot/Root|Shoot\"
 	speed_scale = 1
+	play()
+
+func death_anim() :
+	assigned_animation = \"death/Root|Death\"
+	speed_scale = 0.5
 	play()
 "
 
@@ -114,7 +120,7 @@ bones/24/rotation = Quaternion(-0.10883, 0.0437293, -0.0103631, 0.993044)
 bones/26/rotation = Quaternion(0.597656, 0.395508, 0.565647, -0.407951)
 bones/27/rotation = Quaternion(-0.359614, 0.67303, -0.240337, 0.599955)
 bones/28/rotation = Quaternion(0.351215, -0.0730593, -0.07077, 0.930754)
-bones/29/rotation = Quaternion(-0.0218516, 0.549429, -0.0273379, 0.834807)
+bones/29/rotation = Quaternion(-0.0150854, 0.724359, -0.0315801, 0.688534)
 bones/31/rotation = Quaternion(0.771667, 0.0466405, 0.00196554, 0.634311)
 bones/32/rotation = Quaternion(0.410935, -0.0278593, 0.0125054, 0.911153)
 bones/34/rotation = Quaternion(-0.213061, 0.695039, 0.358431, 0.585707)
@@ -123,7 +129,7 @@ bones/37/rotation = Quaternion(0.678186, -0.48571, 0.463529, 0.298814)
 bones/38/rotation = Quaternion(0.0472988, 0.906256, 0.401211, -0.124471)
 bones/39/rotation = Quaternion(-0.0678256, -0.0210802, 0.351795, 0.933379)
 bones/40/rotation = Quaternion(-0.0108135, 0.109294, -0.0332857, 0.993393)
-bones/41/rotation = Quaternion(-0.01625, -0.0775783, -4.25526e-05, 0.996854)
+bones/41/rotation = Quaternion(-0.01625, -0.0775783, -4.2533e-05, 0.996854)
 bones/42/rotation = Quaternion(-0.7474, 0.0422067, 0.00765555, 0.662988)
 bones/43/rotation = Quaternion(-0.410937, -0.0278582, -0.0125049, 0.911152)
 bones/45/rotation = Quaternion(-0.23102, 0.802493, -0.347127, -0.426776)
@@ -147,24 +153,24 @@ surface_material_override/0 = SubResource("StandardMaterial3D_ut5m7")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1"]
 libraries = {
-"": SubResource("AnimationLibrary_tqeuq"),
-"attack": ExtResource("3_vp2wp"),
-"crouch": ExtResource("4_eg6le"),
-"crouchIdle": ExtResource("5_xau6k"),
-"crouchWalk": ExtResource("6_yumty"),
-"death": ExtResource("7_a7f8i"),
-"idle": ExtResource("8_4un32"),
-"interactGround": ExtResource("9_08pq0"),
-"interactStanding": ExtResource("10_mt0ve"),
-"jump": ExtResource("11_vjs88"),
-"kick": ExtResource("12_d6s5b"),
-"punch": ExtResource("13_cs1ot"),
-"racingIdle": ExtResource("14_43b0p"),
-"racingLeft": ExtResource("15_iqmuq"),
-"racingRight": ExtResource("16_n7tat"),
-"run": ExtResource("17_s2k2g"),
-"shoot": ExtResource("18_imokf"),
-"walk": ExtResource("19_ginm3")
+&"": SubResource("AnimationLibrary_tqeuq"),
+&"attack": ExtResource("3_vp2wp"),
+&"crouch": ExtResource("4_eg6le"),
+&"crouchIdle": ExtResource("5_xau6k"),
+&"crouchWalk": ExtResource("6_yumty"),
+&"death": ExtResource("7_a7f8i"),
+&"idle": ExtResource("8_4un32"),
+&"interactGround": ExtResource("9_08pq0"),
+&"interactStanding": ExtResource("10_mt0ve"),
+&"jump": ExtResource("11_vjs88"),
+&"kick": ExtResource("12_d6s5b"),
+&"punch": ExtResource("13_cs1ot"),
+&"racingIdle": ExtResource("14_43b0p"),
+&"racingLeft": ExtResource("15_iqmuq"),
+&"racingRight": ExtResource("16_n7tat"),
+&"run": ExtResource("17_s2k2g"),
+&"shoot": ExtResource("18_imokf"),
+&"walk": ExtResource("19_ginm3")
 }
 autoplay = "idle/Root|Idle"
 script = SubResource("GDScript_nscyr")

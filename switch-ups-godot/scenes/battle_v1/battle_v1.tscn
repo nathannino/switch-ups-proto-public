@@ -10,17 +10,17 @@
 [ext_resource type="Script" uid="uid://c5b301e36qx6t" path="res://scenes/battle_v1/uiv2/rotate_button.gd" id="9_y30e1"]
 [ext_resource type="Script" uid="uid://bh0hyu2l2eayu" path="res://scenes/battle_v1/uiv2/main_action_root.gd" id="11_g6cpu"]
 
-[sub_resource type="Gradient" id="Gradient_yw4tm"]
+[sub_resource type="Gradient" id="Gradient_cje4h"]
 colors = PackedColorArray(0.0901961, 0.0901961, 0.0901961, 1, 0.0885599, 0.0885599, 0.0885599, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_1weiw"]
-gradient = SubResource("Gradient_yw4tm")
+gradient = SubResource("Gradient_cje4h")
 
-[sub_resource type="Gradient" id="Gradient_775m0"]
+[sub_resource type="Gradient" id="Gradient_g0ja2"]
 colors = PackedColorArray(0, 0.658824, 0, 1, 0, 0.658824, 0, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_xumci"]
-gradient = SubResource("Gradient_775m0")
+gradient = SubResource("Gradient_g0ja2")
 
 [sub_resource type="GDScript" id="GDScript_08te3"]
 script/source = "extends TextureProgressBar
@@ -500,12 +500,12 @@ layout_mode = 2
 [node name="Label" type="Label" parent="SummaryContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Summary"
+text = "TR_SUMMARY_LABEL"
 horizontal_alignment = 1
 
 [node name="Button" type="Button" parent="SummaryContainer/VBoxContainer/HBoxContainer" node_paths=PackedStringArray("root_node")]
 layout_mode = 2
-text = "Close"
+text = "TR_CLOSE"
 script = SubResource("GDScript_4nxje")
 root_node = NodePath("../../..")
 

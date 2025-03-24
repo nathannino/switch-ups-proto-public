@@ -138,8 +138,11 @@ var switch_spirit_can_finish : int :
 			animation_done.emit.call_deferred()
 			_switch_spirit_can_finish = 0
 
+signal animation_paused
+
 func _switch_spirit_center() :
 	animation.pause()
+	animation_paused.emit()
 	pass
 
 func switch_spirit(_position : ms_constants.POSITION, _new_spirit : ms_spirit_active) :
@@ -244,3 +247,18 @@ func attack_3d(_spos : ms_constants.POSITION,_sdmg : float,_pdmg : float,_weak :
 		ms_constants.ATK_FLAVOR.ABSTRACT :
 			_spirit.attack_abstract(_color, _sdmg)
 	pass
+
+func lose_anim() :
+	animation.animation_finished.connect(func(_name) :
+		animation_done.emit()
+	, CONNECT_ONE_SHOT)
+	animation.death_anim()
+
+func win_anim() :
+	animation_paused.connect(func() :
+		animation_done.emit()
+	, CONNECT_ONE_SHOT)
+	animation.play_switch()
+
+func win_anim_second_half() :
+	animation.play()

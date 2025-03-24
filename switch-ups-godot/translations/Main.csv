@@ -48,5 +48,14 @@ TR_BTL_SWITCH;Swap;Échanger
 TR_BTL_HEALTH;HP : {curr}/{max};PV : {curr}/{max}
 TR_BTL_STAMINA;Stamina : {st}/5;Énergie : {st}/5
 TR_ACUI_SWITCH;Select an active and a reserve party member;Sélectionnez un membre actif et un membre en réserve de l’équipe
-TR_SUMMARY_;View summary;Voir les infos
+TR_SUMMARY;View summary;Voir les infos
 TR_SELECT;Select spirit;Choisir l’esprit
+TR_WON;You win;Victoire
+TR_LOST;You lose;Perte
+TR_GENERIC_READY;Ready;Continuer
+TR_GENERIC_UNREADY;Unready;Annuler
+TR_RESULTS_TEAMBUTTON;View team state;Voir l’état des équipes
+TR_RESULTS_TEAMLABEL;Team state;État des équipes
+TR_RESULTS_YOUTEAM;Your team;Votre équipe
+TR_RESULTS_NOTYOUTEAM;Enemy team;Équipe adversaire
+TR_SUMMARY_LABEL;Summary;Informations

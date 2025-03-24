@@ -6,6 +6,7 @@ const MAX_HEALTH = 300
 #region Client variables
 var teambuilding_is_ready = false
 var teambuilding_received_team = false
+var result_is_ready = false
 var in_battle = false 
 var battle_loaded = false
 var team_id = 0
@@ -24,10 +25,22 @@ var change_scene_callable = func () : pass
 #region state setters
 func state_teambuilding() :
 	reset_team_stats()
+	in_battle = false
 	teambuilding_is_ready = false
 	teambuilding_received_team = false
 	change_scene("build_team","wipe_rect",[TcpPayload.TYPE.TEAMBUILD_LAST_TEAM], func() :
 		send(TcpPayload.new().set_type(TcpPayload.TYPE.TEAMBUILD_LAST_TEAM).set_content(team_to_dict()))
+	)
+
+func state_endfight() :
+	in_battle = false
+	result_is_ready = false
+	change_scene("endscreen","wipe_rect",[TcpPayload.TYPE.RESULT_PLAYERID,TcpPayload.TYPE.RESULT_TEAMS], func() :
+		send(TcpPayload.new().set_type(TcpPayload.TYPE.RESULT_PLAYERID).set_content(get_index()))
+		var teams = []
+		for child in get_parent().get_children() :
+			teams.push_back({"hp":child.player_health,"team":child.team_to_dict()})
+		send(TcpPayload.new().set_type(TcpPayload.TYPE.RESULT_TEAMS).set_content(teams))
 	)
 
 func state_startbattle(scene_key : String) :
@@ -80,6 +93,9 @@ func _on_server_client_node_payload_received(payload: TcpPayload) -> void:
 	match payload.get_type() :
 		TcpPayload.TYPE.TEAMBUILD_SET_READY_STATE :
 			teambuilding_is_ready = payload.get_content()
+			global_payload_received.emit(self,payload)
+		TcpPayload.TYPE.RESULT_SET_READY_STATE :
+			result_is_ready = payload.get_content()
 			global_payload_received.emit(self,payload)
 		TcpPayload.TYPE.TEAMBUILD_SEND_TEAM :
 			var temp_team = payload.get_content()

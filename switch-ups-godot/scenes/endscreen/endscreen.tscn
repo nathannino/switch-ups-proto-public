@@ -1,0 +1,475 @@
+[gd_scene load_steps=23 format=3 uid="uid://d23vgejfywguc"]
+
+[ext_resource type="PackedScene" uid="uid://8ub8l473c6q7" path="res://scenes/endscreen/node_3d.tscn" id="1_fc1ui"]
+[ext_resource type="FontFile" uid="uid://cfu0iywhesxbv" path="res://fonts/Monofett/Monofett-Regular.ttf" id="2_0vpak"]
+[ext_resource type="PackedScene" uid="uid://bjwcj7an8i718" path="res://globals/utility_scenes/ui_component/monster_button.tscn" id="3_yb1id"]
+[ext_resource type="PackedScene" uid="uid://diohlpvbxl3oh" path="res://globals/utility_scenes/menus/spirit_summary/spirit_summary.tscn" id="4_4642i"]
+
+[sub_resource type="GDScript" id="GDScript_fc1ui"]
+script/source = "extends Control
+
+@export var world : Node3D
+@export var lose_bg : Control
+@export var win_bg : Control
+@export var win_lose_label : Label
+
+@export var actions_container : Container
+
+var player_id
+var teams
+
+func _init() -> void:
+	player_id = DeferredLoadingManager.get_holding_data(DeferredLoadingManager.add_prefix(ClientWrapperAutoload.AWAIT_PREFIX,TcpPayload.TYPE.RESULT_PLAYERID))
+	teams = DeferredLoadingManager.get_holding_data(DeferredLoadingManager.add_prefix(ClientWrapperAutoload.AWAIT_PREFIX,TcpPayload.TYPE.RESULT_TEAMS))
+	pass
+
+func _ready() :
+	actions_container.hide()
+	if teams[player_id][\"hp\"] > 0 :
+		we_won()
+	else :
+		we_lost()
+
+func we_lost() :
+	lose_bg.show()
+	win_bg.hide()
+	world.we_lost()
+	win_lose_label.text = \"TR_LOST\"
+
+func we_won() :
+	lose_bg.hide()
+	win_bg.show()
+	world.we_won()
+	win_lose_label.text = \"TR_WON\"
+
+
+func _on_node_3d_animation_done() -> void:
+	actions_container.modulate = Color(1,1,1,0)
+	actions_container.show()
+	var tween = create_tween()
+	tween.set_trans(Tween.TRANS_CIRC)
+	tween.set_ease(Tween.EASE_OUT)
+	tween.tween_property(actions_container,\"modulate\",Color.WHITE,1)
+	pass # Replace with function body.
+"
+
+[sub_resource type="Gradient" id="Gradient_fc1ui"]
+colors = PackedColorArray(0.448734, 0.0788237, 0.156587, 1, 0.698931, 0.504018, 0.54258, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_0vpak"]
+gradient = SubResource("Gradient_fc1ui")
+width = 100
+height = 100
+fill_from = Vector2(0.431624, 1)
+fill_to = Vector2(0.628205, 0.025641)
+
+[sub_resource type="Gradient" id="Gradient_0vpak"]
+colors = PackedColorArray(0.26139, 0.925695, 0.163116, 1, 0.445683, 0.896819, 0.784752, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_yb1id"]
+gradient = SubResource("Gradient_0vpak")
+fill_from = Vector2(0.346154, 1)
+fill_to = Vector2(0.803419, 0)
+
+[sub_resource type="LabelSettings" id="LabelSettings_yb1id"]
+font_size = 100
+outline_size = 30
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 50
+shadow_color = Color(0, 0, 0, 0.408)
+shadow_offset = Vector2(5.055, 9.57)
+
+[sub_resource type="GDScript" id="GDScript_0vpak"]
+script/source = "extends Button
+
+
+func _on_pressed() -> void:
+	BattleLogPanel.show()
+	pass # Replace with function body.
+"
+
+[sub_resource type="GDScript" id="GDScript_m666l"]
+script/source = "extends Button
+
+@export var panel : Control
+
+
+func _on_pressed() -> void:
+	panel.show()
+"
+
+[sub_resource type="GDScript" id="GDScript_e0tkd"]
+script/source = "extends Button
+
+func _on_toggled(toggled_on: bool) -> void:
+	text = \"TR_GENERIC_UNREADY\" if toggled_on else \"TR_GENERIC_READY\"
+	ClientWrapperAutoload.send(TcpPayload.new().set_type(TcpPayload.TYPE.RESULT_SET_READY_STATE).set_content(toggled_on))
+"
+
+[sub_resource type="GDScript" id="GDScript_d6e02"]
+script/source = "extends Button
+
+@export var panel : Control
+
+
+func _on_pressed() -> void:
+	panel.hide()
+"
+
+[sub_resource type="LabelSettings" id="LabelSettings_4642i"]
+font_size = 25
+
+[sub_resource type="Gradient" id="Gradient_yw4tm"]
+colors = PackedColorArray(0.0901961, 0.0901961, 0.0901961, 1, 0.0885599, 0.0885599, 0.0885599, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_4642i"]
+gradient = SubResource("Gradient_yw4tm")
+
+[sub_resource type="Gradient" id="Gradient_775m0"]
+colors = PackedColorArray(0, 0.658824, 0, 1, 0, 0.658824, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_d6e02"]
+gradient = SubResource("Gradient_775m0")
+
+[sub_resource type="GDScript" id="GDScript_umhpy"]
+script/source = "extends TextureProgressBar
+
+@export var is_self : bool
+@export var root_node : Control
+
+func _ready() :
+	var team
+	for _team_index in range(root_node.teams.size()) :
+		if (_team_index == root_node.player_id and is_self) or not (_team_index == root_node.player_id or is_self) :
+			team = root_node.teams[_team_index]
+	var hp = team[\"hp\"]
+	
+	value = hp
+	$Label.text = str(hp)
+"
+
+[sub_resource type="GDScript" id="GDScript_4642i"]
+script/source = "extends VBoxContainer
+
+@export var summary : Control
+@export var summary_container : Control
+@export var is_self : bool
+@export var root_node : Control
+
+func _ready() :
+	var team
+	for _team_index in range(root_node.teams.size()) :
+		if (_team_index == root_node.player_id and is_self) or not (_team_index == root_node.player_id or is_self) :
+			team = root_node.teams[_team_index]
+	for child_index in range(get_children().size()) :
+		var child = get_child(child_index)
+		var spirit = ms_spirit_active.from_dict(team[\"team\"][child_index])
+		child.set_monster(spirit)
+		child.pressed_option.connect(func(_index) :
+			summary.set_summary_active(spirit)
+			summary_container.show()
+		)
+"
+
+[sub_resource type="GDScript" id="GDScript_1ohay"]
+script/source = "extends Button
+
+@export var root_node : Node
+
+func _on_pressed() -> void:
+	root_node.hide()
+"
+
+[node name="endscreen" type="Control" node_paths=PackedStringArray("world", "lose_bg", "win_bg", "win_lose_label", "actions_container")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_fc1ui")
+world = NodePath("SubViewportContainer/SubViewport/Node3D")
+lose_bg = NodePath("LoseBg")
+win_bg = NodePath("WinBg")
+win_lose_label = NodePath("Label")
+actions_container = NodePath("VBoxContainer")
+
+[node name="LoseBg" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_0vpak")
+
+[node name="WinBg" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_yb1id")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(1280, 720)
+render_target_update_mode = 4
+
+[node name="Node3D" parent="SubViewportContainer/SubViewport" instance=ExtResource("1_fc1ui")]
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -166.0
+offset_top = 47.0
+offset_right = 166.0
+offset_bottom = 160.2
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_0vpak")
+theme_override_font_sizes/font_size = 100
+text = "TR_WON"
+label_settings = SubResource("LabelSettings_yb1id")
+
+[node name="VBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -59.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="BattleLog" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "TR_OPTIONS_LOGS"
+script = SubResource("GDScript_0vpak")
+
+[node name="team" type="Button" parent="VBoxContainer" node_paths=PackedStringArray("panel")]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "TR_RESULTS_TEAMBUTTON"
+script = SubResource("GDScript_m666l")
+panel = NodePath("../../PanelContainer")
+
+[node name="ready" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+text = "TR_GENERIC_READY"
+script = SubResource("GDScript_e0tkd")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "TR_RESULTS_TEAMLABEL"
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer" node_paths=PackedStringArray("panel")]
+layout_mode = 2
+text = "TR_CLOSE"
+script = SubResource("GDScript_d6e02")
+panel = NodePath("../../..")
+
+[node name="PanelContainer" type="PanelContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainer/VBoxContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/PanelContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/PanelContainer/HBoxContainer2/VBoxContainer"]
+layout_mode = 2
+text = "TR_RESULTS_YOUTEAM"
+label_settings = SubResource("LabelSettings_4642i")
+horizontal_alignment = 1
+
+[node name="Hp" type="TextureProgressBar" parent="PanelContainer/VBoxContainer/PanelContainer/HBoxContainer2/VBoxContainer" node_paths=PackedStringArray("root_node")]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+max_value = 300.0
+value = 300.0
+nine_patch_stretch = true
+texture_under = SubResource("GradientTexture1D_4642i")
+texture_progress = SubResource("GradientTexture1D_d6e02")
+script = SubResource("GDScript_umhpy")
+is_self = true
+root_node = NodePath("../../../../../..")
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/PanelContainer/HBoxContainer2/VBoxContainer/Hp"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -22.0
+offset_right = 26.0
+offset_bottom = 21.3333
+grow_horizontal = 2
+grow_vertical = 2
+text = "300"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/PanelContainer/HBoxContainer2/VBoxContainer" node_paths=PackedStringArray("summary", "summary_container", "root_node")]
+layout_mode = 2
+size_flags_vertical = 3
+script = SubResource("GDScript_4642i")
+summary = NodePath("../../../../../../PanelContainer2/SummaryContianer/SpiritSummary")
+summary_container = NodePath("../../../../../../PanelContainer2")
+is_self = true
+root_node = NodePath("../../../../../..")
+
+[node name="MonsterButton" parent="PanelContainer/VBoxContainer/PanelContainer/HBoxContainer2/VBoxContainer/VBoxContainer" instance=ExtResource("3_yb1id")]
+layout_mode = 2
+
+[node name="MonsterButton2" parent="PanelContainer/VBoxContainer/PanelContainer/HBoxContainer2/VBoxContainer/VBoxContainer" instance=ExtResource("3_yb1id")]
+layout_mode = 2
+
+[node name="MonsterButton3" parent="PanelContainer/VBoxContainer/PanelContainer/HBoxContainer2/VBoxContainer/VBoxContainer" instance=ExtResource("3_yb1id")]
+layout_mode = 2
+
+[node name="MonsterButton4" parent="PanelContainer/VBoxContainer/PanelContainer/HBoxContainer2/VBoxContainer/VBoxContainer" instance=ExtResource("3_yb1id")]
+layout_mode = 2
+
+[node name="MonsterButton5" parent="PanelContainer/VBoxContainer/PanelContainer/HBoxContainer2/VBoxContainer/VBoxContainer" instance=ExtResource("3_yb1id")]
+layout_mode = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="PanelContainer/VBoxContainer/PanelContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/PanelContainer/HBoxContainer2/VBoxContainer2"]
+layout_mode = 2
+text = "TR_RESULTS_NOTYOUTEAM"
+label_settings = SubResource("LabelSettings_4642i")
+horizontal_alignment = 1
+
+[node name="Hp" type="TextureProgressBar" parent="PanelContainer/VBoxContainer/PanelContainer/HBoxContainer2/VBoxContainer2" node_paths=PackedStringArray("root_node")]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+max_value = 300.0
+value = 300.0
+nine_patch_stretch = true
+texture_under = SubResource("GradientTexture1D_4642i")
+texture_progress = SubResource("GradientTexture1D_d6e02")
+script = SubResource("GDScript_umhpy")
+root_node = NodePath("../../../../../..")
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/PanelContainer/HBoxContainer2/VBoxContainer2/Hp"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -22.0
+offset_right = 26.0
+offset_bottom = 21.3333
+grow_horizontal = 2
+grow_vertical = 2
+text = "300"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/PanelContainer/HBoxContainer2/VBoxContainer2" node_paths=PackedStringArray("summary", "summary_container", "root_node")]
+layout_mode = 2
+size_flags_vertical = 3
+script = SubResource("GDScript_4642i")
+summary = NodePath("../../../../../../PanelContainer2/SummaryContianer/SpiritSummary")
+summary_container = NodePath("../../../../../../PanelContainer2")
+root_node = NodePath("../../../../../..")
+
+[node name="MonsterButton" parent="PanelContainer/VBoxContainer/PanelContainer/HBoxContainer2/VBoxContainer2/VBoxContainer" instance=ExtResource("3_yb1id")]
+layout_mode = 2
+
+[node name="MonsterButton2" parent="PanelContainer/VBoxContainer/PanelContainer/HBoxContainer2/VBoxContainer2/VBoxContainer" instance=ExtResource("3_yb1id")]
+layout_mode = 2
+
+[node name="MonsterButton3" parent="PanelContainer/VBoxContainer/PanelContainer/HBoxContainer2/VBoxContainer2/VBoxContainer" instance=ExtResource("3_yb1id")]
+layout_mode = 2
+
+[node name="MonsterButton4" parent="PanelContainer/VBoxContainer/PanelContainer/HBoxContainer2/VBoxContainer2/VBoxContainer" instance=ExtResource("3_yb1id")]
+layout_mode = 2
+
+[node name="MonsterButton5" parent="PanelContainer/VBoxContainer/PanelContainer/HBoxContainer2/VBoxContainer2/VBoxContainer" instance=ExtResource("3_yb1id")]
+layout_mode = 2
+
+[node name="PanelContainer2" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SummaryContianer" type="VBoxContainer" parent="PanelContainer2"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer2/SummaryContianer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer2/SummaryContianer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "TR_SUMMARY_LABEL"
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="PanelContainer2/SummaryContianer/HBoxContainer" node_paths=PackedStringArray("root_node")]
+layout_mode = 2
+text = "TR_CLOSE"
+script = SubResource("GDScript_1ohay")
+root_node = NodePath("../../..")
+
+[node name="SpiritSummary" parent="PanelContainer2/SummaryContianer" instance=ExtResource("4_4642i")]
+layout_mode = 2
+size_flags_vertical = 3
+
+[connection signal="animation_done" from="SubViewportContainer/SubViewport/Node3D" to="." method="_on_node_3d_animation_done"]
+[connection signal="pressed" from="VBoxContainer/BattleLog" to="VBoxContainer/BattleLog" method="_on_pressed"]
+[connection signal="pressed" from="VBoxContainer/team" to="VBoxContainer/team" method="_on_pressed"]
+[connection signal="toggled" from="VBoxContainer/ready" to="VBoxContainer/ready" method="_on_toggled"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer/Button" to="PanelContainer/VBoxContainer/HBoxContainer/Button" method="_on_pressed"]
+[connection signal="pressed" from="PanelContainer2/SummaryContianer/HBoxContainer/Button" to="PanelContainer2/SummaryContianer/HBoxContainer/Button" method="_on_pressed"]

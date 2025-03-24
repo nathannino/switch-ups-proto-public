@@ -33,7 +33,12 @@ enum TYPE {
 	BATTLE_SUBMIT_ACTION,
 	BATTLE_REQUEST_DATA,
 	BATTLE_LOGS,
-	BATTLE_HIDE_CANCEL
+	BATTLE_HIDE_CANCEL,
+	
+	# result
+	RESULT_PLAYERID,
+	RESULT_TEAMS,
+	RESULT_SET_READY_STATE
 }
 const PROTOCOL_VER = game_info.version + ("_dev" if game_info.dev else "")
 

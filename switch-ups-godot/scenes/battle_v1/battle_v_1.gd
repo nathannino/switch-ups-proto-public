@@ -215,6 +215,7 @@ func enter_log_text(_key : String, _format_vars : Dictionary = {}, _translated_f
 #endregion
 
 func _init() :
+	
 	player_id = DeferredLoadingManager.get_holding_data(DeferredLoadingManager.add_prefix(ClientWrapperAutoload.AWAIT_PREFIX,TcpPayload.TYPE.BATTLE_SETUP_PLAYERID))
 	_set_team_state(DeferredLoadingManager.get_holding_data(DeferredLoadingManager.add_prefix(ClientWrapperAutoload.AWAIT_PREFIX,TcpPayload.TYPE.BATTLE_SETUP_SYNCTEAM)))
 	ClientWrapperAutoload.battle_all_loaded.connect.call_deferred(func() :
@@ -424,5 +425,4 @@ func _process(_delta: float) -> void:
 			ClientWrapperAutoload.send(TcpPayload.new().set_type(TcpPayload.TYPE.BATTLE_AWAIT_ENDTURN).set_content(true))
 
 func _exit_tree() -> void:
-	BattleLogPanel.clear()
 	OptionsOverlay.set_in_battle(false)
