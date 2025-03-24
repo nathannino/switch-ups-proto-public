@@ -9,6 +9,7 @@ script/source = "extends Node3D
 @export var animation_player : AnimationPlayer
 signal animation_done
 
+var anim_done_counter_max = 0
 var _anim_done_counter = 0
 var anim_done_counter :
 	get : return _anim_done_counter
@@ -18,13 +19,15 @@ var anim_done_counter :
 			animation_done.emit()
 
 func we_lost() :
+	anim_done_counter_max = 2
 	character.lose_anim()
 	animation_player.speed_scale = 0.5
 	animation_player.play(\"camera_win\")
 	pass
 
 func we_won() : 
-	animation_done.connect(func() :
+	anim_done_counter_max = 3
+	character.animation_done.connect(func() :
 		character.win_anim_second_half()
 	, CONNECT_ONE_SHOT)
 	character.win_anim()
@@ -54,47 +57,6 @@ sky = SubResource("Sky_34rtp")
 tonemap_mode = 2
 ssao_enabled = true
 glow_enabled = true
-
-[sub_resource type="Animation" id="Animation_34rtp"]
-resource_name = "camera_win"
-tracks/0/type = "position_3d"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Camera3D")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array()
-tracks/1/type = "rotation_3d"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Camera3D")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = PackedFloat32Array()
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Camera3D:rotation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.74),
-"transitions": PackedFloat32Array(1, 0.366021, 461.44),
-"update": 0,
-"values": [Vector3(-0.228394, -0.405196, 0), Vector3(-0.413036, -0.0727698, -9.48154e-09), Vector3(-0.911568, 0, 0)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Camera3D:position")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.74),
-"transitions": PackedFloat32Array(1, 0.615572, 19.6983),
-"update": 0,
-"values": [Vector3(-0.488599, 1.67738, 1.51893), Vector3(-0.138969, 1.49294, 0.964311), Vector3(0, 0.994954, -0.533151)]
-}
 
 [sub_resource type="Animation" id="Animation_x4ilu"]
 length = 0.001
@@ -194,6 +156,47 @@ tracks/8/keys = {
 "handle_modes": PackedInt32Array(0),
 "points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_34rtp"]
+resource_name = "camera_win"
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array()
+tracks/1/type = "rotation_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera3D")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array()
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Camera3D:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.74),
+"transitions": PackedFloat32Array(1, 0.366021, 461.44),
+"update": 0,
+"values": [Vector3(-0.228394, -0.405196, 0), Vector3(-0.413036, -0.0727698, -9.48154e-09), Vector3(-0.911568, 0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Camera3D:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.74),
+"transitions": PackedFloat32Array(1, 0.615572, 19.6983),
+"update": 0,
+"values": [Vector3(-0.488599, 1.67738, 1.51893), Vector3(-0.138969, 1.49294, 0.964311), Vector3(0, 0.994954, -0.533151)]
 }
 
 [sub_resource type="Animation" id="Animation_83is6"]

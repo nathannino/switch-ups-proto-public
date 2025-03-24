@@ -261,4 +261,7 @@ func win_anim() :
 	animation.play_switch()
 
 func win_anim_second_half() :
+	animation.animation_finished.connect(func(_name) :
+		animation_done.emit()
+	, CONNECT_ONE_SHOT)
 	animation.play()
