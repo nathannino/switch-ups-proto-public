@@ -107,6 +107,7 @@ size_flags_vertical = 3
 
 [node name="ConfirmButton" type="Button" parent="HBoxContainer" node_paths=PackedStringArray("SceneRoot")]
 layout_mode = 2
+disabled = true
 text = "TR_SUBMIT"
 script = SubResource("GDScript_q4bii")
 SceneRoot = NodePath("../..")

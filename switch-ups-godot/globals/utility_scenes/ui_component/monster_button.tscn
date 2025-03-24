@@ -390,16 +390,6 @@ alignment = 1
 layout_mode = 2
 text = "Name"
 
-[node name="Health" type="Label" parent="MarginContainer/VBoxContainer/Control/HBoxContainer/MarginContainer/HBoxContainer/HBoxContainer"]
-layout_mode = 2
-text = "Health
-"
-
-[node name="Stamina" type="Label" parent="MarginContainer/VBoxContainer/Control/HBoxContainer/MarginContainer/HBoxContainer/HBoxContainer"]
-layout_mode = 2
-text = "Stamina
-"
-
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Control/HBoxContainer/MarginContainer/HBoxContainer/HBoxContainer"]
 layout_mode = 2
 mouse_filter = 2
@@ -419,6 +409,14 @@ bbcode_enabled = true
 text = "Type2"
 fit_content = true
 autowrap_mode = 0
+
+[node name="Health" type="Label" parent="MarginContainer/VBoxContainer/Control/HBoxContainer/MarginContainer/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Health"
+
+[node name="Stamina" type="Label" parent="MarginContainer/VBoxContainer/Control/HBoxContainer/MarginContainer/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Stamina"
 
 [node name="RSelected" type="TextureRect" parent="MarginContainer/VBoxContainer/Control/HBoxContainer"]
 visible = false

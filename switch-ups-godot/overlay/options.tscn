@@ -17,7 +17,7 @@ func set_can_pause(_bool : bool) :
 	can_pause = _bool
 
 func set_in_battle(_bool : bool) :
-	$CenterContainer/VBoxContainer/Button4.visible = _bool
+	$CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/Button4.visible = _bool
 
 func hide_reset() :
 	propagate_call(\"release_focus\",[],true)
