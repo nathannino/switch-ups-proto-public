@@ -18,3 +18,5 @@ TR_ACT_JUMP;Jump;Saut
 TR_ACT_SP_DEFEND;Defend;Défendre
 TR_ACT_SP_SWITCH;Swap;Échanger
 TR_ACT_SUPERNOVA;Supernova;Supernova
+TR_ACT_REMOVAL;Removal;Enlèvement
+TR_ACT_ENERGY_DRAIN;Energy Drain;Vol d’Énergie

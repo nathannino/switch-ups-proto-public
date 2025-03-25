@@ -1,0 +1,45 @@
+[gd_resource type="Resource" script_class="ms_action" load_steps=9 format=3 uid="uid://by1egyyqvqn3h"]
+
+[ext_resource type="Script" uid="uid://csiv0ccgqvmtb" path="res://monster_systems/actions/resources_scripts/components/action_component.gd" id="1_d386k"]
+[ext_resource type="Script" uid="uid://b5o4adhfhkldn" path="res://monster_systems/actions/resources_scripts/components/change_stat_level/ac_ch_stat_level.gd" id="2_435iw"]
+[ext_resource type="Script" uid="uid://cuoh85b8m5ubn" path="res://monster_systems/actions/resources_scripts/action.gd" id="2_cf500"]
+
+[sub_resource type="Resource" id="Resource_xiqn6"]
+script = ExtResource("2_435iw")
+stat = 0
+level_change = -2
+metadata/_custom_type_script = "uid://b5o4adhfhkldn"
+
+[sub_resource type="Resource" id="Resource_bih50"]
+script = ExtResource("2_435iw")
+stat = 1
+level_change = -2
+metadata/_custom_type_script = "uid://b5o4adhfhkldn"
+
+[sub_resource type="Resource" id="Resource_rckaa"]
+script = ExtResource("2_435iw")
+stat = 2
+level_change = -2
+metadata/_custom_type_script = "uid://b5o4adhfhkldn"
+
+[sub_resource type="Resource" id="Resource_trtn3"]
+script = ExtResource("2_435iw")
+stat = 3
+level_change = -2
+metadata/_custom_type_script = "uid://b5o4adhfhkldn"
+
+[sub_resource type="Resource" id="Resource_hesxt"]
+script = ExtResource("2_435iw")
+stat = 4
+level_change = -2
+metadata/_custom_type_script = "uid://b5o4adhfhkldn"
+
+[resource]
+script = ExtResource("2_cf500")
+key = "removal"
+name = "TR_ACT_REMOVAL"
+type = 4
+cost = 1
+priority = 0
+effects = Array[ExtResource("1_d386k")]([SubResource("Resource_xiqn6"), SubResource("Resource_bih50"), SubResource("Resource_rckaa"), SubResource("Resource_trtn3"), SubResource("Resource_hesxt")])
+metadata/_custom_type_script = "uid://cuoh85b8m5ubn"

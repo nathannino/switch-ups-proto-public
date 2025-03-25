@@ -20,6 +20,6 @@ script = ExtResource("4_pw2u8")
 key = "reclaim"
 name = "TR_ACT_RECLAIM"
 type = 5
-cost = 0
+cost = 1
 priority = 0
 effects = Array[ExtResource("1_ega5b")]([SubResource("Resource_jings")])
