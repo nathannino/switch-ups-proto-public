@@ -14,6 +14,7 @@ var summary_container : Container
 signal rotation_done
 signal ms_pressed(index : int, _pos : ms_constants.POSITION)
 
+@export var battle_root : Control
 @export_category(\"monster_buttons\")
 @export var spirit_left : Control
 @export var spirit_center : Control
@@ -84,6 +85,7 @@ func set_options(_options : Array) :
 func _ready() -> void:
 	spirit_list = [spirit_left,spirit_center,spirit_right]
 	for _msbutton in spirit_list :
+		_msbutton.battle_root = battle_root
 		_msbutton.pressed_option.connect(func(_opt_index : int) :
 			ms_pressed.emit(_opt_index, get_position_by_msbutton(_msbutton))
 		)

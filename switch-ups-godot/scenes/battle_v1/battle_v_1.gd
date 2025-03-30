@@ -195,7 +195,7 @@ func rotate_visual(pid_one,spirit_one_index,pid_two,spirit_two_index) :
 			spirit_rotation.emit(pid_one,ms_constants.index_to_position(spirit_one_index),ms_constants.index_to_position(spirit_two_index))
 		else :
 			camera_lookat_helper()
-			spirit_switch.emit(pid_one,spirit_one_index,pid_two,spirit_two_index)
+			spirit_switch.emit(pid_one,ms_constants.index_to_position(spirit_one_index),spirit_one,pid_two,ms_constants.index_to_position(spirit_two_index),spirit_two)
 			
 		team_3d_one.animation_done.connect(func() :
 			play_battle_log.call_deferred()

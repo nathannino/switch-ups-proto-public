@@ -244,12 +244,13 @@ text = "300.0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SpiritTeamDisplay" parent="FriendTeam" instance=ExtResource("8_q2phu")]
+[node name="SpiritTeamDisplay" parent="FriendTeam" node_paths=PackedStringArray("battle_root") instance=ExtResource("8_q2phu")]
 offset_left = -249.0
 offset_top = -103.0
 offset_right = 261.0
 offset_bottom = 122.0
 scale = Vector2(0.75, 0.75)
+battle_root = NodePath("../..")
 
 [node name="ActionRoot" type="Control" parent="FriendTeam"]
 anchors_preset = 0
@@ -367,12 +368,13 @@ grow_vertical = 2
 text = "300.0"
 horizontal_alignment = 1
 
-[node name="SpiritTeamDisplay" parent="EnemyTeam" instance=ExtResource("8_q2phu")]
+[node name="SpiritTeamDisplay" parent="EnemyTeam" node_paths=PackedStringArray("battle_root") instance=ExtResource("8_q2phu")]
 offset_left = -544.0
 offset_top = 50.0
 offset_right = -34.0
 offset_bottom = 275.0
 scale = Vector2(0.75, 0.75)
+battle_root = NodePath("../..")
 
 [node name="SpiritActionRoot" type="HBoxContainer" parent="." node_paths=PackedStringArray("panel_container", "battle_root", "ui_globals", "move_holder")]
 layout_mode = 1

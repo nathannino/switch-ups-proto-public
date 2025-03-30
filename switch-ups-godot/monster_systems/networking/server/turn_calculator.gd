@@ -48,8 +48,8 @@ func _determine_move_order() :
 		var current_action = get_current_action(spirit,order["action_index"])
 		
 		var speed = order["priority_debuff"]
-		speed += spirit.get_speed() / 1000
-		speed += current_action.priority
+		speed += spirit.get_speed()
+		speed += current_action.priority * 1000
 		
 		order["final_speed_stat"] = speed
 		order["speedcalc_initial_order"] = index
@@ -123,6 +123,8 @@ func start_side() :
 	selected_action = get_current_action(order["player_node"].team[ms_constants.position_to_index(ms_constants.POSITION.CENTER)],order["action_index"])
 	if check_stamina() :
 		calculate_next()
+	else :
+		end_side()
 
 func check_health() -> bool :
 	var order = player_order_data[speed_order[current_handling_order]]
@@ -141,6 +143,17 @@ func increase_action_index_and_set_target(current_component, _current_target) :
 		ms_action_index_manager.INCREASE_RESULT.GO_UP :
 			target_info_stack.pop_back()
 
+func end_side() :
+	current_handling_order += 1
+	if current_handling_order >= speed_order.size() :
+		$"..".battle_submit_logs_end(battle_log)
+		battle_log.clear()
+		return
+	else :
+		action_index = [0]
+		start_side()
+		return
+
 func calculate_next() :
 	var order = player_order_data[speed_order[current_handling_order]]
 	var user_node = order["player_node"]
@@ -151,15 +164,8 @@ func calculate_next() :
 	var _target_info = target_info_stack[-1]
 	
 	if _root_component == null :
-		current_handling_order += 1
-		if current_handling_order >= speed_order.size() :
-			$"..".battle_submit_logs_end(battle_log)
-			battle_log.clear()
-			return
-		else :
-			action_index = [0]
-			start_side()
-			return
+		end_side()
+		return
 	
 	var current_component = ms_action_index_manager.get_latest_component(action,action_index)
 	if current_component == null :

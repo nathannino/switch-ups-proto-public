@@ -76,10 +76,19 @@ func update_health(old, new) :
 		tween.tween_callback(battle_root.play_battle_log)
 
 func update_stamina(old,new) :
-	tr(\"TR_BTL_STAMINA\").format({\"st\":new})
+	if battle_root == null :
+		set_stamina(new)
+	else :
+		battle_root.pause_battle_log()
+		var tween = create_tween()
+		tween.tween_method(func(new): set_stamina(new),old,new,0.3 * abs(old-new))
+		tween.tween_callback(battle_root.play_battle_log)
 
 func set_health(curr_health : float, max_health : float) :
-	health_label.text = tr(\"TR_BTL_HEALTH\").format({\"curr\":curr_health,\"max\":max_health})
+	health_label.text = tr(\"TR_BTL_HEALTH\").format({\"curr\":int(curr_health),\"max\":int(max_health)})
+
+func set_stamina(curr_stamina : float) :
+	stamina.text = tr(\"TR_BTL_STAMINA\").format({\"st\":int(curr_stamina)})
 
 func reset() :
 	current_spirit = null
@@ -133,7 +142,7 @@ func set_monster(spirit_active : ms_spirit_active, _options : Array = []) :
 	name_label.text = tr(spirit.name)
 	spr.texture = spirit.sprite
 	set_health(spirit_active.current_hp,spirit.health)
-	stamina.text = \"Stamina : %s\" % current_spirit.current_stamina #FIXME : Add translations
+	set_stamina(current_spirit.current_stamina)
 	Type1.text = ms_constants.type_to_bbcode(spirit.type)
 	Type2.text = \"\"
 	if not spirit_active.key_equip == \"\" :
