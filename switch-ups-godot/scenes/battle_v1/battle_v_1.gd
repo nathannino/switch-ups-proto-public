@@ -101,6 +101,7 @@ func pause_battle_log() :
 func play_battle_log() :
 	battle_logs_await -= 1
 
+var is_request_data = false
 var CANCEL = Object.new()
 func submit_action_data(_data) :
 	for child in interrupt_anchor.get_children() :
@@ -113,11 +114,16 @@ func submit_action_data(_data) :
 			cancelled_action_exdata.emit()
 			return
 	
-	action_data.push_back(_data)
-	ms_action_index_manager.increase_action_index(ms_action_index_manager.get_latest_component(current_action,action_index),action_index)
-	handle_action_component()
+	
+	if is_request_data :
+		is_request_data = false
+		ClientWrapperAutoload.send(TcpPayload.new().set_type(TcpPayload.TYPE.BATTLE_SUBMIT_DATA).set_content(_data))
+		show_await_cancel_timer()
+	else :
+		action_data.push_back(_data)
+		ms_action_index_manager.increase_action_index(ms_action_index_manager.get_latest_component(current_action,action_index),action_index)
+		handle_action_component()
 	pass
-
 
 func get_selected_position() -> ms_constants.POSITION :
 	return ui_globals.selected_position
@@ -201,13 +207,7 @@ func rotate_visual(pid_one,spirit_one_index,pid_two,spirit_two_index) :
 			play_battle_log.call_deferred()
 		,CONNECT_ONE_SHOT)
 		pass # rotate time
-	
 	#endregion
-	#TODO : Animations =D
-	#WARNING : Animations should take into consideration the posibility of a target not being active at the moment
-	
-	#enemy_team_ui.sync_team_state()
-	#friend_team_ui.sync_team_state()
 
 func enter_log_text(_key : String, _format_vars : Dictionary = {}, _translated_format_vars : Dictionary = {}, _time : float = 0) :
 	BattleLogPanel.add_log(_key,_format_vars,_translated_format_vars)
@@ -274,6 +274,7 @@ func _camera_rotation_done_callable() :
 
 var current_action_battle_log
 func handle_battle_logs() :
+	hide_await_cancel_timer()
 	var log = battle_logs.pop_front()
 	var battle_log_type : ms_constants.BATTLE_LOG = log.get("log_type",ms_constants.BATTLE_LOG.ACTION)
 	match battle_log_type :
@@ -330,8 +331,8 @@ func _ready() :
 	ClientWrapperAutoload.battle_logs.connect(func(_logs) :
 		battlelog_start.emit.call_deferred()
 		battle_logs = _logs
-		await_cancel.hide()
 	)
+	ClientWrapperAutoload.request_data.connect(handle_request_data)
 	
 	timer.wait_time = 0.5 # Simulate a battle begin animation or smth
 	timer.timeout.connect(func () : 
@@ -342,6 +343,22 @@ func _ready() :
 	BattleLogPanel.clear()
 	OptionsOverlay.set_in_battle(true)
 
+func handle_request_data(content : Dictionary) :
+	hide_await_cancel_timer()
+	is_request_data = true
+	action_data = []
+	var _team = friend_team if content["team_index"] == player_id else enemy_team
+	var _spirit = _team[content["spirit_index"]]
+	var _action = _spirit.get_action(content["action_index"])
+	
+	var _component = ms_action_index_manager.get_latest_component(_action,content["component_index"])
+	var _precommit = _component.get_interrupt_action()
+	
+	interrupt_anchor.add_child(_precommit)
+	interrupt_anchor.show()
+	_precommit.attach_ready(self)
+	pass
+
 func _begin_battle() :
 	friend_character.begin_battle()
 	enemy_character.begin_battle()
@@ -350,12 +367,12 @@ func _begin_battle() :
 	,CONNECT_ONE_SHOT)
 
 func begin_turn() :
+	hide_await_cancel_timer()
 	turn_start.emit()
 	current_action = null
 	action_data = []
 	action_index = []
 
-	await_cancel.hide()
 	BattleLogPanel.new_turn()
 	camera_lookat_helper()
 
@@ -423,6 +440,23 @@ func _process(_delta: float) -> void:
 			battlelog_next.emit()
 			battle_logs = null
 			ClientWrapperAutoload.send(TcpPayload.new().set_type(TcpPayload.TYPE.BATTLE_AWAIT_ENDTURN).set_content(true))
+			show_await_cancel_timer()
+
+func show_await_cancel_timer() :
+	timer.wait_time = 0.5 # Simulate a battle begin animation or smth
+	if not timer.timeout.is_connected(_await_cancel_timeout) :
+		timer.timeout.connect(_await_cancel_timeout, CONNECT_ONE_SHOT)
+	timer.start()
+
+func hide_await_cancel_timer() :
+	timer.stop()
+	await_cancel.hide()
+	if timer.timeout.is_connected(_await_cancel_timeout) :
+		timer.timeout.disconnect(_await_cancel_timeout)
+	pass
+
+func _await_cancel_timeout() :
+	await_cancel.show()
 
 func _exit_tree() -> void:
 	OptionsOverlay.set_in_battle(false)

@@ -14,6 +14,6 @@ key = "trade"
 name = "TR_ACT_TRADE"
 type = 8
 cost = 5
-priority = -2
+priority = -1
 effects = Array[ExtResource("1_cuntk")]([SubResource("Resource_kmxsj")])
 metadata/_custom_type_script = "uid://cuoh85b8m5ubn"

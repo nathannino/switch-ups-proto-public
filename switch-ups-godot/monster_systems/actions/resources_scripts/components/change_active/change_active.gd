@@ -38,7 +38,7 @@ func handle_server(turn_calc : Node,user:ms_spirit_active, user_player_node : No
 	
 	return [ms_constants.ACTION_COMPONENT_HANDLE_STATE.GET_SIBLING,
 	[] if user_player_node == target_player_node else [ms_constants.ADDITIONNAL_ACTION_COMPONENT_EFFECTS.CLEAR_TARGET_ACTION_DATA],
-	[user,user_player_node,target,target_player_node] if user_player_node == target_player_node else [user,target_player_node,target,user_player_node],
+	[user,user_player_node,target,target_player_node],
 	{
 		"old_pid" : target_player_node.team_id,
 		"old_index" : old_index,

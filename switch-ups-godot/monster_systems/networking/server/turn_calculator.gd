@@ -192,6 +192,15 @@ func calculate_next() :
 	if response == ms_constants.ACTION_COMPONENT_HANDLE_STATE.GET_CHILD or response == ms_constants.ACTION_COMPONENT_HANDLE_STATE.GET_SIBLING :
 		current_data = {}
 		var special_actions = results[1] # FIXME : Do stuff with it
+		
+		for _special_action in special_actions :
+			match _special_action:
+				ms_constants.ADDITIONNAL_ACTION_COMPONENT_EFFECTS.CLEAR_TARGET_ACTION_DATA:
+					player_order_data[$"../ServerMain".get_children().find(results[2][3])]["action_data"] = []
+					pass
+				_:
+					pass
+		
 		var result_data = results[3]
 		var new_target_info = results[2]
 		result_data["target_info"] = {
@@ -226,8 +235,16 @@ func send_request_data() :
 	var action = get_current_action(order["player_node"].team[ms_constants.position_to_index(ms_constants.POSITION.CENTER)],order["action_index"])
 	var current_component = ms_action_index_manager.get_latest_component(action,action_index)
 	
+	var spirit_index = -1
+	var team_index = -1
+	var player_nodes = get_players()
+	while spirit_index == -1 :
+		team_index += 1
+		spirit_index =  player_nodes[team_index].team.find(target_info_stack[0][0])
+	
 	target_info_stack[-1][1].send(TcpPayload.new().set_type(TcpPayload.TYPE.BATTLE_REQUEST_DATA).set_content({
 		"action_index" : order["action_index"],
-		"spirit_index" : target_info_stack[0][1].team.find(target_info_stack[0][0]),
+		"team_index" : team_index,
+		"spirit_index" : spirit_index,
 		"component_index" : action_index
 	}))

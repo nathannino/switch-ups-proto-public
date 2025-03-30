@@ -94,6 +94,9 @@ func global_payload_received(_client : Node, payload : TcpPayload) -> void :
 				for child in $ServerMain.get_children() :
 					child.await_endturn = false
 				battle_next_main()
+		TcpPayload.TYPE.BATTLE_SUBMIT_DATA :
+			$TurnCalculator.current_data = payload.get_content()
+			battle_next_main()
 		_ :
 			printerr("Unkown global type : %s" % payload.get_type())
 	pass
