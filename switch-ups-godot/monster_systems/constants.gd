@@ -152,12 +152,15 @@ enum ADDITIONNAL_ACTION_COMPONENT_EFFECTS {
 	CLEAR_TARGET_ACTION_DATA
 }
 
-static func calculate_randomness(user : ms_spirit_active, target : ms_spirit_active) :
-	var default_result = randf()
-	default_result = max(default_result - (target.get_luck()/100),0.0) 
-	default_result = min(default_result + (user.get_luck()/100),1.0)
-	return default_result
+static func calculate_randomness_with_original(user : ms_spirit_active, target : ms_spirit_active) :
+	var default_result_step1 = randf()
+	var default_result_step2 = maxf(default_result_step1 - (float(target.get_luck())/100.0),0.0) 
+	var default_result_step3 = minf(default_result_step2 + (float(user.get_luck())/100.0),1.0)
+	return [default_result_step3, default_result_step1]
 
+# Compat
+static func calculate_randomness(user : ms_spirit_active, target : ms_spirit_active) :
+	return calculate_randomness_with_original(user,target)[0]
 
 enum WEAK_RES {
 	WEAK,

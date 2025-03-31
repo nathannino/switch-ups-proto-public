@@ -5,13 +5,13 @@
 [ext_resource type="Resource" uid="uid://btja4176bhm51" path="res://monster_systems/actions/database/creature/bite.tres" id="3_7tkv1"]
 [ext_resource type="Script" uid="uid://dqioysnx33r70" path="res://monster_systems/spirits/resources_scripts/spirit.gd" id="4_cs0fq"]
 [ext_resource type="Resource" uid="uid://7b5mkdx1uxjo" path="res://monster_systems/actions/database/fear/lash_out.tres" id="4_uyrgl"]
-[ext_resource type="Texture2D" uid="uid://masa1osx0s86" path="res://monster_systems/spirits/art/unknown.png" id="5_bvb6w"]
+[ext_resource type="Texture2D" uid="uid://bd2v1bhv7dcrc" path="res://monster_systems/spirits/art/dog.png" id="6_ae34s"]
 
 [resource]
 script = ExtResource("4_cs0fq")
 key = "dog"
 name = "TR_SPIRIT_DOG"
-sprite = ExtResource("5_bvb6w")
+sprite = ExtResource("6_ae34s")
 type = 1
 health = 325
 atk_concrete = 125

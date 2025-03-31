@@ -62,11 +62,14 @@ func already_handled_server(battle_log : Array, position : int) :
 
 
 func handle_server(turn_calc : Node,user:ms_spirit_active, user_player_node : Node, target : ms_spirit_active, target_player_node : Node, data : Dictionary) -> Array :
-	var random = 1-ms_constants.calculate_randomness(user,target)
+	var random_array = ms_constants.calculate_randomness_with_original(user,target)
 	
+	var unmodified_random = 1-random_array[1]
+	var random = 1-random_array[0]
 	var success = not (random > base_chance_percent)
+	var unmodified_success = not (unmodified_random > base_chance_percent)
 	
-	var lucky_status = (random < base_chance_percent + 0.05 and random > base_chance_percent - 0.05)
+	var lucky_status = not (unmodified_success == success)
 	
 	return [ms_constants.ACTION_COMPONENT_HANDLE_STATE.GET_CHILD if success else ms_constants.ACTION_COMPONENT_HANDLE_STATE.GET_SIBLING,
 	[],

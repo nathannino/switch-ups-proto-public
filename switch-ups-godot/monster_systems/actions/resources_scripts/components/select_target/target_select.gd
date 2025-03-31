@@ -3,12 +3,14 @@ extends Control
 var target_type : ms_constants.TARGETS
 var allow_back : bool
 var ignore_index : int
+var desc : Control
 
 var battle_root : Node
 
 @export var title_label : Label
 @export var back_button : Button
 @export var grid : GridContainer
+@export var desc_container : Container
 
 func _notification(what: int) -> void:
 	match what:
@@ -53,6 +55,7 @@ func attach_ready(_battle_root : Node) :
 		back_button.hide()
 	set_option()
 	set_label()
+	desc_container.add_child(desc)
 	pass
 
 func pos_to_index(pos) :

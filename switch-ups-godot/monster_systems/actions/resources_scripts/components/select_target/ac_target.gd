@@ -24,6 +24,7 @@ func _select_screen(allow_back : bool) -> Control :
 			var instance = precommit.instantiate()
 			instance.target_type = target_type
 			instance.allow_back = allow_back
+			instance.desc = get_desc()
 			return instance
 
 

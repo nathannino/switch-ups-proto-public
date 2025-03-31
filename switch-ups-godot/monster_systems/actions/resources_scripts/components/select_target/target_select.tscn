@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://cedlvcxxgruty"]
+[gd_scene load_steps=6 format=3 uid="uid://cedlvcxxgruty"]
 
 [ext_resource type="Script" uid="uid://ca68hsqwrul85" path="res://monster_systems/actions/resources_scripts/components/select_target/target_select.gd" id="1_ax6tc"]
 
@@ -39,7 +39,33 @@ func confirm(_spirit : ms_spirit_active, pos : int) :
 	scene_root.return_value(pos)
 "
 
-[node name="TargetPrecommit" type="Control" node_paths=PackedStringArray("title_label", "back_button", "grid")]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hnfq3"]
+bg_color = Color(0, 0, 0, 0.906)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 0.42)
+border_blend = true
+
+[sub_resource type="GDScript" id="GDScript_ik70m"]
+script/source = "extends PanelContainer
+
+func _process(delta: float) -> void:
+	if (visible) :
+		global_position = get_viewport().get_mouse_position()
+
+func _on_button_2_mouse_entered() -> void:
+	visible = true
+	pass # Replace with function body.
+
+
+func _on_button_2_mouse_exited() -> void:
+	visible = false
+	pass # Replace with function body.
+"
+
+[node name="TargetPrecommit" type="Control" node_paths=PackedStringArray("title_label", "back_button", "grid", "desc_container")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -50,6 +76,7 @@ script = ExtResource("1_ax6tc")
 title_label = NodePath("VBoxContainer/HBoxContainer/Label")
 back_button = NodePath("VBoxContainer/HBoxContainer/Button")
 grid = NodePath("VBoxContainer/PanelContainer/GridContainer")
+desc_container = NodePath("PanelContainer")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -61,6 +88,10 @@ grow_vertical = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
+
+[node name="Button2" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "TR__ACT_INFO"
 
 [node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
@@ -84,4 +115,15 @@ script = SubResource("GDScript_n4r2k")
 scene_root = NodePath("../../..")
 max_columns = 3
 
+[node name="PanelContainer" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 0
+offset_right = 168.0
+offset_bottom = 43.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hnfq3")
+script = SubResource("GDScript_ik70m")
+
+[connection signal="mouse_entered" from="VBoxContainer/HBoxContainer/Button2" to="PanelContainer" method="_on_button_2_mouse_entered"]
+[connection signal="mouse_exited" from="VBoxContainer/HBoxContainer/Button2" to="PanelContainer" method="_on_button_2_mouse_exited"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Button" to="VBoxContainer/HBoxContainer/Button" method="_on_pressed"]

@@ -1,8 +1,8 @@
 keys;en;fr
 TR_AC_ATTACK;Deal {power} {flavor} damage to the target;Infliger {power} dégâts {flavor} à la cible
 TR_AC_LUCK;{percent}% base chance to : ;{percent}% de probabilité de :
-TR_AC_CH_STAT_LEVEL_ASC;Increases {stat} by {lv} level(s);Augmente {stat} de {lv} niveau(x)
-TR_AC_CH_STAT_LEVEL_DESC;Decreases {stat} by {lv} level(s);Diminue {stat} de {lv} niveau(x)
+TR_AC_CH_STAT_LEVEL_ASC;Increases the target’s {stat} by {lv} level(s);Augmente {stat} de la cible de {lv} niveau(x)
+TR_AC_CH_STAT_LEVEL_DESC;Decreases the target’s {stat} by {lv} level(s);Diminue {stat} de la cible de {lv} niveau(x)
 TR_AC_TARGET;Target {target} to;Cible {target} et
 TR_AC_TARGET_DURING;When cast, {rest};Lorsqu'il est lancé, {rest}
 TR_AC_CH_ACTIVE;Switch position with target;Changer de position avec l’esprit visé
