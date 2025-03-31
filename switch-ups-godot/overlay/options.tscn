@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://d2lcdsh40reie"]
+[gd_scene load_steps=12 format=3 uid="uid://d2lcdsh40reie"]
 
 [ext_resource type="Script" uid="uid://1yl6aj3ibwlh" path="res://globals/simple_scripts/button_change_scene_simple.gd" id="1_57t8v"]
 [ext_resource type="Theme" uid="uid://bfeafrooqeg54" path="res://ScreenWide.tres" id="1_djnj0"]
 [ext_resource type="Theme" uid="uid://606up66y2qp" path="res://ScreenWideHeader.tres" id="2_whq1p"]
+[ext_resource type="Texture2D" uid="uid://cmj3niq4t2kmg" path="res://Kenney Assets/UI Pack/icon_repeat_dark.svg" id="3_whq1p"]
 
 [sub_resource type="GDScript" id="GDScript_cc25f"]
 script/source = "extends Control
@@ -82,11 +83,34 @@ func _on_item_selected(index: int) -> void:
 [sub_resource type="GDScript" id="GDScript_klnsa"]
 script/source = "extends HSlider
 
+@export var _label : Label
+@export var _button : Button
 
 func _on_drag_ended(value_changed: bool) -> void:
 	if not value_changed :
 		return
 	get_window().content_scale_factor = value
+	_label.text = str(value)
+	_button.disabled = false
+	pass # Replace with function body.
+"
+
+[sub_resource type="GDScript" id="GDScript_y8gkt"]
+script/source = "extends Button
+
+@export var slider : HSlider
+@export var label : Label
+
+func _notification(what: int) -> void:
+	match what:
+		NOTIFICATION_VISIBILITY_CHANGED :
+			disabled = (get_window().content_scale_factor == 1.0)
+
+func _on_pressed() -> void:
+	disabled = true
+	slider.value = 1.0
+	get_window().content_scale_factor = 1.0
+	label.text = str(1.0)
 	pass # Replace with function body.
 "
 
@@ -191,7 +215,11 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "TR_OPTIONS_UISCALE"
 
-[node name="HSlider" type="HSlider" parent="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="UIScale" type="VBoxContainer" parent="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="HSlider" type="HSlider" parent="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/UIScale" node_paths=PackedStringArray("_label", "_button")]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 min_value = 0.5
@@ -199,6 +227,23 @@ max_value = 2.0
 step = 0.1
 value = 1.0
 script = SubResource("GDScript_klnsa")
+_label = NodePath("../../Label2")
+_button = NodePath("../../Button")
+
+[node name="Label2" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "1.0"
+
+[node name="Button" type="Button" parent="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer" node_paths=PackedStringArray("slider", "label")]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+icon = ExtResource("3_whq1p")
+icon_alignment = 1
+expand_icon = true
+script = SubResource("GDScript_y8gkt")
+slider = NodePath("../UIScale/HSlider")
+label = NodePath("../Label2")
 
 [node name="Button4" type="Button" parent="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer" node_paths=PackedStringArray("root")]
 visible = false
@@ -223,7 +268,8 @@ block_change_scene = true
 [connection signal="visibility_changed" from="." to="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/Button2" method="_on_control_visibility_changed"]
 [connection signal="pressed" from="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/Button" to="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/Button" method="_on_pressed"]
 [connection signal="item_selected" from="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/OptionButton" to="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/OptionButton" method="_on_item_selected"]
-[connection signal="drag_ended" from="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/HSlider" to="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/HSlider" method="_on_drag_ended"]
+[connection signal="drag_ended" from="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/UIScale/HSlider" to="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/UIScale/HSlider" method="_on_drag_ended"]
+[connection signal="pressed" from="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/Button" to="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/Button" method="_on_pressed"]
 [connection signal="pressed" from="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/Button4" to="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/Button4" method="_on_pressed"]
 [connection signal="pressed" from="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/Button2" to="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/Button2" method="_on_pressed"]
 [connection signal="pressed" from="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/Button3" to="." method="_on_button_3_pressed"]

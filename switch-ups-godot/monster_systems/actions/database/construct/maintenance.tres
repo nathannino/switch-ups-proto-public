@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="ms_action" load_steps=7 format=3 uid="uid://bj8j5rxlx3j3c"]
+
+[ext_resource type="Script" uid="uid://csiv0ccgqvmtb" path="res://monster_systems/actions/resources_scripts/components/action_component.gd" id="1_anw0f"]
+[ext_resource type="Script" uid="uid://cuoh85b8m5ubn" path="res://monster_systems/actions/resources_scripts/action.gd" id="2_lku21"]
+[ext_resource type="Script" uid="uid://dj745fbgjstr8" path="res://monster_systems/actions/resources_scripts/components/heal_target/ac_heal_target.gd" id="2_qw5yk"]
+[ext_resource type="Script" uid="uid://bedoq515h1qxa" path="res://monster_systems/actions/resources_scripts/components/select_target/ac_target.gd" id="3_jxr7u"]
+
+[sub_resource type="Resource" id="Resource_82sfy"]
+script = ExtResource("2_qw5yk")
+heal_percent = 0.7
+metadata/_custom_type_script = "uid://dj745fbgjstr8"
+
+[sub_resource type="Resource" id="Resource_bk0wl"]
+script = ExtResource("3_jxr7u")
+target_type = 8
+during_turn = false
+action = Array[ExtResource("1_anw0f")]([SubResource("Resource_82sfy")])
+metadata/_custom_type_script = "uid://bedoq515h1qxa"
+
+[resource]
+script = ExtResource("2_lku21")
+key = "maintenance"
+name = "TR_ACT_MAINTENANCE"
+type = 6
+cost = 2
+priority = 0
+effects = Array[ExtResource("1_anw0f")]([SubResource("Resource_bk0wl")])
+metadata/_custom_type_script = "uid://cuoh85b8m5ubn"

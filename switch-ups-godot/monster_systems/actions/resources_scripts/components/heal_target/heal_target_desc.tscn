@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=3 uid="uid://5rpbx71ta133"]
+
+[sub_resource type="GDScript" id="GDScript_f61f4"]
+script/source = "extends RichTextLabel
+
+var component : ms_ac_heal_target
+
+func _notification(what: int) -> void:
+	match what :
+		NOTIFICATION_TRANSLATION_CHANGED :
+			translate()
+
+func translate() :
+	if component == null :
+		return
+	
+	text = tr(\"TR_AC_HEAL\").format({\"percent\":component.heal_percent*100})
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	translate()
+"
+
+[node name="AttackEnemyDesc" type="RichTextLabel"]
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+bbcode_enabled = true
+text = "asda"
+fit_content = true
+script = SubResource("GDScript_f61f4")

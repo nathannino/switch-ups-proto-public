@@ -176,6 +176,7 @@ minimum_size_double = Vector2(400, 400)
 minimum_size_single = Vector2(0, 400)
 
 [node name="TextureRect" type="TextureRect" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/AspectRatioContainer"]
+texture_filter = 1
 layout_mode = 2
 stretch_mode = 6
 

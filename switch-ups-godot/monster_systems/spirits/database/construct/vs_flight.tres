@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="ms_spirit" load_steps=9 format=3 uid="uid://cbfimc6jif107"]
+
+[ext_resource type="Script" uid="uid://cuoh85b8m5ubn" path="res://monster_systems/actions/resources_scripts/action.gd" id="1_d35gg"]
+[ext_resource type="Resource" uid="uid://bxpn0enwtueuh" path="res://monster_systems/actions/database/normal/reg_atk_abs.tres" id="2_12cha"]
+[ext_resource type="Resource" uid="uid://bj8j5rxlx3j3c" path="res://monster_systems/actions/database/construct/maintenance.tres" id="3_aag44"]
+[ext_resource type="Resource" uid="uid://bpqd6ji4kno74" path="res://monster_systems/actions/database/space/supernova.tres" id="3_jtixe"]
+[ext_resource type="Resource" uid="uid://daialfvccb4qd" path="res://monster_systems/actions/database/void/collapse.tres" id="4_12cha"]
+[ext_resource type="Script" uid="uid://dqioysnx33r70" path="res://monster_systems/spirits/resources_scripts/spirit.gd" id="4_aag44"]
+[ext_resource type="Resource" uid="uid://n7ipeend6vgy" path="res://monster_systems/actions/database/normal/slash.tres" id="5_jtixe"]
+[ext_resource type="Texture2D" uid="uid://bws6duc36sbhv" path="res://monster_systems/spirits/art/vs_flight.png" id="8_mtfx4"]
+
+[resource]
+script = ExtResource("4_aag44")
+key = "vs_flight"
+name = "TR_SPIRIT_VS_FLIGHT"
+sprite = ExtResource("8_mtfx4")
+type = 6
+health = 300
+atk_concrete = 50
+atk_abstract = 140
+defense = 130
+speed = 80
+luck = 0
+actions = Array[ExtResource("1_d35gg")]([ExtResource("2_12cha"), ExtResource("3_aag44"), ExtResource("4_12cha"), ExtResource("3_jtixe"), ExtResource("5_jtixe")])
+metadata/_custom_type_script = "uid://dqioysnx33r70"

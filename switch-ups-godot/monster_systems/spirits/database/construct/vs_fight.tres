@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="ms_spirit" load_steps=9 format=3 uid="uid://kqshkurh3llw"]
+
+[ext_resource type="Script" uid="uid://cuoh85b8m5ubn" path="res://monster_systems/actions/resources_scripts/action.gd" id="1_foung"]
+[ext_resource type="Resource" uid="uid://cea7mp2f86a1h" path="res://monster_systems/actions/database/normal/reg_atk_con.tres" id="2_4eofk"]
+[ext_resource type="Script" uid="uid://dqioysnx33r70" path="res://monster_systems/spirits/resources_scripts/spirit.gd" id="2_xql3k"]
+[ext_resource type="Resource" uid="uid://7b5mkdx1uxjo" path="res://monster_systems/actions/database/fear/lash_out.tres" id="3_kvw2e"]
+[ext_resource type="Resource" uid="uid://bpqd6ji4kno74" path="res://monster_systems/actions/database/space/supernova.tres" id="4_jiid6"]
+[ext_resource type="Resource" uid="uid://56cq4vm2p6gy" path="res://monster_systems/actions/database/meta/lucky_shot.tres" id="5_gdb0p"]
+[ext_resource type="Resource" uid="uid://daialfvccb4qd" path="res://monster_systems/actions/database/void/collapse.tres" id="6_kvw2e"]
+[ext_resource type="Texture2D" uid="uid://ckbkgwrho7djs" path="res://monster_systems/spirits/art/vs_fight.png" id="7_ldlqg"]
+
+[resource]
+script = ExtResource("2_xql3k")
+key = "vs_fight"
+name = "TR_SPIRIT_VS_FIGHT"
+sprite = ExtResource("7_ldlqg")
+type = 6
+health = 330
+atk_concrete = 150
+atk_abstract = 70
+defense = 60
+speed = 130
+luck = 20
+actions = Array[ExtResource("1_foung")]([ExtResource("2_4eofk"), ExtResource("4_jiid6"), ExtResource("6_kvw2e"), ExtResource("5_gdb0p"), ExtResource("3_kvw2e")])
+metadata/_custom_type_script = "uid://dqioysnx33r70"
