@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="ms_action" load_steps=9 format=3 uid="uid://bphtfufhwmy3l"]
+
+[ext_resource type="Script" uid="uid://csiv0ccgqvmtb" path="res://monster_systems/actions/resources_scripts/components/action_component.gd" id="1_8c02g"]
+[ext_resource type="Script" uid="uid://mt4db7wtu38t" path="res://monster_systems/actions/resources_scripts/components/change_energy/ac_ch_energy.gd" id="2_4l3bw"]
+[ext_resource type="Script" uid="uid://cuoh85b8m5ubn" path="res://monster_systems/actions/resources_scripts/action.gd" id="2_pxa6l"]
+[ext_resource type="Script" uid="uid://b5o4adhfhkldn" path="res://monster_systems/actions/resources_scripts/components/change_stat_level/ac_ch_stat_level.gd" id="3_3u11q"]
+[ext_resource type="Script" uid="uid://bedoq515h1qxa" path="res://monster_systems/actions/resources_scripts/components/select_target/ac_target.gd" id="4_udkh6"]
+
+[sub_resource type="Resource" id="Resource_t3sw8"]
+script = ExtResource("2_4l3bw")
+energy_change = 1
+metadata/_custom_type_script = "uid://mt4db7wtu38t"
+
+[sub_resource type="Resource" id="Resource_obnja"]
+script = ExtResource("3_3u11q")
+stat = 0
+level_change = 1
+metadata/_custom_type_script = "uid://b5o4adhfhkldn"
+
+[sub_resource type="Resource" id="Resource_0ccdc"]
+script = ExtResource("4_udkh6")
+target_type = 1
+during_turn = false
+action = Array[ExtResource("1_8c02g")]([SubResource("Resource_t3sw8"), SubResource("Resource_obnja")])
+metadata/_custom_type_script = "uid://bedoq515h1qxa"
+
+[resource]
+script = ExtResource("2_pxa6l")
+key = "motivate"
+name = "TR_ACT_MOTIVATE"
+type = 2
+cost = 1
+priority = 0
+effects = Array[ExtResource("1_8c02g")]([SubResource("Resource_0ccdc")])
+metadata/_custom_type_script = "uid://cuoh85b8m5ubn"

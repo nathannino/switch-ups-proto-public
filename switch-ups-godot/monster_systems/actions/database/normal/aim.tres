@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="ms_action" load_steps=7 format=3 uid="uid://d1q6xhgs7e2rb"]
+
+[ext_resource type="Script" uid="uid://csiv0ccgqvmtb" path="res://monster_systems/actions/resources_scripts/components/action_component.gd" id="1_ttymr"]
+[ext_resource type="Script" uid="uid://b5o4adhfhkldn" path="res://monster_systems/actions/resources_scripts/components/change_stat_level/ac_ch_stat_level.gd" id="2_7jioe"]
+[ext_resource type="Script" uid="uid://cuoh85b8m5ubn" path="res://monster_systems/actions/resources_scripts/action.gd" id="2_k6h26"]
+[ext_resource type="Script" uid="uid://bedoq515h1qxa" path="res://monster_systems/actions/resources_scripts/components/select_target/ac_target.gd" id="3_4qp88"]
+
+[sub_resource type="Resource" id="Resource_wjac6"]
+script = ExtResource("2_7jioe")
+stat = 4
+level_change = 1
+metadata/_custom_type_script = "uid://b5o4adhfhkldn"
+
+[sub_resource type="Resource" id="Resource_m37tb"]
+script = ExtResource("3_4qp88")
+target_type = 8
+during_turn = false
+action = Array[ExtResource("1_ttymr")]([SubResource("Resource_wjac6")])
+metadata/_custom_type_script = "uid://bedoq515h1qxa"
+
+[resource]
+script = ExtResource("2_k6h26")
+key = "aim"
+name = "TR_ACT_AIM"
+type = 9
+cost = 1
+priority = 0
+effects = Array[ExtResource("1_ttymr")]([SubResource("Resource_m37tb")])
+metadata/_custom_type_script = "uid://cuoh85b8m5ubn"

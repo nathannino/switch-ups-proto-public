@@ -1,0 +1,40 @@
+[gd_resource type="Resource" script_class="ms_action" load_steps=10 format=3 uid="uid://dq4454tsfugm3"]
+
+[ext_resource type="Script" uid="uid://csiv0ccgqvmtb" path="res://monster_systems/actions/resources_scripts/components/action_component.gd" id="1_armbi"]
+[ext_resource type="Script" uid="uid://b5o4adhfhkldn" path="res://monster_systems/actions/resources_scripts/components/change_stat_level/ac_ch_stat_level.gd" id="2_gk0xr"]
+[ext_resource type="Script" uid="uid://cuoh85b8m5ubn" path="res://monster_systems/actions/resources_scripts/action.gd" id="2_vkfub"]
+[ext_resource type="Script" uid="uid://mt4db7wtu38t" path="res://monster_systems/actions/resources_scripts/components/change_energy/ac_ch_energy.gd" id="3_8j0ol"]
+[ext_resource type="Script" uid="uid://gku76ur12em4" path="res://monster_systems/actions/resources_scripts/components/luck/ac_luck.gd" id="4_or5hd"]
+
+[sub_resource type="Resource" id="Resource_ejkau"]
+script = ExtResource("2_gk0xr")
+stat = 3
+level_change = -1
+metadata/_custom_type_script = "uid://b5o4adhfhkldn"
+
+[sub_resource type="Resource" id="Resource_su0rl"]
+script = ExtResource("2_gk0xr")
+stat = 2
+level_change = -1
+metadata/_custom_type_script = "uid://b5o4adhfhkldn"
+
+[sub_resource type="Resource" id="Resource_w4ieo"]
+script = ExtResource("3_8j0ol")
+energy_change = -1
+metadata/_custom_type_script = "uid://mt4db7wtu38t"
+
+[sub_resource type="Resource" id="Resource_un4i7"]
+script = ExtResource("4_or5hd")
+base_chance_percent = 0.4
+action = Array[ExtResource("1_armbi")]([SubResource("Resource_w4ieo")])
+metadata/_custom_type_script = "uid://gku76ur12em4"
+
+[resource]
+script = ExtResource("2_vkfub")
+key = "sportlight"
+name = "TR_ACT_SPOTLIGHT"
+type = 3
+cost = 1
+priority = 0
+effects = Array[ExtResource("1_armbi")]([SubResource("Resource_ejkau"), SubResource("Resource_su0rl"), SubResource("Resource_un4i7")])
+metadata/_custom_type_script = "uid://cuoh85b8m5ubn"

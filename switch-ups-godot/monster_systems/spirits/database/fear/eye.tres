@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="ms_spirit" load_steps=8 format=3 uid="uid://car3fox0gssqm"]
+
+[ext_resource type="Script" uid="uid://cuoh85b8m5ubn" path="res://monster_systems/actions/resources_scripts/action.gd" id="1_pi14l"]
+[ext_resource type="Resource" uid="uid://bxpn0enwtueuh" path="res://monster_systems/actions/database/normal/reg_atk_abs.tres" id="2_b10qq"]
+[ext_resource type="Script" uid="uid://dqioysnx33r70" path="res://monster_systems/spirits/resources_scripts/spirit.gd" id="2_me4y0"]
+[ext_resource type="Resource" uid="uid://dq4454tsfugm3" path="res://monster_systems/actions/database/fear/spotlight.tres" id="3_o474k"]
+[ext_resource type="Resource" uid="uid://dmmtir6umv3p5" path="res://monster_systems/actions/database/space/lazer.tres" id="4_lhdkt"]
+[ext_resource type="Resource" uid="uid://blpnsm62f5glx" path="res://monster_systems/actions/database/construct/beam.tres" id="5_31nuy"]
+[ext_resource type="Texture2D" uid="uid://buflns00c8d5m" path="res://monster_systems/spirits/art/eye.png" id="7_lhdkt"]
+
+[resource]
+script = ExtResource("2_me4y0")
+key = "eye"
+name = "TR_SPIRIT_EYE"
+sprite = ExtResource("7_lhdkt")
+type = 3
+health = 300
+atk_concrete = 90
+atk_abstract = 110
+defense = 110
+speed = 90
+luck = 0
+actions = Array[ExtResource("1_pi14l")]([ExtResource("2_b10qq"), ExtResource("3_o474k"), ExtResource("4_lhdkt"), ExtResource("5_31nuy")])
+metadata/_custom_type_script = "uid://dqioysnx33r70"

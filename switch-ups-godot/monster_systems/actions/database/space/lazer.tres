@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="ms_action" load_steps=7 format=3 uid="uid://dmmtir6umv3p5"]
+
+[ext_resource type="Script" uid="uid://csiv0ccgqvmtb" path="res://monster_systems/actions/resources_scripts/components/action_component.gd" id="1_2oj1b"]
+[ext_resource type="Script" uid="uid://tratffjr38fv" path="res://monster_systems/actions/resources_scripts/components/attack_enemy/ac_attack_enemy.gd" id="2_6m6dw"]
+[ext_resource type="Script" uid="uid://cuoh85b8m5ubn" path="res://monster_systems/actions/resources_scripts/action.gd" id="2_rltyw"]
+[ext_resource type="Script" uid="uid://gku76ur12em4" path="res://monster_systems/actions/resources_scripts/components/luck/ac_luck.gd" id="3_6m6dw"]
+
+[sub_resource type="Resource" id="Resource_5gno5"]
+script = ExtResource("2_6m6dw")
+base_atk = 40
+atk_flavor = 0
+metadata/_custom_type_script = "uid://tratffjr38fv"
+
+[sub_resource type="Resource" id="Resource_0jmln"]
+script = ExtResource("3_6m6dw")
+base_chance_percent = 0.85
+action = Array[ExtResource("1_2oj1b")]([SubResource("Resource_5gno5")])
+metadata/_custom_type_script = "uid://gku76ur12em4"
+
+[resource]
+script = ExtResource("2_rltyw")
+key = "lazer"
+name = "TR_ACT_LAZER"
+type = 7
+cost = 1
+priority = 1
+effects = Array[ExtResource("1_2oj1b")]([SubResource("Resource_0jmln")])
+metadata/_custom_type_script = "uid://cuoh85b8m5ubn"

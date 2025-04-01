@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ms_spirit" load_steps=7 format=3 uid="uid://er8uasklea7a"]
+[gd_resource type="Resource" script_class="ms_spirit" load_steps=8 format=3 uid="uid://er8uasklea7a"]
 
 [ext_resource type="Script" uid="uid://cuoh85b8m5ubn" path="res://monster_systems/actions/resources_scripts/action.gd" id="1_uqcdq"]
 [ext_resource type="Resource" uid="uid://cea7mp2f86a1h" path="res://monster_systems/actions/database/normal/reg_atk_con.tres" id="2_5klqe"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://dqioysnx33r70" path="res://monster_systems/spirits/resources_scripts/spirit.gd" id="3_glhei"]
 [ext_resource type="Texture2D" uid="uid://v5nsd5j6vvx2" path="res://monster_systems/spirits/art/block.png" id="4_n8tvn"]
 [ext_resource type="Resource" uid="uid://dqoqaosti2hri" path="res://monster_systems/actions/database/retro/res_down.tres" id="4_scbwx"]
+[ext_resource type="Resource" uid="uid://blpnsm62f5glx" path="res://monster_systems/actions/database/construct/beam.tres" id="5_ilmf0"]
 
 [resource]
 script = ExtResource("3_glhei")
@@ -19,4 +20,4 @@ atk_abstract = 110
 defense = 125
 speed = 50
 luck = 5
-actions = Array[ExtResource("1_uqcdq")]([ExtResource("2_5klqe"), ExtResource("3_7cjwd"), ExtResource("4_scbwx")])
+actions = Array[ExtResource("1_uqcdq")]([ExtResource("2_5klqe"), ExtResource("3_7cjwd"), ExtResource("4_scbwx"), ExtResource("5_ilmf0")])

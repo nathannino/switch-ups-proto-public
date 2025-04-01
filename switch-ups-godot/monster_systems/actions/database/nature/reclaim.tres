@@ -1,8 +1,10 @@
-[gd_resource type="Resource" script_class="ms_action" load_steps=7 format=3 uid="uid://bjfwbgkv0w423"]
+[gd_resource type="Resource" script_class="ms_action" load_steps=11 format=3 uid="uid://bjfwbgkv0w423"]
 
 [ext_resource type="Script" uid="uid://csiv0ccgqvmtb" path="res://monster_systems/actions/resources_scripts/components/action_component.gd" id="1_ega5b"]
 [ext_resource type="Script" uid="uid://tratffjr38fv" path="res://monster_systems/actions/resources_scripts/components/attack_enemy/ac_attack_enemy.gd" id="2_6y8bo"]
+[ext_resource type="Script" uid="uid://dj745fbgjstr8" path="res://monster_systems/actions/resources_scripts/components/heal_target/ac_heal_target.gd" id="3_orbe6"]
 [ext_resource type="Script" uid="uid://gku76ur12em4" path="res://monster_systems/actions/resources_scripts/components/luck/ac_luck.gd" id="3_rn61v"]
+[ext_resource type="Script" uid="uid://bedoq515h1qxa" path="res://monster_systems/actions/resources_scripts/components/select_target/ac_target.gd" id="4_0r05f"]
 [ext_resource type="Script" uid="uid://cuoh85b8m5ubn" path="res://monster_systems/actions/resources_scripts/action.gd" id="4_pw2u8"]
 
 [sub_resource type="Resource" id="Resource_qgsld"]
@@ -10,10 +12,22 @@ script = ExtResource("2_6y8bo")
 base_atk = 40
 atk_flavor = 0
 
+[sub_resource type="Resource" id="Resource_tykun"]
+script = ExtResource("3_orbe6")
+heal_percent = 40.0
+metadata/_custom_type_script = "uid://dj745fbgjstr8"
+
+[sub_resource type="Resource" id="Resource_0uf2l"]
+script = ExtResource("4_0r05f")
+target_type = 8
+during_turn = false
+action = Array[ExtResource("1_ega5b")]([SubResource("Resource_tykun")])
+metadata/_custom_type_script = "uid://bedoq515h1qxa"
+
 [sub_resource type="Resource" id="Resource_jings"]
 script = ExtResource("3_rn61v")
 base_chance_percent = 0.8
-action = Array[ExtResource("1_ega5b")]([SubResource("Resource_qgsld")])
+action = Array[ExtResource("1_ega5b")]([SubResource("Resource_qgsld"), SubResource("Resource_0uf2l")])
 
 [resource]
 script = ExtResource("4_pw2u8")
