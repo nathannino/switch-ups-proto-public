@@ -47,7 +47,7 @@ func _determine_move_order() :
 		var spirit = order["player_node"].team[ms_constants.position_to_index(ms_constants.POSITION.CENTER)]
 		var current_action = get_current_action(spirit,order["action_index"])
 		
-		var speed = order["priority_debuff"]
+		var speed = (order["priority_debuff"]*1000)
 		speed += spirit.get_speed()
 		speed += current_action.priority * 1000
 		
