@@ -1,0 +1,10 @@
+[center][font_size=27]Statistiques d’un esprit[/font_size][/center]
+
+[ul]
+Points de vie : La quantité de dégâts que l'esprit peut subir avant que le joueur commence à subir des [bgcolor=lightblue]dégâts de débordement[/bgcolor]
+Pouvoir Concret : La puissance des attaques concrètes. Également la moitié de la puissance défensive contre les attaques concrètes.
+Pouvoir Abstrait : La puissance des attaques abstraites. Également la moitié de la puissance défensive contre les attaques abstraites.
+Défense : La moitié de la puissance de défense contre les deux saveurs d'attaques
+Vitesse : Utilisé afin de déterminer quel côté commence lorsque les deux actions ont la même [bgcolor=lightblue]priorité[/bgcolor]
+Chance : De combien de point le pourcentage change en votre faveur pour les événements de chance
+[/ul]

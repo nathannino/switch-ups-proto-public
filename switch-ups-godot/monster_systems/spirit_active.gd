@@ -35,7 +35,7 @@ var atk_concrete_change : int :
 		var old = _atk_concrete_change
 		_atk_concrete_change = value
 		atk_concrete_changed.emit(old,value)
-const ATK_CONCRETE_CHANGE_MULTI = 10
+const ATK_CONCRETE_CHANGE_MULTI = 20
 
 var _atk_abstract_change : int
 signal atk_abstract_changed(old,new)
@@ -45,7 +45,7 @@ var atk_abstract_change : int :
 		var old = _atk_abstract_change
 		_atk_abstract_change = value
 		atk_abstract_changed.emit(old,value)
-const ATK_ABSTRACT_CHANGE_MULTI = 10
+const ATK_ABSTRACT_CHANGE_MULTI = 20
 
 var _defense_change : int
 signal defense_changed(old,new)
@@ -55,7 +55,7 @@ var defense_change : int :
 		var old = _defense_change
 		_defense_change = value
 		defense_changed.emit(old,value)
-const DEFENSE_CHANGE_MULTI = 10
+const DEFENSE_CHANGE_MULTI = 20
 
 var _speed_change : int
 signal speed_changed(old,new)
@@ -65,9 +65,9 @@ var speed_change : int :
 		var old = _speed_change
 		_speed_change = value
 		speed_changed.emit(old,value)
+const SPEED_CHANGE_MULTI = 20
 
 var _luck_change : int
-const SPEED_CHANGE_MULTI = 10
 signal luck_changed(old,new)
 var luck_change : int :
 	get : return _luck_change

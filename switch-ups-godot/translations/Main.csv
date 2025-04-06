@@ -62,3 +62,8 @@ TR_SUMMARY_LABEL;Summary;Informations
 TR_OPTIONS;Options menu;Menu des options
 TR_OPTIONS_UISCALE;UI Scaling;Taille de l’interface
 TR__ACT_INFO;Action Info;Informations sur l'action
+TR_BUILD_LABEL;Build your team;Construisez votre équipe
+TR_MANUAL;Manual;Manuel
+TR_SUMMARY_PRIORITY;Priority : {val};Priorité : {val}
+TR_MSBUTTON_NONE;No Spirits Selected;Aucun esprit sélectionné
+TR_CHANGE;Change;Changer

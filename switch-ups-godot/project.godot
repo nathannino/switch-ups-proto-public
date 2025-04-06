@@ -43,7 +43,7 @@ project/assembly_name="Switch-ups"
 
 [editor_plugins]
 
-enabled=PackedStringArray()
+enabled=PackedStringArray("res://addons/markdownlabel/plugin.cfg")
 
 [filesystem]
 
@@ -87,7 +87,7 @@ options={
 
 [internationalization]
 
-locale/translations=PackedStringArray("res://translations/Actions.en.translation", "res://translations/Actions.fr.translation", "res://translations/Main.en.translation", "res://translations/Main.fr.translation", "res://translations/Spirits.en.translation", "res://translations/Spirits.fr.translation", "res://translations/Components.en.translation", "res://translations/Components.fr.translation", "res://translations/Constants.en.translation", "res://translations/Constants.fr.translation", "res://translations/Errors.en.translation", "res://translations/Errors.fr.translation", "res://translations/battlelog.en.translation", "res://translations/battlelog.fr.translation")
+locale/translations=PackedStringArray("res://translations/Actions.en.translation", "res://translations/Actions.fr.translation", "res://translations/Main.en.translation", "res://translations/Main.fr.translation", "res://translations/Spirits.en.translation", "res://translations/Spirits.fr.translation", "res://translations/Components.en.translation", "res://translations/Components.fr.translation", "res://translations/Constants.en.translation", "res://translations/Constants.fr.translation", "res://translations/Errors.en.translation", "res://translations/Errors.fr.translation", "res://translations/battlelog.en.translation", "res://translations/battlelog.fr.translation", "res://translations/manpage.en.translation", "res://translations/manpage.fr.translation")
 
 [rendering]
 

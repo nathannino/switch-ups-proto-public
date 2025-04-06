@@ -1,0 +1,12 @@
+[center][font_size=27]Actions requesting additional information[/font_size][/center]
+
+Some actions will ask additional information, such as which spirit the effects of the action will apply to.
+
+[img]res://manual/images/en/actinfo.png[/img]
+
+A description of what to select will be at the top of the screen, and the available options will be at in the middle of the screen.
+
+If the action requests information in the middle of a turn, you will be forced to select an option. Otherwise, you can press the back button to cancel the action.
+
+[font_size=25]Note[/font_size] :
+When putting your cursor on the upper left button, you will get a description of what part of the action this selection will affect. 

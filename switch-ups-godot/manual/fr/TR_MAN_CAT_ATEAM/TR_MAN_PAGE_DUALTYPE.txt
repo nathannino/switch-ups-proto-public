@@ -1,0 +1,17 @@
+[center][font_size=27]Équiper un esprit[/font_size][/center]
+Chaque esprit dispose de 3 emplacements d'action et d'une liste d'actions disponibles à placer dans ces emplacements. Ce qui peut être limitant.
+Heureusement, il existe un moyen d'obtenir un quatrième emplacement et d'y placer une action de votre choix. Il suffit d'équiper un esprit à votre esprit.
+
+[img]res://manual/images/fr/spiritequip.png[/img]
+
+Pour le restant de cette page, un [bgcolor=lightblue]esprit[/bgcolor] est celui sur lequel vous pouvez équiper un esprit, et un [bgcolor=purple]esprit équipé[/bgcolor] est l'esprit que vous avez équipé à l'esprit de votre équipe.
+
+[img]res://manual/images/fr/forthslot.png[/img]
+
+En équipant un esprit, l'esprit acquiert le type de l'esprit equipé comme type secondaire, et un quatrième mplacement d'action devient disponible. Dans cet emplacement, vous pourrez choisir parmi les actions de [bgcolor=purple]l'esprit équipé[/bgcolor] plutôt que celles de [bgcolor=lightblue]l'esprit[/bgcolor].
+
+[font_size=25][color=red]Avertissement :[/color][/font_size]
+[img]res://manual/images/fr/dualtype.png[/img]
+Les types secondaires est un grand compromis. L'esprit obtient les faiblesses, mais pas les résistances du type secondaire. De plus, les faiblesses sont prioritaires. Ainsi, même si vous résistez normalement à une attaque, si votre type secondaire y est faible, vous êtes également considéré comme faible.
+
+N'oubliez pas non plus de sélectionner l'action souhaitée dans le quatrième emplacement après avoir équipé un esprit. L'attaque de base par défaut ne justifie généralement pas les inconvénients d'un type secondaire.

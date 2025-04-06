@@ -210,10 +210,10 @@ action_root = NodePath("ActionRoot")
 [node name="FriendHP" type="TextureProgressBar" parent="FriendTeam" node_paths=PackedStringArray("battle_root", "label")]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 0
-offset_left = -250.0
+offset_left = -206.0
 offset_top = 89.0
-offset_right = 336.0
-offset_bottom = 129.0
+offset_right = 378.0
+offset_bottom = 139.0
 max_value = 300.0
 value = 300.0
 nine_patch_stretch = true
@@ -245,38 +245,40 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="SpiritTeamDisplay" parent="FriendTeam" node_paths=PackedStringArray("battle_root") instance=ExtResource("8_q2phu")]
-offset_left = -249.0
+offset_left = -207.0
 offset_top = -103.0
-offset_right = 261.0
+offset_right = 303.0
 offset_bottom = 122.0
 scale = Vector2(0.75, 0.75)
 battle_root = NodePath("../..")
 
 [node name="ActionRoot" type="Control" parent="FriendTeam"]
 anchors_preset = 0
-offset_left = -25.0
+offset_left = 17.0
 offset_top = -16.0
-offset_right = 15.0
+offset_right = 57.0
 offset_bottom = 24.0
 
 [node name="RotateLeft" type="Button" parent="FriendTeam/ActionRoot" node_paths=PackedStringArray("team_root", "ui_globals")]
 layout_mode = 0
-offset_left = -154.0
-offset_top = -55.0
-offset_right = -110.0
-offset_bottom = -24.0
-text = "LEFT"
+offset_left = -265.0
+offset_top = -64.0
+offset_right = -87.0
+offset_bottom = -11.0
+pivot_offset = Vector2(178, 26.46)
+text = "TR_BTL_ROT_LEFT"
 script = ExtResource("9_y30e1")
 team_root = NodePath("../..")
 ui_globals = NodePath("../../../UiGlobalState")
 
 [node name="RotateRight" type="Button" parent="FriendTeam/ActionRoot" node_paths=PackedStringArray("team_root", "ui_globals")]
 layout_mode = 0
-offset_left = 237.0
-offset_top = -54.0
-offset_right = 293.0
-offset_bottom = -23.0
-text = "RIGHT"
+offset_left = 221.0
+offset_top = -64.0
+offset_right = 408.0
+offset_bottom = -11.0
+pivot_offset = Vector2(0, 26.46)
+text = "TR_BTL_ROT_RIGHT"
 script = ExtResource("9_y30e1")
 team_root = NodePath("../..")
 rotate = 1

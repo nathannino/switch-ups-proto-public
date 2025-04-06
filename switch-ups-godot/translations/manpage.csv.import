@@ -1,0 +1,17 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://cwsihrkyb716v"
+
+[deps]
+
+files=["res://translations/manpage.en.translation", "res://translations/manpage.fr.translation"]
+
+source_file="res://translations/manpage.csv"
+dest_files=["res://translations/manpage.en.translation", "res://translations/manpage.fr.translation"]
+
+[params]
+
+compress=true
+delimiter=1

@@ -1,0 +1,12 @@
+[center][font_size=27]Se défendre[/font_size][/center]
+
+Chaque esprit peut se défendre en appuyant sur le bouton [bgcolor=lightblue]Défendre[/bgcolor]
+
+[img]res://manual/images/fr/playerside.png[/img]
+
+Lorsque l'esprit se défend, les dégâts totaux sont divisés par deux.
+
+[font_size=25][color=red]Avertissement :[/color][/font_size]
+Défendre est une action. Elle a une priorité de +99, coûte 0 point d'énergie et se trouve à la même position pour tous les esprits, mais c'est tout de même une action.
+Par conséquent, vous ne pouvez pas défendre et effectuer une autre action au cours du même tour.
+En fait, c'est l'action à la position -1. C'est également l'action qui sera utilisée si un esprit tente d'utiliser une action dans l'emplacement supplémentaire sans avoir équipé un autre esprit.

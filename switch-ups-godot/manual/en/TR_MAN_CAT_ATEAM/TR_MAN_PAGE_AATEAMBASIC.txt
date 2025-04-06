@@ -1,0 +1,37 @@
+[center][font_size=27]Teambuilding[/font_size][/center]
+You have created or joined a game, and you are now presented with this screen : 
+
+[img]res://manual/images/en/defaultteam.png[/img]
+
+What does it mean?
+
+Welcome to the teambuilding phase, where you create a team to use in the upcoming battle. There are 4 panes, and two can be seen at a time :
+
+[ul]
+The team pane :
+[/ul]
+[img]res://manual/images/en/teampane.png[/img]
+Each team has 5 spirits. By the end of the teambuilding phase, every slot should be filled. If a slot is empty, you can simply click on it to select a spirit, but if a spirit is already assigned to it, you can either view the summary in order to open the summary pane, or press the change button to select a different spirit to put in that slot
+
+[ul]
+The spirit pane :
+[/ul]
+[img]res://manual/images/en/spiritpane.png[/img]
+A list of every spirit available in the game. Will always appear on the right side, and allows you to select a spirit for whatever reason you summoned the pane for.
+
+[ul]
+The summary pane :
+[/ul]
+[img]res://manual/images/en/summarypane.png[/img]
+Here is where you can view information about the spirit. You can also [bgcolor=lightblue]equip a spirit[/bgcolor] to that spirit and change the actions assigned to the action slots available.
+
+[ul]
+The action pane :
+[/ul]
+[img]res://manual/images/en/ationpane.png[/img]
+A list of every action available for that action slot. Will always appear on the right side, and allows you to select an action for the selected action slot.
+
+===
+
+When your team is complete, press the ready button.
+Once both players have confirmed they are ready, the battle will begin.

@@ -3,6 +3,7 @@ extends PanelContainer
 var action : ms_action
 
 @export var name_label : RichTextLabel
+@export var priority_label : RichTextLabel
 @export var type_label : RichTextLabel
 @export var cost_label : RichTextLabel
 @export var desc_container : Container
@@ -32,6 +33,11 @@ func set_button_disabled(_disabled : bool) :
 func update_ui() :
 	name_label.text = action.name
 	type_label.text = tr("TR_SUMMARY_TYPE").format({"type":ms_constants.type_to_bbcode(action.type)})
+	priority_label.text = tr("TR_SUMMARY_PRIORITY").format({"val":action.priority})
+	if (action.priority == 0) :
+		priority_label.hide()
+	else :
+		priority_label.show()
 	cost_label.text = "[right]" + tr("TR_SUMMARY_COST").format({"cost" : action.cost}) + "[/right]" 
 	for child in desc_container.get_children() :
 		desc_container.remove_child(child)

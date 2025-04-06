@@ -1,0 +1,13 @@
+[center][font_size=27]Stamina[/font_size][/center]
+
+Each spirit has a stamina resource.
+
+[img]res://manual/images/en/playerside.png[/img]
+
+Every spirit on the field will naturally regenerate 1 stamina per turn, up to a max of 5. Spirits not on the field will not naturally regenerate any stamina.
+
+[font_size=25]Note :[/font_size]
+Certain actions will allow you to go below 0 stamina, or go above 5 stamina. If you are above 5 stamina at the start of a turn, you will not lose them, but you will also not gain any from natural regeneration until you go back below 5.
+
+[font_size=25][color=red]Warning :[/color][/font_size]
+Actions that costs 0 stamina can be used no matter how much stamina you have.

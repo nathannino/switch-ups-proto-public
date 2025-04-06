@@ -1,0 +1,14 @@
+[center][font_size=27]Priority[/font_size][/center]
+
+Every action has a priority attached to it. An action with a higher priority will give it an earlier place in the turn order than an action with a lower priority.
+
+[img]res://manual/images/en/actionlist.png[/img]
+
+If an action does not indicate it's priority, it has a priority of 0
+
+[font_size=25]Note : [/font_size]
+The turn order is calculated at the start of a turn, and is not calculated again for the rest of the turn. 
+
+[font_size=25][color=red]Warning :[/color][/font_size]
+Internally, each priority level adds 1000 speed.
+A dedicated player might be able to outspeed a priority level with enough dedication... if the oponent isn't attacking them.

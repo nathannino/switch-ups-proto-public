@@ -1,0 +1,17 @@
+[center][font_size=27]Spirit Indicators[/font_size][/center]
+
+The spirit display has some indicators on the left and the right
+
+[img]res://manual/images/en/teampane.png[/img]
+
+[ul]
+Dark yellow : The spirit display is empty
+[/ul]
+
+[ul]
+Bright yellow : The spirit display contains a spirit
+[/ul]
+
+[ul]
+White : The spirit display is selected
+[/ul]

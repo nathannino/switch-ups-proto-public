@@ -336,7 +336,7 @@ size = Vector2i(500, 500)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Animations/SubViewport"]
 libraries = {
-"": SubResource("AnimationLibrary_u5y0y")
+&"": SubResource("AnimationLibrary_u5y0y")
 }
 
 [node name="ConcreteAttackFirst" type="Sprite2D" parent="Animations/SubViewport"]

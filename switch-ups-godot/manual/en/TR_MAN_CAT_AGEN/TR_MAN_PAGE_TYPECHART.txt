@@ -1,0 +1,21 @@
+[center][font_size=27]Type Chart[/font_size][/center]
+
+[bgcolor=white][table=11]
+[cell][/cell][cell]Retro[/cell][cell]Creature[/cell][cell]Dream[/cell][cell]Fear[/cell][cell]Void[/cell][cell]Nature[/cell][cell]Construct[/cell][cell]Space[/cell][cell]Meta[/cell][cell]Normal[/cell]
+[cell]Retro[/cell][cell][/cell][cell][/cell][cell][/cell][cell][/cell][cell][color=green]Weak[/color][/cell][cell][color=red]Resist[/color][/cell][cell][color=green]Weak[/color][/cell][cell][color=red]Resist[/color][/cell][cell][color=green]Weak[/color][/cell][cell][/cell]
+[cell]Creature[/cell][cell][/cell][cell][color=green]Weak[/color][/cell][cell][/cell][cell][color=red]Resist[/color][/cell][cell][/cell][cell][color=green]Weak[/color][/cell][cell][/cell][cell][color=red]Resist[/color][/cell][cell][color=green]Weak[/color][/cell][cell][/cell]
+[cell]Dream[/cell][cell][/cell][cell][color=red]Resist[/color][/cell][cell][color=red]Resist[/color][/cell][cell][color=green]Weak[/color][/cell][cell][/cell][cell][/cell][cell][/cell][cell][color=green]Weak[/color][/cell][cell][color=green]Weak[/color][/cell][cell][/cell]
+[cell]Fear[/cell][cell][color=red]Resist[/color][/cell][cell][color=green]Weak[/color][/cell][cell][color=green]Weak[/color][/cell][cell][color=green]Weak[/color][/cell][cell][/cell][cell][/cell][cell][/cell][cell][/cell][cell][color=green]Weak[/color][/cell][cell][/cell]
+[cell]Void[/cell][cell][color=red]Resist[/color][/cell][cell][/cell][cell][color=red]Resist[/color][/cell][cell][color=green]Weak[/color][/cell][cell][color=red]Resist[/color][/cell][cell][color=red]Resist[/color][/cell][cell][color=red]Resist[/color][/cell][cell][color=green]Weak[/color][/cell][cell][color=green]Weak[/color][/cell][cell][/cell]
+[cell]Nature[/cell][cell][color=green]Weak[/color][/cell][cell][color=red]Resist[/color][/cell][cell][/cell][cell][color=red]Resist[/color][/cell][cell][color=red]Resist[/color][/cell][cell][/cell][cell][color=green]Weak[/color][/cell][cell][/cell][cell][color=green]Weak[/color][/cell][cell][/cell]
+[cell]Construct[/cell][cell][/cell][cell][/cell][cell][color=green]Weak[/color][/cell][cell][color=red]Resist[/color][/cell][cell][color=green]Weak[/color][/cell][cell][/cell][cell][/cell][cell][color=green]Weak[/color][/cell][cell][color=green]Weak[/color][/cell][cell][/cell]
+[cell]Space[/cell][cell][color=green]Weak[/color][/cell][cell][/cell][cell][/cell][cell][/cell][cell][/cell][cell][color=green]Weak[/color][/cell][cell][color=red]Resist[/color][/cell][cell][color=red]Resist[/color][/cell][cell][color=green]Weak[/color][/cell][cell][/cell]
+[cell]Meta[/cell][cell][color=green]Weak[/color][/cell][cell][color=green]Weak[/color][/cell][cell][color=green]Weak[/color][/cell][cell][color=green]Weak[/color][/cell][cell][color=green]Weak[/color][/cell][cell][color=green]Weak[/color][/cell][cell][color=green]Weak[/color][/cell][cell][color=green]Weak[/color][/cell][cell][color=green]Weak[/color][/cell][cell][color=green]Weak[/color][/cell]
+[cell]Normal[/cell][cell][/cell][cell][/cell][cell][/cell][cell][/cell][cell][/cell][cell][/cell][cell][/cell][cell][/cell][cell][color=green]Weak[/color][/cell][cell][/cell]
+[/table]
+[/bgcolor]
+
+Where the type of the attacking action is on the left, and the type of the defending spirit is at the top
+
+[bgcolor=white][color=green]Weak[/color][/bgcolor] : Deals 1.25 more damage
+[bgcolor=white][color=red]Resist[/color][/bgcolor] : Deals 0.75 less damage

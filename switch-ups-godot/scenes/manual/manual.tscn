@@ -1,0 +1,151 @@
+[gd_scene load_steps=7 format=3 uid="uid://ldilvd2qtf83"]
+
+[ext_resource type="Theme" uid="uid://bfeafrooqeg54" path="res://ScreenWide.tres" id="1_g3rnn"]
+[ext_resource type="Theme" uid="uid://606up66y2qp" path="res://ScreenWideHeader.tres" id="2_iggsv"]
+[ext_resource type="Script" uid="uid://1yl6aj3ibwlh" path="res://globals/simple_scripts/button_change_scene_simple.gd" id="3_5edbu"]
+[ext_resource type="Theme" uid="uid://bpqaxwejxxq45" path="res://scenes/manual/ListTheme.tres" id="4_116d0"]
+
+[sub_resource type="GDScript" id="GDScript_116d0"]
+script/source = "extends Control
+
+func _ready() -> void:
+	BgmManager.play(\"bg_compendium\",BgmManager.TRANSITIONS.FADE_OUT_CUT_IN)
+"
+
+[sub_resource type="GDScript" id="GDScript_iggsv"]
+script/source = "extends VBoxContainer
+
+@export var database_path = \"res://manual\"
+@export var default_lang = \"en\"
+@export var manual : RichTextLabel
+@export var scroll : ScrollContainer
+
+var _current_article : String = \"\"
+var current_article : String :
+	get : return _current_article
+	set(value) :
+		_current_article = value;
+		set_article()
+
+func _ready() -> void:
+	var dirs = DirAccess.get_directories_at(database_path+\"/\"+default_lang)
+	
+	print(\"Discovering Spirits\")
+	for dir in dirs :
+		var dir_str = dir.replace(\"/\",\"\");
+		var _label = Label.new();
+		_label.text = dir_str
+		_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		add_child(_label)
+		
+		var files = DirAccess.get_files_at(database_path+\"/\"+default_lang+\"/\"+dir)
+		for file : String in files :
+			file = file.replace(\".remap\",\"\")
+			if file.ends_with(\".txt\") :
+				var file_str = file.replace(\".txt\",\"\")
+				var _button = Button.new();
+				_button.text = file_str;
+				_button.pressed.connect(func() : 
+					current_article = dir+\"/\"+file
+				)
+				add_child(_button)
+
+func _notification(what: int) -> void:
+	match what :
+		NOTIFICATION_TRANSLATION_CHANGED :
+			set_article()
+
+func set_article() :
+	if (current_article == \"\") :
+		return
+	var locale = TranslationServer.get_locale().split(\"_\").get(0)
+	var file = FileAccess.open(database_path+\"/\"+locale+\"/\"+_current_article,FileAccess.READ)
+	if (file == null) :
+		printerr(database_path+\"/\"+locale+\"/\"+_current_article)
+		printerr(FileAccess.get_open_error())
+		file = FileAccess.open(database_path+\"/\"+default_lang+\"/\"+_current_article,FileAccess.READ)
+		if (file == null) :
+			printerr(database_path+\"/\"+locale+\"/\"+_current_article)
+			printerr(FileAccess.get_open_error())
+			return
+	manual.text = file.get_as_text()
+	scroll.scroll_vertical = 0
+"
+
+[node name="Manual" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_116d0")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_g3rnn")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="Header" type="PanelContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_iggsv")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer/Header"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/Header/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "TR_MANUAL"
+horizontal_alignment = 1
+
+[node name="Button2" type="Button" parent="PanelContainer/VBoxContainer/Header/HBoxContainer"]
+layout_mode = 2
+text = "TR_CLOSE"
+script = ExtResource("3_5edbu")
+key = "main_menu"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/HBoxContainer/ScrollContainer" node_paths=PackedStringArray("manual", "scroll")]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("4_116d0")
+script = SubResource("GDScript_iggsv")
+manual = NodePath("../../PanelContainer2/ScrollContainer/MarginContainer/Manual")
+scroll = NodePath("../../PanelContainer2/ScrollContainer")
+
+[node name="PanelContainer2" type="PanelContainer" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VBoxContainer/HBoxContainer/PanelContainer2"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/HBoxContainer/PanelContainer2/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 20
+
+[node name="Manual" type="RichTextLabel" parent="PanelContainer/VBoxContainer/HBoxContainer/PanelContainer2/ScrollContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+bbcode_enabled = true
+fit_content = true
+scroll_active = false

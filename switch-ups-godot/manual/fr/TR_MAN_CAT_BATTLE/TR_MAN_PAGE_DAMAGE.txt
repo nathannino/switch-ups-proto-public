@@ -1,0 +1,17 @@
+[center][font_size=27]Subir des dégâts[/font_size][/center]
+
+Il est inévitable que vous subissiez des dégâts à un moment ou un autre. Lorsque vous subissez des dégâts, vous pouvez perdre des points de vie à deux endroits : l'esprit ciblé ou les vôtres.
+
+[img]res://manual/images/fr/playerside.png[/img]
+
+Chaque esprit possède une valeur de points de vie affichée sur son affichage. De plus, chaque joueur possède sa propre barre de points de vie.
+Once their hp drops to 0, they are... not out of the game. However, all additional damage will be dealt as overflow damage directly to your main health bar.
+Une fois que les points de vie d'un esprit tombent à 0, ils.. ne sont pas hors jeu. Cependant, tous les dégâts supplémentaires seront infligés sous forme de dégâts de débordement directement sur votre barre de vie principale.
+
+[img]res://manual/images/fr/damage.png[/img]
+Les dégâts réguliers sont affichés en blanc, tandis que les dégâts de débordement sont affichés en rouge
+
+Si votre barre de vie principale atteint ou descend en dessous de 0, vous perdez la partie.
+
+[font_size=25][color=red]Avertissement :[/color][/font_size]
+Les dégâts sont affectés par le [bgcolor=lightblue]tableau des types[/bgcolor]. Quoi qu'il en soit, le total des dégâts (c'est-à-dire le total des dégâts infligés avant la répartition entre l'esprit ciblé et vous-même) sera multiplié si l'attaque touche une faiblesse ou une résistance.

@@ -13,7 +13,7 @@ func _notification(what: int) -> void:
 func translate() :
 	if component == null :
 		return
-	tr(\"TR_AC_CH_ENERGY_ASC\" if component.energy_change > 0 else \"TR_AC_CH_ENERGY_DESC\").format({\"amount\":abs(component.energy_change)})
+	text = tr(\"TR_AC_CH_ENERGY_ASC\" if component.energy_change > 0 else \"TR_AC_CH_ENERGY_DESC\").format({\"amount\":abs(component.energy_change)})
 	
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

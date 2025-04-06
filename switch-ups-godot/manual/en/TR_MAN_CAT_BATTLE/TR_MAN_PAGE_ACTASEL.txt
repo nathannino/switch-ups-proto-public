@@ -1,0 +1,19 @@
+[center][font_size=27]Selecting an action[/font_size][/center]
+Every turn, you can select the  [bgcolor=lightblue]Action[/bgcolor] option to use one of the up to four predefined actions from the selected spirit. Each action has a name, a type. a cost, and a description of what it will do.
+
+[img]res://manual/images/en/actionlist.png[/img]
+
+You can only select an action if the selected spirit has enough stamina to execute it.
+
+Some actions will ask additional information, such as which spirit the effects of the action will apply to.
+
+Once your choice has been locked in, you will have to wait for your oponnent to choose their action. As long as they haven't locked in their choice, you will get the option to cancel your own choice and select another action.
+
+Once both sides locked in their choices, the turn begins.
+
+[font_size=25][color=red]Warning :[/color][/font_size]
+When selecting an action, you are actually selecting the position of the action.
+While not usually relevent, the action you will end up doing depends on the action at the selected position on the active spirit at the exact moment it becomes your turn in the turn order.
+If no actions are at that position, you will instead block.
+If the action was not the one you selected and requires additionnal information, the battle will be paused and you will get the oportunity to make your choice.
+The same goes for your oponent, so it can be possible to build a spirit to take advantage of this.

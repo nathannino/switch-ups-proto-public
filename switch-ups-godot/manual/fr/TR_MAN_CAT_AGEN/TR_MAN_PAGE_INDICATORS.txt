@@ -1,0 +1,17 @@
+[center][font_size=27]Indicateurs lumineux d’esprit[/font_size][/center]
+
+L'affichage de l'esprit comporte des indicateurs à gauche et à droite
+
+[img]res://manual/images/fr/teampane.png[/img]
+
+[ul]
+Jaune foncé : L'affichage de l'esprit est vide
+[/ul]
+
+[ul]
+Jaune vif : L'affichage de l'esprit contient un esprit
+[/ul]
+
+[ul]
+Blanc : L'affichage de l'esprit est sélectionné
+[/ul]

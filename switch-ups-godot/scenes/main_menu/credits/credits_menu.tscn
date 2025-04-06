@@ -1,8 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://c61v7qckif4d1"]
+[gd_scene load_steps=13 format=3 uid="uid://c61v7qckif4d1"]
 
 [ext_resource type="Script" uid="uid://bpgo2ajdqaijx" path="res://scenes/main_menu/credits/music_credits/music_library.gd" id="1_4rm8s"]
+[ext_resource type="PackedScene" uid="uid://dg54dbj8r4o3j" path="res://globals/utility_scenes/bg.tscn" id="1_6tbxy"]
 [ext_resource type="Script" uid="uid://1yl6aj3ibwlh" path="res://globals/simple_scripts/button_change_scene_simple.gd" id="1_wmp6k"]
+[ext_resource type="Theme" uid="uid://bfeafrooqeg54" path="res://ScreenWide.tres" id="2_k53oc"]
 [ext_resource type="Script" uid="uid://cp0h1sybiqu0t" path="res://globals/simple_scripts/flowgrid.gd" id="2_tluex"]
+[ext_resource type="Theme" uid="uid://606up66y2qp" path="res://ScreenWideHeader.tres" id="3_2qlgp"]
 [ext_resource type="Script" uid="uid://22xiljhyb07p" path="res://globals/simple_scripts/set_parent_tab_name.gd" id="3_ntjgm"]
 
 [sub_resource type="GDScript" id="GDScript_xo24i"]
@@ -19,6 +22,17 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 "
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k53oc"]
+bg_color = Color(0, 0, 0, 0.707)
+border_width_left = 13
+border_width_right = 13
+border_width_bottom = 13
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [sub_resource type="GDScript" id="GDScript_f2ac0"]
 script/source = "extends RichTextLabel
@@ -159,48 +173,63 @@ grow_horizontal = 2
 grow_vertical = 2
 script = SubResource("GDScript_xo24i")
 
+[node name="BG" parent="." instance=ExtResource("1_6tbxy")]
+layout_mode = 2
+
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 2
+theme = ExtResource("2_k53oc")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("3_2qlgp")
+theme_type_variation = &"GrayPanel"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer/PanelContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/PanelContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "TR_CREDIT_TITLE"
 horizontal_alignment = 1
 
-[node name="Button" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="Button" type="Button" parent="PanelContainer/VBoxContainer/PanelContainer/HBoxContainer"]
 layout_mode = 2
 text = "TR_CLOSE"
 script = ExtResource("1_wmp6k")
 key = "main_menu"
 
-[node name="Credits" type="TabContainer" parent="PanelContainer/VBoxContainer"]
+[node name="PanelContainer2" type="PanelContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_k53oc")
+
+[node name="Credits" type="TabContainer" parent="PanelContainer/VBoxContainer/PanelContainer2"]
 layout_mode = 2
 size_flags_vertical = 3
 current_tab = 0
 
-[node name="Third Party" type="TabContainer" parent="PanelContainer/VBoxContainer/Credits"]
+[node name="Third Party" type="TabContainer" parent="PanelContainer/VBoxContainer/PanelContainer2/Credits"]
 layout_mode = 2
-current_tab = 0
+current_tab = 2
 script = ExtResource("3_ntjgm")
 title = "TR_CREDIT_THIRD"
 translate = true
 metadata/_tab_index = 0
 
-[node name="Copyright" type="RichTextLabel" parent="PanelContainer/VBoxContainer/Credits/Third Party"]
+[node name="Copyright" type="RichTextLabel" parent="PanelContainer/VBoxContainer/PanelContainer2/Credits/Third Party"]
+visible = false
 layout_mode = 2
 script = SubResource("GDScript_f2ac0")
 title = "TR_CREDIT_COPYRIGHT"
 translate = true
 metadata/_tab_index = 0
 
-[node name="License" type="RichTextLabel" parent="PanelContainer/VBoxContainer/Credits/Third Party"]
+[node name="License" type="RichTextLabel" parent="PanelContainer/VBoxContainer/PanelContainer2/Credits/Third Party"]
 visible = false
 layout_mode = 2
 script = SubResource("GDScript_auesj")
@@ -208,20 +237,60 @@ title = "TR_CREDIT_LICENSE"
 translate = true
 metadata/_tab_index = 1
 
-[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/VBoxContainer/Credits/Third Party"]
-visible = false
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/VBoxContainer/PanelContainer2/Credits/Third Party"]
 layout_mode = 2
 bbcode_enabled = true
 text = "
 [ul]
 Stylized Flame - [url=https://godotshaders.com/shader/stylized-flame/](Thundergecko8 | Godot Shaders)[/url] - MIT
+[ul]
+Copyright 2024 Thundergecko8
+[/ul]
+[/ul]
+
+[ul]
+2D Wavy Effect - [url=https://godotshaders.com/shader/2d-wavy-effect//](marsonfire | Godot Shaders)[/url] - CC0
+[/ul]
+
+[ul]
+Dark Noise Vignette - [url=https://godotshaders.com/shader/scary-dark-vignette/](silver637 | Godot Shaders)[/url] - CC0
+[/ul]
+
+[ul]
+Discrete Sunset - [url=https://godotshaders.com/shader/discrete-sunset/](moraguma | Godot Shaders)[/url] - CC0
+[/ul]
+
+[ul]
+Discrete Ocean - [url=https://godotshaders.com/shader/discrete-ocean/](moraguma | Godot Shaders)[/url] - CC0
+[/ul]
+
+[ul]
+Kenney Game Assets All-in-1 - [url=https://kenney.itch.io/kenney-game-assets](itch.io)[/url] - CC0
+[ul]
+[url=https://kenney.itch.io/kenney-character-assets]Animated Characters Bundle (4.0)[/url]
+[/ul]
+[ul]
+[url=https://kenney.nl/assets/fantasy-ui-borders]Fantasy UI Borders (1.0)[/url]
+[/ul]
+[ul]
+[url=https://kenney.nl/assets/space-station-kit]Space Station Kit (1.0)[/url]
+[/ul]
+[ul]
+[url=https://kenney.nl/assets/ui-pack]UI Pack (2.0)[/url]
+[/ul]
+[ul]
+[url=https://kenney.nl/assets/ui-pack-adventure]UI Pack - Adventure (1.1)[/url]
+[/ul]
+[ul]
+[url=https://kenney.nl/assets/ui-pack-sci-fi]UI Pack: Sci-fi (2.0)[/url]
+[/ul]
 [/ul]"
 script = SubResource("GDScript_v1poy")
 title = "TR_CREDIT_PLUGINS"
 translate = true
 metadata/_tab_index = 2
 
-[node name="Music" type="TabContainer" parent="PanelContainer/VBoxContainer/Credits"]
+[node name="Music" type="TabContainer" parent="PanelContainer/VBoxContainer/PanelContainer2/Credits"]
 visible = false
 layout_mode = 2
 current_tab = 0
@@ -230,7 +299,7 @@ title = "TR_CREDIT_MUSIC"
 translate = true
 metadata/_tab_index = 1
 
-[node name="Music Library" type="ScrollContainer" parent="PanelContainer/VBoxContainer/Credits/Music" node_paths=PackedStringArray("grid")]
+[node name="Music Library" type="ScrollContainer" parent="PanelContainer/VBoxContainer/PanelContainer2/Credits/Music" node_paths=PackedStringArray("grid")]
 layout_mode = 2
 script = ExtResource("1_4rm8s")
 grid = NodePath("MarginContainer/GridContainer")
@@ -238,7 +307,7 @@ title = "TR_CREDIT_LIBRARY"
 translate = true
 metadata/_tab_index = 0
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/Credits/Music/Music Library"]
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/PanelContainer2/Credits/Music/Music Library"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -247,14 +316,14 @@ theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="GridContainer" type="GridContainer" parent="PanelContainer/VBoxContainer/Credits/Music/Music Library/MarginContainer"]
+[node name="GridContainer" type="GridContainer" parent="PanelContainer/VBoxContainer/PanelContainer2/Credits/Music/Music Library/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 columns = 3
 script = ExtResource("2_tluex")
 min_size = 400.0
 
-[node name="License" type="TabContainer" parent="PanelContainer/VBoxContainer/Credits/Music"]
+[node name="License" type="TabContainer" parent="PanelContainer/VBoxContainer/PanelContainer2/Credits/Music"]
 visible = false
 layout_mode = 2
 current_tab = 0
@@ -263,7 +332,7 @@ title = "TR_CREDIT_LICENSE"
 translate = true
 metadata/_tab_index = 1
 
-[node name="CC0" type="RichTextLabel" parent="PanelContainer/VBoxContainer/Credits/Music/License"]
+[node name="CC0" type="RichTextLabel" parent="PanelContainer/VBoxContainer/PanelContainer2/Credits/Music/License"]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -306,7 +375,7 @@ Should any part of the Waiver for any reason be judged legally invalid or ineffe
 "
 metadata/_tab_index = 0
 
-[node name="OGA-BY-3_0" type="RichTextLabel" parent="PanelContainer/VBoxContainer/Credits/Music/License"]
+[node name="OGA-BY-3_0" type="RichTextLabel" parent="PanelContainer/VBoxContainer/PanelContainer2/Credits/Music/License"]
 visible = false
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
@@ -413,7 +482,7 @@ script = ExtResource("3_ntjgm")
 title = "OGA-BY-3.0"
 metadata/_tab_index = 1
 
-[node name="OGA-BY-4_0" type="RichTextLabel" parent="PanelContainer/VBoxContainer/Credits/Music/License"]
+[node name="OGA-BY-4_0" type="RichTextLabel" parent="PanelContainer/VBoxContainer/PanelContainer2/Credits/Music/License"]
 visible = false
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
@@ -826,4 +895,4 @@ script = ExtResource("3_ntjgm")
 title = "OGA-BY-4.0"
 metadata/_tab_index = 2
 
-[connection signal="meta_clicked" from="PanelContainer/VBoxContainer/Credits/Third Party/RichTextLabel" to="PanelContainer/VBoxContainer/Credits/Third Party/RichTextLabel" method="_on_meta_clicked"]
+[connection signal="meta_clicked" from="PanelContainer/VBoxContainer/PanelContainer2/Credits/Third Party/RichTextLabel" to="PanelContainer/VBoxContainer/PanelContainer2/Credits/Third Party/RichTextLabel" method="_on_meta_clicked"]

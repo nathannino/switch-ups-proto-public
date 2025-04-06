@@ -1,8 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://cvjy602iejvrx"]
+[gd_scene load_steps=14 format=3 uid="uid://cvjy602iejvrx"]
 
+[ext_resource type="PackedScene" uid="uid://dg54dbj8r4o3j" path="res://globals/utility_scenes/bg.tscn" id="1_7of32"]
 [ext_resource type="PackedScene" uid="uid://bjwcj7an8i718" path="res://globals/utility_scenes/ui_component/monster_button.tscn" id="1_5754o"]
 [ext_resource type="PackedScene" uid="uid://cmjl5hcgm2r7w" path="res://globals/utility_scenes/menus/spirit_summary/spirit_list.tscn" id="2_5ups2"]
 [ext_resource type="PackedScene" uid="uid://diohlpvbxl3oh" path="res://globals/utility_scenes/menus/spirit_summary/spirit_summary.tscn" id="2_h40an"]
+[ext_resource type="Theme" uid="uid://606up66y2qp" path="res://ScreenWideHeader.tres" id="2_s7jrd"]
 [ext_resource type="PackedScene" uid="uid://l5cmnn36hklt" path="res://globals/utility_scenes/ui_component/move_holder.tscn" id="4_n3emp"]
 
 [sub_resource type="GDScript" id="GDScript_b8mls"]
@@ -60,6 +62,9 @@ func show_summary_movelist() :
 	spirit_list.hide()
 	move_list.show()
 "
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p65c5"]
+bg_color = Color(0, 0, 0, 0.547)
 
 [sub_resource type="GDScript" id="GDScript_37t73"]
 script/source = "extends VBoxContainer
@@ -290,6 +295,18 @@ summary = NodePath("VBoxContainer/HBoxContainer/SpiritSummary2")
 spirit_list = NodePath("VBoxContainer/HBoxContainer/SpiritList")
 move_list = NodePath("VBoxContainer/HBoxContainer/MoveList")
 
+[node name="BG" parent="." instance=ExtResource("1_7of32")]
+layout_mode = 1
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_p65c5")
+
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -297,6 +314,18 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Control" type="Control" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/PanelContainer"]
+layout_mode = 2
+theme = ExtResource("2_s7jrd")
+text = "TR_BUILD_LABEL"
+horizontal_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -370,6 +399,7 @@ alignment = 2
 
 [node name="Button" type="Button" parent="VBoxContainer/HBoxContainer2" node_paths=PackedStringArray("team")]
 layout_mode = 2
+size_flags_horizontal = 3
 disabled = true
 toggle_mode = true
 text = "TR_BUILD_READY"

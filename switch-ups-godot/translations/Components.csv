@@ -6,6 +6,6 @@ TR_AC_CH_STAT_LEVEL_DESC;Decreases the target’s {stat} by {lv} level(s);Diminu
 TR_AC_TARGET;Target {target} to;Cible {target} et
 TR_AC_TARGET_DURING;When cast, {rest};Lorsqu'il est lancé, {rest}
 TR_AC_CH_ACTIVE;Switch position with target;Changer de position avec l’esprit visé
-TR_AC_CH_ENERGY_ASC;Target gain {amount} energy;Esprit visé gagne {amount} energie
-TR_AC_CH_ENERGY_DESC;Target lose {amount} energy;Esprit visé perd {amount} energie
+TR_AC_CH_ENERGY_ASC;Target gain {amount} energy;Esprit visé gagne {amount} point d’énergie
+TR_AC_CH_ENERGY_DESC;Target lose {amount} energy;Esprit visé perd {amount} point d’énergie
 TR_AC_HEAL;Heal {percent}% health to the target spirit.;Soignez {percent}% de points de vie à l'esprit ciblé.

@@ -1,5 +1,6 @@
-[gd_scene load_steps=23 format=3 uid="uid://d23vgejfywguc"]
+[gd_scene load_steps=24 format=3 uid="uid://d23vgejfywguc"]
 
+[ext_resource type="PackedScene" uid="uid://dg54dbj8r4o3j" path="res://globals/utility_scenes/bg.tscn" id="1_1ohay"]
 [ext_resource type="PackedScene" uid="uid://8ub8l473c6q7" path="res://scenes/endscreen/node_3d.tscn" id="1_fc1ui"]
 [ext_resource type="FontFile" uid="uid://cfu0iywhesxbv" path="res://fonts/Monofett/Monofett-Regular.ttf" id="2_0vpak"]
 [ext_resource type="Texture2D" uid="uid://dt670i50r2l2x" path="res://Kenney Assets/UI Pack - Sci-fi/bar_shadow_square_outline_small_square.svg" id="3_d6e02"]
@@ -183,10 +184,23 @@ grow_horizontal = 2
 grow_vertical = 2
 script = SubResource("GDScript_fc1ui")
 world = NodePath("SubViewportContainer/SubViewport/Node3D")
-lose_bg = NodePath("LoseBg")
-win_bg = NodePath("WinBg")
+lose_bg = NodePath("LoseBg2")
+win_bg = NodePath("WinBg2")
 win_lose_label = NodePath("Label")
 actions_container = NodePath("VBoxContainer")
+
+[node name="WinBg2" parent="." instance=ExtResource("1_1ohay")]
+layout_mode = 1
+bottom_color = Color(0, 0.729523, 0.064075, 1)
+top_color = Color(0.603767, 0.955588, 0.859004, 1)
+vignette_color = Color(0.678995, 0.996208, 0.631805, 1)
+
+[node name="LoseBg2" parent="." instance=ExtResource("1_1ohay")]
+visible = false
+layout_mode = 1
+bottom_color = Color(0.447059, 0.0784314, 0.156863, 1)
+top_color = Color(0.698039, 0.505882, 0.541176, 1)
+vignette_color = Color(0.698039, 0.505882, 0.541176, 1)
 
 [node name="LoseBg" type="TextureRect" parent="."]
 visible = false
@@ -199,6 +213,7 @@ grow_vertical = 2
 texture = SubResource("GradientTexture2D_0vpak")
 
 [node name="WinBg" type="TextureRect" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

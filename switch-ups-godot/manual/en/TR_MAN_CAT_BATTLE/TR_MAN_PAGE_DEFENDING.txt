@@ -1,0 +1,12 @@
+[center][font_size=27]Defending[/font_size][/center]
+
+Every spirit can defend by pressing the [bgcolor=lightblue]Defend[/bgcolor] button
+
+[img]res://manual/images/en/playerside.png[/img]
+
+When defending, the total damage is divided by half.
+
+[font_size=25][color=red]Warning :[/color][/font_size]
+Defending counts as an action. It has +99 priority, costs 0 stamina and is at the same position for every spirit, but it is an action regardless.
+As such, you cannot defend and do another action in the same turn.
+In fact, it is the action at the position -1. It is also the action that will be used if a spirit attempts to use an action in the extra slot without having another spirit equipped

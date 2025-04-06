@@ -1,0 +1,5 @@
+[center][font_size=27]Changement de statistique[/font_size][/center]
+
+Lorsque vous utilisez un action qui modifie une statistique, chaque niveau modifiera cette statistique de 20 points.
+
+L'exception est la statistique de chance, qui est modifié de 5 points à la place.

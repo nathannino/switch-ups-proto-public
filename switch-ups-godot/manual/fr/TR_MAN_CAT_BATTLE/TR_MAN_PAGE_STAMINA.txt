@@ -1,0 +1,13 @@
+[center][font_size=27]Point d'énergie[/font_size][/center]
+
+Chaque esprit a des points d'énergies
+
+[img]res://manual/images/fr/playerside.png[/img]
+
+Chaque esprit sur le terrain va regénérer naturellement 1 point d'énergie par tour, pour un maximum de 5 points d'énergie. Les esprits qui ne sont pas sur le terrain ne régénéreront pas naturellement leur points d'énergies.
+
+[font_size=25]Note :[/font_size]
+Certaines actions vous permettront de passer au-dessous de 0 ou au-dessus de 5 points d'énergie. Si vous avez plus de 5 points d'énergie au début d'un tour, vous ne les perdrez pas, mais vous n'en gagnerez pas non plus avec la régénération naturelle jusqu'à ce que vous repassiez au-dessous de 5 points d'énergie.
+
+[font_size=25][color=red]Avertissement :[/color][/font_size]
+Les actions qui coûtent 0 point d'énergie peuvent être utilisées peut importe le nombre de point d'énergie que l'esprit a.

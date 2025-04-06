@@ -1,0 +1,10 @@
+[center][font_size=27]Spirit Stats[/font_size][/center]
+
+[ul]
+Health : The amount of damage the spirit can take before the player starts taking [bgcolor=lightblue]overflow damage[/bgcolor]
+Concrete Power : The power of concrete attacks. Also used as half of the defensive power against concrete attacks
+Abstract Power : The power of abstract attacks. Also used as half of the defensive power against abstracts attacks
+Defense : Half of the defense power against both types of attacks
+Speed : Used to detemine which side goes first when both actions have the same [bgcolor=lightblue]priority[/bgcolor]
+Luck : How much the percentage changes in your favor for luck events
+[/ul]

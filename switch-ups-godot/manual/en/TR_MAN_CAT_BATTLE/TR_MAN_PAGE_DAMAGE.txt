@@ -1,0 +1,16 @@
+[center][font_size=27]Taking damage[/font_size][/center]
+
+It is inevitable that you will, at some point, take damage. When taking damage, you may lose hp in two places. You can either lose hp in the targetted spirit, or lose your own hp.
+
+[img]res://manual/images/en/playerside.png[/img]
+
+Each spirit has an hp value shown in their display. Additionally, each player has their own health bar.
+Once their hp drops to 0, they are... not out of the game. However, all additional damage will be dealt as overflow damage directly to your main health bar.
+
+[img]res://manual/images/en/damage.png[/img]
+Regular damage is displayed in white, while overflow damage is displayed in red
+
+If your main health bar reaches or goes below 0, you lose the game.
+
+[font_size=25][color=red]Warning :[/color][/font_size]
+Damage is affected by the [bgcolor=lightblue]type chart[/bgcolor]. No matter what, the total damage (Which is the total damage dealt before being split off to the targetted spirit and yourself) will be multiplied depending on whether the attack is hitting a weakness or a resistance.

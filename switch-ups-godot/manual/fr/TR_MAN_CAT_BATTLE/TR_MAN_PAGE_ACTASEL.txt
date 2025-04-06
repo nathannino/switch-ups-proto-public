@@ -1,0 +1,19 @@
+[center][font_size=27]Sélectionner une action[/font_size][/center]
+À chaque tour, vous pouvez sélectionner l'option [bgcolor=lightblue]Action[/bgcolor] pour utiliser une des actions prédéfinies de l'esprit sélectionné. Chaque action possède un nom, un type, un coût, une priorité et une description de son effet.
+[img]res://manual/images/fr/actionlist.png[/img]
+
+Vous ne pouvez sélectionner une action que si l'esprit sélectionné a suffisamment de points de vie pour l'exécuter.
+
+Certaines actions demanderont des informations supplémentaires, comme l'esprit auquel les effets de l'action s'appliqueront.
+
+Une fois votre choix verrouillé, vous devrez attendre que votre adversaire choisisse son action. Tant qu'ils n'ont pas verrouillé leur choix, vous aurez la possibilité d'annuler votre propre choix et de sélectionner une autre action.
+
+Une fois que les deux côtés ont confirmé leurs choix, le tour commence.
+
+[font_size=25][color=red]Avertissement :[/color][/font_size]
+Lorsque vous sélectionnez une action, vous sélectionnez en réalité la position de l'action.
+Bien que cela ne soit généralement pas pertinent, l'action que vous finirez par effectuer dépend de l'action à la position sélectionnée sur l'esprit actif au moment exact où votre tour commence dans l'ordre des tours.
+If no actions are at that position, you will instead block.
+Si aucune action existe à cette position, l'esprit va se défendre.
+Si l'action n'est pas celle que vous avez sélectionnée et nécessite des informations supplémentaires, le tour sera mis en pause et vous aurez la possibilité de faire votre choix.
+Il en va de même pour votre adversaire, il peut donc être possible de construire un esprit afin d'en profiter.

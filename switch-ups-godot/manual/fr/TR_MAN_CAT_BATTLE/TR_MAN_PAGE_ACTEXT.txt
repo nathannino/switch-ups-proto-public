@@ -1,0 +1,12 @@
+[center][font_size=27]Actions demandant des informations suplémentaires[/font_size][/center]
+
+Certaines actions demanderont des informations supplémentaires, comme par example la cible auquel les effets de l'action s'appliqueront.
+
+[img]res://manual/images/fr/actinfo.png[/img]
+
+Une description de ce qu'il faut sélectionner sera en haut de l'écran et les options disponibles seront au milieu de l'écran.
+
+Si l'action demande des informations en cours de tour, vous serez obligé de sélectionner une option. Sinon, vous pouvez appuyer sur le bouton Retour pour annuler l'action.
+
+[font_size=25]Note :[/font_size]
+Lorsque vous placez votre curseur sur le bouton supérieur gauche, vous obtiendrez une description de la partie de l'action que cette sélection affectera.

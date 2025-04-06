@@ -57,7 +57,7 @@ func already_handled_server(battle_log : Array, position : int) :
 func handle_server(turn_calc : Node,user:ms_spirit_active, user_player_node : Node, target : ms_spirit_active, target_player_node : Node, data : Dictionary) -> Array :
 	var attack_power = base_atk * (user.get_atk_concrete() if atk_flavor == ms_constants.ATK_FLAVOR.CONCRETE else user.get_atk_abstract())
 	var defense_power = (target.get_defense() / 2) + ((target.get_atk_concrete() if atk_flavor == ms_constants.ATK_FLAVOR.CONCRETE else target.get_atk_abstract())/2)
-	var random = 0.9 + (ms_constants.calculate_randomness(user,target) * 0.2)
+	var random = clampf(0.9 + (ms_constants.calculate_randomness(user,target) * 0.2),0.9,1.1)
 	var damage = attack_power / defense_power * random
 	
 	var current_action = turn_calc.get_current_action(user,turn_calc.player_order_data[turn_calc.speed_order[turn_calc.current_handling_order]]["action_index"])

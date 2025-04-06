@@ -1,0 +1,15 @@
+[center][font_size=27]Priorité[/font_size][/center]
+
+Chaque action a une priorité. Une action de priorité supérieure sera placée plus tôt dans l'ordre du tour qu'une action de priorité inférieure.
+
+[img]res://manual/images/fr/actionlist.png[/img]
+
+Si une action n'indique pas sa priorité, elle a une priorité de 0
+
+[font_size=25]Note : [/font_size]
+L'ordre des tours est calculé au début d'un tour et n'est pas calculé à nouveau pour le reste du tour
+
+[font_size=25][color=red]Avertissement :[/color][/font_size]
+Techniquement, chaque niveau de priorité vaut 1000 points de vitesse.
+Un joueur dévoué pourrait dépasser un niveau de priorité avec suffisamment de dévouement… avec la collaboration de l'adversaire.
+Donc, pour un combat réel, mieux vaut ne pas essayer.

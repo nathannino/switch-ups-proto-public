@@ -1,0 +1,21 @@
+[center][font_size=27]Tableau des types[/font_size][/center]
+
+[bgcolor=white][table=11]
+[cell][/cell][cell]Rétro[/cell][cell]Créature[/cell][cell]Rêve[/cell][cell]Peur[/cell][cell]Vide[/cell][cell]Nature[/cell][cell]Construction[/cell][cell]Espace[/cell][cell]Meta[/cell][cell]Normal[/cell]
+[cell]Rétro[/cell][cell][/cell][cell][/cell][cell][/cell][cell][/cell][cell][color=green]Faiblesse[/color][/cell][cell][color=red]Résistance[/color][/cell][cell][color=green]Faiblesse[/color][/cell][cell][color=red]Résistance[/color][/cell][cell][color=green]Faiblesse[/color][/cell][cell][/cell]
+[cell]Créature[/cell][cell][/cell][cell][color=green]Faiblesse[/color][/cell][cell][/cell][cell][color=red]Résistance[/color][/cell][cell][/cell][cell][color=green]Faiblesse[/color][/cell][cell][/cell][cell][color=red]Résistance[/color][/cell][cell][color=green]Faiblesse[/color][/cell][cell][/cell]
+[cell]Rêve[/cell][cell][/cell][cell][color=red]Résistance[/color][/cell][cell][color=red]Résistance[/color][/cell][cell][color=green]Faiblesse[/color][/cell][cell][/cell][cell][/cell][cell][/cell][cell][color=green]Faiblesse[/color][/cell][cell][color=green]Faiblesse[/color][/cell][cell][/cell]
+[cell]Peur[/cell][cell][color=red]Résistance[/color][/cell][cell][color=green]Faiblesse[/color][/cell][cell][color=green]Faiblesse[/color][/cell][cell][color=green]Faiblesse[/color][/cell][cell][/cell][cell][/cell][cell][/cell][cell][/cell][cell][color=green]Faiblesse[/color][/cell][cell][/cell]
+[cell]Vide[/cell][cell][color=red]Résistance[/color][/cell][cell][/cell][cell][color=red]Résistance[/color][/cell][cell][color=green]Faiblesse[/color][/cell][cell][color=red]Résistance[/color][/cell][cell][color=red]Résistance[/color][/cell][cell][color=red]Résistance[/color][/cell][cell][color=green]Faiblesse[/color][/cell][cell][color=green]Faiblesse[/color][/cell][cell][/cell]
+[cell]Nature[/cell][cell][color=green]Faiblesse[/color][/cell][cell][color=red]Résistance[/color][/cell][cell][/cell][cell][color=red]Résistance[/color][/cell][cell][color=red]Résistance[/color][/cell][cell][/cell][cell][color=green]Faiblesse[/color][/cell][cell][/cell][cell][color=green]Faiblesse[/color][/cell][cell][/cell]
+[cell]Construction[/cell][cell][/cell][cell][/cell][cell][color=green]Faiblesse[/color][/cell][cell][color=red]Résistance[/color][/cell][cell][color=green]Faiblesse[/color][/cell][cell][/cell][cell][/cell][cell][color=green]Faiblesse[/color][/cell][cell][color=green]Faiblesse[/color][/cell][cell][/cell]
+[cell]Espace[/cell][cell][color=green]Faiblesse[/color][/cell][cell][/cell][cell][/cell][cell][/cell][cell][/cell][cell][color=green]Faiblesse[/color][/cell][cell][color=red]Résistance[/color][/cell][cell][color=red]Résistance[/color][/cell][cell][color=green]Faiblesse[/color][/cell][cell][/cell]
+[cell]Meta[/cell][cell][color=green]Faiblesse[/color][/cell][cell][color=green]Faiblesse[/color][/cell][cell][color=green]Faiblesse[/color][/cell][cell][color=green]Faiblesse[/color][/cell][cell][color=green]Faiblesse[/color][/cell][cell][color=green]Faiblesse[/color][/cell][cell][color=green]Faiblesse[/color][/cell][cell][color=green]Faiblesse[/color][/cell][cell][color=green]Faiblesse[/color][/cell][cell][color=green]Faiblesse[/color][/cell]
+[cell]Normal[/cell][cell][/cell][cell][/cell][cell][/cell][cell][/cell][cell][/cell][cell][/cell][cell][/cell][cell][/cell][cell][color=green]Faiblesse[/color][/cell][cell][/cell]
+[/table]
+[/bgcolor]
+
+Où le type de l'action qui attaque est à gauche et le type de esprit qui reçois est en haut
+
+[bgcolor=white][color=green]Faiblesse[/color][/bgcolor] : Inflige 1.25 fois plus de dégâts.
+[bgcolor=white][color=red]Résistance[/color][/bgcolor] : Inflige 0.75 fois moins de dégâts.

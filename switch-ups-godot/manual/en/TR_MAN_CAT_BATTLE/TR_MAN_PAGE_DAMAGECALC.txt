@@ -1,0 +1,29 @@
+[center][font_size=27]Damage formula[/font_size][/center]
+
+[font_size=20]damage = floor(attack_power / defense_power * random * weak * STAB * defending)[/font_size]
+
+Where :
+
+[ul]
+attack_power is the base power of the attack multiplied by either the concrete power or the abstract power of the attacker, depending on the flavor of the attack
+[/ul]
+
+[ul]
+defense_power is half of the defense of the defending spirit added to half of either the concrete power of the abstract power of the defending spirit, depending on the flavor of the attack
+[/ul]
+
+[ul]
+random is a random number between 0.9 and 1.1, affected by the luck stats of both spirits
+[/ul]
+
+[ul]
+weak is the type multiplier according to the [bgcolor=lightblue]type chart[/bgcolor]
+[/ul]
+
+[ul]
+STAB is a 1.1 multiplier applied if the type of the action is the same as the [bgcolor=lightblue]primary type[/bgcolor] of the attacking spirit
+[/ul]
+
+[ul]
+defending is a 0.5 multiplier applied if the defending spirit is defending this turn
+[/ul]

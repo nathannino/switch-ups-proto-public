@@ -1,0 +1,13 @@
+[center][font_size=27]Rotation[/font_size][/center]
+Chaque côté dispose de trois esprits sur le terrain en permanence. Cependant, seul l'esprit en tête peut utiliser une action, car il est l'esprit sélectionné. Mais que faire si vous souhaitez utiliser les actions des deux autres esprits ?
+
+[img]res://manual/images/fr/playerside.png[/img]
+
+C'est là que la rotation est cruciale. En cliquant sur les boutons [bgcolor=lightblue]Pivot à gauche[/bgcolor] et [bgcolor=lightblue]Pivot à droite[/bgcolor], vous changerez l'esprit sélectionné. Le pivot à gauche va dans le sens inverse des aiguilles d'une montre, tandis que le pivot à droite va dans le sens des aiguilles d'une montre.
+
+Vous pouvez savoir quel esprit est sélectionné, car les indicateurs sont blancs au lieu de jaunes.
+
+Une fois les actions des deux côté sont verrouillées, le tour commence en plaçant l'esprit sélectionné en avant. Ce n'est qu'une fois que les esprits sélectionnés des deux côtés sont au en tête de leurs équipes respectives que l'ordre du tour prend effet. Il peut donc être avantageux de faire tourner un esprit sans points de vie pour éviter de subir des dégâts de débordements.
+
+[font_size=25][color=red]Avertissement :[/color][/font_size]
+La rotation a un coût caché. Lors de votre tour de rotation, vous subirez une pénalité de -2 sur la priorité. Dans la plupart des cas, un joueur qui effectue une rotation se déplacera après un joueur qui choisi ne ne pas faire de rotation.

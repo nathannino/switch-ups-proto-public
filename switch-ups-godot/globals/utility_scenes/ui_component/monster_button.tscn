@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bjwcj7an8i718"]
+[gd_scene load_steps=12 format=3 uid="uid://bjwcj7an8i718"]
 
 [ext_resource type="Texture2D" uid="uid://masa1osx0s86" path="res://monster_systems/spirits/art/unknown.png" id="1_doi4o"]
 [ext_resource type="Theme" uid="uid://bruhywdwinhc8" path="res://globals/utility_scenes/ui_component/monster_button_theme.tres" id="1_xyvhm"]
@@ -99,10 +99,15 @@ func reset() :
 	stamina.text = \"\"
 	Type1.text = \"\"
 	Type2.text = \"\"
-	none_label.text = \"No spirits selected\"
+	none_label.text = tr(\"TR_MSBUTTON_NONE\")
 	options = []
 	button.show()
 	populate_options()
+
+func _notification(what: int) -> void:
+	match what :
+		NOTIFICATION_TRANSLATION_CHANGED :
+			reload_content()
 
 func reload_content() :
 	if current_spirit == null and current_spirit_inactive == null :
@@ -244,6 +249,12 @@ func set_indicator_state() :
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kfl45"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xyvhm"]
+bg_color = Color(0, 0, 0, 0.608)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d01xl"]
+bg_color = Color(0, 0, 0, 0.713)
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nddgv"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_76o8l"]
@@ -293,6 +304,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/focus = SubResource("StyleBoxEmpty_kfl45")
+theme_override_styles/hover = SubResource("StyleBoxFlat_xyvhm")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_d01xl")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_nddgv")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_76o8l")
 
@@ -307,7 +320,7 @@ mouse_filter = 2
 
 [node name="Label" type="Label" parent="CenterContainer"]
 layout_mode = 2
-text = "No Spirits Selected"
+text = "TR_MSBUTTON_NONE"
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1

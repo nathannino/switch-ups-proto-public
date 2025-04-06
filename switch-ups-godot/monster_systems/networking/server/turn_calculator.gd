@@ -101,7 +101,7 @@ func check_stamina() :
 			}
 	
 	
-	if user.current_stamina < action.cost :
+	if (user.current_stamina < action.cost) and (action.cost > 0) :
 		log["success"] = false
 		battle_log.push_back(log)
 		return false

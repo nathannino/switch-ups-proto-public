@@ -1,0 +1,15 @@
+[center][font_size=27]Switching[/font_size][/center]
+Each side has 3 spirits on the field at all times. However, each team is composed of 5 spirits, not 3. So how do we use the other 2?
+
+[img]res://manual/images/en/playerside.png[/img]
+
+By switching! Press the [bgcolor=lightblue]Swap[/bgcolor] option to begin
+
+[img]res://manual/images/en/switchspr.png[/img]
+
+When switching, you can select any one of the three spirits on the field, and any one of the two spirits in reserve. Confirm your selection, and once both sides locked in their actions, the selected spirit on the field and the selected spirit in reserve will switch positions.
+
+[font_size=25][color=red]Warning :[/color][/font_size]
+Switching counts as an action. It has +99 priority, costs 0 stamina and is at the same position for every spirit, but it is an action regardless.
+As such, you cannot switch and do another action in the same turn.
+In fact, it is the action at the position -2. It's also very much a useless info to know about.

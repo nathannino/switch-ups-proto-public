@@ -1,0 +1,37 @@
+[center][font_size=27]Construction d'équipe[/font_size][/center]
+Vous avez créé ou rejoint une partie, et ceci apparait à l'écran :
+
+[img]res://manual/images/fr/defaultteam.png[/img]
+
+Qu'est-ce que ça veut dire?
+
+Bienvenue dans la phase de construction d'équipe, où vous créez une équipe pour le combat à venir. Il y a quatre sections, dont deux peut être visibles en même temps :
+
+[ul]
+Le panneau d'équipe :
+[/ul]
+[img]res://manual/images/fr/teampane.png[/img]
+Chaque équipe dispose de 5 esprits. À la fin de la phase de construction d'équipe, tous les emplacements doivent être occupés. Si un emplacement est vide, vous avez simplement besoin d'appuyer dessus et de sélectionner un esprit dans le panneau des esprits. Si un esprit lui est déjà assigné, vous pouvez soit voir les informations pour ouvrir le panneau de résumé ou appuyer sur le bouton « Changer » pour le remplacer par un autre esprit.
+
+[ul]
+Le panneau des esprits :
+[/ul]
+[img]res://manual/images/fr/spiritpane.png[/img]
+Une liste de tous les esprits disponibles dans le jeu. Apparaîtra toujours sur le côté droit et permet de sélectionner un esprit.
+
+[ul]
+Le panneau d'information :
+[/ul]
+[img]res://manual/images/fr/summarypane.png[/img]
+C'est ici que vous pouvez consulter les informations sur l'esprit. Vous pouvez également [bgcolor=lightblue]équiper un esprit[/bgcolor] et modifier les actions attribuées aux emplacements d'action disponibles.
+
+[ul]
+Le panneau des actions :
+[/ul]
+[img]res://manual/images/fr/ationpane.png[/img]
+Liste de toutes les actions disponibles pour cet emplacement. Cette liste s'affiche toujours à droite et vous permet de sélectionner une action pour l'emplacement sélectionné.
+
+===
+
+Lorsque votre équipe est complète, appuyez sur le bouton « Équipe prêt ».
+Une fois que les deux joueurs auront confirmé qu’ils sont prêts, le combat commencera.

@@ -1,0 +1,17 @@
+[center][font_size=27]Equipping a spirit[/font_size][/center]
+Every spirit has 3 action slots and a list of available actions to place in thoses slots. Which can be limiting.
+Thankfully, there is a way to get a forth action slot, and to have any (one) action you want in that slot. You just have to equip a spirit to your spirit.
+
+[img]res://manual/images/en/spiritequip.png[/img]
+
+From now on, a [bgcolor=lightblue]spirit[/bgcolor] is the one you can equip a spirit to, and an [bgcolor=purple]equipped spirit[/bgcolor] is the spirit you equipped to the spirit in your team.
+
+[img]res://manual/images/en/forthslot.png[/img]
+
+When equipping a spirit, the [bgcolor=lightblue]spirit[/bgcolor] will gain the type of the [bgcolor=purple]equipped spirit[/bgcolor] as a secondary type, and a forth action slot will become available. In that slot, you will be able to select from the action pool of the [bgcolor=purple]equipped spirit[/bgcolor] instead of the action pool of the [bgcolor=lightblue]spirit[/bgcolor].
+
+[font_size=25][color=red]Warning :[/color][/font_size]
+[img]res://manual/images/en/dualtype.png[/img]
+Secondary types can be a big tradeoff. You gain the weaknesses of the secondary type, but not the resistances. Not only that, but the weaknesses take priority, so even if you would normally resist an attack, if your secondary type is weak to it, you are considered weak to it as well.
+
+Also, please remember to select the action you want in the forth action slot after equipping a spirit. The default basic attack usually isn't worth the downsides.

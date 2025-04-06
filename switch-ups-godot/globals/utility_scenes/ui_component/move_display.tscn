@@ -16,7 +16,7 @@ bg_color = Color(0.145, 0.145, 0.145, 0.718)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tu01o"]
 
-[node name="MoveDisplay" type="PanelContainer" node_paths=PackedStringArray("name_label", "type_label", "cost_label", "desc_container", "button")]
+[node name="MoveDisplay" type="PanelContainer" node_paths=PackedStringArray("name_label", "priority_label", "type_label", "cost_label", "desc_container", "button")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -26,6 +26,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_k3w1v")
 name_label = NodePath("MarginContainer/VBoxContainer/Name")
+priority_label = NodePath("MarginContainer/VBoxContainer/Priority")
 type_label = NodePath("MarginContainer/VBoxContainer/GridContainer/Type")
 cost_label = NodePath("MarginContainer/VBoxContainer/GridContainer/Cost")
 desc_container = NodePath("MarginContainer/VBoxContainer/desc")
@@ -40,6 +41,11 @@ layout_mode = 2
 [node name="Name" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Name"
+fit_content = true
+
+[node name="Priority" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Priority"
 fit_content = true
 
 [node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer"]

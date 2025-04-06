@@ -1,0 +1,29 @@
+[center][font_size=27]Formule de dégâts[/font_size][/center]
+
+[font_size=20]dégâts = partie entière de(puissance_d'attaque / puissance_de_défense * hasard * faiblesse * BAMT * en_défense)[/font_size]
+
+Where :
+
+[ul]
+puissance_d'attaque est la puissance de base de l'attaque multipliée par la puissance concrète ou la puissance abstraite de l'attaquant, selon la saveur de l'attaque
+[/ul]
+
+[ul]
+puissance_de_défense est la moitié de la défense de l'esprit défenseur ajoutée à la moitié de la puissance concrète ou de la puissance abstraite de l'esprit défenseur, selon la saveur de l'attaque
+[/ul]
+
+[ul]
+hasard est un nombre aléatoire compris entre 0.9 et 1.1, affecté par les statistiques de chance des deux esprits
+[/ul]
+
+[ul]
+faiblesse est le multiplicateur de type selon le [bgcolor=lightblue]tableau des types[/bgcolor]
+[/ul]
+
+[ul]
+BAMT est un multiplicateur de 1.1 appliqué si le type d'action est le même que le [bgcolor=lightblue]type principal[/bgcolor] de l'esprit attaquant
+[/ul]
+
+[ul]
+en_défense est un multiplicateur de 0,5 appliqué si l'esprit défenseur défend ce tour-ci
+[/ul]

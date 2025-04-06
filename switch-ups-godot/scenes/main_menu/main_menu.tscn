@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://bvau8nx2vb1p0"]
+[gd_scene load_steps=10 format=3 uid="uid://bvau8nx2vb1p0"]
 
 [ext_resource type="Script" uid="uid://clvhu6luji7wa" path="res://scenes/main_menu/main_menu.gd" id="1_e6rbv"]
 [ext_resource type="Script" uid="uid://1yl6aj3ibwlh" path="res://globals/simple_scripts/button_change_scene_simple.gd" id="2_330wo"]
+[ext_resource type="PackedScene" uid="uid://dg54dbj8r4o3j" path="res://globals/utility_scenes/bg.tscn" id="2_ob46e"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ch1ei"]
 font_size = 50
@@ -86,14 +87,8 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_e6rbv")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="BG" parent="." instance=ExtResource("2_ob46e")]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.230315, 0.230315, 0.230315, 1)
 
 [node name="TitleAnchor" type="Control" parent="."]
 layout_mode = 1
@@ -133,40 +128,56 @@ theme_override_constants/margin_bottom = 20
 [node name="Control" type="Control" parent="MainMenuMargins"]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MainMenuMargins/Control"]
+[node name="MarginContainer" type="MarginContainer" parent="MainMenuMargins/Control"]
 layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
+anchors_preset = 12
 anchor_top = 1.0
-anchor_right = 0.5
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -103.0
-offset_top = -182.0
-offset_right = 103.0
-offset_bottom = -36.0
+offset_top = -214.0
+offset_bottom = -47.0
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_constants/margin_left = 350
+theme_override_constants/margin_right = 350
 
-[node name="PlayButton" type="Button" parent="MainMenuMargins/Control/VBoxContainer" node_paths=PackedStringArray("container")]
+[node name="VBoxContainer" type="VBoxContainer" parent="MainMenuMargins/Control/MarginContainer"]
+layout_mode = 2
+
+[node name="PlayButton" type="Button" parent="MainMenuMargins/Control/MarginContainer/VBoxContainer" node_paths=PackedStringArray("container")]
 layout_mode = 2
 text = "TR_BUT_START"
 script = SubResource("GDScript_xqynw")
-container = NodePath("../../../../ConnectMenu")
+container = NodePath("../../../../../ConnectMenu")
 
-[node name="CompendiumButton" type="Button" parent="MainMenuMargins/Control/VBoxContainer"]
+[node name="GridContainer" type="GridContainer" parent="MainMenuMargins/Control/MarginContainer/VBoxContainer"]
 layout_mode = 2
+columns = 2
+
+[node name="ManualButton" type="Button" parent="MainMenuMargins/Control/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "TR_MANUAL"
+script = ExtResource("2_330wo")
+key = "manual"
+
+[node name="CompendiumButton2" type="Button" parent="MainMenuMargins/Control/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 text = "TR_COMPENDIUM"
 script = ExtResource("2_330wo")
 key = "compendium"
 
-[node name="CreditsButton" type="Button" parent="MainMenuMargins/Control/VBoxContainer"]
+[node name="CreditsButton" type="Button" parent="MainMenuMargins/Control/MarginContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
 text = "TR_CREDIT_TITLE"
 script = ExtResource("2_330wo")
 key = "credits"
 
-[node name="QuitButton" type="Button" parent="MainMenuMargins/Control/VBoxContainer"]
+[node name="QuitButton" type="Button" parent="MainMenuMargins/Control/MarginContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
 text = "TR_END"
 script = ExtResource("2_330wo")
 key = "kill"
@@ -247,7 +258,7 @@ script = SubResource("GDScript_ac2is")
 port = NodePath("../../GridContainer/Port")
 host = NodePath("../../GridContainer/Adress")
 
-[connection signal="pressed" from="MainMenuMargins/Control/VBoxContainer/PlayButton" to="MainMenuMargins/Control/VBoxContainer/PlayButton" method="_on_pressed"]
+[connection signal="pressed" from="MainMenuMargins/Control/MarginContainer/VBoxContainer/PlayButton" to="MainMenuMargins/Control/MarginContainer/VBoxContainer/PlayButton" method="_on_pressed"]
 [connection signal="text_changed" from="ConnectMenu/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/GridContainer/Port" to="ConnectMenu/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/GridContainer/Port" method="_on_text_changed"]
 [connection signal="pressed" from="ConnectMenu/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/but_host" to="ConnectMenu/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/but_host" method="_on_pressed"]
 [connection signal="pressed" from="ConnectMenu/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/but_join" to="ConnectMenu/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/but_join" method="_on_pressed"]

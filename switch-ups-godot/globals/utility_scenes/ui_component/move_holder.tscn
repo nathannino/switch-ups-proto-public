@@ -16,7 +16,7 @@ func set_actions(actions : Array, max_cost : int = -1) :
 		var action = actions[index]
 		var instance = template.instantiate()
 		instance.set_action(action)
-		if action.cost > max_cost and max_cost >= 0 : 
+		if action.cost > max_cost and max_cost >= 0 and action.cost > 0 : 
 			instance.set_button_disabled(true)
 		add_child(instance)
 		instance.pressed.connect(func (_action : ms_action) : action_pressed(index,_action))

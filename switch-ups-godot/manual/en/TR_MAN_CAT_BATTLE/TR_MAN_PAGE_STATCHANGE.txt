@@ -1,0 +1,5 @@
+[center][font_size=27]Stat changes[/font_size][/center]
+
+When using a move that changes a stat, each level will change that stat by 20 points.
+
+The exception is the luck stat, where it changes by 5 points instead.

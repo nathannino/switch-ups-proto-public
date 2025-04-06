@@ -1,0 +1,13 @@
+[center][font_size=27]Rotating[/font_size][/center]
+Each side has 3 spirits on the field at all times. However, only the spirit at the front can use an action, as it is the selected spirit. But what if you want to use the actions of the other two spirits?
+
+[img]res://manual/images/en/playerside.png[/img]
+
+That's where rotating saves the day. By clicking the [bgcolor=lightblue]Rotate Left[/bgcolor] and [bgcolor=lightblue]Rotate Right[/bgcolor] buttons, you will change the selected spirit. Left goes counter-clockwise while right goes clockwise.
+
+You can tell which spirit is selected, as the indicators are white instead of yellow.
+
+Once both sides have locked in their actions, the turn will start by putting the selected spirit at the front. Only after both side's selected spirit are at the front of their respective teams will the turn order start taking effect. As such, it might be advantagous to rotate a spirit with no hp left to avoid taking damage.
+
+[font_size=25][color=red]Warning :[/color][/font_size]
+Rotating does have a hidden cost. On the turn you rotate, you will suffer a -2 priority penalty. In most cases, a player that rotates will end up moving after a player that doesn't rotate.

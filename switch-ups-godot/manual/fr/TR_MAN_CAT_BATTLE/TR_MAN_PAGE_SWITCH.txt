@@ -1,0 +1,16 @@
+[center][font_size=27]Échanger[/font_size][/center]
+Chaque équipe dispose de trois esprits sur le terrain en permanence. Cependant, chaque équipe est composée de cinq esprits, et non de trois. Alors, comment utiliser les deux autres?
+
+[img]res://manual/images/fr/playerside.png[/img]
+
+By switching! Press the [bgcolor=lightblue]Swap[/bgcolor] option to begin
+En échangeant! Appuyer sur l'option [bgcolor=lightblue]Échanger[/bgcolor] pour commencer.
+
+[img]res://manual/images/fr/switchspr.png[/img]
+
+Lors d'un changement, vous pouvez sélectionner l'un des trois esprits sur le terrain et l'un des deux esprits en réserve. Confirmez votre sélection et, lorsque les deux côté auront confirmé leur action pour le tour, l'esprit sélectionné sur le terrain et celui en réserve échangeront leurs positions.
+
+[font_size=25][color=red]Avertissement :[/color][/font_size]
+Changer d'action est considéré comme une action. Il a une priorité de +99, coûte 0 point d'énergie et se trouve à la même position pour tous les esprits, mais c'est tous de même une action
+Par conséquent, vous ne pouvez pas changer d'action et effectuer une autre action au cours du même tour.
+En fait, c'est l'action à la position -2.
