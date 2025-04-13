@@ -102,7 +102,7 @@ func _on_grid_container_resized() -> void:
 	pass # Replace with function body.
 "
 
-[node name="SpiritSummary" type="Control" node_paths=PackedStringArray("label_name", "sprite", "label_type", "label_health", "label_concrete", "label_abstract", "label_defense", "label_speed", "label_luck", "move_holder", "spirit_label", "spirit_button")]
+[node name="SpiritSummary" type="Control" node_paths=PackedStringArray("label_name", "sprite", "label_type", "label_health", "label_concrete", "label_abstract", "label_defense", "label_speed", "label_luck", "label_priority", "move_holder", "spirit_label", "spirit_button")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -119,6 +119,7 @@ label_abstract = NodePath("PanelContainer/ScrollContainer/MarginContainer/GridCo
 label_defense = NodePath("PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/GridContainer/VBoxContainer2/Defense")
 label_speed = NodePath("PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/GridContainer/VBoxContainer2/Speed")
 label_luck = NodePath("PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/GridContainer/VBoxContainer2/Luck")
+label_priority = NodePath("PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/GridContainer/VBoxContainer2/Priority")
 move_holder = NodePath("PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/GridContainer/MarginContainer/VBoxContainer/MoveHolder")
 spirit_label = NodePath("PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/GridContainer/VBoxContainer2/EquipLabel")
 spirit_button = NodePath("PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/GridContainer/VBoxContainer2/MonsterButton")
@@ -237,6 +238,11 @@ size_flags_horizontal = 3
 fit_content = true
 
 [node name="Luck" type="RichTextLabel" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/GridContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+fit_content = true
+
+[node name="Priority" type="RichTextLabel" parent="PanelContainer/ScrollContainer/MarginContainer/GridContainer/MarginContainer/GridContainer/VBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 fit_content = true

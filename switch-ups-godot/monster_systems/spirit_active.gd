@@ -76,6 +76,15 @@ var luck_change : int :
 		_luck_change = value
 		luck_changed.emit(old,value)
 const LUCK_CHANGE_MULTI = 5
+
+var _priority_change : int
+signal priority_changed(old,new)
+var priority_change : int :
+	get : return _luck_change
+	set(value) :
+		var old = _luck_change
+		_luck_change = value
+		luck_changed.emit(old,value)
 #regionend
 
 var is_defending = false
@@ -92,6 +101,7 @@ func read_dict(_data : Dictionary) -> void :
 	defense_change = _data["def"]
 	speed_change = _data["speed"]
 	luck_change = _data["luck"]
+	priority_change = _data["priority"]
 
 func to_dict() -> Dictionary :
 	return {
@@ -105,7 +115,8 @@ func to_dict() -> Dictionary :
 		"atk_abs" = atk_abstract_change,
 		"def" = defense_change,
 		"speed" = speed_change,
-		"luck" = luck_change
+		"luck" = luck_change,
+		"priority" = priority_change,
 	}
 
 # We are not sending over a resource omg did you know resource files can have arbitrary code inside? scary.
@@ -199,4 +210,4 @@ func get_luck() :
 	return SpiritDictionary.spirits[key].luck + (luck_change * LUCK_CHANGE_MULTI)
 
 func get_speed() :
-	return SpiritDictionary.spirits[key].speed + (speed_change * SPEED_CHANGE_MULTI)
+	return SpiritDictionary.spirits[key].speed + (speed_change * SPEED_CHANGE_MULTI)\

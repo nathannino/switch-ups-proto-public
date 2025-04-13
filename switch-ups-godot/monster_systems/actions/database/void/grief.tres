@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="ms_action" load_steps=8 format=3 uid="uid://bt8wdtcovpm1m"]
+
+[ext_resource type="Script" uid="uid://csiv0ccgqvmtb" path="res://monster_systems/actions/resources_scripts/components/action_component.gd" id="1_myoy1"]
+[ext_resource type="Script" uid="uid://cuoh85b8m5ubn" path="res://monster_systems/actions/resources_scripts/action.gd" id="2_h17ak"]
+[ext_resource type="Script" uid="uid://b5o4adhfhkldn" path="res://monster_systems/actions/resources_scripts/components/change_stat_level/ac_ch_stat_level.gd" id="2_imjbg"]
+[ext_resource type="Script" uid="uid://tratffjr38fv" path="res://monster_systems/actions/resources_scripts/components/attack_enemy/ac_attack_enemy.gd" id="3_w4s06"]
+
+[sub_resource type="Resource" id="Resource_aj24x"]
+script = ExtResource("2_imjbg")
+stat = 2
+level_change = -4
+metadata/_custom_type_script = "uid://b5o4adhfhkldn"
+
+[sub_resource type="Resource" id="Resource_e1pa3"]
+script = ExtResource("2_imjbg")
+stat = 0
+level_change = 4
+metadata/_custom_type_script = "uid://b5o4adhfhkldn"
+
+[sub_resource type="Resource" id="Resource_vv5yg"]
+script = ExtResource("3_w4s06")
+base_atk = 70
+atk_flavor = 1
+metadata/_custom_type_script = "uid://tratffjr38fv"
+
+[resource]
+script = ExtResource("2_h17ak")
+key = "greif"
+name = "TR_ACT_GRIEF"
+type = 4
+cost = 2
+priority = 0
+effects = Array[ExtResource("1_myoy1")]([SubResource("Resource_aj24x"), SubResource("Resource_e1pa3"), SubResource("Resource_vv5yg")])
+metadata/_custom_type_script = "uid://cuoh85b8m5ubn"

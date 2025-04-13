@@ -330,6 +330,7 @@ func _ready() :
 	ClientWrapperAutoload.battle_team_synced.connect(_set_team_state)
 	ClientWrapperAutoload.battle_logs.connect(func(_logs) :
 		battlelog_start.emit.call_deferred()
+		summary_container.hide()
 		battle_logs = _logs
 	)
 	ClientWrapperAutoload.request_data.connect(handle_request_data)

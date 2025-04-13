@@ -1,11 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://b5y2cne36yg2v"]
+[gd_scene load_steps=2 format=3 uid="uid://dw6bamhoodhsd"]
 
 [sub_resource type="GDScript" id="GDScript_wfchc"]
 script/source = "extends VBoxContainer
 
 @export var text : RichTextLabel
 
-var component : ms_ac_ch_stat_level
+var component : ms_ac_temp_priority
 
 func _notification(what: int) -> void:
 	match what :
@@ -20,7 +20,7 @@ func translate() -> void :
 	if component == null :
 		return
 	
-	text.text = tr(\"TR_AC_CH_STAT_LEVEL_ASC\" if component.level_change > 0 else \"TR_AC_CH_STAT_LEVEL_DESC\").format({\"stat\":ms_constants.stats_to_bbcode(component.stat),\"lv\":abs(component.level_change)})
+	text.text = tr(\"TR_AC_TEMP_PRIORITY_ASC\" if component.level_change > 0 else \"TR_AC_TEMP_PRIORITY_DESC\").format({\"lv\":abs(component.level_change)})
 "
 
 [node name="LuckDesc" type="VBoxContainer" node_paths=PackedStringArray("text")]

@@ -40,6 +40,8 @@ func _rotate_to_front_startturn() :
 				"new_index" : ms_constants.position_to_index(ms_constants.POSITION.CENTER),
 			})
 
+const PRIORITY_MULTI = 1000
+
 # We are now at the center
 func _determine_move_order() :
 	for index in range(player_order_data.size()) :
@@ -47,9 +49,12 @@ func _determine_move_order() :
 		var spirit = order["player_node"].team[ms_constants.position_to_index(ms_constants.POSITION.CENTER)]
 		var current_action = get_current_action(spirit,order["action_index"])
 		
-		var speed = (order["priority_debuff"]*1000)
+		var speed = (order["priority_debuff"]*PRIORITY_MULTI)
+		speed += spirit.priority_change * PRIORITY_MULTI
 		speed += spirit.get_speed()
-		speed += current_action.priority * 1000
+		speed += current_action.priority * PRIORITY_MULTI
+		
+		spirit.priority_change = 0 # Reset priority buff before any actions has the time to change it.
 		
 		order["final_speed_stat"] = speed
 		order["speedcalc_initial_order"] = index

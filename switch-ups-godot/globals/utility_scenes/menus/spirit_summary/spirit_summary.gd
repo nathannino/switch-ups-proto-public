@@ -9,6 +9,7 @@ extends Control
 @export var label_defense : RichTextLabel
 @export var label_speed : RichTextLabel
 @export var label_luck : RichTextLabel
+@export var label_priority : RichTextLabel
 @export var move_holder : Container
 
 @export var spirit_label : Label
@@ -61,6 +62,7 @@ func set_summary_inactive(_spirit : ms_spirit) :
 	label_defense.text = tr("TR_SUMMARY_DEFENSE").format({"defense":spirit.defense})
 	label_speed.text = tr("TR_SUMMARY_SPEED").format({"speed":spirit.speed})
 	label_luck.text = tr("TR_SUMMARY_LUCK").format({"luck":spirit.luck})
+	label_priority.hide()
 	move_holder.set_actions(spirit.actions)
 	%ActionsLabel.show()
 	spirit_button.hide()
@@ -87,6 +89,12 @@ func set_summary_active(_spirit : ms_spirit_active) :
 	%ActionsLabel.show()
 	spirit_label.show()
 	spirit_button.show()
+	
+	if (spirit_active.priority_change != 0) :
+		label_priority.show()
+		label_priority.text = tr("TR_SUMMARY_PRIORITY").format({"lv":spirit_active.priority_change})
+	else :
+		label_priority.hide()
 	
 	if not _spirit.key_equip == "" :
 		spirit_button.set_spirit_inactive(SpiritDictionary.spirits[spirit_active.key_equip])

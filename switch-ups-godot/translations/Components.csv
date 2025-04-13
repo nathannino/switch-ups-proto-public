@@ -9,3 +9,5 @@ TR_AC_CH_ACTIVE;Switch position with target;Changer de position avec l’esprit 
 TR_AC_CH_ENERGY_ASC;Target gain {amount} energy;Esprit visé gagne {amount} point d’énergie
 TR_AC_CH_ENERGY_DESC;Target lose {amount} energy;Esprit visé perd {amount} point d’énergie
 TR_AC_HEAL;Heal {percent}% health to the target spirit.;Soignez {percent}% de points de vie à l'esprit ciblé.
+TR_AC_TEMP_PRIORITY_ASC;Increases the next action’s priority by {lv} points;Augmente la priorité de l'action suivante de {lv} points
+TR_AC_TEMP_PRIORITY_DESC;Decreases the next action’s priority by {lv} points;Diminue la priorité de l'action suivante de {lv} points

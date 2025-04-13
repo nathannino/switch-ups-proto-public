@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="ms_spirit" load_steps=8 format=3 uid="uid://co5cncs6glm72"]
+
+[ext_resource type="Script" uid="uid://cuoh85b8m5ubn" path="res://monster_systems/actions/resources_scripts/action.gd" id="1_0de3s"]
+[ext_resource type="Resource" uid="uid://cea7mp2f86a1h" path="res://monster_systems/actions/database/normal/reg_atk_con.tres" id="2_iy8gx"]
+[ext_resource type="Script" uid="uid://dqioysnx33r70" path="res://monster_systems/spirits/resources_scripts/spirit.gd" id="2_qafg6"]
+[ext_resource type="Resource" uid="uid://5tlas3rgwkvj" path="res://monster_systems/actions/database/void/fall.tres" id="3_cfrt6"]
+[ext_resource type="Resource" uid="uid://daialfvccb4qd" path="res://monster_systems/actions/database/void/collapse.tres" id="3_inmeg"]
+[ext_resource type="Resource" uid="uid://bt8wdtcovpm1m" path="res://monster_systems/actions/database/void/grief.tres" id="4_cfrt6"]
+[ext_resource type="Texture2D" uid="uid://u6oll02bvk2x" path="res://monster_systems/spirits/art/hole.png" id="6_xuik8"]
+
+[resource]
+script = ExtResource("2_qafg6")
+key = "hole"
+name = "TR_SPIRIT_HOLE"
+sprite = ExtResource("6_xuik8")
+type = 4
+health = 400
+atk_concrete = 80
+atk_abstract = 100
+defense = 50
+speed = 50
+luck = 0
+actions = Array[ExtResource("1_0de3s")]([ExtResource("2_iy8gx"), ExtResource("3_cfrt6"), ExtResource("4_cfrt6"), ExtResource("3_inmeg")])
+metadata/_custom_type_script = "uid://dqioysnx33r70"

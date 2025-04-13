@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="ms_action" load_steps=5 format=3 uid="uid://dp5we0axf0mxc"]
+
+[ext_resource type="Script" uid="uid://csiv0ccgqvmtb" path="res://monster_systems/actions/resources_scripts/components/action_component.gd" id="1_hjsyg"]
+[ext_resource type="Script" uid="uid://cuoh85b8m5ubn" path="res://monster_systems/actions/resources_scripts/action.gd" id="2_bm6on"]
+[ext_resource type="Script" uid="uid://iin4sub8c3be" path="res://monster_systems/actions/resources_scripts/components/temp_priority/ac_temp_priority.gd" id="2_ovywf"]
+
+[sub_resource type="Resource" id="Resource_ltjgu"]
+script = ExtResource("2_ovywf")
+level_change = 1
+metadata/_custom_type_script = "uid://iin4sub8c3be"
+
+[resource]
+script = ExtResource("2_bm6on")
+key = "hunt"
+name = "TR_ACT_HUNT"
+type = 1
+cost = 2
+priority = 0
+effects = Array[ExtResource("1_hjsyg")]([SubResource("Resource_ltjgu")])
+metadata/_custom_type_script = "uid://cuoh85b8m5ubn"

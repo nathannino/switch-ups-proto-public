@@ -43,7 +43,7 @@ project/assembly_name="Switch-ups"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/markdownlabel/plugin.cfg")
+enabled=PackedStringArray()
 
 [filesystem]
 
