@@ -67,3 +67,6 @@ TR_MANUAL;Manual;Manuel
 TR_SUMMARY_PRIORITY;Priority : {val};Priorité : {val}
 TR_MSBUTTON_NONE;No Spirits Selected;Aucun esprit sélectionné
 TR_CHANGE;Change;Changer
+TR_OPTIONS_CAMSTATIC;Disable camera movements : ;Désactiver les mouvements de la caméra :
+TR_WAIT_OTHER_PLAYER;Waiting for other player;En attente de l’autre joueur
+TR_GENERIC_CANCEL;Cancel;Annuler

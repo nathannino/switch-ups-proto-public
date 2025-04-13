@@ -469,12 +469,12 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="AwaitCancel/MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "Waiting for other player"
+text = "TR_WAIT_OTHER_PLAYER"
 horizontal_alignment = 1
 
 [node name="Button" type="Button" parent="AwaitCancel/MarginContainer/VBoxContainer" node_paths=PackedStringArray("battle_root")]
 layout_mode = 2
-text = "Cancel"
+text = "TR_GENERIC_CANCEL"
 script = SubResource("GDScript_lmsix")
 battle_root = NodePath("../../../..")
 
