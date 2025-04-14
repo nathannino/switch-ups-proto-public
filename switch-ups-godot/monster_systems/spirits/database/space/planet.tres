@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="ms_spirit" load_steps=8 format=3 uid="uid://dxeaeanmnisjf"]
+
+[ext_resource type="Script" uid="uid://cuoh85b8m5ubn" path="res://monster_systems/actions/resources_scripts/action.gd" id="1_capcb"]
+[ext_resource type="Script" uid="uid://dqioysnx33r70" path="res://monster_systems/spirits/resources_scripts/spirit.gd" id="2_gnr56"]
+[ext_resource type="Resource" uid="uid://cea7mp2f86a1h" path="res://monster_systems/actions/database/normal/reg_atk_con.tres" id="2_t74l1"]
+[ext_resource type="Resource" uid="uid://bj8j5rxlx3j3c" path="res://monster_systems/actions/database/construct/maintenance.tres" id="3_d4pab"]
+[ext_resource type="Resource" uid="uid://bpqd6ji4kno74" path="res://monster_systems/actions/database/space/supernova.tres" id="4_60rwr"]
+[ext_resource type="Resource" uid="uid://bdpdhd520e7my" path="res://monster_systems/actions/database/space/roach.tres" id="5_k0n8e"]
+[ext_resource type="Texture2D" uid="uid://c1o1qxlhwec5e" path="res://monster_systems/spirits/art/planet.png" id="7_d4pab"]
+
+[resource]
+script = ExtResource("2_gnr56")
+key = "planet"
+name = "TR_SPIRIT_PLANET"
+sprite = ExtResource("7_d4pab")
+type = 7
+health = 275
+atk_concrete = 125
+atk_abstract = 75
+defense = 125
+speed = 75
+luck = 10
+actions = Array[ExtResource("1_capcb")]([ExtResource("2_t74l1"), ExtResource("3_d4pab"), ExtResource("4_60rwr"), ExtResource("5_k0n8e")])
+metadata/_custom_type_script = "uid://dqioysnx33r70"

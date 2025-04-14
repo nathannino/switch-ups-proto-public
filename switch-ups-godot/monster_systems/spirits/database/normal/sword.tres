@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="ms_spirit" load_steps=8 format=3 uid="uid://dyx2d1gqvrsmm"]
+
+[ext_resource type="Script" uid="uid://cuoh85b8m5ubn" path="res://monster_systems/actions/resources_scripts/action.gd" id="1_vj6vy"]
+[ext_resource type="Resource" uid="uid://cea7mp2f86a1h" path="res://monster_systems/actions/database/normal/reg_atk_con.tres" id="2_01yyx"]
+[ext_resource type="Script" uid="uid://dqioysnx33r70" path="res://monster_systems/spirits/resources_scripts/spirit.gd" id="2_fvyfx"]
+[ext_resource type="Resource" uid="uid://n7ipeend6vgy" path="res://monster_systems/actions/database/normal/slash.tres" id="3_6nul2"]
+[ext_resource type="Resource" uid="uid://beu45wfgfrwkc" path="res://monster_systems/actions/database/meta/prep_charged_atk_con.tres" id="4_8pr4p"]
+[ext_resource type="Resource" uid="uid://oe7tng26gklt" path="res://monster_systems/actions/database/dream/sharpening.tres" id="4_mq5xy"]
+[ext_resource type="Texture2D" uid="uid://dm16cqerm42ur" path="res://monster_systems/spirits/art/sword.png" id="6_6nul2"]
+
+[resource]
+script = ExtResource("2_fvyfx")
+key = "sword"
+name = "TR_SPIRIT_SWORD"
+sprite = ExtResource("6_6nul2")
+type = 9
+health = 200
+atk_concrete = 200
+atk_abstract = 75
+defense = 75
+speed = 100
+luck = 5
+actions = Array[ExtResource("1_vj6vy")]([ExtResource("2_01yyx"), ExtResource("3_6nul2"), ExtResource("4_mq5xy"), ExtResource("4_8pr4p")])
+metadata/_custom_type_script = "uid://dqioysnx33r70"

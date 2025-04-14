@@ -70,4 +70,4 @@ TR_CHANGE;Change;Changer
 TR_OPTIONS_CAMSTATIC;Disable camera movements : ;Désactiver les mouvements de la caméra :
 TR_WAIT_OTHER_PLAYER;Waiting for other player;En attente de l’autre joueur
 TR_GENERIC_CANCEL;Cancel;Annuler
-TR_SUMMARY_PRIORITY;Priority modifier of next action : {lv};Modificateur de priorité de la prochaine action : {lv}
+TR_SUMMARY_TEMPPRIORITY;Priority modifier of next action : {lv};Modificateur de priorité de la prochaine action : {lv}

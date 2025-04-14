@@ -30,7 +30,7 @@ var current_article : String :
 func _ready() -> void:
 	var dirs = DirAccess.get_directories_at(database_path+\"/\"+default_lang)
 	
-	print(\"Discovering Spirits\")
+	print(\"Discovering manuals (Wow I love copy pasting code =D)\")
 	for dir in dirs :
 		var dir_str = dir.replace(\"/\",\"\");
 		var _label = Label.new();

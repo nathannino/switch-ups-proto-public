@@ -1,0 +1,59 @@
+[gd_resource type="Resource" script_class="ms_action" load_steps=14 format=3 uid="uid://bdpdhd520e7my"]
+
+[ext_resource type="Script" uid="uid://csiv0ccgqvmtb" path="res://monster_systems/actions/resources_scripts/components/action_component.gd" id="1_yqbun"]
+[ext_resource type="Script" uid="uid://iin4sub8c3be" path="res://monster_systems/actions/resources_scripts/components/temp_priority/ac_temp_priority.gd" id="2_it4sh"]
+[ext_resource type="Script" uid="uid://cuoh85b8m5ubn" path="res://monster_systems/actions/resources_scripts/action.gd" id="2_rdld8"]
+[ext_resource type="Script" uid="uid://b5o4adhfhkldn" path="res://monster_systems/actions/resources_scripts/components/change_stat_level/ac_ch_stat_level.gd" id="3_2bn8a"]
+[ext_resource type="Script" uid="uid://tratffjr38fv" path="res://monster_systems/actions/resources_scripts/components/attack_enemy/ac_attack_enemy.gd" id="4_f6ub1"]
+[ext_resource type="Script" uid="uid://bedoq515h1qxa" path="res://monster_systems/actions/resources_scripts/components/select_target/ac_target.gd" id="5_8g0o7"]
+
+[sub_resource type="Resource" id="Resource_dok88"]
+script = ExtResource("2_it4sh")
+level_change = 3
+metadata/_custom_type_script = "uid://iin4sub8c3be"
+
+[sub_resource type="Resource" id="Resource_k211u"]
+script = ExtResource("3_2bn8a")
+stat = 2
+level_change = -5
+metadata/_custom_type_script = "uid://b5o4adhfhkldn"
+
+[sub_resource type="Resource" id="Resource_y8do5"]
+script = ExtResource("4_f6ub1")
+base_atk = 100
+atk_flavor = 0
+metadata/_custom_type_script = "uid://tratffjr38fv"
+
+[sub_resource type="Resource" id="Resource_ulcxr"]
+script = ExtResource("4_f6ub1")
+base_atk = 100
+atk_flavor = 0
+metadata/_custom_type_script = "uid://tratffjr38fv"
+
+[sub_resource type="Resource" id="Resource_4ws6m"]
+script = ExtResource("3_2bn8a")
+stat = 2
+level_change = -5
+metadata/_custom_type_script = "uid://b5o4adhfhkldn"
+
+[sub_resource type="Resource" id="Resource_hypi2"]
+script = ExtResource("2_it4sh")
+level_change = 3
+metadata/_custom_type_script = "uid://iin4sub8c3be"
+
+[sub_resource type="Resource" id="Resource_elh73"]
+script = ExtResource("5_8g0o7")
+target_type = 8
+during_turn = false
+action = Array[ExtResource("1_yqbun")]([SubResource("Resource_ulcxr"), SubResource("Resource_4ws6m"), SubResource("Resource_hypi2")])
+metadata/_custom_type_script = "uid://bedoq515h1qxa"
+
+[resource]
+script = ExtResource("2_rdld8")
+key = "roach"
+name = "TR_ACT_ROACH"
+type = 7
+cost = 5
+priority = -1
+effects = Array[ExtResource("1_yqbun")]([SubResource("Resource_dok88"), SubResource("Resource_k211u"), SubResource("Resource_y8do5"), SubResource("Resource_elh73")])
+metadata/_custom_type_script = "uid://cuoh85b8m5ubn"

@@ -92,7 +92,7 @@ func set_summary_active(_spirit : ms_spirit_active) :
 	
 	if (spirit_active.priority_change != 0) :
 		label_priority.show()
-		label_priority.text = tr("TR_SUMMARY_PRIORITY").format({"lv":spirit_active.priority_change})
+		label_priority.text = tr("TR_SUMMARY_TEMPPRIORITY").format({"lv":spirit_active.priority_change})
 	else :
 		label_priority.hide()
 	

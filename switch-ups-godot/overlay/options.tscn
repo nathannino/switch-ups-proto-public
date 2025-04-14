@@ -170,6 +170,7 @@ func change_scene() :
 "
 
 [node name="Control" type="Control" node_paths=PackedStringArray("return_main_menu_button")]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
