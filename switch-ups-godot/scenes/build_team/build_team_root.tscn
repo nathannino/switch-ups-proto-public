@@ -82,11 +82,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		if event.keycode == KEY_F5 :
 			var sorted_array = SpiritDictionary.spirits.values()
 			for index in range(get_child_count()) :
-				get_child(index).set_monster(ms_spirit_active.from_spirit(sorted_array[index]))
+				get_child(index).set_monster(ms_spirit_active.from_spirit(sorted_array[index]),get_options_array())
 		if event.keycode == KEY_F6 :
 			var sorted_array = SpiritDictionary.spirits.values()
 			for index in range(get_child_count()) :
-				get_child(index).set_monster(ms_spirit_active.from_spirit(sorted_array[sorted_array.size()-get_child_count()+index]))
+				get_child(index).set_monster(ms_spirit_active.from_spirit(sorted_array[sorted_array.size()-get_child_count()+index]),get_options_array())
 		ready_button.check_deactivated()
 
 # Called when the node enters the scene tree for the first time.
@@ -97,7 +97,7 @@ func _ready() -> void:
 		child.hide_extra_info()
 	var last_team = DeferredLoadingManager.get_holding_data(DeferredLoadingManager.add_prefix(ClientWrapperAutoload.AWAIT_PREFIX,TcpPayload.TYPE.TEAMBUILD_LAST_TEAM))
 	for index in range(last_team.size()) :
-		get_child(index).set_monster(ms_spirit_active.from_dict(last_team[index]))
+		get_child(index).set_monster(ms_spirit_active.from_dict(last_team[index]),get_options_array())
 	ready_button.check_deactivated()
 	ClientWrapperAutoload.teambuilder_request_team.connect(send_team_to_server)
 
