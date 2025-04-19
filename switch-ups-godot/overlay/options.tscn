@@ -40,6 +40,10 @@ func _input(event: InputEvent) -> void:
 		if visible :
 			hide_reset()
 		else :
+			if (ClientWrapperAutoload.connected) :
+				return_main_menu_button.show()
+			else :
+				return_main_menu_button.hide()
 			show()
 
 

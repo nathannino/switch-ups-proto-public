@@ -29,7 +29,7 @@ TR_SUMMARY_COST;Cost : {cost};Coût : {cost}
 TR_SUMMARY_EQUIP;Equipped spirit;Esprit équipé
 TR_SUMMARY_CLEAR;Clear selection;Effacer la sélection
 TR_OPTIONS_RESUME;Resume;Retour au jeu
-TR_OPTIONS_MAINMENU;Return to main menu;Retourner au menu principal
+TR_OPTIONS_MAINMENU;Disconnect;Se déconnecter
 TR_OPTIONS_QUIT;Close game;Fermer le jeu
 TR_OPTIONS_LOGS;Battle log;Historique du combat
 TR_MSG_ERROR_TITLE;Client had an error;Le client a eu un erreur
