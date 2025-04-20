@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://d2lcdsh40reie"]
+[gd_scene load_steps=16 format=3 uid="uid://d2lcdsh40reie"]
 
 [ext_resource type="Script" uid="uid://1yl6aj3ibwlh" path="res://globals/simple_scripts/button_change_scene_simple.gd" id="1_57t8v"]
 [ext_resource type="Theme" uid="uid://bfeafrooqeg54" path="res://ScreenWide.tres" id="1_djnj0"]
@@ -126,6 +126,42 @@ func _on_pressed() -> void:
 	pass # Replace with function body.
 "
 
+[sub_resource type="GDScript" id="GDScript_lciwm"]
+script/source = "extends HSlider
+
+@export var label : Label
+@export var bus : String
+
+func _on_value_changed(value: float) -> void:
+	label.text = str(int(value * 100)) + \"%\"
+	AudioServer.set_bus_volume_linear(AudioServer.get_bus_index(bus),value)
+	pass # Replace with function body.
+"
+
+[sub_resource type="GDScript" id="GDScript_1l884"]
+script/source = "extends HSlider
+
+@export var label : Label
+@export var bus : String
+
+func _on_value_changed(value: float) -> void:
+	label.text = str(int(value * 100)) + \"%\"
+	AudioServer.set_bus_volume_linear(AudioServer.get_bus_index(bus),value)
+	pass # Replace with function body.
+"
+
+[sub_resource type="GDScript" id="GDScript_djw82"]
+script/source = "extends HSlider
+
+@export var label : Label
+@export var bus : String
+
+func _on_value_changed(value: float) -> void:
+	label.text = str(int(value * 100)) + \"%\"
+	AudioServer.set_bus_volume_linear(AudioServer.get_bus_index(bus),value)
+	pass # Replace with function body.
+"
+
 [sub_resource type="GDScript" id="GDScript_whq1p"]
 script/source = "extends CheckBox
 
@@ -174,7 +210,6 @@ func change_scene() :
 "
 
 [node name="Control" type="Control" node_paths=PackedStringArray("return_main_menu_button")]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -250,7 +285,7 @@ alignment = 1
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 min_value = 0.5
-max_value = 1.0
+max_value = 1.2
 step = 0.1
 value = 1.0
 script = SubResource("GDScript_klnsa")
@@ -271,6 +306,93 @@ expand_icon = true
 script = SubResource("GDScript_y8gkt")
 slider = NodePath("../UIScale/HSlider")
 label = NodePath("../Label2")
+
+[node name="VolumeMaster" type="HBoxContainer" parent="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/VolumeMaster"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "TR_OPTIONS_VOLUME_MASTER"
+
+[node name="UIScale" type="VBoxContainer" parent="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/VolumeMaster"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="HSlider" type="HSlider" parent="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/VolumeMaster/UIScale" node_paths=PackedStringArray("label")]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+max_value = 1.0
+step = 0.05
+value = 1.0
+script = SubResource("GDScript_lciwm")
+label = NodePath("../../Label2")
+bus = "Master"
+
+[node name="Label2" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/VolumeMaster"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "100%"
+
+[node name="VolumeMusic" type="HBoxContainer" parent="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/VolumeMusic"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "TR_OPTIONS_VOLUME_MUSIC"
+
+[node name="UIScale" type="VBoxContainer" parent="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/VolumeMusic"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="HSlider" type="HSlider" parent="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/VolumeMusic/UIScale" node_paths=PackedStringArray("label")]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+max_value = 1.0
+step = 0.05
+value = 1.0
+script = SubResource("GDScript_1l884")
+label = NodePath("../../Label2")
+bus = "BGM"
+
+[node name="Label2" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/VolumeMusic"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "100%"
+
+[node name="VolumeEffects" type="HBoxContainer" parent="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/VolumeEffects"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "TR_OPTIONS_VOLUME_EFFECTS"
+
+[node name="UIScale" type="VBoxContainer" parent="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/VolumeEffects"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="HSlider" type="HSlider" parent="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/VolumeEffects/UIScale" node_paths=PackedStringArray("label")]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+max_value = 1.0
+step = 0.05
+value = 1.0
+script = SubResource("GDScript_djw82")
+label = NodePath("../../Label2")
+bus = "Effects"
+
+[node name="Label2" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/VolumeEffects"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "100%"
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -311,6 +433,9 @@ block_change_scene = true
 [connection signal="item_selected" from="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/OptionButton" to="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/OptionButton" method="_on_item_selected"]
 [connection signal="drag_ended" from="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/UIScale/HSlider" to="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/UIScale/HSlider" method="_on_drag_ended"]
 [connection signal="pressed" from="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/Button" to="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/Button" method="_on_pressed"]
+[connection signal="value_changed" from="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/VolumeMaster/UIScale/HSlider" to="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/VolumeMaster/UIScale/HSlider" method="_on_value_changed"]
+[connection signal="drag_ended" from="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/VolumeMusic/UIScale/HSlider" to="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/VolumeMusic/UIScale/HSlider" method="_on_drag_ended"]
+[connection signal="drag_ended" from="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/VolumeEffects/UIScale/HSlider" to="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/VolumeEffects/UIScale/HSlider" method="_on_drag_ended"]
 [connection signal="toggled" from="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2/OPTIONS_CAMSTATIC" to="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2/OPTIONS_CAMSTATIC" method="_on_toggled"]
 [connection signal="pressed" from="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/Button4" to="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/Button4" method="_on_pressed"]
 [connection signal="pressed" from="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/Button2" to="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/Button2" method="_on_pressed"]

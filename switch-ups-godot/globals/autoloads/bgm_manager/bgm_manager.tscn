@@ -8,7 +8,9 @@ fade_sigular_duration = 1.0
 crossfade_duration = 1.0
 
 [node name="AudioStreamPlayerOne" type="AudioStreamPlayer" parent="."]
+bus = &"BGM"
 playback_type = 1
 
 [node name="AudioStreamPlayerTwo" type="AudioStreamPlayer" parent="."]
+bus = &"BGM"
 playback_type = 1

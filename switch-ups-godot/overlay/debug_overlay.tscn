@@ -8,7 +8,7 @@ script/source = "extends Control
 func _ready() -> void:
 	$HBoxContainer/VersionInformation.text = \"%s : %s - Protocol version %s\" % [game_info.project_name, game_info.flavor, game_info.version + (\"_dev\" if game_info.dev else \"\")]
 	if not game_info.dev :
-		$HBoxContainer/VersionInformation.hide()
+		#$HBoxContainer/VersionInformation.hide()
 		$DevWarning.hide()
 	pass # Replace with function body.
 

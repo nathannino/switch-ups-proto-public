@@ -43,16 +43,17 @@ func state_endfight() :
 		send(TcpPayload.new().set_type(TcpPayload.TYPE.RESULT_TEAMS).set_content(teams))
 	)
 
-func state_startbattle(scene_key : String) :
+func state_startbattle(scene_key : String, music_key : String) :
 	reset_team_stats()
 	in_battle = true
 	battle_loaded = false
 	await_endturn = false
 	selected_action_dict = null
 	team_id = get_parent().get_children().find(self)
-	change_scene("battle_v1","fade_to_black",[TcpPayload.TYPE.BATTLE_SETUP_PLAYERID,TcpPayload.TYPE.BATTLE_SETUP_BATTLEENV, TcpPayload.TYPE.BATTLE_SETUP_SYNCTEAM],func () :
+	change_scene("battle_v1","fade_to_black",[TcpPayload.TYPE.BATTLE_SETUP_PLAYERID,TcpPayload.TYPE.BATTLE_SETUP_BATTLEENV, TcpPayload.TYPE.BATTLE_SETUP_SYNCTEAM, TcpPayload.TYPE.BATTLE_SETUP_MUSICID],func () :
 		send(TcpPayload.new().set_type(TcpPayload.TYPE.BATTLE_SETUP_PLAYERID).set_content(get_index()))
 		send(TcpPayload.new().set_type(TcpPayload.TYPE.BATTLE_SETUP_BATTLEENV).set_content(scene_key))
+		send(TcpPayload.new().set_type(TcpPayload.TYPE.BATTLE_SETUP_MUSICID).set_content(music_key))
 		sync_teams()
 	)
 

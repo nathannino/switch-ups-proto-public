@@ -36,12 +36,14 @@ func _ready() :
 		we_lost()
 
 func we_lost() :
+	BgmManager.play(\"bg_defeat\",BgmManager.TRANSITIONS.FADE_OUT_IN)
 	lose_bg.show()
 	win_bg.hide()
 	world.we_lost()
 	win_lose_label.text = \"TR_LOST\"
 
 func we_won() :
+	BgmManager.play(\"bg_victory\",BgmManager.TRANSITIONS.FADE_OUT_IN)
 	lose_bg.hide()
 	win_bg.show()
 	world.we_won()

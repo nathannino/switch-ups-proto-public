@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="bgm" load_steps=3 format=3 uid="uid://dkqgrwpjbl7rh"]
+
+[ext_resource type="AudioStream" uid="uid://dfywwfpn5vwlv" path="res://bgm/audio/bg_btl_05.ogg" id="1_h0k07"]
+[ext_resource type="Script" uid="uid://8kexw00pd7k1" path="res://bgm/bgm.gd" id="1_olff6"]
+
+[resource]
+script = ExtResource("1_olff6")
+name = "Wizard's Battlefield"
+key = "bg_btl_05"
+loop = ExtResource("1_h0k07")
+author = "MintoDog"
+license = 0
+source = "https://opengameart.org/content/wizards-battlefield"
+metadata/_custom_type_script = "uid://8kexw00pd7k1"

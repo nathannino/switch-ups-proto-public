@@ -215,12 +215,12 @@ func enter_log_text(_key : String, _format_vars : Dictionary = {}, _translated_f
 #endregion
 
 func _init() :
-	
 	player_id = DeferredLoadingManager.get_holding_data(DeferredLoadingManager.add_prefix(ClientWrapperAutoload.AWAIT_PREFIX,TcpPayload.TYPE.BATTLE_SETUP_PLAYERID))
 	_set_team_state(DeferredLoadingManager.get_holding_data(DeferredLoadingManager.add_prefix(ClientWrapperAutoload.AWAIT_PREFIX,TcpPayload.TYPE.BATTLE_SETUP_SYNCTEAM)))
 	ClientWrapperAutoload.battle_all_loaded.connect.call_deferred(func() :
 		preinit_complete.emit.call_deferred()
 	, CONNECT_ONE_SHOT)
+	BgmManager.stop(BgmManager.TRANSITIONS.FADE_OUT_CUT_IN)
 	
 # this is so dumb...
 func _deferred_init() :
@@ -334,6 +334,7 @@ func _ready() :
 		battle_logs = _logs
 	)
 	ClientWrapperAutoload.request_data.connect(handle_request_data)
+	BgmManager.play(DeferredLoadingManager.get_holding_data(DeferredLoadingManager.add_prefix(ClientWrapperAutoload.AWAIT_PREFIX,TcpPayload.TYPE.BATTLE_SETUP_MUSICID)),BgmManager.TRANSITIONS.CUT)
 	
 	timer.wait_time = 0.5 # Simulate a battle begin animation or smth
 	timer.timeout.connect(func () : 

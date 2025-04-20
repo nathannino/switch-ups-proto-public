@@ -4,6 +4,8 @@ extends Node
 @export var error_root : Control
 @export var battle_subscenes : scene_dictionary
 
+@export var battle_music : Array[bgm]
+
 const MAX_PLAYERS = 2
 
 enum BATTLE_STEPS {
@@ -46,9 +48,10 @@ func set_state_teambuilding() :
 func set_state_battle_start() :
 	battle_next = BATTLE_STEPS.NONE
 	var battle_scene_def = battle_subscenes.get_scene_dictionary().values().pick_random()
+	var battle_music = battle_music.pick_random()
 	
 	for child in $ServerMain.get_children() :
-		child.state_startbattle(battle_scene_def.key)
+		child.state_startbattle(battle_scene_def.key,battle_music.key)
 
 func set_state_battle_end() :
 	for child in $ServerMain.get_children() :
