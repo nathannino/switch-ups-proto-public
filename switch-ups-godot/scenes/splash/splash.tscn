@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://ci4fwae3invkg"]
 
 [ext_resource type="Script" uid="uid://t2pg4bumrbni" path="res://scenes/splash/splash.gd" id="1_3h00b"]
-[ext_resource type="Texture2D" uid="uid://css5cwgy07oyi" path="res://scenes/splash/LogoN_Gray .png" id="1_42k42"]
-[ext_resource type="Texture2D" uid="uid://bqjlpodu8budu" path="res://scenes/splash/CircleClassic_Gray.png" id="2_ghd4l"]
+[ext_resource type="Texture2D" uid="uid://css5cwgy07oyi" path="res://nlogo/LogoN_Gray .png" id="1_42k42"]
+[ext_resource type="Texture2D" uid="uid://bqjlpodu8budu" path="res://nlogo/CircleClassic_Gray.png" id="2_ghd4l"]
 [ext_resource type="Script" uid="uid://bh1lw5e8xsfk5" path="res://globals/simple_scripts/avatar_rotate.gd" id="4_n1tfx"]
 
 [node name="splash" type="Control"]
