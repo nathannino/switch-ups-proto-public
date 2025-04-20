@@ -113,6 +113,8 @@ func start_init() :
 						loop = true
 			if loop :
 				OS.delay_msec(1)
+			if corrupted :
+				return
 		
 	var packed_scene = ResourceLoader.load_threaded_get(path)
 	node = packed_scene.instantiate()
@@ -128,6 +130,10 @@ func start_init() :
 		_preinit_complete = true
 		increment_completed_steps()
 		preinit_complete.emit()
+
+func cancel() :
+	preinit_complete.emit.call_deferred()
+	corrupted = true
 
 func get_finished() :
 	assert(ready)

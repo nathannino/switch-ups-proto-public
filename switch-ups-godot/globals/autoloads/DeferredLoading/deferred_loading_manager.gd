@@ -183,7 +183,8 @@ func prepare_scene(scene : SceneLoadWrapper) :
 	thread.start(func() : preload_scene(scene, thread))
 
 func _end_preload_scene(_scene : SceneLoadWrapper, _thread : Thread) :
-	_scene.ready = true
+	if not _scene.corrupted :
+		_scene.ready = true
 	_decrement_workers()
 
 func preload_scene(_scene : SceneLoadWrapper, _thread : Thread) :
@@ -229,9 +230,6 @@ func change_scene(scene : SceneLoadWrapper, animation : SceneLoadWrapper) -> boo
 	if scene.corrupted :
 		printerr("Scene corrupted!")
 		return false
-	#if not current_load_target == null : #FIXME : Actually make look better than simply overriding
-		#printerr("Already switching scenes")
-	#FIXME : handle transitions n stuff
 	
 	if not can_change_scene :
 		printerr("change_scene currently prevented. Canceled scene change of : %s" % scene.path)
@@ -241,13 +239,17 @@ func change_scene(scene : SceneLoadWrapper, animation : SceneLoadWrapper) -> boo
 		$ActiveScene.remove_child(child)
 		$HoldingScene.add_child(child)
 	
+	var _old_scene = current_load_target
+	
 	current_load_target = scene
 	if current_load_transition == null :
 		current_load_transition = animation
 		current_load_scene = null
-	load_midpoint = false
-	load_endpoint = false
+		load_midpoint = false
+		load_endpoint = false
 	
 	OptionsOverlay.set_can_pause(false)
 	
+	if not _old_scene == null :
+		_old_scene.cancel()
 	return true

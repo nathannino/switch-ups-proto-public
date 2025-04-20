@@ -202,10 +202,10 @@ func change_scene() :
 	var transition = SceneLoadWrapper.create().as_transition(\"wipe_rect\").prepare()
 	OptionsOverlay.hide()
 	BgmManager.stop_override(BgmManager.TRANSITIONS.FADE_OUT_IN)
-	DeferredLoadingManager.change_scene(target,transition)
-	if block_change_scene : DeferredLoadingManager.prevent_change_scene()
-	ServerWrapper.close_server()
+	#DeferredLoadingManager.change_scene(target,transition)
+	#if block_change_scene : DeferredLoadingManager.prevent_change_scene()
 	ClientWrapperAutoload.disconnect_client()
+	ServerWrapper.close_server()
 "
 
 [node name="Control" type="Control" node_paths=PackedStringArray("return_main_menu_button")]
