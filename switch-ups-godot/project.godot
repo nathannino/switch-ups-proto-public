@@ -21,6 +21,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+ButtonSoundEffectAutoload="*res://globals/autoloads/button_sound_workaround/ButtonSoundEffectAutoload.tscn"
 DeferredLoadingManager="*res://globals/autoloads/DeferredLoading/deferred_loading_manager.tscn"
 BgmManager="*res://globals/autoloads/bgm_manager/bgm_manager.tscn"
 SpiritDictionary="*res://globals/autoloads/spirit_dictionary/spirit_dictionary.gd"

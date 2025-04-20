@@ -159,7 +159,6 @@ script/source = "extends HSlider
 func _on_value_changed(value: float) -> void:
 	label.text = str(int(value * 100)) + \"%\"
 	AudioServer.set_bus_volume_linear(AudioServer.get_bus_index(bus),value)
-	pass # Replace with function body.
 "
 
 [sub_resource type="GDScript" id="GDScript_whq1p"]
@@ -434,8 +433,8 @@ block_change_scene = true
 [connection signal="drag_ended" from="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/UIScale/HSlider" to="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/UIScale/HSlider" method="_on_drag_ended"]
 [connection signal="pressed" from="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/Button" to="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/Button" method="_on_pressed"]
 [connection signal="value_changed" from="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/VolumeMaster/UIScale/HSlider" to="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/VolumeMaster/UIScale/HSlider" method="_on_value_changed"]
-[connection signal="drag_ended" from="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/VolumeMusic/UIScale/HSlider" to="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/VolumeMusic/UIScale/HSlider" method="_on_drag_ended"]
-[connection signal="drag_ended" from="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/VolumeEffects/UIScale/HSlider" to="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/VolumeEffects/UIScale/HSlider" method="_on_drag_ended"]
+[connection signal="value_changed" from="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/VolumeMusic/UIScale/HSlider" to="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/VolumeMusic/UIScale/HSlider" method="_on_value_changed"]
+[connection signal="value_changed" from="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/VolumeEffects/UIScale/HSlider" to="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/VolumeEffects/UIScale/HSlider" method="_on_value_changed"]
 [connection signal="toggled" from="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2/OPTIONS_CAMSTATIC" to="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2/OPTIONS_CAMSTATIC" method="_on_toggled"]
 [connection signal="pressed" from="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/Button4" to="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/Button4" method="_on_pressed"]
 [connection signal="pressed" from="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/Button2" to="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/Button2" method="_on_pressed"]

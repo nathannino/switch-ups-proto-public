@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://bbtsa7gqvwdx4"]
+
+[ext_resource type="Script" uid="uid://c3t62o35ta311" path="res://globals/autoloads/button_sound_workaround/button_sound_effect_autoload.gd" id="1_ck46e"]
+[ext_resource type="AudioStream" uid="uid://bom2i4dq58hgo" path="res://Kenney Assets/UI Audio/rollover2.ogg" id="2_8g7l6"]
+[ext_resource type="AudioStream" uid="uid://l8hegmdhocam" path="res://Kenney Assets/UI Audio/switch24.ogg" id="2_q4s7b"]
+
+[node name="ButtonSoundEffectAutoload" type="Node"]
+script = ExtResource("1_ck46e")
+
+[node name="ButtonPressed" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_q4s7b")
+bus = &"Effects"
+
+[node name="ButtonHover" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_8g7l6")
+max_polyphony = 3
+bus = &"Effects"
+
+[node name="Button" type="Button" parent="."]
+offset_right = 32.0
+offset_bottom = 32.0
