@@ -215,13 +215,14 @@ current_tab = 0
 
 [node name="Third Party" type="TabContainer" parent="PanelContainer/VBoxContainer/PanelContainer2/Credits"]
 layout_mode = 2
-current_tab = 0
+current_tab = 2
 script = ExtResource("3_ntjgm")
 title = "TR_CREDIT_THIRD"
 translate = true
 metadata/_tab_index = 0
 
 [node name="Copyright" type="RichTextLabel" parent="PanelContainer/VBoxContainer/PanelContainer2/Credits/Third Party"]
+visible = false
 layout_mode = 2
 script = SubResource("GDScript_f2ac0")
 title = "TR_CREDIT_COPYRIGHT"
@@ -237,7 +238,6 @@ translate = true
 metadata/_tab_index = 1
 
 [node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/VBoxContainer/PanelContainer2/Credits/Third Party"]
-visible = false
 layout_mode = 2
 bbcode_enabled = true
 text = "
@@ -283,6 +283,21 @@ Kenney Game Assets All-in-1 - [url=https://kenney.itch.io/kenney-game-assets](it
 [/ul]
 [ul]
 [url=https://kenney.nl/assets/ui-pack-sci-fi]UI Pack: Sci-fi (2.0)[/url]
+[/ul]
+[ul]
+[url=https://kenney.nl/assets/digital-audio]Digital Audio[/url]
+[/ul]
+[ul]
+Foley Sounds (No links founds outside of the All-In-One pack)
+[/ul]
+[ul]
+[url=https://kenney.nl/assets/ui-pack]Impact Sounds[/url]
+[/ul]
+[ul]
+[url=https://kenney.nl/assets/music-jingles]Music Jingles[/url]
+[/ul]
+[ul]
+[url=https://kenney.nl/assets/ui-audio]UI Audio[/url]
 [/ul]
 [/ul]"
 script = SubResource("GDScript_v1poy")

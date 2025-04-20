@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://ope0vgwhns7r"]
+[gd_scene load_steps=28 format=3 uid="uid://ope0vgwhns7r"]
 
 [ext_resource type="Texture2D" uid="uid://masa1osx0s86" path="res://monster_systems/spirits/art/unknown.png" id="1_plwqg"]
 [ext_resource type="Shader" uid="uid://bnsk4eami3u2c" path="res://shaders/spirit_ball.gdshader" id="1_uvler"]
@@ -7,7 +7,12 @@
 [ext_resource type="Shader" uid="uid://x3k1pjjplqdd" path="res://monster_systems/spirits/3d/attack_effect.tres" id="5_v7aob"]
 [ext_resource type="Texture2D" uid="uid://beunnlf5g35ur" path="res://monster_systems/actions/effects/attack_concrete.svg" id="5_xm3yf"]
 [ext_resource type="Script" uid="uid://b4oph7gtxb7s0" path="res://monster_systems/spirits/3d/animations.gd" id="6_42c40"]
+[ext_resource type="AudioStream" uid="uid://dp8o4h2uoiwbg" path="res://Kenney Assets/Foley Sounds/woosh3.ogg" id="7_ofc6o"]
 [ext_resource type="Texture2D" uid="uid://b1pawseunm44f" path="res://monster_systems/actions/effects/attack_abstract.svg" id="8_dx6dt"]
+[ext_resource type="AudioStream" uid="uid://c8bqm1wctvd5k" path="res://Kenney Assets/Digital Audio/zapThreeToneUp.ogg" id="9_7oors"]
+[ext_resource type="AudioStream" uid="uid://32lc2u48jhd6" path="res://Kenney Assets/Impact Sounds/impactPunch_heavy_001.ogg" id="9_vgi8m"]
+[ext_resource type="AudioStream" uid="uid://ikhqqv8ocuhr" path="res://Kenney Assets/Music Jingles/jingles-hit_16.ogg" id="10_ofc6o"]
+[ext_resource type="AudioStream" uid="uid://bh8a64wpbmui6" path="res://Kenney Assets/Digital Audio/zapThreeToneDown.ogg" id="10_tnxlv"]
 
 [sub_resource type="GDScript" id="GDScript_fq4ef"]
 script/source = "extends Node3D
@@ -73,11 +78,13 @@ func set_spirit_active(_spirit_active : ms_spirit_active) :
 func play_stat_change(change: int) :
 	if change > 0 :
 		stat_anim_higher.play()
+		$StatUp.play()
 		stat_anim_higher.animation_done.connect(func() :
 			stat_change_anim_done.emit()
 		, CONNECT_ONE_SHOT)
 	else :
 		stat_anim_lower.play()
+		$StatDown.play()
 		stat_anim_lower.animation_done.connect(func() :
 			stat_change_anim_done.emit()
 		, CONNECT_ONE_SHOT)
@@ -217,6 +224,78 @@ tracks/4/keys = {
 "update": 0,
 "values": [Vector2(0.8, 0.8)]
 }
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Abstract1:playing")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Abstract2:playing")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Abstract3:playing")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Concrete:playing")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Concrete2:playing")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("Concrete3:playing")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_ftkcg"]
 resource_name = "abstract_attack"
@@ -257,6 +336,42 @@ tracks/2/keys = {
 "update": 0,
 "values": [Vector2(0.8, 0.8), Vector2(0, 0)]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Abstract1:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.316667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Abstract2:playing")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.483333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Abstract3:playing")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(-0.0166667, 0, 0.666667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, false, true]
+}
 
 [sub_resource type="Animation" id="Animation_iotvf"]
 resource_name = "concrete_attack"
@@ -284,6 +399,42 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 0.5),
 "update": 0,
 "values": [Vector2(2.6, 2.6), Vector2(1e-05, 1e-05)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Concrete:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Concrete2:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Concrete3:playing")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_u5y0y"]
@@ -363,3 +514,42 @@ texture = ExtResource("5_xm3yf")
 position = Vector2(250, 250)
 scale = Vector2(1.49697, 1.49697)
 texture = ExtResource("8_dx6dt")
+
+[node name="Concrete" type="AudioStreamPlayer" parent="Animations/SubViewport"]
+stream = ExtResource("9_vgi8m")
+bus = &"Effects"
+
+[node name="Concrete3" type="AudioStreamPlayer" parent="Animations/SubViewport"]
+stream = ExtResource("7_ofc6o")
+bus = &"Effects"
+
+[node name="Concrete2" type="AudioStreamPlayer" parent="Animations/SubViewport"]
+stream = ExtResource("9_vgi8m")
+pitch_scale = 1.2
+bus = &"Effects"
+
+[node name="Abstract1" type="AudioStreamPlayer" parent="Animations/SubViewport"]
+stream = ExtResource("10_ofc6o")
+bus = &"Effects"
+
+[node name="Abstract2" type="AudioStreamPlayer" parent="Animations/SubViewport"]
+stream = ExtResource("10_ofc6o")
+pitch_scale = 0.9
+bus = &"Effects"
+
+[node name="Abstract3" type="AudioStreamPlayer" parent="Animations/SubViewport"]
+stream = ExtResource("10_ofc6o")
+pitch_scale = 0.8
+bus = &"Effects"
+
+[node name="StatUp" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_7oors")
+volume_db = 15.0
+pitch_scale = 0.6
+bus = &"Effects"
+
+[node name="StatDown" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_tnxlv")
+volume_db = 15.0
+pitch_scale = 0.6
+bus = &"Effects"

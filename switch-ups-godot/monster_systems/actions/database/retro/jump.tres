@@ -25,6 +25,6 @@ script = ExtResource("2_vjbmw")
 key = "jump"
 name = "TR_ACT_JUMP"
 type = 0
-cost = 1
+cost = 2
 priority = 0
 effects = Array[ExtResource("1_2oajx")]([SubResource("Resource_2f7l1"), SubResource("Resource_ainrw")])
