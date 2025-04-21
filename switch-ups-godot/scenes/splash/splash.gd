@@ -16,6 +16,17 @@ func _ready() -> void:
 	main_menu = SceneLoadWrapper.create().from_key(key).background_preload().prepare()
 	transition = SceneLoadWrapper.create().as_transition("fade_to_black").prepare()
 	#main_menu = SceneLoadWrapper.preload_scene(test_path) #Testing
+	
+	$BG.bottom_color = Color.BLACK
+	$BG.top_color = Color.BLACK
+	$BG.vignette_color = Color.BLACK
+	var tween = create_tween()
+	tween.set_ease(Tween.EASE_IN_OUT)
+	tween.set_trans(Tween.TRANS_SINE)
+	tween.set_parallel(true)
+	tween.tween_property($BG,"bottom_color",Color("#2a2e86"),3)
+	tween.tween_property($BG,"top_color",Color("#fa6157"),3)
+	tween.tween_property($BG,"vignette_color",Color("#dfd21f"),3)
 	pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
