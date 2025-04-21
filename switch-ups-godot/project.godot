@@ -16,11 +16,13 @@ warnings/check_invalid_track_paths=false
 
 config/name="Switch-ups"
 run/main_scene="res://overlay/main_overlay.tscn"
+config/use_custom_user_dir=true
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
+SettingManager="*res://globals/autoloads/setting_manager/setting_manager.gd"
 ButtonSoundEffectAutoload="*res://globals/autoloads/button_sound_workaround/ButtonSoundEffectAutoload.tscn"
 DeferredLoadingManager="*res://globals/autoloads/DeferredLoading/deferred_loading_manager.tscn"
 BgmManager="*res://globals/autoloads/bgm_manager/bgm_manager.tscn"
@@ -28,7 +30,6 @@ SpiritDictionary="*res://globals/autoloads/spirit_dictionary/spirit_dictionary.g
 OptionsOverlay="*res://overlay/options.tscn"
 ServerWrapper="*res://monster_systems/networking/server/ServerWrapper.tscn"
 ClientWrapperAutoload="*res://monster_systems/networking/client_autoload/client_wrapper_autoload.tscn"
-SettingManager="*res://globals/autoloads/setting_manager/setting_manager.gd"
 BattleLogPanel="*res://globals/autoloads/battle_log/log_panel.tscn"
 
 [display]

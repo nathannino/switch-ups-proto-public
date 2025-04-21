@@ -20,7 +20,7 @@ static func get_latest_component(current_action : ms_action, action_index) :
 static func increase_action_index(_current_component : ms_action_component, action_index) -> INCREASE_RESULT :
 	if _current_component == null :
 		if action_index.size() <= 1 :
-			printerr("Cannot increase action index")
+			#printerr("Cannot increase action index") #FIXME : This was being called every time a luck event succeed. I think we can ignore it?
 			return INCREASE_RESULT.STAY
 		action_index.pop_back()
 		action_index[-1] += 1

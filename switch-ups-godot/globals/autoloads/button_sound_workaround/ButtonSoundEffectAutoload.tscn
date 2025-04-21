@@ -15,7 +15,3 @@ bus = &"Effects"
 stream = ExtResource("2_8g7l6")
 max_polyphony = 3
 bus = &"Effects"
-
-[node name="Button" type="Button" parent="."]
-offset_right = 32.0
-offset_bottom = 32.0

@@ -45,10 +45,11 @@ func handle_server(turn_calc : Node,user:ms_spirit_active, user_player_node : No
 	# 	"active" : battle_root.friend_team.find(SceneRoot.team_active_representative),
 	# 	"reserve" : battle_root.friend_team.find(SceneRoot.team_reserve_representative),
 	
-	var active_index =  data["active"]
-	var active_spirit = target_team_state[active_index]
-	var reserve_index = data["reserve"]
-	var reserve_spirit = target_team_state[reserve_index]
+	
+	var active_spirit = target_team_state[data["active"]]
+	var active_index =  target_team.find(active_spirit)
+	var reserve_spirit = target_team_state[data["reserve"]]
+	var reserve_index = target_team.find(reserve_spirit)
 	
 	target_team[active_index] = reserve_spirit
 	target_team[reserve_index] = active_spirit

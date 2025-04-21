@@ -1,5 +1,5 @@
 keys;en;fr
-TR_DEV;This is a very early development version, not intended to be shared outside of what's required for the school project;Ceci s'agit d'une version de développement très incomplet, qui n'est pas destinée à être partagée en dehors de ce qui est nécessaire pour le projet scolaire.
+TR_DEV;This is a development mode build.;Il s'agit d'une version en mode développement.
 TR_TITLE;Switch-Ups;Switch-Ups
 TR_BUT_START;Play;Jouer
 TR_COMPENDIUM;Compendium;Compendium
@@ -74,3 +74,5 @@ TR_SUMMARY_TEMPPRIORITY;Priority modifier of next action : {lv};Modificateur de 
 TR_OPTIONS_VOLUME_MASTER;Main volume;Volume principal
 TR_OPTIONS_VOLUME_MUSIC;Music volume;Volume de la musique
 TR_OPTIONS_VOLUME_EFFECTS;Sound effects volume;Volume des effets sonores
+TR_OPTIONS_FULLSCREEN;Fullscreen;Plein écran
+TR_OPTIONS_BEGIN;Start game;Démarrer le jeu

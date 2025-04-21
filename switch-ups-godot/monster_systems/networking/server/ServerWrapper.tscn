@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://b2tpdem416owt"]
+[gd_scene load_steps=15 format=3 uid="uid://b2tpdem416owt"]
 
 [ext_resource type="Script" uid="uid://drpl50e7wt8yx" path="res://monster_systems/networking/server/server_wrapper.gd" id="1_5rxyd"]
 [ext_resource type="PackedScene" uid="uid://bg6nha4tn60d1" path="res://monster_systems/networking/server/server_client_wrapper/server_client_wrapper.tscn" id="2_iesxm"]
@@ -9,6 +9,8 @@
 [ext_resource type="Resource" uid="uid://bdj1tfbpn8fa7" path="res://bgm/database/bg_btl_01.tres" id="5_a836f"]
 [ext_resource type="Resource" uid="uid://d5vj65ykjsd4" path="res://bgm/database/bg_btl_02.tres" id="6_iadbm"]
 [ext_resource type="Resource" uid="uid://cq5jel6ue0d55" path="res://bgm/database/bg_btl_03.tres" id="7_a836f"]
+[ext_resource type="Resource" uid="uid://d2qw1wbj5kano" path="res://bgm/database/bg_btl_04.tres" id="8_5u68e"]
+[ext_resource type="Resource" uid="uid://dkqgrwpjbl7rh" path="res://bgm/database/bg_btl_05.tres" id="9_vyvvg"]
 
 [sub_resource type="GDScript" id="GDScript_gxxs3"]
 script/source = "extends Control
@@ -39,7 +41,7 @@ script = ExtResource("1_5rxyd")
 server_client_wrapper = ExtResource("2_iesxm")
 error_root = NodePath("ErrorRoot")
 battle_subscenes = ExtResource("3_6fiib")
-battle_music = Array[ExtResource("4_40o0t")]([ExtResource("5_a836f"), ExtResource("6_iadbm"), ExtResource("7_a836f")])
+battle_music = Array[ExtResource("4_40o0t")]([ExtResource("5_a836f"), ExtResource("6_iadbm"), ExtResource("7_a836f"), ExtResource("8_5u68e"), ExtResource("9_vyvvg")])
 
 [node name="ServerMain" parent="." instance=ExtResource("2_pr3k4")]
 

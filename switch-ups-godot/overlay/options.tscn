@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://d2lcdsh40reie"]
+[gd_scene load_steps=18 format=3 uid="uid://d2lcdsh40reie"]
 
 [ext_resource type="Script" uid="uid://1yl6aj3ibwlh" path="res://globals/simple_scripts/button_change_scene_simple.gd" id="1_57t8v"]
 [ext_resource type="Theme" uid="uid://bfeafrooqeg54" path="res://ScreenWide.tres" id="1_djnj0"]
@@ -9,16 +9,23 @@
 script/source = "extends Control
 
 @export var return_main_menu_button : Control
+@export var quit_button : Control
+@export var return_game_button : Button
 
 var can_pause = false
 
 signal grab_back_focus
 
-var _camera_static : bool = false
+func _ready() -> void:
+	if (SettingManager.firstrun) :
+		show_prepare()
+	else :
+		hide()
+
 var camera_static : bool :
-	get: return _camera_static
+	get: return SettingManager.camera_static
 	set(value) :
-		_camera_static = value
+		SettingManager.camera_static = value
 		camera_static_changed.emit()
 signal camera_static_changed
 
@@ -30,6 +37,7 @@ func set_in_battle(_bool : bool) :
 
 func hide_reset() :
 	propagate_call(\"release_focus\",[],true)
+	SettingManager.save_values()
 	grab_back_focus.emit()
 	hide()
 
@@ -40,16 +48,37 @@ func _input(event: InputEvent) -> void:
 		if visible :
 			hide_reset()
 		else :
-			if (ClientWrapperAutoload.connected) :
-				return_main_menu_button.show()
-			else :
-				return_main_menu_button.hide()
-			show()
+			show_prepare()
+
+func show_prepare() :
+	if (SettingManager.firstrun) :
+		quit_button.hide()
+		return_game_button.text = \"TR_OPTIONS_BEGIN\"
+	else :
+		quit_button.show()
+		return_game_button.text = \"TR_OPTIONS_RESUME\"
+	if (ClientWrapperAutoload.connected) :
+		return_main_menu_button.show()
+	else :
+		return_main_menu_button.hide()
+	show()
 
 
 func _on_button_3_pressed() -> void:
 	hide_reset()
 	pass # Replace with function body.
+"
+
+[sub_resource type="GDScript" id="GDScript_7tfiw"]
+script/source = "extends ColorRect
+
+
+func _on_gui_input(event: InputEvent) -> void:
+	if SettingManager.firstrun :
+		return
+	if event is InputEventMouseButton :
+		if event.button_index == MOUSE_BUTTON_LEFT :
+			$\"..\".hide_reset()
 "
 
 [sub_resource type="GDScript" id="GDScript_2nhgm"]
@@ -65,14 +94,15 @@ func _on_pressed() -> void:
 script/source = "extends OptionButton
 
 const lang_array = [
+	{\"shorthand\":\"en\",\"longhand\":\"English\"},
 	{\"shorthand\":\"fr\",\"longhand\":\"Français\"},
-	{\"shorthand\":\"en\",\"longhand\":\"English\"}
 ]
 
 func populate_options() :
 	clear()
 	var regex = RegEx.new()
-	regex.compile(\".+?(?=_)\")
+	regex.compile(\"^.+?(?=_|$)\")
+	var all_languages = TranslationServer.get_locale()
 	var current_language = regex.search(TranslationServer.get_locale()).get_string()
 	for i in range(lang_array.size()) :
 		var lang = lang_array[i]
@@ -89,6 +119,7 @@ func _on_item_selected(index: int) -> void:
 	var id = get_selected_id()
 	var lang = lang_array[id]
 	TranslationServer.set_locale(lang.shorthand)
+	SettingManager.set_language(lang.shorthand)
 	pass # Replace with function body.
 "
 
@@ -98,12 +129,23 @@ script/source = "extends HSlider
 @export var _label : Label
 @export var _button : Button
 
+func _ready() -> void:
+	value = get_window().content_scale_factor
+	_label.text = str(value)
+	if not value == 1.0 :
+		_button.disabled = false
+	else :
+		_button.disabled = true
+
 func _on_drag_ended(value_changed: bool) -> void:
 	if not value_changed :
 		return
 	get_window().content_scale_factor = value
 	_label.text = str(value)
-	_button.disabled = false
+	if not value == 1.0 :
+		_button.disabled = false
+	else :
+		_button.disabled = true
 	pass # Replace with function body.
 "
 
@@ -132,6 +174,9 @@ script/source = "extends HSlider
 @export var label : Label
 @export var bus : String
 
+func _ready() :
+	value = AudioServer.get_bus_volume_linear(AudioServer.get_bus_index(bus))
+
 func _on_value_changed(value: float) -> void:
 	label.text = str(int(value * 100)) + \"%\"
 	AudioServer.set_bus_volume_linear(AudioServer.get_bus_index(bus),value)
@@ -143,6 +188,9 @@ script/source = "extends HSlider
 
 @export var label : Label
 @export var bus : String
+
+func _ready() :
+	value = AudioServer.get_bus_volume_linear(AudioServer.get_bus_index(bus))
 
 func _on_value_changed(value: float) -> void:
 	label.text = str(int(value * 100)) + \"%\"
@@ -156,6 +204,10 @@ script/source = "extends HSlider
 @export var label : Label
 @export var bus : String
 
+
+func _ready() :
+	value = AudioServer.get_bus_volume_linear(AudioServer.get_bus_index(bus))
+
 func _on_value_changed(value: float) -> void:
 	label.text = str(int(value * 100)) + \"%\"
 	AudioServer.set_bus_volume_linear(AudioServer.get_bus_index(bus),value)
@@ -166,6 +218,9 @@ script/source = "extends CheckBox
 
 @export var toplevel : Control
 
+func _ready() :
+	button_pressed = toplevel.camera_static
+
 func _on_toggled(toggled_on: bool) -> void:
 	toplevel.camera_static = toggled_on
 	
@@ -173,6 +228,23 @@ func _notification(what: int) -> void:
 	match what:
 		NOTIFICATION_VISIBILITY_CHANGED :
 			button_pressed = toplevel.camera_static
+"
+
+[sub_resource type="GDScript" id="GDScript_x0ixg"]
+script/source = "extends CheckBox
+
+@export var toplevel : Control
+
+func _ready() :
+	button_pressed = (DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN)
+
+func _on_toggled(toggled_on: bool) -> void:
+	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN if toggled_on else DisplayServer.WINDOW_MODE_WINDOWED)
+	
+func _notification(what: int) -> void:
+	match what:
+		NOTIFICATION_VISIBILITY_CHANGED :
+			button_pressed = (DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN)
 "
 
 [sub_resource type="GDScript" id="GDScript_5poeu"]
@@ -208,7 +280,7 @@ func change_scene() :
 	ServerWrapper.close_server()
 "
 
-[node name="Control" type="Control" node_paths=PackedStringArray("return_main_menu_button")]
+[node name="Control" type="Control" node_paths=PackedStringArray("return_main_menu_button", "quit_button", "return_game_button")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -217,6 +289,8 @@ grow_horizontal = 2
 grow_vertical = 2
 script = SubResource("GDScript_cc25f")
 return_main_menu_button = NodePath("CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/Button2")
+quit_button = NodePath("CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/Button3")
+return_game_button = NodePath("CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/Button")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
@@ -226,6 +300,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.392157)
+script = SubResource("GDScript_7tfiw")
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 1
@@ -234,6 +309,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="PanelContainer" type="PanelContainer" parent="CenterContainer"]
 layout_mode = 2
@@ -407,6 +483,20 @@ layout_mode = 2
 script = SubResource("GDScript_whq1p")
 toplevel = NodePath("../../../../../../..")
 
+[node name="HBoxContainer3" type="HBoxContainer" parent="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "TR_OPTIONS_FULLSCREEN"
+
+[node name="OPTIONS_FULLSCREEN" type="CheckBox" parent="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer3" node_paths=PackedStringArray("toplevel")]
+layout_mode = 2
+script = SubResource("GDScript_x0ixg")
+toplevel = NodePath("../../../../../../..")
+
 [node name="Button4" type="Button" parent="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer" node_paths=PackedStringArray("root")]
 visible = false
 layout_mode = 2
@@ -428,6 +518,7 @@ key = "kill"
 block_change_scene = true
 
 [connection signal="visibility_changed" from="." to="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/Button2" method="_on_control_visibility_changed"]
+[connection signal="gui_input" from="ColorRect" to="ColorRect" method="_on_gui_input"]
 [connection signal="pressed" from="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/Button" to="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/Button" method="_on_pressed"]
 [connection signal="item_selected" from="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/OptionButton" to="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/OptionButton" method="_on_item_selected"]
 [connection signal="drag_ended" from="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/UIScale/HSlider" to="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/UIScale/HSlider" method="_on_drag_ended"]
@@ -436,6 +527,7 @@ block_change_scene = true
 [connection signal="value_changed" from="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/VolumeMusic/UIScale/HSlider" to="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/VolumeMusic/UIScale/HSlider" method="_on_value_changed"]
 [connection signal="value_changed" from="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/VolumeEffects/UIScale/HSlider" to="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/VolumeEffects/UIScale/HSlider" method="_on_value_changed"]
 [connection signal="toggled" from="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2/OPTIONS_CAMSTATIC" to="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2/OPTIONS_CAMSTATIC" method="_on_toggled"]
+[connection signal="toggled" from="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer3/OPTIONS_FULLSCREEN" to="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer3/OPTIONS_FULLSCREEN" method="_on_toggled"]
 [connection signal="pressed" from="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/Button4" to="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/Button4" method="_on_pressed"]
 [connection signal="pressed" from="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/Button2" to="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/Button2" method="_on_pressed"]
 [connection signal="pressed" from="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/Button3" to="." method="_on_button_3_pressed"]
