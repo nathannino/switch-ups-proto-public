@@ -1,10 +1,15 @@
-[gd_scene load_steps=6 format=3 uid="uid://ci4fwae3invkg"]
+[gd_scene load_steps=7 format=3 uid="uid://ci4fwae3invkg"]
 
 [ext_resource type="Script" uid="uid://t2pg4bumrbni" path="res://scenes/splash/splash.gd" id="1_3h00b"]
 [ext_resource type="Texture2D" uid="uid://css5cwgy07oyi" path="res://nlogo/LogoN_Gray .png" id="1_42k42"]
 [ext_resource type="PackedScene" uid="uid://dg54dbj8r4o3j" path="res://globals/utility_scenes/bg.tscn" id="2_a6n0j"]
 [ext_resource type="Texture2D" uid="uid://bqjlpodu8budu" path="res://nlogo/CircleClassic_Gray.png" id="2_ghd4l"]
 [ext_resource type="Script" uid="uid://bh1lw5e8xsfk5" path="res://globals/simple_scripts/avatar_rotate.gd" id="4_n1tfx"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_a6n0j"]
+font_size = 80
+outline_size = 30
+outline_color = Color(0, 0, 0, 1)
 
 [node name="splash" type="Control"]
 layout_mode = 3
@@ -75,6 +80,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 80
 text = "Nathan_Nino"
+label_settings = SubResource("LabelSettings_a6n0j")
 horizontal_alignment = 1
 vertical_alignment = 1
 
