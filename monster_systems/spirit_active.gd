@@ -80,11 +80,11 @@ const LUCK_CHANGE_MULTI = 5
 var _priority_change : int
 signal priority_changed(old,new)
 var priority_change : int :
-	get : return _luck_change
+	get : return _priority_change
 	set(value) :
-		var old = _luck_change
-		_luck_change = value
-		luck_changed.emit(old,value)
+		var old = _priority_change
+		_priority_change = value
+		priority_changed.emit(old,value)
 #regionend
 
 var is_defending = false

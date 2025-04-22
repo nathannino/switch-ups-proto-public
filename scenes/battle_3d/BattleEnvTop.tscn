@@ -39,18 +39,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = SubResource("GDScript_erg37")
-battle_env_root = NodePath("SubViewportContainer/SubViewport/BattleEnvRoot")
+battle_env_root = NodePath("BattleEnvRoot")
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-stretch = true
-
-[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
-size = Vector2i(1920, 1080)
-
-[node name="BattleEnvRoot" type="Node3D" parent="SubViewportContainer/SubViewport"]
+[node name="BattleEnvRoot" type="Node3D" parent="."]

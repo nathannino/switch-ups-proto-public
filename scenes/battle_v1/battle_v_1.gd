@@ -344,6 +344,7 @@ func _ready() :
 	
 	BattleLogPanel.clear()
 	OptionsOverlay.set_in_battle(true)
+	$ColorRect.queue_free() # I do want to keep the rectangle in the editor, but it is blocking the scene in the game... =/
 
 func handle_request_data(content : Dictionary) :
 	hide_await_cancel_timer()
