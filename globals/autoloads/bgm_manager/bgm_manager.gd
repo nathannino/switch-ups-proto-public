@@ -8,6 +8,7 @@ const database_path = "res://bgm/database/"
 const DATABASE_LOAD_KEY = "bgm_database"
 var database = null
 var current_active = 0
+var current_volume = 1.0
 
 @onready var mutex = Mutex.new()
 
@@ -77,18 +78,18 @@ func _handle_standby(transition : TRANSITIONS, on_end : Callable, standby : Audi
 					on_end.call()
 				, CONNECT_ONE_SHOT)
 
-func _handle_active(transition : TRANSITIONS, active : AudioStreamPlayer) :
+func _handle_active(transition : TRANSITIONS, active : AudioStreamPlayer, volume : float) :
 	call_deferred("_set_paused",active,false)
 	match transition :
 		TRANSITIONS.CUT, TRANSITIONS.FADE_OUT_CUT_IN :
-			active.volume_db = linear_to_db(1)
+			active.volume_db = linear_to_db(volume)
 		TRANSITIONS.FADE_OUT_IN :
 			var tween = get_tree().create_tween()
-			tween.tween_property(active,"volume_db",linear_to_db(1),fade_sigular_duration)
+			tween.tween_property(active,"volume_db",linear_to_db(volume),fade_sigular_duration)
 			await tween.finished
 		TRANSITIONS.CROSSFADE :
 			var tween = get_tree().create_tween()
-			tween.tween_property(active,"volume_db",linear_to_db(1),crossfade_duration)
+			tween.tween_property(active,"volume_db",linear_to_db(volume),crossfade_duration)
 			await tween.finished
 
 func play(key : String, transition : TRANSITIONS) :
@@ -104,6 +105,7 @@ func _play(key : String, transition : TRANSITIONS) :
 	while database == null :
 		OS.delay_msec(1)
 	var song = database[key]
+	current_volume = song.volume_linear
 	already_overwritten = false
 	
 	if _get_active().stream == song.loop :
@@ -120,7 +122,7 @@ func _play(key : String, transition : TRANSITIONS) :
 	
 	active.call_deferred("play")
 	
-	await _handle_active(transition, active)
+	await _handle_active(transition, active,song.volume_linear)
 	return
 	
 
@@ -153,7 +155,7 @@ func _play_override(key : String, transition : TRANSITIONS) :
 	
 	active.call_deferred("play")
 	
-	await _handle_active(transition, active)
+	await _handle_active(transition, active,song.volume_linear)
 	pass
 
 func stop_override(transition : TRANSITIONS) :
@@ -177,7 +179,7 @@ func _stop_override(transition : TRANSITIONS) :
 	
 	await _handle_standby(transition,func () : standby.call_deferred("stop") ,standby)
 	
-	await _handle_active(transition, active)
+	await _handle_active(transition, active,current_volume)
 	pass
 
 func stop(transition : TRANSITIONS) :

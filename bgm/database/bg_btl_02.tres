@@ -8,6 +8,7 @@ script = ExtResource("1_mi0we")
 name = "Battle - Crystal World"
 key = "bg_btl_02"
 loop = ExtResource("1_rlmqn")
+volume_linear = 1.1
 author = "Juhani Junkala"
 license = 1
 source = "https://opengameart.org/content/gt-rpg-soundtrack"

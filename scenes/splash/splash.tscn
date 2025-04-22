@@ -33,7 +33,7 @@ offset_left = 3.0
 offset_right = 3.0
 bottom_color = Color(0.108486, 0.301422, 0.544107, 1)
 top_color = Color(0.306463, 0.548504, 0.943099, 1)
-vignette_color = Color(0.876329, 0.824878, 0.121708, 1)
+vignette_color = Color(0.948457, 0.899295, 0.268898, 1)
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 4.0

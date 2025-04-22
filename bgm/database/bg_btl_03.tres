@@ -8,6 +8,7 @@ script = ExtResource("1_fkxo4")
 name = "Random Encounter 3"
 key = "bg_btl_03"
 loop = ExtResource("1_80s6u")
+volume_linear = 0.9
 author = "Spring Spring"
 license = 0
 source = "https://opengameart.org/content/random-encounter-3"

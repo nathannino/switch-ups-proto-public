@@ -6,6 +6,7 @@ class_name bgm
 @export var key : String
 
 @export var loop : AudioStream
+@export var volume_linear : float = 1.0
 
 @export var author : String
 @export var license : LICENSE

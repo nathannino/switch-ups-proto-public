@@ -8,6 +8,7 @@ script = ExtResource("1_atscc")
 name = "Bravery Knight"
 key = "bg_btl_07"
 loop = ExtResource("1_wbf7l")
+volume_linear = 0.7
 author = "MintoDog"
 license = 0
 source = "https://opengameart.org/content/bravery-knight"

@@ -8,6 +8,7 @@ script = ExtResource("2_rdsje")
 name = "Two Left Socks"
 key = "bg_firstrun"
 loop = ExtResource("1_h3seg")
+volume_linear = 1.0
 author = "Congus Bongus"
 license = 0
 source = "https://opengameart.org/content/two-left-socks"

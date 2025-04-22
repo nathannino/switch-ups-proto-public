@@ -8,6 +8,7 @@ script = ExtResource("1_51laf")
 name = "Neural Malfunction"
 key = "bg_btl_01"
 loop = ExtResource("1_c44b4")
+volume_linear = 0.8
 author = "Vitalezzz"
 license = 0
 source = "https://opengameart.org/content/neural-malfunction"

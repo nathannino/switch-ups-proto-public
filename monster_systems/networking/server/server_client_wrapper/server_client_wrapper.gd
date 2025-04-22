@@ -83,6 +83,7 @@ func reset_team_stats() :
 func peer_ready(_peer : StreamPeerTCP) -> void:
 	if ServerWrapper.get_connections() > ServerWrapper.MAX_PLAYERS :
 		$ServerClientNode.peer_refused(_peer)
+		queue_free()
 	else :
 		$ServerClientNode.peer_ready(_peer)
 

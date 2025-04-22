@@ -25,7 +25,8 @@ func _ready() -> void:
 	$BG.vignette_color = Color.BLACK
 	var tween = create_tween()
 	tween.set_ease(Tween.EASE_IN_OUT)
-	tween.set_trans(Tween.TRANS_SINE)
+	#tween.set_trans(Tween.TRANS_SINE)
+	tween.set_trans(Tween.TRANS_CUBIC)
 	tween.set_parallel(true)
 	tween.tween_property($BG,"bottom_color",bottom_color,3)
 	tween.tween_property($BG,"top_color",top_color,3)
