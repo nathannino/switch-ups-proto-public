@@ -37,6 +37,7 @@ func _ready() -> void:
 			$LoadingRoot/ProgressBar.show_bar()
 	)
 	if SettingManager.firstrun :
+		$ActiveScene/BG.show()
 		await OptionsOverlay.grab_back_focus
 	change_scene(SceneLoadWrapper.create()
 								.background_preload()

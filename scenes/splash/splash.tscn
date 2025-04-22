@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://ci4fwae3invkg"]
+[gd_scene load_steps=8 format=3 uid="uid://ci4fwae3invkg"]
 
 [ext_resource type="Script" uid="uid://t2pg4bumrbni" path="res://scenes/splash/splash.gd" id="1_3h00b"]
 [ext_resource type="Texture2D" uid="uid://css5cwgy07oyi" path="res://nlogo/LogoN_Gray .png" id="1_42k42"]
@@ -11,6 +11,13 @@ font_size = 80
 outline_size = 30
 outline_color = Color(0, 0, 0, 1)
 
+[sub_resource type="GDScript" id="GDScript_a6n0j"]
+script/source = "extends ColorRect
+
+func _init() :
+	visible = true
+"
+
 [node name="splash" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -22,7 +29,10 @@ script = ExtResource("1_3h00b")
 
 [node name="BG" parent="." instance=ExtResource("2_a6n0j")]
 layout_mode = 1
-top_color = Color(0.980392, 0.380392, 0.341176, 1)
+offset_left = 3.0
+offset_right = 3.0
+bottom_color = Color(0.108486, 0.301422, 0.544107, 1)
+top_color = Color(0.306463, 0.548504, 0.943099, 1)
 vignette_color = Color(0.876329, 0.824878, 0.121708, 1)
 
 [node name="Timer" type="Timer" parent="."]
@@ -65,6 +75,24 @@ texture = ExtResource("2_ghd4l")
 expand_mode = 1
 script = ExtResource("4_n1tfx")
 
+[node name="AvatarLogo2" type="TextureRect" parent="CenterAnchor/AvatarLogo"]
+self_modulate = Color(0, 0, 0, 0.8)
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -140.0
+offset_top = -140.0
+offset_right = 160.0
+offset_bottom = 160.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_42k42")
+expand_mode = 1
+
 [node name="Username" type="Label" parent="CenterAnchor"]
 layout_mode = 1
 anchors_preset = 8
@@ -83,5 +111,47 @@ text = "Nathan_Nino"
 label_settings = SubResource("LabelSettings_a6n0j")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Username2" type="Label" parent="CenterAnchor/Username"]
+show_behind_parent = true
+clip_children = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -249.5
+offset_top = -58.5
+offset_right = 267.5
+offset_bottom = 78.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 80
+text = "Nathan_Nino"
+label_settings = SubResource("LabelSettings_a6n0j")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ColorRect" type="ColorRect" parent="CenterAnchor/Username/Username2"]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.8)
+
+[node name="fade_proc" type="ColorRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+script = SubResource("GDScript_a6n0j")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

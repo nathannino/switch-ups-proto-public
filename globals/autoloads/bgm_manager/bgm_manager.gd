@@ -101,6 +101,8 @@ func play(key : String, transition : TRANSITIONS) :
 	)
 
 func _play(key : String, transition : TRANSITIONS) :
+	while database == null :
+		OS.delay_msec(1)
 	var song = database[key]
 	already_overwritten = false
 	

@@ -1,6 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://b3iivh4vcwpxr"]
+[gd_scene load_steps=13 format=3 uid="uid://b3iivh4vcwpxr"]
 
 [ext_resource type="Script" uid="uid://dk7o5ennvaw5u" path="res://globals/autoloads/DeferredLoading/deferred_loading_manager.gd" id="1_6quig"]
+[ext_resource type="PackedScene" uid="uid://dg54dbj8r4o3j" path="res://globals/utility_scenes/bg.tscn" id="2_e2yxb"]
 [ext_resource type="Script" uid="uid://cmguuo413hs4x" path="res://globals/autoloads/DeferredLoading/progress_bar.gd" id="2_ewa2w"]
 [ext_resource type="Texture2D" uid="uid://brjinnjo5rjtw" path="res://nlogo/CircleBlue.png" id="2_n5h2f"]
 [ext_resource type="Script" uid="uid://bh1lw5e8xsfk5" path="res://globals/simple_scripts/avatar_rotate.gd" id="3_lucd1"]
@@ -97,6 +98,11 @@ process_mode = 1
 
 [node name="ActiveScene" type="Node" parent="."]
 process_mode = 1
+
+[node name="BG" parent="ActiveScene" instance=ExtResource("2_e2yxb")]
+visible = false
+bottom_color = Color(0.0349654, 0.0408884, 0.183714, 1)
+top_color = Color(0.103781, 0.0893186, 0.288, 1)
 
 [node name="AnimationRoot" type="Control" parent="."]
 layout_mode = 3

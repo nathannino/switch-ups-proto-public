@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="bgm" load_steps=3 format=3 uid="uid://bvm4ip1i501vp"]
+
+[ext_resource type="Script" uid="uid://8kexw00pd7k1" path="res://bgm/bgm.gd" id="1_f8rhd"]
+[ext_resource type="AudioStream" uid="uid://b3qgpvqxbfwol" path="res://bgm/audio/bg_btl_06.ogg" id="1_k6uy2"]
+
+[resource]
+script = ExtResource("1_f8rhd")
+name = "Bravery Cheer"
+key = "bg_btl_06"
+loop = ExtResource("1_k6uy2")
+author = "MintoDog"
+license = 0
+source = "https://opengameart.org/content/bravery-cheer"
+metadata/_custom_type_script = "uid://8kexw00pd7k1"

@@ -1,14 +1,14 @@
-[gd_resource type="Resource" script_class="bgm" load_steps=3 format=3 uid="uid://sy0peohq70ij"]
+[gd_resource type="Resource" script_class="bgm" load_steps=3 format=3 uid="uid://d3qh7rw8ptk3l"]
 
-[ext_resource type="AudioStream" uid="uid://btu7bs2yov01m" path="res://bgm/audio/bg_teambuild.ogg" id="1_m7kb7"]
+[ext_resource type="AudioStream" uid="uid://b6hxjcp6gd8dh" path="res://bgm/audio/bg_teambuild.mp3" id="1_m7kb7"]
 [ext_resource type="Script" uid="uid://8kexw00pd7k1" path="res://bgm/bgm.gd" id="1_o5trv"]
 
 [resource]
 script = ExtResource("1_o5trv")
-name = "Two Left Socks"
+name = "Deep dive"
 key = "bg_teambuild"
 loop = ExtResource("1_m7kb7")
-author = "Congus Bongus"
+author = "iamoneabe"
 license = 0
-source = "https://opengameart.org/content/two-left-socks"
+source = "https://opengameart.org/content/deep-dive-0"
 metadata/_custom_type_script = "uid://8kexw00pd7k1"

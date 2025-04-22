@@ -16,8 +16,12 @@ var can_pause = false
 
 signal grab_back_focus
 
+var stop_music_afterwards = false
+
 func _ready() -> void:
 	if (SettingManager.firstrun) :
+		stop_music_afterwards = true
+		BgmManager.play(\"bg_firstrun\",BgmManager.TRANSITIONS.CUT)
 		show_prepare()
 	else :
 		hide()
@@ -39,6 +43,9 @@ func hide_reset() :
 	propagate_call(\"release_focus\",[],true)
 	SettingManager.save_values()
 	grab_back_focus.emit()
+	if (stop_music_afterwards) :
+		BgmManager.stop(BgmManager.TRANSITIONS.FADE_OUT_CUT_IN)
+		stop_music_afterwards = false
 	hide()
 
 func _input(event: InputEvent) -> void:
@@ -387,7 +394,6 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/VolumeMaster"]
 layout_mode = 2
-size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "TR_OPTIONS_VOLUME_MASTER"
 
@@ -407,16 +413,17 @@ label = NodePath("../../Label2")
 bus = "Master"
 
 [node name="Label2" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/VolumeMaster"]
+custom_minimum_size = Vector2(37, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "100%"
+horizontal_alignment = 2
 
 [node name="VolumeMusic" type="HBoxContainer" parent="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
 [node name="Label" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/VolumeMusic"]
 layout_mode = 2
-size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "TR_OPTIONS_VOLUME_MUSIC"
 
@@ -436,16 +443,17 @@ label = NodePath("../../Label2")
 bus = "BGM"
 
 [node name="Label2" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/VolumeMusic"]
+custom_minimum_size = Vector2(37, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "100%"
+horizontal_alignment = 2
 
 [node name="VolumeEffects" type="HBoxContainer" parent="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
 [node name="Label" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/VolumeEffects"]
 layout_mode = 2
-size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "TR_OPTIONS_VOLUME_EFFECTS"
 
@@ -465,9 +473,11 @@ label = NodePath("../../Label2")
 bus = "Effects"
 
 [node name="Label2" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/VolumeEffects"]
+custom_minimum_size = Vector2(37, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "100%"
+horizontal_alignment = 2
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
