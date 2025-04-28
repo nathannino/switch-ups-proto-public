@@ -76,3 +76,7 @@ TR_OPTIONS_VOLUME_MUSIC;Music volume;Volume de la musique
 TR_OPTIONS_VOLUME_EFFECTS;Sound effects volume;Volume des effets sonores
 TR_OPTIONS_FULLSCREEN;Fullscreen;Plein écran
 TR_OPTIONS_BEGIN;Start game;Démarrer le jeu
+TR_CREDITS_NN;Created by Nathan_Nino;Créé par Nathan_Nino
+TR_CREDITS_CAL;Created as part of the ESP course at Cégep André-Laurendeau;Créé dans le cadre du cours ESP au Cégep André-Laurendeau
+TR_CREDITS_REPO;See source code;Voir le code source
+TR_CREDITS_ITCH;View itch.io page;Voir la page itch.io

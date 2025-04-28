@@ -1,0 +1,74 @@
+[gd_scene load_steps=6 format=3 uid="uid://godibo6gkren"]
+
+[ext_resource type="Script" uid="uid://dkvktrr3lootc" path="res://globals/utility_scenes/ui_component/statusindicator.gd" id="1_ligl4"]
+[ext_resource type="Texture2D" uid="uid://beunnlf5g35ur" path="res://monster_systems/actions/effects/attack_concrete.svg" id="2_827q1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sbnog"]
+bg_color = Color(0, 0, 0, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ligl4"]
+bg_color = Color(0.001, 0.001, 0, 0.613)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="LabelSettings" id="LabelSettings_xysa2"]
+font_size = 25
+font_color = Color(0.129409, 0.5566, 0.930005, 1)
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
+[node name="Panel" type="Panel" node_paths=PackedStringArray("StatusRect", "StatusLabel")]
+custom_minimum_size = Vector2(40, 0)
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_sbnog")
+script = ExtResource("1_ligl4")
+StatusRect = NodePath("TextureRect")
+StatusLabel = NodePath("Label")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 1.0
+offset_top = -25.0
+offset_right = 41.0
+offset_bottom = 15.0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ligl4")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(34, 0)
+layout_mode = 1
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 38.0
+offset_bottom = 38.0
+mouse_filter = 2
+texture = ExtResource("2_827q1")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -52.0
+offset_top = -34.0
+offset_bottom = 4.125
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "+99"
+label_settings = SubResource("LabelSettings_xysa2")
+horizontal_alignment = 2

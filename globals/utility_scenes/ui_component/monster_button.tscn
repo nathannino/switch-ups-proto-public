@@ -1,10 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://bjwcj7an8i718"]
+[gd_scene load_steps=14 format=3 uid="uid://bjwcj7an8i718"]
 
 [ext_resource type="Texture2D" uid="uid://masa1osx0s86" path="res://monster_systems/spirits/art/unknown.png" id="1_doi4o"]
 [ext_resource type="Theme" uid="uid://bruhywdwinhc8" path="res://globals/utility_scenes/ui_component/monster_button_theme.tres" id="1_xyvhm"]
 [ext_resource type="Texture2D" uid="uid://bjl2wps3qisod" path="res://globals/utility_scenes/ui_component/litup.png" id="2_e1jc3"]
 [ext_resource type="Texture2D" uid="uid://ddpaqboof7bul" path="res://globals/utility_scenes/ui_component/full.png" id="2_vdeb0"]
 [ext_resource type="Texture2D" uid="uid://cfbxx11lha525" path="res://globals/utility_scenes/ui_component/empty.png" id="3_aobpe"]
+[ext_resource type="PackedScene" uid="uid://godibo6gkren" path="res://globals/utility_scenes/ui_component/statusindicator.tscn" id="6_d01xl"]
 
 [sub_resource type="GDScript" id="GDScript_k40d3"]
 script/source = "extends Control
@@ -19,8 +20,10 @@ script/source = "extends Control
 @export var none_label : Label
 @export var button : Button
 @export var hightlight_rect : ColorRect
+@export var status_indicators : Control
 
 @export var battle_root : Control
+
 
 @export_category(\"but_indicators\")
 @export var l_selected : TextureRect
@@ -48,13 +51,66 @@ var current_spirit : ms_spirit_active :
 				_current_spirit.current_hp_changed.disconnect(update_health)
 			if _current_spirit.current_stamina_changed.is_connected(update_stamina) :
 				_current_spirit.current_stamina_changed.disconnect(update_stamina)
+			
+			if _current_spirit.atk_concrete_changed.is_connected(update_concrete) :
+				_current_spirit.atk_concrete_changed.disconnect(update_concrete)
+			if _current_spirit.atk_abstract_changed.is_connected(update_abstract) :
+				_current_spirit.atk_abstract_changed.disconnect(update_abstract)
+			if _current_spirit.defense_changed.is_connected(update_defense) :
+				_current_spirit.defense_changed.disconnect(update_defense)
+			if _current_spirit.speed_changed.is_connected(update_speed) :
+				_current_spirit.speed_changed.disconnect(update_speed)
+			if _current_spirit.luck_changed.is_connected(update_luck) :
+				_current_spirit.luck_changed.disconnect(update_luck)
+			if _current_spirit.priority_changed.is_connected(update_priority) :
+				_current_spirit.priority_changed.disconnect(update_priority)
 			pass
 		_current_spirit = value
 		if not value == null :
 			value.current_hp_changed.connect(update_health)
 			value.current_stamina_changed.connect(update_stamina)
+			
+			value.atk_concrete_changed.connect(update_concrete)
+			value.atk_abstract_changed.connect(update_abstract)
+			value.defense_changed.connect(update_defense)
+			value.speed_changed.connect(update_speed)
+			value.luck_changed.connect(update_luck)
+			value.priority_changed.connect(update_priority)
 		
 		set_indicator_state()
+
+# The sea of really dumb methods that only exists so that I can be sure the disconnect mechanism will work. Callable.bind() kinda scares me
+func update_concrete(_old,_new) :
+	status_indicators.update_status_indicator(status_indicators.status_list.CONCRETE,current_spirit.atk_concrete_change)
+	pass
+
+func update_abstract(_old,_new) :
+	status_indicators.update_status_indicator(status_indicators.status_list.ABSTRACT,current_spirit.atk_abstract_change)
+	pass
+
+func update_defense(_old,_new) :
+	status_indicators.update_status_indicator(status_indicators.status_list.DEFENSE,current_spirit.defense_change)
+	pass
+
+func update_speed(_old,_new) :
+	status_indicators.update_status_indicator(status_indicators.status_list.SPEED,current_spirit.speed_change)
+	pass
+
+func update_luck(_old,_new) :
+	status_indicators.update_status_indicator(status_indicators.status_list.LUCK,current_spirit.luck_change)
+	pass
+
+func update_priority(_old,_new) :
+	status_indicators.update_status_indicator(status_indicators.status_list.PRIORITY,current_spirit.priority_change)
+	pass
+
+func update_all_indicators() :
+	update_concrete(-1,-1)
+	update_abstract(-1,-1)
+	update_defense(-1,-1)
+	update_speed(-1,-1)
+	update_luck(-1,-1)
+	update_priority(-1,-1)
 
 var _current_spirit_inactive : ms_spirit
 var current_spirit_inactive : ms_spirit :
@@ -160,6 +216,7 @@ func set_monster(spirit_active : ms_spirit_active, _options : Array = []) :
 	set_options(_options)
 	if not keep_hidden :
 		show_extra_info()
+	update_all_indicators()
 
 func set_options(_options : Array) :
 	options = _options
@@ -259,7 +316,40 @@ bg_color = Color(0, 0, 0, 0.713)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_76o8l"]
 
-[node name="MonsterButton" type="Control" node_paths=PackedStringArray("spr", "name_label", "health_label", "stamina", "Type1", "Type2", "none_label", "button", "hightlight_rect", "l_selected", "l_full", "l_empty", "r_selected", "r_full", "r_empty", "options_root")]
+[sub_resource type="GDScript" id="GDScript_sbnog"]
+script/source = "extends HBoxContainer
+
+@export var indicator : PackedScene
+
+enum status_list {
+	UNKNOWN = 0,
+	CONCRETE = 1,
+	ABSTRACT = 2,
+	DEFENSE = 3,
+	SPEED = 4,
+	LUCK = 5,
+	PRIORITY = 6
+}
+
+func clear_all() :
+	for child in get_children() :
+		child.queue_free()
+
+func update_status_indicator(status : status_list, value) :
+	var status_instance = null
+	for child in get_children() :
+		if child.saved_status == int(status) :
+			status_instance = child
+			break
+	
+	if status_instance == null :
+		status_instance = indicator.instantiate()
+		add_child(status_instance)
+	
+	status_instance.set_status(int(status),value)
+"
+
+[node name="MonsterButton" type="Control" node_paths=PackedStringArray("spr", "name_label", "health_label", "stamina", "Type1", "Type2", "none_label", "button", "hightlight_rect", "status_indicators", "l_selected", "l_full", "l_empty", "r_selected", "r_full", "r_empty", "options_root")]
 custom_minimum_size = Vector2(100, 110)
 layout_mode = 3
 anchors_preset = 15
@@ -280,6 +370,7 @@ Type2 = NodePath("MarginContainer/VBoxContainer/Control/HBoxContainer/MarginCont
 none_label = NodePath("CenterContainer/Label")
 button = NodePath("Button")
 hightlight_rect = NodePath("HighlightColor")
+status_indicators = NodePath("Statuses")
 l_selected = NodePath("MarginContainer/VBoxContainer/Control/HBoxContainer/LSelected")
 l_full = NodePath("MarginContainer/VBoxContainer/Control/HBoxContainer/LFull")
 l_empty = NodePath("MarginContainer/VBoxContainer/Control/HBoxContainer/LEmpty")
@@ -484,6 +575,16 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 0
+
+[node name="Statuses" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 51.0
+grow_horizontal = 2
+mouse_filter = 2
+script = SubResource("GDScript_sbnog")
+indicator = ExtResource("6_d01xl")
 
 [connection signal="focus_entered" from="Button" to="." method="_on_button_focus_entered"]
 [connection signal="mouse_entered" from="Button" to="." method="_on_button_mouse_entered"]

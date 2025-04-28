@@ -4,8 +4,10 @@
 [ext_resource type="Script" uid="uid://1yl6aj3ibwlh" path="res://globals/simple_scripts/button_change_scene_simple.gd" id="2_330wo"]
 [ext_resource type="PackedScene" uid="uid://dg54dbj8r4o3j" path="res://globals/utility_scenes/bg.tscn" id="2_ob46e"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_ch1ei"]
+[sub_resource type="LabelSettings" id="LabelSettings_4ujhu"]
 font_size = 50
+outline_size = 15
+outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="GDScript" id="GDScript_xqynw"]
 script/source = "extends Button
@@ -111,7 +113,22 @@ offset_right = 134.0
 offset_bottom = 141.0
 grow_horizontal = 2
 text = "TR_TITLE"
-label_settings = SubResource("LabelSettings_ch1ei")
+label_settings = SubResource("LabelSettings_4ujhu")
+
+[node name="Title2" type="Label" parent="TitleAnchor/Title"]
+self_modulate = Color(0, 0, 0, 1)
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -133.5
+offset_top = 10.0
+offset_right = 133.5
+offset_bottom = 79.0
+grow_horizontal = 2
+text = "TR_TITLE"
+label_settings = SubResource("LabelSettings_4ujhu")
 
 [node name="MainMenuMargins" type="MarginContainer" parent="."]
 layout_mode = 1

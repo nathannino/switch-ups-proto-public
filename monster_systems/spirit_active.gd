@@ -154,6 +154,12 @@ func change_equip_key(value : String) :
 func reset_stats() :
 	current_hp = SpiritDictionary.spirits[key].health
 	current_stamina = 1
+	atk_abstract_change = 0
+	atk_concrete_change = 0
+	defense_change = 0
+	speed_change = 0
+	luck_change = 0
+	priority_change = 0
 
 func get_action_converted(_key : String) -> ms_action :
 	if _key == extra_move :

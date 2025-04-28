@@ -1,0 +1,19 @@
+[center][font_size=27]Status indicators[/font_size][/center]
+
+When a spirit gets hit by a stat changing effect, an icon will appear above it's display :
+
+[img]res://manual/images/en/statusindicators.png[/img]
+
+Each icon has a different meaning
+
+[bgcolor=00000060][img=100]res://monster_systems/actions/effects/attack_concrete.svg[/img][/bgcolor] : Concrete power
+
+[bgcolor=00000060][img=100]res://monster_systems/actions/effects/attack_abstract.svg[/img][/bgcolor] : Abstract power
+
+[bgcolor=00000060][img=100]res://Kenney Assets/Board Game Icons/tag_shield.svg[/img][/bgcolor] : Defense
+
+[bgcolor=00000060][img=100]res://Kenney Assets/Game icons Fighter Expansion/kick.png[/img][/bgcolor] : Speed
+
+[bgcolor=00000060][img=100]res://Kenney Assets/Board Game Icons/tag_d6_5.svg[/img][/bgcolor] : Luck
+
+[bgcolor=00000060][img=100]res://Kenney Assets/Game Icons/next.png[/img][/bgcolor] : Priority of next move

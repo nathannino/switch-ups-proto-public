@@ -1,0 +1,19 @@
+[center][font_size=27]Indicateurs d'état[/font_size][/center]
+
+Lorsqu'un esprit est touché par un effet de changement de statistiques, une icône apparaît au-dessus de son affichage :
+
+[img]res://manual/images/fr/statusindicators.png[/img]
+
+Chaque icône a une signification différente
+
+[bgcolor=00000060][img=100]res://monster_systems/actions/effects/attack_concrete.svg[/img][/bgcolor] : Pouvoir Concret
+
+[bgcolor=00000060][img=100]res://monster_systems/actions/effects/attack_abstract.svg[/img][/bgcolor] : Pouvoir Abstrait
+
+[bgcolor=00000060][img=100]res://Kenney Assets/Board Game Icons/tag_shield.svg[/img][/bgcolor] : Défense
+
+[bgcolor=00000060][img=100]res://Kenney Assets/Game icons Fighter Expansion/kick.png[/img][/bgcolor] : Vitesse
+
+[bgcolor=00000060][img=100]res://Kenney Assets/Board Game Icons/tag_d6_5.svg[/img][/bgcolor] : Chance
+
+[bgcolor=00000060][img=100]res://Kenney Assets/Game Icons/next.png[/img][/bgcolor] : Priorité de la prochaine action

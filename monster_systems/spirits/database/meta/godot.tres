@@ -3,15 +3,15 @@
 [ext_resource type="Script" uid="uid://cuoh85b8m5ubn" path="res://monster_systems/actions/resources_scripts/action.gd" id="1_0ei0c"]
 [ext_resource type="Script" uid="uid://dqioysnx33r70" path="res://monster_systems/spirits/resources_scripts/spirit.gd" id="1_vhtbu"]
 [ext_resource type="Resource" uid="uid://cea7mp2f86a1h" path="res://monster_systems/actions/database/normal/reg_atk_con.tres" id="2_cq75h"]
-[ext_resource type="Texture2D" uid="uid://bfhtb1a5qnryw" path="res://icon.svg" id="2_d07r4"]
 [ext_resource type="Resource" uid="uid://ch4nupwhlm6il" path="res://monster_systems/actions/database/retro/jump.tres" id="3_x2vpe"]
 [ext_resource type="Resource" uid="uid://dqoqaosti2hri" path="res://monster_systems/actions/database/retro/res_down.tres" id="4_xuqko"]
+[ext_resource type="Texture2D" uid="uid://b5w008mexcwkx" path="res://monster_systems/spirits/art/gameengine.png" id="6_o4fwv"]
 
 [resource]
 script = ExtResource("1_vhtbu")
 key = "godot"
 name = "TR_SPIRIT_GODOT"
-sprite = ExtResource("2_d07r4")
+sprite = ExtResource("6_o4fwv")
 type = 8
 health = 250
 atk_concrete = 110

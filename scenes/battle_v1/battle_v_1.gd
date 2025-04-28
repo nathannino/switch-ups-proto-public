@@ -99,7 +99,8 @@ func pause_battle_log() :
 	battle_logs_await += 1
 
 func play_battle_log() :
-	battle_logs_await -= 1
+	if battle_logs_await > 0 :
+		battle_logs_await -= 1
 
 var is_request_data = false
 var CANCEL = Object.new()

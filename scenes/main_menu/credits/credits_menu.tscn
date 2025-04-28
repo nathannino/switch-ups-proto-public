@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://c61v7qckif4d1"]
+[gd_scene load_steps=17 format=3 uid="uid://c61v7qckif4d1"]
 
 [ext_resource type="Script" uid="uid://bpgo2ajdqaijx" path="res://scenes/main_menu/credits/music_credits/music_library.gd" id="1_4rm8s"]
 [ext_resource type="PackedScene" uid="uid://dg54dbj8r4o3j" path="res://globals/utility_scenes/bg.tscn" id="1_6tbxy"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://cp0h1sybiqu0t" path="res://globals/simple_scripts/flowgrid.gd" id="2_tluex"]
 [ext_resource type="Theme" uid="uid://606up66y2qp" path="res://ScreenWideHeader.tres" id="3_2qlgp"]
 [ext_resource type="Script" uid="uid://22xiljhyb07p" path="res://globals/simple_scripts/set_parent_tab_name.gd" id="3_ntjgm"]
+[ext_resource type="PackedScene" uid="uid://ci4fwae3invkg" path="res://scenes/splash/splash.tscn" id="5_2qlgp"]
 
 [sub_resource type="GDScript" id="GDScript_xo24i"]
 script/source = "extends MarginContainer
@@ -33,6 +34,21 @@ corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l76qc"]
+bg_color = Color(0, 0, 0, 0.586)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2qlgp"]
+bg_color = Color(0, 0, 0, 0.955)
+
+[sub_resource type="GDScript" id="GDScript_2qlgp"]
+script/source = "extends Button
+
+@export var url : String
+
+func _on_pressed() -> void:
+	OS.shell_open(url)
+"
 
 [sub_resource type="GDScript" id="GDScript_f2ac0"]
 script/source = "extends RichTextLabel
@@ -213,13 +229,111 @@ layout_mode = 2
 size_flags_vertical = 3
 current_tab = 0
 
+[node name="SwitchUps" type="PanelContainer" parent="PanelContainer/VBoxContainer/PanelContainer2/Credits"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_l76qc")
+script = ExtResource("3_ntjgm")
+title = "TR_TITLE"
+translate = true
+metadata/_tab_index = 0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VBoxContainer/PanelContainer2/Credits/SwitchUps"]
+layout_mode = 2
+
+[node name="Switch-Ups2" type="VBoxContainer" parent="PanelContainer/VBoxContainer/PanelContainer2/Credits/SwitchUps/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="WeirdSpacing2" type="Control" parent="PanelContainer/VBoxContainer/PanelContainer2/Credits/SwitchUps/ScrollContainer/Switch-Ups2"]
+custom_minimum_size = Vector2(0, 57.245)
+layout_mode = 2
+
+[node name="splash" parent="PanelContainer/VBoxContainer/PanelContainer2/Credits/SwitchUps/ScrollContainer/Switch-Ups2" instance=ExtResource("5_2qlgp")]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+hack_notimer = true
+
+[node name="WeirdSpacing" type="Control" parent="PanelContainer/VBoxContainer/PanelContainer2/Credits/SwitchUps/ScrollContainer/Switch-Ups2"]
+custom_minimum_size = Vector2(0, 60.965)
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="PanelContainer/VBoxContainer/PanelContainer2/Credits/SwitchUps/ScrollContainer/Switch-Ups2"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_2qlgp")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/PanelContainer2/Credits/SwitchUps/ScrollContainer/Switch-Ups2/PanelContainer"]
+layout_mode = 2
+
+[node name="GameLabel" type="Label" parent="PanelContainer/VBoxContainer/PanelContainer2/Credits/SwitchUps/ScrollContainer/Switch-Ups2/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "TR_TITLE"
+
+[node name="CreatorLabel" type="Label" parent="PanelContainer/VBoxContainer/PanelContainer2/Credits/SwitchUps/ScrollContainer/Switch-Ups2/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "TR_CREDITS_NN"
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/PanelContainer2/Credits/SwitchUps/ScrollContainer/Switch-Ups2/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer/PanelContainer2/Credits/SwitchUps/ScrollContainer/Switch-Ups2/PanelContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="PanelContainer/VBoxContainer/PanelContainer2/Credits/SwitchUps/ScrollContainer/Switch-Ups2/PanelContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "TR_CREDITS_REPO"
+script = SubResource("GDScript_2qlgp")
+url = "https://github.com/cegep-Andre-Laurendeau1/projet-esp-nathannino"
+
+[node name="Button2" type="Button" parent="PanelContainer/VBoxContainer/PanelContainer2/Credits/SwitchUps/ScrollContainer/Switch-Ups2/PanelContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "TR_CREDITS_ITCH"
+script = SubResource("GDScript_2qlgp")
+url = "https://nathan-nino.itch.io/switch-ups"
+
+[node name="ColorRect" type="ColorRect" parent="PanelContainer/VBoxContainer/PanelContainer2/Credits/SwitchUps/ScrollContainer/Switch-Ups2"]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+
+[node name="LicenseLabel" type="Label" parent="PanelContainer/VBoxContainer/PanelContainer2/Credits/SwitchUps/ScrollContainer/Switch-Ups2"]
+layout_mode = 2
+text = "MIT License
+
+Copyright (c) 2025 Nathan_Nino
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the \"Software\"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+"
+
 [node name="Third Party" type="TabContainer" parent="PanelContainer/VBoxContainer/PanelContainer2/Credits"]
+visible = false
 layout_mode = 2
 current_tab = 0
 script = ExtResource("3_ntjgm")
 title = "TR_CREDIT_THIRD"
 translate = true
-metadata/_tab_index = 0
+metadata/_tab_index = 1
 
 [node name="Copyright" type="RichTextLabel" parent="PanelContainer/VBoxContainer/PanelContainer2/Credits/Third Party"]
 layout_mode = 2
@@ -299,6 +413,15 @@ Foley Sounds (No links founds outside of the All-In-One pack)
 [ul]
 [url=https://kenney.nl/assets/ui-audio]UI Audio[/url]
 [/ul]
+[ul]
+[url=https://kenney.nl/assets/board-game-icons]Board Game Icons[/url]
+[/ul]
+[ul]
+[url=https://kenney.nl/assets/game-icons]Game Icons[/url]
+[/ul]
+[ul]
+[url=https://opengameart.org/content/game-icons-fighter-expansion]Game Icons (Fighter Expansion)[/url]
+[/ul]
 [/ul]"
 script = SubResource("GDScript_v1poy")
 title = "TR_CREDIT_PLUGINS"
@@ -312,7 +435,7 @@ current_tab = 0
 script = ExtResource("3_ntjgm")
 title = "TR_CREDIT_MUSIC"
 translate = true
-metadata/_tab_index = 1
+metadata/_tab_index = 2
 
 [node name="Music Library" type="ScrollContainer" parent="PanelContainer/VBoxContainer/PanelContainer2/Credits/Music" node_paths=PackedStringArray("grid")]
 layout_mode = 2
@@ -910,4 +1033,6 @@ script = ExtResource("3_ntjgm")
 title = "OGA-BY-4.0"
 metadata/_tab_index = 2
 
+[connection signal="pressed" from="PanelContainer/VBoxContainer/PanelContainer2/Credits/SwitchUps/ScrollContainer/Switch-Ups2/PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/Button" to="PanelContainer/VBoxContainer/PanelContainer2/Credits/SwitchUps/ScrollContainer/Switch-Ups2/PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/Button" method="_on_pressed"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/PanelContainer2/Credits/SwitchUps/ScrollContainer/Switch-Ups2/PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/Button2" to="PanelContainer/VBoxContainer/PanelContainer2/Credits/SwitchUps/ScrollContainer/Switch-Ups2/PanelContainer/VBoxContainer/MarginContainer/HBoxContainer/Button2" method="_on_pressed"]
 [connection signal="meta_clicked" from="PanelContainer/VBoxContainer/PanelContainer2/Credits/Third Party/RichTextLabel" to="PanelContainer/VBoxContainer/PanelContainer2/Credits/Third Party/RichTextLabel" method="_on_meta_clicked"]

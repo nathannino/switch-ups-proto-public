@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://cwp5xmvuwvhph"]
+[gd_scene load_steps=28 format=3 uid="uid://cwp5xmvuwvhph"]
 
 [ext_resource type="Script" uid="uid://j4se1qgh1djm" path="res://scenes/battle_v1/battle_v_1.gd" id="1_hot38"]
 [ext_resource type="Script" uid="uid://dv6mnv666j7xn" path="res://scenes/battle_v1/uiv2/ui_variables.gd" id="2_tam1c"]
@@ -6,7 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://b277cnea7bq65" path="res://Kenney Assets/UI Pack - Sci-fi/bar_square_gloss_small_square.svg" id="3_g0ja2"]
 [ext_resource type="PackedScene" uid="uid://diohlpvbxl3oh" path="res://globals/utility_scenes/menus/spirit_summary/spirit_summary.tscn" id="4_5f312"]
 [ext_resource type="PackedScene" uid="uid://l5cmnn36hklt" path="res://globals/utility_scenes/ui_component/move_holder.tscn" id="5_vk5bl"]
+[ext_resource type="Texture2D" uid="uid://cv62mxsk6lh7d" path="res://Kenney Assets/Board Game Icons/arrow_counterclockwise.svg" id="7_2ou8y"]
 [ext_resource type="Script" uid="uid://bdybbbq4abp3c" path="res://scenes/battle_v1/uiv2/battlelogs.gd" id="7_7vxvx"]
+[ext_resource type="Texture2D" uid="uid://dhpsff5xomp5m" path="res://Kenney Assets/Board Game Icons/arrow_clockwise.svg" id="8_b6bk4"]
 [ext_resource type="Script" uid="uid://4s4xrwoowa26" path="res://scenes/battle_v1/uiv2/uiv2_team.gd" id="8_jhuc8"]
 [ext_resource type="Texture2D" uid="uid://dbtswwbf1236u" path="res://Kenney Assets/UI Pack - Sci-fi/bar_shadow_square_outline_large_square.svg" id="8_otltv"]
 [ext_resource type="PackedScene" uid="uid://bejpglhgtx7ds" path="res://scenes/battle_v1/uiv2/SpiritTeamDisplay/spirit_team_display.tscn" id="8_q2phu"]
@@ -194,9 +196,9 @@ layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 254.0
+offset_left = 208.0
 offset_top = -144.0
-offset_right = 294.0
+offset_right = 248.0
 offset_bottom = -104.0
 grow_vertical = 0
 script = ExtResource("8_jhuc8")
@@ -261,28 +263,62 @@ offset_bottom = 24.0
 
 [node name="RotateLeft" type="Button" parent="FriendTeam/ActionRoot" node_paths=PackedStringArray("team_root", "ui_globals")]
 layout_mode = 0
-offset_left = -265.0
-offset_top = -64.0
-offset_right = -87.0
-offset_bottom = -11.0
-pivot_offset = Vector2(178, 26.46)
-text = "TR_BTL_ROT_LEFT"
+offset_left = -156.0
+offset_top = -71.0
+offset_right = -92.0
+offset_bottom = -14.0
+pivot_offset = Vector2(70.915, 29.18)
 script = ExtResource("9_y30e1")
 team_root = NodePath("../..")
 ui_globals = NodePath("../../../UiGlobalState")
 
+[node name="MarginContainer2" type="MarginContainer" parent="FriendTeam/ActionRoot/RotateLeft"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 15
+
+[node name="TextureRect" type="TextureRect" parent="FriendTeam/ActionRoot/RotateLeft/MarginContainer2"]
+layout_mode = 2
+texture = ExtResource("7_2ou8y")
+expand_mode = 1
+stretch_mode = 5
+
 [node name="RotateRight" type="Button" parent="FriendTeam/ActionRoot" node_paths=PackedStringArray("team_root", "ui_globals")]
 layout_mode = 0
 offset_left = 221.0
-offset_top = -64.0
-offset_right = 408.0
-offset_bottom = -11.0
-pivot_offset = Vector2(0, 26.46)
-text = "TR_BTL_ROT_RIGHT"
+offset_top = -70.0
+offset_right = 285.0
+offset_bottom = -13.0
+pivot_offset = Vector2(0, 29.18)
 script = ExtResource("9_y30e1")
 team_root = NodePath("../..")
 rotate = 1
 ui_globals = NodePath("../../../UiGlobalState")
+
+[node name="MarginContainer" type="MarginContainer" parent="FriendTeam/ActionRoot/RotateRight"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 15
+
+[node name="TextureRect" type="TextureRect" parent="FriendTeam/ActionRoot/RotateRight/MarginContainer"]
+layout_mode = 2
+texture = ExtResource("8_b6bk4")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="ADSActionRoot" type="HBoxContainer" parent="FriendTeam/ActionRoot" node_paths=PackedStringArray("ui_globals")]
 layout_mode = 1

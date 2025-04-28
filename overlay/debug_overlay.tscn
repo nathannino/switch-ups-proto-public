@@ -15,7 +15,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	$HBoxContainer/FPSCounter.text = \"%d fps\" % Engine.get_frames_per_second()
+	$HBoxContainer/FPSCounter.text = \"%d\" % Engine.get_frames_per_second()
 	pass
 "
 
