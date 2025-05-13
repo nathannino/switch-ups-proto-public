@@ -42,4 +42,4 @@ TR_ACT_SNEAK;Sneak Attack;Attaque sournoise
 TR_ACT_FOG;Fog;Brouillard
 TR_ACT_UNCANNY;Uncanny valley;Vallée de l'étrange
 TR_ACT_NIGHTMARE;Nightmare;Cauchemar
-TR_ACT_REST;;
+TR_ACT_REST;Rest;Repos
