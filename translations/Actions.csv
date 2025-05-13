@@ -36,3 +36,10 @@ TR_ACT_HACK;Hack;Hack
 TR_ACT_FALL;Fall;Chute
 TR_ACT_ROACH;Roche limit;Limite de Roche
 TR_ACT_SHARPENING;Sharpening;affûtage
+TR_ACT_SNOWSTORM;Snowstorm;Tempête de neige
+TR_ACT_PUMPUP;Cheer;Remonter le moral
+TR_ACT_SNEAK;Sneak Attack;Attaque sournoise
+TR_ACT_FOG;Fog;Brouillard
+TR_ACT_UNCANNY;Uncanny valley;Vallée de l'étrange
+TR_ACT_NIGHTMARE;Nightmare;Cauchemar
+TR_ACT_REST;;

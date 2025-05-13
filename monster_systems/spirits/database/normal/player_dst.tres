@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="ms_spirit" load_steps=9 format=3 uid="uid://fdkplucw4f3"]
+
+[ext_resource type="Script" uid="uid://cuoh85b8m5ubn" path="res://monster_systems/actions/resources_scripts/action.gd" id="1_trmug"]
+[ext_resource type="Script" uid="uid://dqioysnx33r70" path="res://monster_systems/spirits/resources_scripts/spirit.gd" id="2_go72j"]
+[ext_resource type="Resource" uid="uid://cea7mp2f86a1h" path="res://monster_systems/actions/database/normal/reg_atk_con.tres" id="2_ijnbg"]
+[ext_resource type="Resource" uid="uid://n7ipeend6vgy" path="res://monster_systems/actions/database/normal/slash.tres" id="3_daidp"]
+[ext_resource type="Resource" uid="uid://ded4pwxrg5a7g" path="res://monster_systems/actions/database/normal/pumpup.tres" id="4_wotfr"]
+[ext_resource type="Resource" uid="uid://buvg75peoo6sc" path="res://monster_systems/actions/database/space/jetpack.tres" id="5_m2wv4"]
+[ext_resource type="Resource" uid="uid://bab81l1aucwqe" path="res://monster_systems/actions/database/dream/build.tres" id="6_qyoh4"]
+[ext_resource type="Texture2D" uid="uid://bufh4ci3r2n66" path="res://monster_systems/spirits/art/player_dst.png" id="8_yoa2g"]
+
+[resource]
+script = ExtResource("2_go72j")
+key = "player_dst"
+name = "TR_SPIRIT_HUMAN"
+sprite = ExtResource("8_yoa2g")
+type = 9
+health = 250
+atk_concrete = 150
+atk_abstract = 50
+defense = 100
+speed = 100
+luck = 10
+actions = Array[ExtResource("1_trmug")]([ExtResource("2_ijnbg"), ExtResource("3_daidp"), ExtResource("4_wotfr"), ExtResource("5_m2wv4"), ExtResource("6_qyoh4")])
+metadata/_custom_type_script = "uid://dqioysnx33r70"

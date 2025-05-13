@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="ms_spirit" load_steps=9 format=3 uid="uid://bjbu8mfjall3x"]
+
+[ext_resource type="Script" uid="uid://cuoh85b8m5ubn" path="res://monster_systems/actions/resources_scripts/action.gd" id="1_4p1hq"]
+[ext_resource type="Resource" uid="uid://bxpn0enwtueuh" path="res://monster_systems/actions/database/normal/reg_atk_abs.tres" id="2_6ytbi"]
+[ext_resource type="Script" uid="uid://dqioysnx33r70" path="res://monster_systems/spirits/resources_scripts/spirit.gd" id="2_s0sa4"]
+[ext_resource type="Resource" uid="uid://bpqd6ji4kno74" path="res://monster_systems/actions/database/space/supernova.tres" id="3_hgkf4"]
+[ext_resource type="Resource" uid="uid://daialfvccb4qd" path="res://monster_systems/actions/database/void/collapse.tres" id="4_ywu7y"]
+[ext_resource type="Resource" uid="uid://bdpdhd520e7my" path="res://monster_systems/actions/database/space/roach.tres" id="5_41mix"]
+[ext_resource type="Resource" uid="uid://bri4y3ngjg5cr" path="res://monster_systems/actions/database/fear/energy_drain.tres" id="6_ryvag"]
+[ext_resource type="Texture2D" uid="uid://w0vyr2yo1jew" path="res://monster_systems/spirits/art/void.png" id="8_oiruq"]
+
+[resource]
+script = ExtResource("2_s0sa4")
+key = "void"
+name = "TR_SPIRIT_VOID"
+sprite = ExtResource("8_oiruq")
+type = 4
+health = 400
+atk_concrete = 50
+atk_abstract = 110
+defense = 90
+speed = 50
+luck = 0
+actions = Array[ExtResource("1_4p1hq")]([ExtResource("2_6ytbi"), ExtResource("3_hgkf4"), ExtResource("4_ywu7y"), ExtResource("5_41mix"), ExtResource("6_ryvag")])
+metadata/_custom_type_script = "uid://dqioysnx33r70"

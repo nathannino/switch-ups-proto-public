@@ -1,0 +1,49 @@
+[gd_resource type="Resource" script_class="ms_action" load_steps=11 format=3 uid="uid://cxa5v75r73o51"]
+
+[ext_resource type="Script" uid="uid://csiv0ccgqvmtb" path="res://monster_systems/actions/resources_scripts/components/action_component.gd" id="1_rsnp1"]
+[ext_resource type="Script" uid="uid://cuoh85b8m5ubn" path="res://monster_systems/actions/resources_scripts/action.gd" id="2_cfouj"]
+[ext_resource type="Script" uid="uid://b5o4adhfhkldn" path="res://monster_systems/actions/resources_scripts/components/change_stat_level/ac_ch_stat_level.gd" id="2_tjbl2"]
+[ext_resource type="Script" uid="uid://bedoq515h1qxa" path="res://monster_systems/actions/resources_scripts/components/select_target/ac_target.gd" id="3_eko3k"]
+[ext_resource type="Script" uid="uid://tratffjr38fv" path="res://monster_systems/actions/resources_scripts/components/attack_enemy/ac_attack_enemy.gd" id="4_ncs8a"]
+
+[sub_resource type="Resource" id="Resource_7v1nw"]
+script = ExtResource("2_tjbl2")
+stat = 4
+level_change = 10
+metadata/_custom_type_script = "uid://b5o4adhfhkldn"
+
+[sub_resource type="Resource" id="Resource_20sgd"]
+script = ExtResource("3_eko3k")
+target_type = 8
+during_turn = false
+action = Array[ExtResource("1_rsnp1")]([SubResource("Resource_7v1nw")])
+metadata/_custom_type_script = "uid://bedoq515h1qxa"
+
+[sub_resource type="Resource" id="Resource_ec6xj"]
+script = ExtResource("4_ncs8a")
+base_atk = 40
+atk_flavor = 0
+metadata/_custom_type_script = "uid://tratffjr38fv"
+
+[sub_resource type="Resource" id="Resource_7ejnw"]
+script = ExtResource("2_tjbl2")
+stat = 4
+level_change = -10
+metadata/_custom_type_script = "uid://b5o4adhfhkldn"
+
+[sub_resource type="Resource" id="Resource_vc1ab"]
+script = ExtResource("3_eko3k")
+target_type = 8
+during_turn = false
+action = Array[ExtResource("1_rsnp1")]([SubResource("Resource_7ejnw")])
+metadata/_custom_type_script = "uid://bedoq515h1qxa"
+
+[resource]
+script = ExtResource("2_cfouj")
+key = "sneak"
+name = "TR_ACT_SNEAK"
+type = 4
+cost = 3
+priority = 3
+effects = Array[ExtResource("1_rsnp1")]([SubResource("Resource_20sgd"), SubResource("Resource_ec6xj"), SubResource("Resource_vc1ab")])
+metadata/_custom_type_script = "uid://cuoh85b8m5ubn"

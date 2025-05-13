@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="ms_action" load_steps=7 format=3 uid="uid://c2whdx2nkmqg3"]
+
+[ext_resource type="Script" uid="uid://csiv0ccgqvmtb" path="res://monster_systems/actions/resources_scripts/components/action_component.gd" id="1_0hlyl"]
+[ext_resource type="Script" uid="uid://cuoh85b8m5ubn" path="res://monster_systems/actions/resources_scripts/action.gd" id="2_00vyl"]
+[ext_resource type="Script" uid="uid://tratffjr38fv" path="res://monster_systems/actions/resources_scripts/components/attack_enemy/ac_attack_enemy.gd" id="2_kbb8p"]
+[ext_resource type="Script" uid="uid://gku76ur12em4" path="res://monster_systems/actions/resources_scripts/components/luck/ac_luck.gd" id="3_ildj6"]
+
+[sub_resource type="Resource" id="Resource_ph0xi"]
+script = ExtResource("2_kbb8p")
+base_atk = 70
+atk_flavor = 1
+metadata/_custom_type_script = "uid://tratffjr38fv"
+
+[sub_resource type="Resource" id="Resource_1qdl8"]
+script = ExtResource("3_ildj6")
+base_chance_percent = 0.8
+action = Array[ExtResource("1_0hlyl")]([SubResource("Resource_ph0xi")])
+metadata/_custom_type_script = "uid://gku76ur12em4"
+
+[resource]
+script = ExtResource("2_00vyl")
+key = "uncanny"
+name = "TR_ACT_UNCANNY"
+type = 0
+cost = 3
+priority = 1
+effects = Array[ExtResource("1_0hlyl")]([SubResource("Resource_1qdl8")])
+metadata/_custom_type_script = "uid://cuoh85b8m5ubn"

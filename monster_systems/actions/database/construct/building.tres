@@ -8,7 +8,7 @@
 [sub_resource type="Resource" id="Resource_05it4"]
 script = ExtResource("2_nxubu")
 stat = 2
-level_change = 2
+level_change = 4
 
 [sub_resource type="Resource" id="Resource_rre3q"]
 script = ExtResource("2_d1exy")

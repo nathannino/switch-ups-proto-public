@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="ms_spirit" load_steps=10 format=3 uid="uid://bwhnc1fhdmich"]
+
+[ext_resource type="Script" uid="uid://cuoh85b8m5ubn" path="res://monster_systems/actions/resources_scripts/action.gd" id="1_7ye8h"]
+[ext_resource type="Resource" uid="uid://bxpn0enwtueuh" path="res://monster_systems/actions/database/normal/reg_atk_abs.tres" id="2_sq5b1"]
+[ext_resource type="Resource" uid="uid://cxa5v75r73o51" path="res://monster_systems/actions/database/void/sneak.tres" id="3_5aucs"]
+[ext_resource type="Resource" uid="uid://dqoqaosti2hri" path="res://monster_systems/actions/database/retro/res_down.tres" id="3_h18fo"]
+[ext_resource type="Resource" uid="uid://56cq4vm2p6gy" path="res://monster_systems/actions/database/meta/lucky_shot.tres" id="4_3spud"]
+[ext_resource type="Resource" uid="uid://c2whdx2nkmqg3" path="res://monster_systems/actions/database/fear/uncanny.tres" id="4_s4l01"]
+[ext_resource type="Resource" uid="uid://dq4454tsfugm3" path="res://monster_systems/actions/database/fear/spotlight.tres" id="5_h3hxu"]
+[ext_resource type="Script" uid="uid://dqioysnx33r70" path="res://monster_systems/spirits/resources_scripts/spirit.gd" id="6_ayyls"]
+[ext_resource type="Texture2D" uid="uid://d2qu4170200qu" path="res://monster_systems/spirits/art/flag_dst.png" id="9_s4l01"]
+
+[resource]
+script = ExtResource("6_ayyls")
+key = "flag_shadow"
+name = "TR_SPIRIT_FLAG"
+sprite = ExtResource("9_s4l01")
+type = 3
+health = 250
+atk_concrete = 85
+atk_abstract = 140
+defense = 100
+speed = 100
+luck = 5
+actions = Array[ExtResource("1_7ye8h")]([ExtResource("2_sq5b1"), ExtResource("3_5aucs"), ExtResource("4_s4l01"), ExtResource("3_h18fo"), ExtResource("4_3spud"), ExtResource("5_h3hxu")])

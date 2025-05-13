@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="ms_spirit" load_steps=9 format=3 uid="uid://cwpcjab517deb"]
+
+[ext_resource type="Script" uid="uid://cuoh85b8m5ubn" path="res://monster_systems/actions/resources_scripts/action.gd" id="1_tef74"]
+[ext_resource type="Script" uid="uid://dqioysnx33r70" path="res://monster_systems/spirits/resources_scripts/spirit.gd" id="2_2mmes"]
+[ext_resource type="Resource" uid="uid://bxpn0enwtueuh" path="res://monster_systems/actions/database/normal/reg_atk_abs.tres" id="2_jqxe5"]
+[ext_resource type="Resource" uid="uid://8ux0kbxxh5bi" path="res://monster_systems/actions/database/fear/nightmare.tres" id="3_jqxe5"]
+[ext_resource type="Resource" uid="uid://cqh56tawku55t" path="res://monster_systems/actions/database/dream/rest.tres" id="4_1pnqh"]
+[ext_resource type="Resource" uid="uid://btja4176bhm51" path="res://monster_systems/actions/database/creature/bite.tres" id="5_0gfpp"]
+[ext_resource type="Resource" uid="uid://bri4y3ngjg5cr" path="res://monster_systems/actions/database/fear/energy_drain.tres" id="6_o1465"]
+[ext_resource type="Texture2D" uid="uid://pkcp535gd0hs" path="res://monster_systems/spirits/art/bed.png" id="8_0gfpp"]
+
+[resource]
+script = ExtResource("2_2mmes")
+key = "bed"
+name = "TR_SPIRIT_BED"
+sprite = ExtResource("8_0gfpp")
+type = 2
+health = 250
+atk_concrete = 75
+atk_abstract = 80
+defense = 110
+speed = 135
+luck = 0
+actions = Array[ExtResource("1_tef74")]([ExtResource("2_jqxe5"), ExtResource("3_jqxe5"), ExtResource("4_1pnqh"), ExtResource("5_0gfpp"), ExtResource("6_o1465")])
+metadata/_custom_type_script = "uid://dqioysnx33r70"
