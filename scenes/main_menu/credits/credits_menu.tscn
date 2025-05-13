@@ -288,7 +288,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "TR_CREDITS_REPO"
 script = SubResource("GDScript_2qlgp")
-url = "https://github.com/cegep-Andre-Laurendeau1/projet-esp-nathannino"
+url = "https://github.com/nathannino/switch-ups-proto-public"
 
 [node name="Button2" type="Button" parent="PanelContainer/VBoxContainer/PanelContainer2/Credits/SwitchUps/ScrollContainer/Switch-Ups2/PanelContainer/VBoxContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2

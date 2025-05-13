@@ -8,6 +8,7 @@ script = ExtResource("2_prnkw")
 name = "Credits/ Game Over (Short Loop)"
 key = "bg_waiting"
 loop = ExtResource("1_e8por")
+volume_linear = 1.0
 author = "Umplix"
 license = 0
 source = "https://opengameart.org/content/credits-game-over-short-loop"
