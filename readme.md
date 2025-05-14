@@ -1,5 +1,5 @@
 # Switch-Ups  
-#### A monster collector battle simulator inspired by a battle system introduced in the fifth generation of a certain serie  
+#### A monster collector (well, the battle part of a monster collector) battle simulator inspired by a battle system introduced in the fifth generation of a certain serie  
 
 ## Project info :  
 This project was made as part of a school assignement  
