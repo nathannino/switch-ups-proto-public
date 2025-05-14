@@ -1,13 +1,21 @@
-[gd_resource type="Resource" script_class="ms_action" load_steps=5 format=3 uid="uid://buvg75peoo6sc"]
+[gd_resource type="Resource" script_class="ms_action" load_steps=7 format=3 uid="uid://buvg75peoo6sc"]
 
 [ext_resource type="Script" uid="uid://csiv0ccgqvmtb" path="res://monster_systems/actions/resources_scripts/components/action_component.gd" id="1_pijh4"]
 [ext_resource type="Script" uid="uid://b5o4adhfhkldn" path="res://monster_systems/actions/resources_scripts/components/change_stat_level/ac_ch_stat_level.gd" id="2_p8nja"]
 [ext_resource type="Script" uid="uid://cuoh85b8m5ubn" path="res://monster_systems/actions/resources_scripts/action.gd" id="2_uv5fe"]
+[ext_resource type="Script" uid="uid://bedoq515h1qxa" path="res://monster_systems/actions/resources_scripts/components/select_target/ac_target.gd" id="3_vrqqv"]
 
 [sub_resource type="Resource" id="Resource_yjnbm"]
 script = ExtResource("2_p8nja")
 stat = 3
 level_change = 2
+
+[sub_resource type="Resource" id="Resource_rky7t"]
+script = ExtResource("3_vrqqv")
+target_type = 8
+during_turn = false
+action = Array[ExtResource("1_pijh4")]([SubResource("Resource_yjnbm")])
+metadata/_custom_type_script = "uid://bedoq515h1qxa"
 
 [resource]
 script = ExtResource("2_uv5fe")
@@ -16,4 +24,4 @@ name = "TR_ACT_JETPACK"
 type = 7
 cost = 1
 priority = 0
-effects = Array[ExtResource("1_pijh4")]([SubResource("Resource_yjnbm")])
+effects = Array[ExtResource("1_pijh4")]([SubResource("Resource_rky7t")])

@@ -14,7 +14,7 @@ atk_flavor = 0
 
 [sub_resource type="Resource" id="Resource_tykun"]
 script = ExtResource("3_orbe6")
-heal_percent = 40.0
+heal_percent = 0.4
 metadata/_custom_type_script = "uid://dj745fbgjstr8"
 
 [sub_resource type="Resource" id="Resource_0uf2l"]

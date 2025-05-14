@@ -14,7 +14,7 @@ metadata/_custom_type_script = "uid://dj745fbgjstr8"
 
 [sub_resource type="Resource" id="Resource_xdxvp"]
 script = ExtResource("3_4rm12")
-energy_change = 2
+energy_change = 1
 metadata/_custom_type_script = "uid://mt4db7wtu38t"
 
 [sub_resource type="Resource" id="Resource_yvv28"]
@@ -51,7 +51,7 @@ script = ExtResource("2_xhhp2")
 key = "rest"
 name = "TR_ACT_REST"
 type = 2
-cost = 2
+cost = 3
 priority = -2
 effects = Array[ExtResource("1_4bdbl")]([SubResource("Resource_13w5s"), SubResource("Resource_kn0xh")])
 metadata/_custom_type_script = "uid://cuoh85b8m5ubn"
