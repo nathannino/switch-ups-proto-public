@@ -18,6 +18,7 @@ enum BATTLE_STEPS {
 }
 
 var battle_next : BATTLE_STEPS = BATTLE_STEPS.NONE
+var can_cancel = false
 
 func _ready() -> void:
 	battle_subscenes.populate_scene_dictionary()
@@ -88,6 +89,10 @@ func global_payload_received(_client : Node, payload : TcpPayload) -> void :
 			if readys >= MAX_PLAYERS :
 				battle_next = BATTLE_STEPS.SELECT_ACTION
 				$ServerMain.send_all(TcpPayload.new().set_type(TcpPayload.TYPE.BATTLE_AWAIT_INIT))
+		TcpPayload.TYPE.BATTLE_AWAIT_ENDTURN_CANCEL_REQ :
+			if can_cancel :
+				_client.await_endturn = false
+				_client.send(TcpPayload.new().set_type(TcpPayload.TYPE.BATTLE_AWAIT_ENDTURN_CANCEL_ACK))
 		TcpPayload.TYPE.BATTLE_AWAIT_ENDTURN :
 			var readys = 0
 			for child in $ServerMain.get_children() :
@@ -109,6 +114,7 @@ const MAX_NATURAL_STAMINA = 5
 func battle_next_main() :
 	match battle_next :
 		BATTLE_STEPS.SELECT_ACTION :
+			can_cancel = true
 			$ServerMain.send_all(TcpPayload.new().set_type(TcpPayload.TYPE.BATTLE_HIDE_CANCEL).set_content(false))
 			for child in $ServerMain.get_children() :
 				var _team = child.team
@@ -122,14 +128,18 @@ func battle_next_main() :
 			battle_next = BATTLE_STEPS.CALCULATE_MOVES
 			pass
 		BATTLE_STEPS.CALCULATE_MOVES :
+			can_cancel = false
 			$ServerMain.send_all(TcpPayload.new().set_type(TcpPayload.TYPE.BATTLE_HIDE_CANCEL).set_content(true))
 			$TurnCalculator.start_turn()
 		BATTLE_STEPS.AWAIT_MODIFICATION :
+			can_cancel = false
 			battle_next = BATTLE_STEPS.RESUME_MOVES
 			$TurnCalculator.send_request_data()
 		BATTLE_STEPS.RESUME_MOVES :
+			can_cancel = false
 			$TurnCalculator.calculate_next()
 		BATTLE_STEPS.END_FIGHT :
+			can_cancel = false
 			set_state_battle_end()
 		_ :
 			printerr("No next step : %s" % battle_next)

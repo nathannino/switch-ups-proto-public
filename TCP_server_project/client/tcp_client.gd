@@ -59,6 +59,9 @@ func _process(delta: float) -> void:
 			var _available_bytes: int = peer.get_available_bytes()
 			if _available_bytes > 0 :
 				var _string = peer.get_utf8_string()
+				if game_info.show_network_messages :
+					print("[Client received message] : ")
+					print(_string)
 				var payload = TcpPayload.new().parse_json(_string)
 				match payload.get_type() :
 					TcpPayload.TYPE.ASK_VER:

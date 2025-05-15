@@ -455,6 +455,7 @@ func show_await_cancel_timer() :
 func hide_await_cancel_timer() :
 	timer.stop()
 	await_cancel.hide()
+	await_cancel.enable_button()
 	if timer.timeout.is_connected(_await_cancel_timeout) :
 		timer.timeout.disconnect(_await_cancel_timeout)
 	pass

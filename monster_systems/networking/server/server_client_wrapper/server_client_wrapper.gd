@@ -114,7 +114,7 @@ func _on_server_client_node_payload_received(payload: TcpPayload) -> void:
 			global_payload_received.emit(self,payload)
 		TcpPayload.TYPE.BATTLE_SUBMIT_ACTION :
 			selected_action_dict = payload.get_content()
-		TcpPayload.TYPE.BATTLE_SUBMIT_DATA :
+		TcpPayload.TYPE.BATTLE_SUBMIT_DATA, TcpPayload.TYPE.BATTLE_AWAIT_ENDTURN_CANCEL_REQ :
 			global_payload_received.emit(self,payload)
 		TcpPayload.TYPE.CHANGE_SCENE_RECEIVED :
 			change_scene_callable.call()

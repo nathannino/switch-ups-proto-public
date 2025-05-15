@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://cwp5xmvuwvhph"]
+[gd_scene load_steps=29 format=3 uid="uid://cwp5xmvuwvhph"]
 
 [ext_resource type="Script" uid="uid://j4se1qgh1djm" path="res://scenes/battle_v1/battle_v_1.gd" id="1_hot38"]
 [ext_resource type="Script" uid="uid://dv6mnv666j7xn" path="res://scenes/battle_v1/uiv2/ui_variables.gd" id="2_tam1c"]
@@ -108,6 +108,15 @@ func _on_pressed() -> void:
 	ui_globals.show_ads()
 "
 
+[sub_resource type="GDScript" id="GDScript_2ou8y"]
+script/source = "extends PanelContainer
+
+@export var button : Button
+
+func enable_button() :
+	button.disabled = false
+"
+
 [sub_resource type="GDScript" id="GDScript_lmsix"]
 script/source = "extends Button
 
@@ -117,10 +126,14 @@ func _ready() -> void:
 	ClientWrapperAutoload.hide_cancel.connect(func (_hide) :
 		visible = not _hide
 	)
+	ClientWrapperAutoload.cancel_ACKed.connect(func () :
+		battle_root.begin_turn()
+	)
 
 func _on_pressed() -> void:
-	ClientWrapperAutoload.send(TcpPayload.new().set_type(TcpPayload.TYPE.BATTLE_AWAIT_ENDTURN).set_content(false))
-	battle_root.begin_turn()
+	ClientWrapperAutoload.send(TcpPayload.new().set_type(TcpPayload.TYPE.BATTLE_AWAIT_ENDTURN_CANCEL_REQ))
+	disabled = true
+	#battle_root.begin_turn()
 "
 
 [sub_resource type="GDScript" id="GDScript_3dqdr"]
@@ -483,7 +496,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="AwaitCancel" type="PanelContainer" parent="."]
+[node name="AwaitCancel" type="PanelContainer" parent="." node_paths=PackedStringArray("button")]
 visible = false
 layout_mode = 1
 anchors_preset = 14
@@ -494,6 +507,8 @@ offset_top = -39.0
 offset_bottom = 39.0
 grow_horizontal = 2
 grow_vertical = 2
+script = SubResource("GDScript_2ou8y")
+button = NodePath("MarginContainer/VBoxContainer/Button")
 
 [node name="MarginContainer" type="MarginContainer" parent="AwaitCancel"]
 layout_mode = 2

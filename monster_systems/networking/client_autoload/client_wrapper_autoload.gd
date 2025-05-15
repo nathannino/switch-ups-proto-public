@@ -10,6 +10,7 @@ signal battle_begin_turn
 signal battle_logs(logs)
 signal request_data(request)
 signal hide_cancel(hide)
+signal cancel_ACKed
 #endregion
 
 var connected = false
@@ -92,6 +93,8 @@ func _on_main_client_payload_received(payload: TcpPayload) -> void:
 			request_data.emit(payload.get_content())
 		TcpPayload.TYPE.BATTLE_HIDE_CANCEL :
 			hide_cancel.emit(payload.get_content())
+		TcpPayload.TYPE.BATTLE_AWAIT_ENDTURN_CANCEL_ACK :
+			cancel_ACKed.emit()
 		_:
 			printerr("Unkown type %s" % payload.get_type())
 	pass # Replace with function body.

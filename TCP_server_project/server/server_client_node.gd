@@ -1,6 +1,8 @@
+
 extends Node
 
 var peer : StreamPeerTCP;
+var verified = false
 
 func peer_ready(_peer : StreamPeerTCP) -> void:
 	peer = _peer;
@@ -48,6 +50,9 @@ func _process(delta: float) -> void:
 			var _available_bytes: int = peer.get_available_bytes()
 			if _available_bytes > 0 :
 				var _string = peer.get_utf8_string()
+				if game_info.show_network_messages :
+					print("[Server received message] : ")
+					print(_string)
 				var payload = TcpPayload.new().parse_json(_string)
 				match payload.get_type() :
 					TcpPayload.TYPE.ASK_VER:
@@ -55,6 +60,7 @@ func _process(delta: float) -> void:
 							disconnect_from_server(true,"ERR_SERVER_PROTOCOLVER")
 						else :
 							send(TcpPayload.new().set_type(TcpPayload.TYPE.ASK_VER_ACCEPTED))
+							verified = true
 							accepted.emit()
 						return
 					TcpPayload.TYPE.ERR_DISCONNECT :
@@ -68,6 +74,14 @@ func _process(delta: float) -> void:
 						print(payload.get_content())
 						return
 					_ :
-						payload_received.emit(payload)
-						return
+						if verified :
+							payload_received.emit(payload)
+							return
 		pass
+
+
+func _on_timer_timeout() -> void:
+	if not verified :
+		disconnect_from_server(true,"ERR_LOST_CONNECTION")
+		pass
+	pass # Replace with function body.
